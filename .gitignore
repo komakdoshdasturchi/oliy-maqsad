@@ -1,0 +1,30 @@
+# === Kutubxonalar va qurilgan fayllar (avtomatik qayta yaratiladi) ===
+node_modules/
+build/
+dist/
+coverage/
+*.log
+
+# === Maxfiy kalitlar ===
+.env*
+!.env.example
+*.keystore
+*.jks
+
+# === SHAXSIY MA'LUMOT — GitHub'ga hech qachon tushmasin ===
+oliy-maqsad-zaxira-*.pdf
+*.zip
+*.rar
+
+# === Android (qurish natijalari va shu kompyuterga xos sozlamalar) ===
+android/.gradle/
+android/local.properties
+android/app/src/main/assets/public/
+android/app/release/
+*.apk
+*.aab
+.idea/
+
+# === Tizim fayllari ===
+.DS_Store
+Thumbs.db
