@@ -97,7 +97,11 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **!!! FOYDALANUVCHI TEKSHIRISHI KERAK:** bu ikki matn xotiradan yozildi, bosma manba bilan solishtirilmagan. Play Market bosqichidan oldin albatta tasdiqlansin
 - Hadis uch bo'lakka bo'lingan (o'rtasi qalin yashil) — bo'laklar ingliz tili tartibiga moslab yozilgan, alohida tahrirlanmasin
 
-**7-bosqich: ARABCHA BOSHLANDI** (2026-07-27). `LUGAT_AR` da **176 / 520**. `ar` holati "sinov", izoh "Sinov · qisman tarjima".
+**7-bosqich: ARABCHA — 516 / 520** (2026-07-27). `ar` holati "sinov" (tekshiruv kutilmoqda), izoh "Sinov · qisman tarjima".
+**Qolgan 4 tasi ATAYLAB tarjimasiz:**
+1. Oyatning ma'nosi («Ey mo'minlar! Sabr qilinglar...») — arabchada `OyatCard` uni ko'rsatmaydi, yuqorida oyatning ASLI turadi
+2-4. Hadisning uch bo'lagi — **arabcha ASLI kerak, xotiradan yozilmaydi.** Foydalanuvchi ishonchli manbadan (sunnah.com / bosma) berishi kutilmoqda
+- **KO'PLIK CHEKLOVI:** arab tilida son bilan kelishuv murakkab (1 / 2 / 3-10 / 11+), `tf()` esa faqat ikki shakl beradi. 11 dan katta sonlarda grammatik jihatdan aniq emas — tekshiruvchi shunga e'tibor bersin
 - **Arabcha ALOHIDA blokda:** `tillar.ts` dagi `const LUGAT_AR: Record<string, string>` — pastida sodda halqa bilan `LUGAT[k].ar` ga qo'shiladi. Sabab: arab tilini biladigan odam butun tarjimani **bir joydan** ko'rib chiqa olsin
 - Bajarilgani: bo'limlar, ibodat atamalari, kun/vaqt, belgilash, tugmalar, vazifa, maqsad, uyqu/pomodoro
 - Diniy atamalar arabcha ASLIDA: العبادة · الصلوات الخمس · التهجد · الأذكار · ختم القرآن · النافلة · ركعة · التاريخ الهجري
