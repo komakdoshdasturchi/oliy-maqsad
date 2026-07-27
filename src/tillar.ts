@@ -9,7 +9,7 @@ export const TILLAR: { id: Lang; nom: string; izoh: string; belgi: string; rang:
   { id: "uz", nom: "O'zbek tili", izoh: "Lotin", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
   { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
   { id: "en", nom: "English language", izoh: "tez orada", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tez" },
-  { id: "ar", nom: "اللغة العربية", izoh: "tez orada", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tez" },
+  { id: "ar", nom: "اللغة العربية", izoh: "Sinov · o'ngdan chapga", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "sinov" },
 ];
 
 // ---------- LUG'AT ----------

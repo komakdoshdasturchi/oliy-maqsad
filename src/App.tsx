@@ -494,8 +494,11 @@ const ICONS: Record<string, string> = {
   upload: '<path d="M12 21V9m0 0 4.5 4.5M12 9l-4.5 4.5M4 4h16"/>',
   quote: '<path d="M6 11.2h4V17H4v-4.4c0-2.9 1.5-4.8 4.2-5.6l.6 1.5c-1.7.6-2.6 1.5-2.8 2.7Zm10 0h4V17h-6v-4.4c0-2.9 1.5-4.8 4.2-5.6l.6 1.5c-1.7.6-2.6 1.5-2.8 2.7Z" fill="currentColor" stroke="none"/>',
 };
+// Yo'nalishga ishora qiluvchi ikonkalar — RTL da ko'zguga aylanadi (.om-yon)
+const YONALISHLI = new Set(["arrowLeft", "arrowRight", "chevronLeft", "chevronRight"]);
 function Icon({ n, size = 22, fill = "none", style, className }: { n: string; size?: number; fill?: string; style?: React.CSSProperties; className?: string }) {
-  return <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke={fill === "none" ? "currentColor" : "none"}
+  const cls = (className || "") + (YONALISHLI.has(n) ? " om-yon" : "");
+  return <svg className={cls || undefined} width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke={fill === "none" ? "currentColor" : "none"}
     strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", display: "inline-block", verticalAlign: "middle", ...style }}
     dangerouslySetInnerHTML={{ __html: ICONS[n] || "" }} />;
 }
@@ -1037,7 +1040,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
           ? <button onClick={back} className="om-press grid h-9 w-9 flex-none place-items-center rounded-xl" style={cardS}><Icon n="chevronLeft" size={18} style={{ color: "var(--ink)" }} /></button>
           : <span className="h-9 w-9 flex-none" />}
         <span className="flex items-center gap-1.5"><Logo size={22} /><span className="text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Oliy maqsad")}</span></span>
-        <span className="ml-auto text-xs font-semibold tabular-nums" style={lblS}>{step}/{TOTAL}</span>
+        <span className="ms-auto text-xs font-semibold tabular-nums" style={lblS}>{step}/{TOTAL}</span>
       </div>
       <div className="mb-8 h-1.5 overflow-hidden rounded-full" style={{ background: "var(--soft)" }}>
         <div className="h-full rounded-full" style={{ width: `${(step / TOTAL) * 100}%`, background: "var(--green)", transition: "width .3s" }} />
@@ -1288,7 +1291,7 @@ function IbadatPage(p: {
                   <button key={pr.id} onClick={() => setOpenPr(o => ({ ...o, [pr.id]: true }))}
                     className="om-press flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-sm"
                     style={{ borderColor: "var(--green)", background: "var(--soft)", color: "var(--green)" }}>
-                    <span className="flex items-center gap-2 font-bold"><Icon n="checkCircle" size={18} />{tr(pr.n)}{masjid ? <Icon n="mosque" size={15} style={{ marginLeft: 2 }} /> : null}</span>
+                    <span className="flex items-center gap-2 font-bold"><Icon n="checkCircle" size={18} />{tr(pr.n)}{masjid ? <Icon n="mosque" size={15} style={{ marginInlineStart: 2 }} /> : null}</span>
                     <span className="text-[11px]" style={lblS}>{tr("to'liq o'qildi")}</span>
                   </button>
                 );
@@ -1351,7 +1354,7 @@ function IbadatPage(p: {
           ) : today < khatm.start ? (
             <div className="flex items-center gap-2 rounded-2xl border px-4 py-3 text-sm" style={cardS}>
               <Icon n="bookOpen" size={17} style={{ color: "var(--green)" }} /><span style={{ color: "var(--ink)" }}>Xatm {fmtUz(khatm.start)} dan boshlanadi</span>
-              <button onClick={() => setShowKhatm(true)} className="ml-auto text-xs" style={lblS}>{tr("tahrirlash")}</button>
+              <button onClick={() => setShowKhatm(true)} className="ms-auto text-xs" style={lblS}>{tr("tahrirlash")}</button>
             </div>
           ) : kActive ? (
             <button onClick={() => upd(x => ({ ...x, khatm: !x.khatm }))}
@@ -1367,7 +1370,7 @@ function IbadatPage(p: {
           ) : (
             <div className="flex items-center gap-2 rounded-2xl border px-4 py-3 text-sm" style={cardS}>
               <Icon n="bookOpen" size={17} style={{ color: "var(--muted)" }} /><span style={{ color: "var(--ink)" }}>{tr("Xatm tugadi:")} <b>{kDone}/{kTotal}</b> {tr("kun")}</span>
-              <button onClick={() => setShowKhatm(true)} className="ml-auto text-xs" style={{ color: "var(--green)" }}>{tr("yangi xatm")}</button>
+              <button onClick={() => setShowKhatm(true)} className="ms-auto text-xs" style={{ color: "var(--green)" }}>{tr("yangi xatm")}</button>
             </div>
           )}
           {kActive && <button onClick={() => setShowKhatm(true)} className="mt-1.5 text-[11px]" style={lblS}>{tr("xatm rejasini tahrirlash")}</button>}
@@ -1614,7 +1617,7 @@ function BugunView(p: {
     const done = m && (m.st === "full" || m.st === "extra");
     return (
       <button onClick={() => setSheetTask(t)} className="flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left"
-        style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: t.scope === "oliy" ? "var(--gold)" : "var(--green)", opacity: m && m.st ? 0.6 : 1 }}>
+        style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: t.scope === "oliy" ? "var(--gold)" : "var(--green)", opacity: m && m.st ? 0.6 : 1 }}>
         <span className="w-24 flex-none text-[11px] font-bold tabular-nums" style={{ color: "var(--green)" }}>{t.schedFrom}–{t.schedTo}</span>
         <span className="min-w-0 flex-1 truncate text-sm" style={{ color: "var(--ink)", textDecoration: done ? "line-through" : "none" }}>{t.name}</span>
         <span className="text-sm font-bold" style={{ color: statusColor(t) }}>{statusIcon(t)}</span>
@@ -1659,9 +1662,9 @@ function BugunView(p: {
       setSleepH("");
     };
     return (
-      <Card style={{ borderLeftWidth: 3, borderLeftColor: "var(--blue)" }}>
+      <Card style={{ borderInlineStartWidth: 3, borderInlineStartColor: "var(--blue)" }}>
         <div className="text-sm font-medium" style={{ color: "var(--ink)" }}>
-          <Icon n="moon" size={15} style={{ marginRight: 5, verticalAlign: "-2px" }} />Rejaga muvofiq uyqu{locked ? (m!.st === "full" ? " · ✓ belgilandi" : " · ✗ belgilandi") : ""}
+          <Icon n="moon" size={15} style={{ marginInlineEnd: 5, verticalAlign: "-2px" }} />Rejaga muvofiq uyqu{locked ? (m!.st === "full" ? " · ✓ belgilandi" : " · ✗ belgilandi") : ""}
         </div>
         <div className="text-[11px]" style={{ color: "var(--muted)" }}>
           Reja: {p.sleepCfg.kind === "range" ? `${p.sleepCfg.from} — ${p.sleepCfg.to} (~${planH} ${tr("soat")})` : `${planH} ${tr("soat")}`}
@@ -1774,9 +1777,9 @@ function BugunView(p: {
 
   // shaxsiy iqtiboslar — tanlangan joyda ko'rinadi (Sozlamalarda boshqariladi)
   const quotesAt = (pos: Quote["pos"]) => p.quotes.filter(q => q.pos === pos).map(q => (
-    <Card key={q.id} style={{ borderLeftWidth: 3, borderLeftColor: "var(--gold)" }}>
+    <Card key={q.id} style={{ borderInlineStartWidth: 3, borderInlineStartColor: "var(--gold)" }}>
       <p className="text-sm italic leading-relaxed" style={{ color: "var(--ink)" }}>
-        <Icon n="quote" size={14} style={{ color: "var(--gold)", marginRight: 6, verticalAlign: "-2px" }} />{q.text}
+        <Icon n="quote" size={14} style={{ color: "var(--gold)", marginInlineEnd: 6, verticalAlign: "-2px" }} />{q.text}
       </p>
     </Card>
   ));
@@ -1798,7 +1801,7 @@ function BugunView(p: {
             behind = total < Math.floor((target * passed) / totalDays);
           }
           return (
-            <div key={t.id} className="rounded-xl border px-3 py-2" style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: t.scope === "oliy" ? "var(--gold)" : "var(--blue)", opacity: t.completedAt ? 0.6 : 1 }}>
+            <div key={t.id} className="rounded-xl border px-3 py-2" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: t.scope === "oliy" ? "var(--gold)" : "var(--blue)", opacity: t.completedAt ? 0.6 : 1 }}>
               <div className="flex items-center justify-between gap-2">
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-medium" style={{ color: "var(--ink)" }}>{t.scope === "oliy" ? "⭐ " : ""}{t.completedAt ? "✅ " : ""}{t.name}</div>
@@ -2517,14 +2520,14 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
         {(bw.best || bw.worst) && (
           <div className="grid grid-cols-2 gap-2.5">
             {bw.best && (
-              <div className="rounded-2xl border p-3" style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: "var(--green)" }}>
+              <div className="rounded-2xl border p-3" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: "var(--green)" }}>
                 <p className="text-[10px] font-semibold" style={lblS}>{tr("Kuchli tomon")}</p>
                 <p className="mt-1 truncate text-[13px] font-bold" style={{ color: "var(--ink)" }}>{bw.best.t.name}</p>
                 <p className="text-[12px] font-bold" style={{ color: "var(--green)" }}>{bw.best.r.pct}%</p>
               </div>
             )}
             {bw.worst && (
-              <div className="rounded-2xl border p-3" style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: "var(--gold)" }}>
+              <div className="rounded-2xl border p-3" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: "var(--gold)" }}>
                 <p className="text-[10px] font-semibold" style={lblS}>{tr("E'tibor bering")}</p>
                 <p className="mt-1 truncate text-[13px] font-bold" style={{ color: "var(--ink)" }}>{bw.worst.t.name}</p>
                 <p className="text-[12px] font-bold" style={{ color: "var(--gold)" }}>{bw.worst.r.pct}%</p>
@@ -2644,14 +2647,14 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
         {(bw.best || bw.worst) && (
           <div className="grid grid-cols-2 gap-2.5">
             {bw.best && (
-              <div className="rounded-2xl border p-3" style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: "var(--green)" }}>
+              <div className="rounded-2xl border p-3" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: "var(--green)" }}>
                 <p className="text-[10px] font-semibold" style={lblS}>{tr("Kuchli tomon")}</p>
                 <p className="mt-1 truncate text-[13px] font-bold" style={{ color: "var(--ink)" }}>{bw.best.t.name}</p>
                 <p className="text-[12px] font-bold" style={{ color: "var(--green)" }}>{bw.best.r.pct}%</p>
               </div>
             )}
             {bw.worst && (
-              <div className="rounded-2xl border p-3" style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: "var(--gold)" }}>
+              <div className="rounded-2xl border p-3" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: "var(--gold)" }}>
                 <p className="text-[10px] font-semibold" style={lblS}>{tr("E'tibor bering")}</p>
                 <p className="mt-1 truncate text-[13px] font-bold" style={{ color: "var(--ink)" }}>{bw.worst.t.name}</p>
                 <p className="text-[12px] font-bold" style={{ color: "var(--gold)" }}>{bw.worst.r.pct}%</p>
@@ -3322,7 +3325,7 @@ function UyquPage(p: {
         </Card>
       )}
 
-      <Card style={{ borderLeftWidth: 3, borderLeftColor: "var(--gold)" }}>
+      <Card style={{ borderInlineStartWidth: 3, borderInlineStartColor: "var(--gold)" }}>
         <h3 className="mb-1 flex items-center gap-2 text-sm font-bold" style={{ color: "var(--ink)" }}><Icon n="sparkles" size={15} style={{ color: "var(--gold)" }} /> {tr("Sifatli uyqu uchun maslahatlar")}</h3>
         <p className="text-[12px] leading-relaxed" style={lblS}>{tr("Uxlashdan 1 soat oldin ekranlardan uzoqlashing va yengil kitob o'qing. Uxlashdan oldingi zikrlarni unutmang.")}</p>
         <p className="mt-2 text-[11px] font-medium" style={{ color: "var(--gold)" }}>{tr("Eslatma: bu ilovada uyqu reytingi teskari — rejadan KAM uxlash yuqori baholanadi.")}</p>
@@ -3863,7 +3866,7 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
           <input type="number" value={c} onChange={e => setC(e.target.value)} className="w-14 rounded-lg border px-2 py-1.5 text-sm" style={inpS} />
           <span>{tr("marta")}</span>
           <button onClick={() => { const wv = parseInt(w) || 25, rv = parseInt(r) || 5, cv = parseInt(c) || 3; if (wv > 0 && rv > 0 && cv > 0) setCfg({ work: wv, rest: rv, cycles: cv }); }}
-            className="ml-auto rounded-lg px-3 py-1.5 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
+            className="ms-auto rounded-lg px-3 py-1.5 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
         </div>
         <p className="mt-2 text-[11px]" style={lblS}>{tr("Sikl — kunlik pomodoro maqsadingiz. Yetganingizda hisob yashil rangda ko'rinadi.")}</p>
       </Card>
@@ -3882,7 +3885,7 @@ function PomoAsk({ min, tasks, logs, today, onPick }: { min: number; tasks: Task
         {opts.map(t => {
           const m = lg[t.id];
           return (
-            <button key={t.id} onClick={() => onPick(t.id)} className="flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left text-sm" style={{ ...cardS, borderLeftWidth: 3, borderLeftColor: t.scope === "oliy" ? "var(--gold)" : "var(--green)" }}>
+            <button key={t.id} onClick={() => onPick(t.id)} className="flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left text-sm" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: t.scope === "oliy" ? "var(--gold)" : "var(--green)" }}>
               <span className="min-w-0 truncate" style={{ color: "var(--ink)" }}>{t.scope === "oliy" ? "⭐ " : ""}{t.name}</span>
               <span className="flex-none text-[11px]" style={lblS}>{t.minutes > 0 ? fmtMin(t.minutes) : "vaqtsiz"}{m && m.creditedMin ? ` · ${fmtMin(m.creditedMin)} ✓` : m && (m.st === "full" || m.st === "extra") ? " · ✓" : ""}</span>
             </button>
@@ -4275,6 +4278,14 @@ export default function App() {
 
   useEffect(() => { const t = setTimeout(() => setSplash(false), 1250); return () => clearTimeout(t); }, []);
 
+  // Til almashganda hujjat yo'nalishi: arabcha — o'ngdan chapga (RTL), qolgani chapdan o'ngga.
+  // <html> ga qo'yiladi, shunda modal/sheet kabi barcha qatlamlar ham to'g'ri joylashadi.
+  useEffect(() => {
+    const el = document.documentElement;
+    el.dir = lang === "ar" ? "rtl" : "ltr";
+    el.lang = lang === "uzk" ? "uz" : lang;
+  }, [lang]);
+
   useEffect(() => {
     const t = setInterval(() => { const n = todayStr(); if (n !== today) setToday(n); }, 30000);
     return () => clearInterval(t);
@@ -4457,7 +4468,7 @@ export default function App() {
         --shadow:0 4px 18px rgba(0,0,0,0.30); --shadow-lg:0 14px 36px rgba(0,0,0,0.44);
       }
       html, body { background: var(--bg); color: var(--ink);
-        font-family: tr("Inter"), -apple-system, BlinkMacSystemFont, tr("Segoe UI"), Roboto, tr("Helvetica Neue"), sans-serif;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
         -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
       body { overflow-x: hidden; letter-spacing: -0.01em; }
       * { -webkit-tap-highlight-color: transparent; }
@@ -4479,6 +4490,17 @@ export default function App() {
       .om-press { transition: transform .13s cubic-bezier(.22,.61,.36,1), opacity .13s ease, box-shadow .2s ease; }
       .om-press:active { transform: scale(.96); }
       .om-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow); }
+
+      /* ===== RTL (arabcha) — butun ilova o'ngdan chapga ===== */
+      /* Tailwind text-left/right ko'zguga aylanadi. O'z dir'i bor elementlar (arabcha
+         hadis/oyat) tegilmaydi — ular allaqachon to'g'ri yo'nalishda. */
+      [dir="rtl"] .text-left:not([dir]) { text-align: right; }
+      [dir="rtl"] .text-right:not([dir]) { text-align: left; }
+      /* Yo'nalishga ishora qiluvchi ikonkalar (strelka, chevron) teskari aylanadi */
+      [dir="rtl"] .om-yon { transform: scaleX(-1); }
+      /* Sahifa almashinuvi animatsiyasi ham teskari yo'nalishda */
+      [dir="rtl"] .om-slide-l { animation-name: omSlideR; }
+      [dir="rtl"] .om-slide-r { animation-name: omSlideL; }
     `}</style>
   );
 
