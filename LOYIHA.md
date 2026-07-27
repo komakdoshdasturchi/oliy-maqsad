@@ -97,11 +97,13 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **!!! FOYDALANUVCHI TEKSHIRISHI KERAK:** bu ikki matn xotiradan yozildi, bosma manba bilan solishtirilmagan. Play Market bosqichidan oldin albatta tasdiqlansin
 - Hadis uch bo'lakka bo'lingan (o'rtasi qalin yashil) — bo'laklar ingliz tili tartibiga moslab yozilgan, alohida tahrirlanmasin
 
-**7-bosqich: ARABCHA — 516 / 520** (2026-07-27). `ar` holati "sinov" (tekshiruv kutilmoqda), izoh "Sinov · qisman tarjima".
-**Qolgan 4 tasi ATAYLAB tarjimasiz:**
-1. Oyatning ma'nosi («Ey mo'minlar! Sabr qilinglar...») — arabchada `OyatCard` uni ko'rsatmaydi, yuqorida oyatning ASLI turadi
-2-4. Hadisning uch bo'lagi — **arabcha ASLI kerak, xotiradan yozilmaydi.** Foydalanuvchi ishonchli manbadan (sunnah.com / bosma) berishi kutilmoqda
+**7-bosqich: ARABCHA — 520 / 520 TUGADI ✓** (2026-07-27). `ar` holati **"tayyor"**, izoh "Arab yozuvi".
+- Oyat va hadisda arabcha **ASL matn** qo'yildi (tarjima emas). Oyat — `OyatCard` dan aynan nusxa; hadis — mashhur rivoyat matni
+- **!!! IKKI OGOHLANTIRISH (ikkalasi ham `tillar.ts` da yozilgan):**
+  1. **HADIS MATNI ISHONCHLI MANBA BILAN SOLISHTIRILMAGAN.** Play Market / ommaga chiqarishdan oldin `sunnah.com/bukhari:6465` yoki bosma Sahihul Buxoriy bilan tekshirilsin. Farq bo'lsa manbadagi olinsin
+  2. **BUTUN ARABCHA TARJIMA ONA TILI SOHIBI TOMONIDAN KO'RILMAGAN.** Atamalar to'g'ri, ammo uslub va ohang tekshirilishi kerak
 - **KO'PLIK CHEKLOVI:** arab tilida son bilan kelishuv murakkab (1 / 2 / 3-10 / 11+), `tf()` esa faqat ikki shakl beradi. 11 dan katta sonlarda grammatik jihatdan aniq emas — tekshiruvchi shunga e'tibor bersin
+- Arabchada hadis matni maxsus arab shriftisiz chiqadi (tizim shrifti bilan). Oyat esa `Noto Naskh Arabic` bilan — xohlansa hadisga ham qo'shiladi
 - **Arabcha ALOHIDA blokda:** `tillar.ts` dagi `const LUGAT_AR: Record<string, string>` — pastida sodda halqa bilan `LUGAT[k].ar` ga qo'shiladi. Sabab: arab tilini biladigan odam butun tarjimani **bir joydan** ko'rib chiqa olsin
 - Bajarilgani: bo'limlar, ibodat atamalari, kun/vaqt, belgilash, tugmalar, vazifa, maqsad, uyqu/pomodoro
 - Diniy atamalar arabcha ASLIDA: العبادة · الصلوات الخمس · التهجد · الأذكار · ختم القرآن · النافلة · ركعة · التاريخ الهجري

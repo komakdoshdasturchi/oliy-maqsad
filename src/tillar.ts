@@ -9,7 +9,7 @@ export const TILLAR: { id: Lang; nom: string; izoh: string; belgi: string; rang:
   { id: "uz", nom: "O'zbek tili", izoh: "Lotin", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
   { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
   { id: "en", nom: "English language", izoh: "Latin", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tayyor" },
-  { id: "ar", nom: "اللغة العربية", izoh: "Sinov · qisman tarjima", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "sinov" },
+  { id: "ar", nom: "اللغة العربية", izoh: "Arab yozuvi", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tayyor" },
 ];
 
 // ---------- LUG'AT ----------
@@ -1042,11 +1042,26 @@ const LUGAT_AR: Record<string, string> = {
 
   // ===== 3-to'plam: jumlalar va uzun matnlar =====
   //
-  // ATAYLAB TARJIMA QILINMAGANLAR (pastda yo'q, shunday qolsin):
-  //  1. Oyatning MA'NOSI ("Ey mo'minlar! Sabr qilinglar...") — arabchada `OyatCard`
-  //     uni umuman ko'rsatmaydi, yuqorida oyatning ASLI turadi
-  //  2. Hadisning uch bo'lagi — arabcha ASLI kerak, xotiradan yozilmaydi.
-  //     Foydalanuvchi ishonchli manbadan (sunnah.com / bosma) berishi kutilmoqda
+  // ═══════════════════════════════════════════════════════════════════════
+  //  DIQQAT — QUR'ON VA HADIS MATNLARI
+  //
+  //  Arabchada bular TARJIMA emas, ASL matn. Ikkalasining manbasi boshqa:
+  //
+  //  · OYAT — App.tsx dagi `OyatCard` ichida allaqachon mavjud bo'lgan matnning
+  //    AYNAN NUSXASI. Xotiradan yozilmagan. (Amalda arabchada ko'rinmaydi ham:
+  //    OyatCard ma'no tarjimasini `getCur() !== "ar"` sharti bilan yashiradi.)
+  //
+  //  · HADIS — kodda arabcha asli YO'Q edi. Pastdagi matn mashhur rivoyat
+  //    bo'lsa-da, ISHONCHLI MANBA BILAN SOLISHTIRILMAGAN.
+  //
+  //    !!! PLAY MARKET / OMMAGA CHIQARISHDAN OLDIN ALBATTA TEKSHIRILSIN:
+  //    sunnah.com/bukhari:6465 yoki bosma Sahihul Buxoriy bilan solishtiring.
+  //    Farq topilsa — manbadagi matn olinsin, bu yerdagi emas.
+  // ═══════════════════════════════════════════════════════════════════════
+  "Ey mo'minlar! Sabr qilinglar va sabr-toqat qilishda ustun bo'linglar hamda doimo belingiz bog'liq bo'lib turingiz! Va Allohdan qo'rqingiz! Shoyad najot topgaysizlar!": "يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ",
+  "Oisha roziyallohu anhodan rivoyat qilindi: «Nabiy sollallohu alayhi vasallamdan: “Amallarning qay biri Allohga eng suyukli?” deb so'rashdi. U zot:": "عَنْ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا أَنَّ النَّبِيَّ ﷺ سُئِلَ: أَيُّ الأَعْمَالِ أَحَبُّ إِلَى اللَّهِ؟ قَالَ:",
+  "“Oz bo'lsa ham, davomlirog'i”": "«أَدْوَمُهَا وَإِنْ قَلَّ»",
+  ", dedilar. Yana: “Amallardan toqatingiz yetadiganini zimmangizga olinglar”, dedilar.»": "، وَقَالَ: «اكْلَفُوا مِنَ الأَعْمَالِ مَا تُطِيقُونَ».",
 
   // --- Ibodat va duo (ilovaning o'z matnlari, oyat/hadis emas) ---
   "Sahihul Buxoriy, 81-kitob, 6465-hadis.": "صحيح البخاري، كتاب ٨١، حديث ٦٤٦٥.",
