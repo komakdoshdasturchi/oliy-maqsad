@@ -53,15 +53,24 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **Kalit = o'zbekcha lotin matnning O'ZI**: `tr("Bugun")`. Tarjima topilmasa o'zbekchasi ko'rinadi — hech qachon buzilmaydi
 - Yangi kalit: `om3_lang` (default "uz"). Tillar: `uz` · `uzk` (kirill, avto, sinov) · `en` (**qo'lda** tarjima kerak) · `ar`
 - **Ruscha olib tashlandi**, o'rniga English
-- **Alohida `TilPage` sahifasi** (`page="til"`, Sozlamalar→"Ilova tili" qatoridan ochiladi, orqaga → Sozlamalar): ro'yxat ko'rinishi, har qatorda gradient plitka (O'/ў/Aa/ض) + nom + radio. en/ar hozircha xira va o'chiq
+- **Alohida `TilPage` sahifasi** (`page="til"`, Sozlamalar→"Ilova tili" qatoridan ochiladi, orqaga → Sozlamalar): ro'yxat ko'rinishi, har qatorda gradient plitka (O'/ў/Aa/ض) + nom + radio. `en` xira va o'chiq; `ar` tanlanadigan (holat "sinov")
 
 **2-bosqich: O'RASH TUGADI — 479 ta `tr()` + 6 ta `tf()`.** Ilovada o'zbekcha matn qolmadi (tafsiloti TARIX.md).
 - **KIRILL TAYYOR** — avtomatik o'girish ishlaydi, lug'atga bir dona yozuv kerak bo'lmadi
 - Tarjima QILINMAYDIGANLAR (ataylab): foydalanuvchi ma'lumoti (vazifa nomi, tur, iqtibos) · PDF hisobot matni (ASCII shrift cheklovi) · lotin qisqartmalar PDF/OK (toKiril himoyalaydi) · til nomlari
 - Modul massivlari (OYLAR/KUNLAR/ZIKRLAR/NAMOZLAR/NEWS_ITEMS/HELP_ITEMS) xom holicha — `tr()` ular **ishlatilgan joyda** qo'llanadi
 
+**3-bosqich: RTL POYDEVORI TAYYOR** (2026-07-27, commit `3a439b1`). Arabcha endi **tanlanadi** (holat "sinov") — ilova o'ngdan chapga aylanadi, matn hozircha o'zbekcha.
+- `useEffect` → `document.documentElement.dir` = `ar` bo'lsa "rtl", aks holda "ltr" (+ `.lang`). `<html>` ga qo'yiladi, shuning uchun modal/sheet ham to'g'ri
+- CSS (styleBlock oxirida): `[dir="rtl"] .text-left:not([dir])` → o'ngga, `.text-right:not([dir])` → chapga. **`:not([dir])` MUHIM** — arabcha hadis/oyat o'z `dir="rtl"` iga ega, ular tegilmasligi kerak
+- `.om-yon` sinfi: `Icon` avtomatik qo'yadi (`YONALISHLI` to'plami: arrowLeft/Right, chevronLeft/Right) → RTL da `scaleX(-1)`
+- `om-slide-l/r` animatsiyalari RTL da almashadi
+- Yo'nalishli uslublar mantiqiyga o'tkazildi: `borderLeft*` → `borderInlineStart*` (9 joy) · `ml-auto` → `ms-auto` · `marginLeft/Right` → `marginInlineStart/End`
+- **QOIDA:** bundan keyin `ml-/mr-/pl-/pr-`, `text-left/right`, `borderLeft/Right` ishlatilmasin — mantiqiy variantlari (`ms-/me-/ps-/pe-`, `borderInlineStart/End`) qo'llanilsin
+- Hali qilinmagan: arabcha tarjima (LUGAT), arab raqamlari/sana formati, PDF da arabcha (ASCII cheklovi — ehtimol umuman imkonsiz)
+
 **KEYINGI QADAM: ENGLISH.** `tillar.ts` dagi `LUGAT` ga ~479 juftlik yoziladi (`"Bugun": { en: "Today" }`). Kirilldan farqli — avtomatik emas, QO'LDA. Bo'lim-bo'lim borish shart (limitning ~30-40%). App.tsx ga umuman tegilmaydi.
-- Arabcha **oxirida**: u faqat tarjima emas, butun ilova o'ngdan chapga (RTL) ko'zguga aylanadi — alohida katta ish
+- Arabcha tarjimasi: diniy atamalar (namoz/zikr/xatm/tazkiya) uchun **arab tilini biladigan odam ko'rib chiqishi** kerak — mashina tarjimasi yetarli emas
 
 ## TEXNIK XOTIRA
 - **Ma'lumot kalitlari (27 ta):** om3_plan, om3_tasks, om3_logs, om3_extras, om3_counts, om3_countlog, om3_weights, om3_notes, om3_sleepcfg, om3_sleeplog, om3_pomocfg, om3_pomolog, om3_settings, om3_ibadat, om3_khatm, om3_gender, om3_daymode, om3_ui, om3_quotes, om3_news, om3_hints, om3_lang, om3_folders, om3_ver + eski (om3_books, om3_cats, om3_groups)
@@ -72,6 +81,7 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 
 ## MUHIM ESLATMALAR
 - **Ma'lumot xavfsizligi:** har yangilanish eski ma'lumotlarni saqlashi SHART. Katta o'zgarishdan oldin zaxira oldirish
+- **SABOQ (2026-07-27):** avtomatik `tr()` o'rash skripti `<style>` bloki ichidagi CSS ga ham tegib ketgan edi — `font-family: tr("Inter")` chiqib, butun shrift qoidasi buzilgan (v9 dan beri, `3a439b1` da tuzatildi). Shablon satri (backtick) ichida `tr()` **bajarilmaydi**, matn holicha qoladi. Skript ishlatilsa, `<style>` va boshqa backtick bloklari chetlab o'tilsin
 - AI Studio'da kod FAQAT qo'lda joylanadi (Gemini chatiga ishonilmaydi)
 - Android Studio yangilash takliflari doim RAD etiladi
 - package.json da @google/genai qoldiq turibdi — zarari yo'q
