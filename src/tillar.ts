@@ -654,6 +654,52 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- Birinchi kirishdagi til so'rovi ---
   "Qaysi tilni tanlaysiz?": { en: "Which language do you prefer?" },
   "Til o'zgartirilganda ba'zi ma'lumotlar qayta yuklanishi mumkin.": { en: "Some data may reload when the language changes." },
+
+  // ===== 6-BOSQICH: MODUL MASSIVLARI =====
+  // !!! DIQQAT: bular massiv ichida turadi (ZIKRLAR / NAMOZLAR / HELP_ITEMS /
+  // NEWS_ITEMS), `tr()` ularga ISHLATILGAN JOYDA qo'llanadi. Shu sababli
+  // `grep 'tr("...")'` tekshiruvi ularni TOPMAYDI — massiv o'zgartirilsa
+  // tarjimasi ham QO'LDA qo'shilsin, aks holda sezilmay o'zbekcha qolib ketadi.
+
+  // --- Zikrlar ---
+  "Tonggi zikrlar": { en: "Morning dhikr" },
+  "Kechki zikrlar": { en: "Evening dhikr" },
+  "Uxlashdan oldingi zikrlar": { en: "Dhikr before sleep" },
+
+  // --- Namoz nomlari (arabcha asliga qaytariladi) ---
+  "Bomdod": { en: "Fajr" }, "Peshin": { en: "Dhuhr" }, "Asr": { en: "Asr" },
+  "Shom": { en: "Maghrib" }, "Xufton": { en: "Isha" }, "Vitr": { en: "Witr" },
+  "2 sunnat": { en: "2 sunnah" }, "4 sunnat": { en: "4 sunnah" },
+  "2 farz": { en: "2 fard" }, "3 farz": { en: "3 fard" }, "4 farz": { en: "4 fard" },
+  "3 vitr": { en: "3 witr" },
+
+  // --- Yordam bo'limi (sarlavhalar; "Bugun/Ibodatlar/Pomodoro/Taqvim/
+  //     Statistika/Oliy maqsad/Qo'shimcha ish" yuqorida allaqachon bor) ---
+  "Qo'shish (+)": { en: "Add (+)" },
+  "Vazifa vaqti": { en: "Task time" },
+  "Zaxira": { en: "Backup" },
+  "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim.": { en: "The heart of the day. Today's result at the top, then your tasks. Tap a box and the marking window opens: done, excused, or not done at all." },
+  "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz.": { en: "The green button at the bottom. Use it to add a daily task, an ultimate goal task or a yearly goal, and to open the full task list." },
+  "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin.": { en: "Each task gets a time range — for example 08:00–09:00. A reminder arrives on your phone at that time, even if the app is closed. You can also choose the days." },
+  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
+  "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi.": { en: "A separate section that does not affect the daily percentage. Dhikr, the five daily prayers, nafl prayers and the Qur'an khatm are marked here." },
+  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi.": { en: "There are two modes. In Focus the screen dims and only the timer remains. In Open mode you get a notification when the time is up, even if you leave the app." },
+  "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi.": { en: "Each day is coloured by its result: a fully completed day is green, more than half is amber, below that is red. The rest day has no colour — it is not counted." },
+  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": { en: "Daily, weekly and monthly views. Next to each figure is the change from the previous period. Tap a point on the chart to see which day it is." },
+  "Maqsad matningiz, natija halqasi va yillik maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, 6 oy va yil bo'yicha.": { en: "Your goal text, the result ring and your yearly goals. Tap any goal to see its progress — by week, month, 6 months and year." },
+  "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": { en: "Settings → Data. When you download the PDF, all your data is stored in that file. On a new phone you restore it with «Install from PDF»." },
+
+  // --- Yangiliklar oynasi (v10) ---
+  "10-yangilanish (v10)": { en: "Update 10 (v10)" },
+  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.": { en: "The app now speaks four languages: Uzbek Latin, Uzbek Cyrillic, English and Arabic. Settings → App language." },
+  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.": { en: "The language is asked on first launch. You may close it without choosing — you can change it later in Settings." },
+  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.": { en: "Choosing Arabic flips the whole app right-to-left, and the numerals become Arabic too." },
+  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.": { en: "Month, weekday and Hijri month names also appear in the chosen language." },
+  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.": { en: "The app name changes with the language — including under the icon on your phone." },
+  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.": { en: "The verse card in the Today section has a new look. With Arabic selected, only the verse itself remains." },
+  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": { en: "The language list is more compact — it takes up less space." },
+  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": { en: "Fixed a font setting bug (the app was losing its own typeface)." },
+  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": { en: "Some sentences stayed in Latin script in Cyrillic mode — all fixed." },
 };
 
 // ---------- ARABCHA ----------
@@ -1283,6 +1329,45 @@ const LUGAT_AR: Record<string, string> = {
   // --- Birinchi kirishdagi til so'rovi ---
   "Qaysi tilni tanlaysiz?": "بأي لغة تفضّل؟",
   "Til o'zgartirilganda ba'zi ma'lumotlar qayta yuklanishi mumkin.": "قد تُعاد بعض البيانات عند تغيير اللغة.",
+
+  // --- Zikrlar ---
+  "Tonggi zikrlar": "أذكار الصباح",
+  "Kechki zikrlar": "أذكار المساء",
+  "Uxlashdan oldingi zikrlar": "أذكار النوم",
+
+  // --- Namoz nomlari (arabcha asli) ---
+  "Bomdod": "الفجر", "Peshin": "الظهر", "Asr": "العصر",
+  "Shom": "المغرب", "Xufton": "العشاء", "Vitr": "الوتر",
+  "2 sunnat": "٢ سنة", "4 sunnat": "٤ سنة",
+  "2 farz": "٢ فرض", "3 farz": "٣ فرض", "4 farz": "٤ فرض",
+  "3 vitr": "٣ وتر",
+
+  // --- Yordam bo'limi ---
+  "Qo'shish (+)": "الإضافة (+)",
+  "Vazifa vaqti": "وقت المهمة",
+  "Zaxira": "النسخة الاحتياطية",
+  "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim.": "قلب اليوم. في الأعلى نتيجة اليوم، ثم مهامك. اضغط المربّع فتُفتح نافذة التحديد: فعلتُ، لم أفعل بعذر، أو لم أفعل مطلقًا.",
+  "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz.": "الزر الأخضر في الأسفل. منه تضيف مهمة يومية أو مهمة للمقصد الأعلى أو هدفًا سنويًا، وتفتح قائمة كل المهام.",
+  "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin.": "لكل مهمة فترة زمنية — مثلًا ٠٨:٠٠–٠٩:٠٠. وعند حلول ذلك الوقت يصلك تذكير على الهاتف، ولو كان التطبيق مغلقًا. ويمكنك اختيار الأيام أيضًا.",
+  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا ما تعمله زيادة على الخطة. يُضاف إلى المهمة المعنية بوصفه «زيادة» ويرفع النسبة فوق ١٠٠٪ في الإحصائيات.",
+  "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi.": "قسم مستقل لا يؤثر على النسبة اليومية. هنا تُسجَّل الأذكار والصلوات الخمس والنوافل وختم القرآن.",
+  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi.": "فيه وضعان. في وضع التركيز تُعتَّم الشاشة ولا يبقى إلا المؤقّت. وفي الوضع المفتوح يصلك إشعار عند انتهاء الوقت ولو خرجت من التطبيق.",
+  "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi.": "لون كل يوم بحسب نتيجته: اليوم المنجز كاملًا أخضر، وما فوق النصف أصفر، وما دون ذلك أحمر. ويوم الراحة بلا لون — فهو لا يدخل في الحساب.",
+  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "عرض يومي وأسبوعي وشهري. وبجانب كل رقم فرقه عن الفترة السابقة. واضغط نقطة في الرسم البياني ليظهر أي يوم هي.",
+  "Maqsad matningiz, natija halqasi va yillik maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, 6 oy va yil bo'yicha.": "نص هدفك، وحلقة النتيجة، وأهدافك السنوية. واضغط أي هدف لترى تقدّمه — بالأسبوع والشهر وستة أشهر والسنة.",
+  "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": "الإعدادات ← البيانات. وعند تنزيل ملف PDF تُحفظ فيه كل بياناتك. وفي هاتف جديد تستعيدها بـ«التثبيت من PDF».",
+
+  // --- Yangiliklar oynasi (v10) ---
+  "10-yangilanish (v10)": "التحديث العاشر (v10)",
+  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.": "صار التطبيق بأربع لغات: الأوزبكية اللاتينية، والأوزبكية السيريلية، والإنجليزية، والعربية. الإعدادات ← لغة التطبيق.",
+  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.": "تُسأل عن اللغة عند أول تشغيل. ويمكنك إغلاقها دون اختيار — ثم تغيّرها لاحقًا من الإعدادات.",
+  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.": "عند اختيار العربية ينقلب التطبيق كله من اليمين إلى اليسار، وتظهر الأرقام عربية أيضًا.",
+  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.": "وتظهر أسماء الأشهر والأيام والأشهر الهجرية باللغة المختارة أيضًا.",
+  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.": "ويتغيّر اسم التطبيق مع اللغة — حتى تحت الأيقونة في هاتفك.",
+  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.": "بطاقة الآية في قسم اليوم بحُلّة جديدة. وعند اختيار العربية لا يبقى إلا نص الآية.",
+  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": "صارت قائمة اللغات أكثر إيجازًا — وتشغل مساحة أقل.",
+  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": "أُصلح خلل في إعداد الخط (كان التطبيق يفقد خطه الخاص).",
+  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": "كانت بعض الجمل تبقى بالحروف اللاتينية في الوضع السيريلي — أُصلحت كلها.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)

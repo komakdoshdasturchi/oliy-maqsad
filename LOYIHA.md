@@ -113,6 +113,8 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - PDF hisobotda arabcha ishlamaydi (ASCII shrift cheklovi)
 
 **Tekshirish usuli (har bosqichdan keyin):** `LUGAT` kalitlarini App.tsx dagi `tr("...")`/`tf("...")` matnlari bilan `comm` orqali solishtirish — o'lik kalit ham, tarjimasiz matn ham qolmasin
+- **!!! BU TEKSHIRUVNING KO'R NUQTASI:** modul massivlari (`ZIKRLAR`, `NAMOZLAR`, `HELP_ITEMS`, `NEWS_ITEMS`, `OYLAR`, `KUNLAR`, `HIJRI_OYLAR`) `tr()` ga **ishlatilgan joyda** beriladi, shuning uchun grep ularni **TOPMAYDI**. Massiv o'zgartirilsa tarjimasi ham QO'LDA qo'shilsin. 2026-07-27 da aynan shu sababdan 38 ta matn tarjimasiz qolib ketgan edi
+- **NEWS_ITEMS yangilanganda** yangi bandlar ham `LUGAT` va `LUGAT_AR` ga qo'shilsin
 
 **8-bosqich: TIL SO'ROVI, SANA NOMLARI, ARAB RAQAMLARI, OYAT KARTASI** (2026-07-27). Lug'at **552 / 552** to'rt tilda ham.
 - **`om3_langask`** (yangi kalit, 28-chi): "" = hali so'ralmagan, "1" = so'ralgan. Bir marta ishlaydi

@@ -927,19 +927,19 @@ function OyatCard() {
 }
 
 // ================== ILOVA YANGILIKLARI (bir martalik oyna) ==================
-const NEWS_VER = "v9";
-const NEWS_LABEL = "9-yangilanish (v9)";
-const NEWS_DATE = "2026-07-26";
+const NEWS_VER = "v10";
+const NEWS_LABEL = "10-yangilanish (v10)";
+const NEWS_DATE = "2026-07-27";
 const NEWS_ITEMS = [
-  "Statistika butunlay yangilandi: Kunlik, Haftalik va Oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi.",
-  "Ortiqcha qilingan ish endi foizga qo'shiladi — natija 100% dan yuqoriga chiqadi.",
-  "Oliy maqsad bo'limi soddalashdi: maqsad matni, natija halqasi va maqsadlar ro'yxati. Har maqsadni bosib jarayonini ko'rasiz.",
-  "Vaqt, sana va kun tanlash butunlay yangi ko'rinishda. Telefonning oddiy oynalari qolmadi.",
-  "Vazifaga qaysi kunlari qilishni belgilaysiz — eslatma faqat o'sha kunlari keladi.",
-  "Bildirishnomalarda ilova belgisi ko'rinadi.",
-  "Taqvimda kun rangi aniq qoida bilan: to'liq bajarilgan yashil, yarmidan ko'pi sariq, past bo'lsa qizil.",
-  "Uyqu kundaligi qo'shildi — qaysi kuni necha soat uxlaganingiz ro'yxatda.",
-  "Sozlamalarda «Qanday ishlaydi?» bo'limi paydo bo'ldi.",
+  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.",
+  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.",
+  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.",
+  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.",
+  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.",
+  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.",
+  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.",
+  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).",
+  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.",
 ];
 
 function NewsModal({ hijriOffset, logoColor, onClose }: { hijriOffset: number; logoColor: string; onClose: () => void }) {
