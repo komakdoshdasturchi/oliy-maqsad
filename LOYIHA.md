@@ -31,7 +31,8 @@ Batafsil tarix (barcha bajarilgan ishlar, tuzatilgan xatolar, qarorlar) — **TA
 - `.gitignore` chetlatadi: `node_modules`, `build`, `dist`, `.env*`, `*.keystore/*.jks`, `oliy-maqsad-zaxira-*.pdf`, `*.zip/*.rar`, `*.apk/*.aab`, `android/.gradle`, `android/local.properties`
 - **Har yangilanishdan keyin:** `git add -A && git commit -m "vN: ..." && git push`
 - **Ortga qaytish:** `git log --oneline` bilan versiyani top → `git checkout <hash> -- src/App.tsx`
-- Kirish Git Credential Manager orqali saqlangan (parol so'ralmaydi). Agar push qotib qolsa — foydalanuvchi terminalda o'zi bajarishi kerak (ruxsat oynasi faqat unda ochiladi)
+- Kirish Windows Credential Manager'da saqlangan (`komakdoshdasturchi`), parol so'ralmaydi
+- **MUHIM:** push/fetch dan oldin doim `GIT_TERMINAL_PROMPT=0` qo'y — aks holda git terminal so'rovini kutib **cheksiz qotib qoladi**. To'g'ri shakl: `GIT_TERMINAL_PROMPT=0 git push`
 
 ## HOZIRGI HOLAT (v9)
 Katta yangilanish tugadi, **build ✓ va cap sync ✓**, lekin **TELEFONDA SINALMAGAN — APK qayta qurish kerak**.
