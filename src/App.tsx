@@ -615,7 +615,7 @@ function TimeRangeSheet({ from, to, single, title, wrap, onSave, onClose }: { fr
         </div>
         {!single && (
           <p className="text-center text-[12px] font-semibold" style={{ color: dur > 0 ? "var(--green)" : "var(--red)" }}>
-            {dur > 0 ? `Davomiyligi: ${fmtMin(dur)}` : tr("Tugash vaqti boshlanishdan keyin bo'lsin")}
+            {dur > 0 ? tf("Davomiyligi: {v}", { v: fmtMin(dur) }) : tr("Tugash vaqti boshlanishdan keyin bo'lsin")}
           </p>
         )}
         <button onClick={() => { if (single || dur > 0) { buzz(); onSave(f, t); } }} className="om-press w-full rounded-2xl py-3.5 text-sm font-bold text-white"
@@ -706,7 +706,7 @@ function Hint({ id, text, hints, done }: { id: string; text: string; hints: Reco
 function PauseSheet({ name, onPick, onClose }: { name: string; onPick: (days: number) => void; onClose: () => void }) {
   return (
     <Sheet onClose={onClose} title={<span className="flex items-center gap-2"><Icon n="pause" size={15} style={{ color: "var(--gold)" }} /> {tr("Vaqtincha to'xtatish")}</span>}>
-      <p className="mb-3 text-[12.5px] leading-relaxed" style={lblS}>«{name}» necha kunga to'xtatilsin? To'xtatilgan kunlar statistikaga kirmaydi.</p>
+      <p className="mb-3 text-[12.5px] leading-relaxed" style={lblS}>{tf("«{nom}» necha kunga to'xtatilsin? To'xtatilgan kunlar statistikaga kirmaydi.", { nom: name })}</p>
       <div className="grid grid-cols-4 gap-2">
         {[1, 2, 3, 4, 5, 6, 7].map(n => (
           <button key={n} onClick={() => { buzz(); onPick(n); }} className="om-press rounded-xl border py-3 text-sm font-bold" style={{ ...cardS, color: "var(--ink)" }}>{n} kun</button>
@@ -1070,7 +1070,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
         </>)}
 
         {step === 5 && (<>
-          <IconCircle n="flag" /><Title>{tr("Yaxshi!")}</Title><Sub>{years} yillik maqsadlaringiz uchun rejangizni tuzishga tayyormisiz?</Sub>
+          <IconCircle n="flag" /><Title>{tr("Yaxshi!")}</Title><Sub>{tf("{n} yillik maqsadlaringiz uchun rejangizni tuzishga tayyormisiz?", { n: years })}</Sub>
           <div className="mt-6 space-y-2">
             <RadioRow on={ready === true} label={tr("Ha, tayyorman")} sub={tr("Rejani tuzishni boshlaymiz.")} onClick={() => setReady(true)} />
             <RadioRow on={ready === false} label={tr("Yo'q, hozir emas")} sub={tr("Keyinroq davom ettiraman.")} onClick={() => setReady(false)} />
@@ -1353,7 +1353,7 @@ function IbadatPage(p: {
             </button>
           ) : today < khatm.start ? (
             <div className="flex items-center gap-2 rounded-2xl border px-4 py-3 text-sm" style={cardS}>
-              <Icon n="bookOpen" size={17} style={{ color: "var(--green)" }} /><span style={{ color: "var(--ink)" }}>Xatm {fmtUz(khatm.start)} dan boshlanadi</span>
+              <Icon n="bookOpen" size={17} style={{ color: "var(--green)" }} /><span style={{ color: "var(--ink)" }}>{tf("Xatm {sana} dan boshlanadi", { sana: fmtUz(khatm.start) })}</span>
               <button onClick={() => setShowKhatm(true)} className="ms-auto text-xs" style={lblS}>{tr("tahrirlash")}</button>
             </div>
           ) : kActive ? (
@@ -1364,7 +1364,7 @@ function IbadatPage(p: {
               <span className="flex-1 text-left" style={{ color: d.khatm ? "var(--green)" : "var(--ink)", fontWeight: d.khatm ? 700 : 500 }}>
                 Bugungi ulush: {khatm.daily} {khatm.mode === "vaqt" ? "daqiqa" : "pora"}
               </span>
-              <span className="text-[11px]" style={lblS}>{kDone}/{kTotal} kun</span>
+              <span className="text-[11px]" style={lblS}>{tf("{a}/{b} kun", { a: kDone, b: kTotal })}</span>
               <Icon n={d.khatm ? "checkCircle" : "circle"} size={19} style={{ color: d.khatm ? "var(--green)" : "var(--muted)", opacity: d.khatm ? 1 : 0.4 }} />
             </button>
           ) : (
@@ -1394,7 +1394,7 @@ function MarkSheet({ t, m, slotMin, onSave, onClose }: {
 
   return (
     <Sheet onClose={onClose} title={<span>{t.name}{t.minutes > 0 ? <span className="ml-2 text-xs font-normal" style={lblS}>{fmtMin(t.minutes)}</span> : null}</span>}>
-      {m && m.creditedMin ? <p className="mb-2 flex items-center gap-1.5 text-xs" style={{ color: "var(--green)" }}><Icon n="timer" size={13} /> Pomodoro orqali {fmtMin(m.creditedMin)} hisoblangan.</p> : null}
+      {m && m.creditedMin ? <p className="mb-2 flex items-center gap-1.5 text-xs" style={{ color: "var(--green)" }}><Icon n="timer" size={13} /> {tf("Pomodoro orqali {v} hisoblangan.", { v: fmtMin(m.creditedMin) })}</p> : null}
       {mode === "main" && (
         <div className="space-y-2">
           <button onClick={() => {
@@ -1435,7 +1435,7 @@ function SchedSheet({ t, others, onSave, onClose }: {
     if (tt <= f) { omAlert(tr("Tugash vaqti boshlanishdan keyin bo'lishi kerak.")); return; }
     if (t.minutes > 0 && tt - f < t.minutes) { omAlert(tf("Vazifaning kunlik vaqti {v} — undan KAM vaqt ajratib bo'lmaydi.", { v: fmtMin(t.minutes) })); return; }
     const clash = others.find(o => o.id !== t.id && o.schedFrom && o.schedTo && f < hmToMin(o.schedTo) && hmToMin(o.schedFrom) < tt);
-    if (clash) { omAlert(`Bu vaqt «${clash.name}» (${clash.schedFrom}–${clash.schedTo}) bilan to'qnashadi.`); return; }
+    if (clash) { omAlert(tf("Bu vaqt «{nom}» ({a}–{b}) bilan to'qnashadi.", { nom: clash.name, a: clash.schedFrom || "", b: clash.schedTo || "" })); return; }
     onSave(from, to);
   };
   return (
@@ -1446,7 +1446,7 @@ function SchedSheet({ t, others, onSave, onClose }: {
         <input type="time" value={to} onChange={e => setTo(e.target.value)} className={inpC} style={inpS} />
         <span style={lblS}>{tr("gacha")}</span>
       </div>
-      {t.minutes > 0 && <p className="mb-2 text-[11px]" style={lblS}>Kunlik vaqti: {fmtMin(t.minutes)}. Ortiqcha ajratilgan vaqt belgilashda “ziyoda”ga o'tadi.</p>}
+      {t.minutes > 0 && <p className="mb-2 text-[11px]" style={lblS}>{tf("Kunlik vaqti: {v}. Ortiqcha ajratilgan vaqt belgilashda “ziyoda”ga o'tadi.", { v: fmtMin(t.minutes) })}</p>}
       <button onClick={save} className="w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
       {t.schedFrom && (
         <button onClick={() => { onSave("", ""); }} className="mt-2 w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--red)" }}>{tr("Vaqtni olib tashlash")}</button>
@@ -1664,7 +1664,7 @@ function BugunView(p: {
     return (
       <Card style={{ borderInlineStartWidth: 3, borderInlineStartColor: "var(--blue)" }}>
         <div className="text-sm font-medium" style={{ color: "var(--ink)" }}>
-          <Icon n="moon" size={15} style={{ marginInlineEnd: 5, verticalAlign: "-2px" }} />Rejaga muvofiq uyqu{locked ? (m!.st === "full" ? " · ✓ belgilandi" : " · ✗ belgilandi") : ""}
+          <Icon n="moon" size={15} style={{ marginInlineEnd: 5, verticalAlign: "-2px" }} />{tr("Rejaga muvofiq uyqu")}{locked ? (m!.st === "full" ? ` · ${tr("✓ belgilandi")}` : ` · ${tr("✗ belgilandi")}`) : ""}
         </div>
         <div className="text-[11px]" style={{ color: "var(--muted)" }}>
           Reja: {p.sleepCfg.kind === "range" ? `${p.sleepCfg.from} — ${p.sleepCfg.to} (~${planH} ${tr("soat")})` : `${planH} ${tr("soat")}`}
@@ -1740,7 +1740,7 @@ function BugunView(p: {
         <div className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.72)" }}>{tr("Keyingi vazifa")}</div>
         <div className="truncate text-[15px] font-bold text-white">{nextTask.name}</div>
         <div className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.72)" }}>
-          {sched && nextTask.schedFrom ? `${nextTask.schedFrom}–${nextTask.schedTo}` : nextTask.minutes > 0 ? fmtMin(nextTask.minutes) : "vaqtsiz"}
+          {sched && nextTask.schedFrom ? `${nextTask.schedFrom}–${nextTask.schedTo}` : nextTask.minutes > 0 ? fmtMin(nextTask.minutes) : tr("vaqtsiz")}
         </div>
       </div>
       <button onClick={e => { e.stopPropagation(); p.startPomo(); }}
@@ -1806,7 +1806,7 @@ function BugunView(p: {
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-medium" style={{ color: "var(--ink)" }}>{t.scope === "oliy" ? "⭐ " : ""}{t.completedAt ? "✅ " : ""}{t.name}</div>
                   <div className="text-[11px]" style={lblS}>
-                    Jami: <b style={{ color: "var(--ink)" }}>{total}/{target}</b>{tn > 0 ? ` · bugun: +${tn}` : ""}{t.endDate ? ` · ${fmtUz(t.endDate)} gacha` : ""}
+                    {tr("Jami:")} <b style={{ color: "var(--ink)" }}>{total}/{target}</b>{tn > 0 ? ` · ${tf("bugun: +{n}", { n: tn })}` : ""}{t.endDate ? ` · ${tf("{sana} gacha", { sana: fmtUz(t.endDate) })}` : ""}
                   </div>
                 </div>
                 {!t.completedAt && !ended && (
@@ -1820,7 +1820,7 @@ function BugunView(p: {
                 <div className="h-full rounded-full" style={{ width: `${target ? Math.min((total / target) * 100, 100) : 0}%`, background: t.scope === "oliy" ? "var(--gold)" : "var(--blue)" }} />
               </div>
               {behind && <p className="mt-1 text-[11px]" style={{ color: "var(--gold)" }}>{tr("Rejadan biroz ortdasiz — bugun bir oz ko'proq harakat qiling.")}</p>}
-              {ended && !t.completedAt && <p className="mt-1 text-[11px]" style={{ color: "var(--red)" }}>Muddat tugadi: {total}/{target}</p>}
+              {ended && !t.completedAt && <p className="mt-1 text-[11px]" style={{ color: "var(--red)" }}>{tf("Muddat tugadi: {a}/{b}", { a: total, b: target })}</p>}
             </div>
           );
         })}
@@ -1858,7 +1858,7 @@ function BugunView(p: {
               {n === 0 ? tr("Haftalik hisobot") : `Haftangiz ${avg}%`}
             </span>
             <span className="block text-[11px]" style={lblS}>
-              {n === 0 ? tr("Ma'lumot hali yetarli emas") : `${doneT} bajarildi${exc ? ` · ${exc} sababli` : ""} — to'liq hisobotni ko'rish`}
+              {n === 0 ? tr("Ma'lumot hali yetarli emas") : `${tf("{n} bajarildi", { n: doneT })}${exc ? ` · ${tf("{n} sababli", { n: exc })}` : ""} — ${tr("to'liq hisobotni ko'rish")}`}
             </span>
           </span>
           <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
@@ -1885,7 +1885,7 @@ function BugunView(p: {
           {st.counted === 0 ? (
             <p className="text-sm" style={{ color: "var(--muted)" }}>{tr("Bugunga vazifa yo'q. Vazifalar ro'yxati orqali qo'shing.")}</p>
           ) : st.done >= st.counted - st.excused ? (
-            <p className="font-bold" style={{ color: "var(--green)" }}>Barakalla, {plan.name}! Bugungi barcha ishlar bajarildi</p>
+            <p className="font-bold" style={{ color: "var(--green)" }}>{tf("Barakalla, {nom}! Bugungi barcha ishlar bajarildi", { nom: plan.name })}</p>
           ) : (
             <p className="text-sm" style={{ color: "var(--ink)" }}><b>{pending.length + (sleepTask && !(lg[sleepTask.id] && lg[sleepTask.id].st) ? 1 : 0)}</b> {tr("ta ish qoldi")}{st.excused ? `, ${st.excused} ${tr("ta sababli")}` : ""}.</p>
           )}
@@ -1916,19 +1916,19 @@ function BugunView(p: {
 
       {soon.map(t => (
         <Card key={t.id} style={{ borderColor: "var(--gold)" }}>
-          <p className="text-sm" style={{ color: "var(--ink)" }}><b>{diffDays(today, t.startDate)} kundan keyin</b> «{t.name}» vazifasini boshlaysiz.</p>
+          <p className="text-sm" style={{ color: "var(--ink)" }}><b>{tf("{n} kundan keyin", { n: diffDays(today, t.startDate) })}</b> {tf("«{nom}» vazifasini boshlaysiz.", { nom: t.name })}</p>
         </Card>
       ))}
 
       {overdue.map(t => (
         <Card key={t.id}>
-          <p className="text-sm" style={{ color: "var(--ink)" }}>«{t.name}» - {diffDays(t.startDate, today) + 1}-kun (reja: {t.plannedDays} kun). Shoshilmang, lekin rejani ham unutmang.</p>
+          <p className="text-sm" style={{ color: "var(--ink)" }}>{tf("«{nom}» - {k}-kun (reja: {r} kun). Shoshilmang, lekin rejani ham unutmang.", { nom: t.name, k: diffDays(t.startDate, today) + 1, r: t.plannedDays || 0 })}</p>
         </Card>
       ))}
 
       {alerts.map(t => (
         <Card key={t.id} style={{ borderColor: "var(--gold)" }}>
-          <p className="text-sm" style={{ color: "var(--ink)" }}>«{t.name}» so'nggi 30 kunda {excused30(t.id, logs, today)} marta sababli qoldirildi. Balki og'irlik qilayotgandir? Yengillashtirishingiz mumkin.</p>
+          <p className="text-sm" style={{ color: "var(--ink)" }}>{tf("«{nom}» so'nggi 30 kunda {n} marta sababli qoldirildi. Balki og'irlik qilayotgandir? Yengillashtirishingiz mumkin.", { nom: t.name, n: excused30(t.id, logs, today) })}</p>
         </Card>
       ))}
 
@@ -2277,7 +2277,7 @@ function DayDetail(p: { date: string; onClose: () => void; plan: Plan; tasks: Ta
       )}
       {manual.map(m => <p key={m.id} className="mt-2 text-sm" style={{ color: "var(--ink)" }}>{m.name}: {(p.counts[m.id] || {})[p.date]} {tr("ta")}</p>)}
       {w && <p className="mt-2 text-sm" style={{ color: "var(--ink)" }}>⚖️ Vazn: {w.kg} kg</p>}
-      {p.sleepLog[p.date] !== undefined && <p className="mt-2 text-sm" style={{ color: "var(--ink)" }}>Uyqu: {p.sleepLog[p.date]} soat</p>}
+      {p.sleepLog[p.date] !== undefined && <p className="mt-2 text-sm" style={{ color: "var(--ink)" }}>{tf("Uyqu: {n} soat", { n: p.sleepLog[p.date] })}</p>}
       {p.notes[p.date] && <p className="mt-2 rounded-lg border p-2 text-sm italic" style={{ ...cardS, color: "var(--ink)" }}>✍️ {p.notes[p.date]}</p>}
       <p className="mt-3 text-[11px]" style={lblS}>{tr("O'tgan kunlar o'zgartirilmaydi.")}</p>
     </Modal>
@@ -2448,7 +2448,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
         </div>
 
         <p className="px-1 text-center text-[11px]" style={lblS}>
-          Oxirgi 7 kunda <b style={{ color: "var(--ink)" }}>{full7} kun</b> {tr("to'liq bajarilgan.")}
+          {tr("Oxirgi 7 kunda")} <b style={{ color: "var(--ink)" }}>{tf("{n} kun", { n: full7 })}</b> {tr("to'liq bajarilgan.")}
         </p>
       </>
     );
@@ -2543,8 +2543,8 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
           </div>
           {sAvg === null ? <p className="text-[12px]" style={lblS}>{tr("Bu hafta uyqu yozilmagan.")}</p> : (
             <p className="text-[13px]" style={{ color: "var(--ink)" }}>
-              O'rtacha <b>{sAvg} soat</b>
-              {p.sleepCfg ? <span style={lblS}> · reja {p.sleepCfg.hours} soat</span> : null}
+              {tr("O'rtacha")} <b>{tf("{n} soat", { n: sAvg })}</b>
+              {p.sleepCfg ? <span style={lblS}> · {tf("reja {n} soat", { n: p.sleepCfg.hours })}</span> : null}
             </p>
           )}
         </Card>
@@ -2722,8 +2722,8 @@ function UyquKundaligi({ today, plan, sleepLog, sleepCfg, onClose }: { today: st
                   <span className="block text-[13px] font-medium" style={{ color: "var(--ink)" }}>{fmtUz(d)}</span>
                   <span className="block text-[10px]" style={lblS}>{tr(KUNLAR[parseISO(d).getDay()])}</span>
                 </span>
-                <span className="flex-none text-[14px] font-bold tabular-nums" style={{ color: col }}>{h} soat</span>
-                {diff !== null && <span className="w-16 flex-none text-right text-[10px]" style={lblS}>{diff > 0 ? `${diff} kam` : diff === 0 ? "rejada" : `${-diff} ko'p`}</span>}
+                <span className="flex-none text-[14px] font-bold tabular-nums" style={{ color: col }}>{tf("{n} soat", { n: h })}</span>
+                {diff !== null && <span className="w-16 flex-none text-right text-[10px]" style={lblS}>{diff > 0 ? tf("{n} kam", { n: diff }) : diff === 0 ? tr("rejada") : tf("{n} ko'p", { n: -diff })}</span>}
               </div>
             );
           })}
@@ -2766,7 +2766,7 @@ function TaskDetailStat({ t, onClose, today, logs, plan }: { t: Task; onClose: (
       <div className="space-y-1 text-sm" style={{ color: "var(--ink)" }}>
         {t.type && <p>{tr("Turi:")} <b>{t.type}</b></p>}
         <p>{tr("Bajarildi:")} <b>{done}/{actD}</b> {tr("kun · Umumiy:")} <b>{pct === null ? "—" : pct + "%"}</b></p>
-        <p>Sababli: {exc} marta (joriy 30 kunlik: {excused30(t.id, logs, today)}/3)</p>
+        <p>{tf("Sababli: {n} marta (joriy 30 kunlik: {m}/3)", { n: exc, m: excused30(t.id, logs, today) })}</p>
       </div>
       <p className="mb-1 mt-3 text-xs font-bold" style={lblS}>{tr("OXIRGI 90 KUN")}</p>
       <div className="grid gap-[3px]" style={{ gridTemplateColumns: "repeat(18, 1fr)" }}>
@@ -2916,7 +2916,7 @@ function MaqsadView(p: {
             <span className="mt-1.5 text-[11px] font-medium" style={lblS}>{tr("Maqsadlar bajarildi")}</span>
           </div>
         </div>
-        <p className="mt-4 text-[12px] font-medium" style={{ color: "var(--gold)" }}>{yearNum}-yil · {daysLeftAll} kun qoldi</p>
+        <p className="mt-4 text-[12px] font-medium" style={{ color: "var(--gold)" }}>{tf("{y}-yil · {n} kun qoldi", { y: yearNum, n: daysLeftAll })}</p>
       </Card>
 
       {/* 3. Maqsadlar ro'yxati */}
@@ -3069,7 +3069,7 @@ function JarayonSheet({ m, today, plan, tasks, logs, counts, countLog, onClose }
                       {t.completedAt ? `${fmtUz(t.startDate)} — ${fmtUz(t.completedAt)}` : t.kind === "count" ? `${cTot}/${t.countTarget || 0}` : `${fmtUz(t.startDate)} dan`}
                     </span>
                   </span>
-                  {t.completedAt && <span className="flex-none text-[10px] font-semibold" style={{ color: "var(--green)" }}>{diffDays(t.startDate, t.completedAt) + 1} kun</span>}
+                  {t.completedAt && <span className="flex-none text-[10px] font-semibold" style={{ color: "var(--green)" }}>{tf("{n} kun", { n: diffDays(t.startDate, t.completedAt) + 1 })}</span>}
                 </div>
               );
             })}
@@ -3216,8 +3216,8 @@ function SleepPlanCard({ sleepCfg, setSleepCfg }: { sleepCfg: SleepCfg | null; s
         <>
           <p className="text-sm" style={{ color: "var(--ink)" }}>
             {sleepCfg.kind === "range"
-              ? <>{tr("Har kuni")} <b>{sleepCfg.from} — {sleepCfg.to}</b> da uxlayman (~{sleepCfg.hours} soat)</>
-              : <>{tr("Har kuni kamida")} <b>{sleepCfg.hours} soat</b> {tr("uxlayman")}</>}
+              ? <>{tr("Har kuni")} <b>{sleepCfg.from} — {sleepCfg.to}</b> {tf("da uxlayman (~{n} soat)", { n: sleepCfg.hours })}</>
+              : <>{tr("Har kuni kamida")} <b>{tf("{n} soat", { n: sleepCfg.hours })}</b> {tr("uxlayman")}</>}
           </p>
           <div className="mt-2 flex gap-2">
             <button onClick={() => { setKind(sleepCfg.kind); setHours(String(sleepCfg.hours)); setFrom(sleepCfg.from); setTo(sleepCfg.to); setEdit(true); }}
@@ -3243,7 +3243,7 @@ function SleepPlanCard({ sleepCfg, setSleepCfg }: { sleepCfg: SleepCfg | null; s
                 <Icon n="moon" size={17} style={{ color: "var(--blue)", flex: "none" }} />
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-bold tabular-nums" style={{ color: "var(--ink)" }}>{from} — {to}</span>
-                  <span className="block text-[11px]" style={{ color: "var(--blue)" }}>~{rangeHours(from, to)} soat</span>
+                  <span className="block text-[11px]" style={{ color: "var(--blue)" }}>{tf("~{n} soat", { n: rangeHours(from, to) })}</span>
                 </span>
                 <Icon n="chevronRight" size={15} style={{ color: "var(--muted)", flex: "none" }} />
               </button>
@@ -3286,7 +3286,7 @@ function UyquPage(p: {
         <div className="rounded-2xl p-5" style={{ background: "linear-gradient(135deg,#232B4A 0%,#141A33 100%)", boxShadow: "var(--shadow-lg)" }}>
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-2xl font-bold text-white">{p.sleepCfg.hours} soat</div>
+              <div className="text-2xl font-bold text-white">{tf("{n} soat", { n: p.sleepCfg.hours })}</div>
               <div className="mt-1 flex items-center gap-1.5 text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.62)" }}><Icon n="target" size={12} /> {tr("Belgilangan maqsad")}</div>
             </div>
             <Icon n="moon" size={40} style={{ color: "#D7A94B" }} />
@@ -3321,7 +3321,7 @@ function UyquPage(p: {
               </div>
             ))}
           </div>
-          {weekAvg !== null && <p className="mt-3 text-[11px]" style={lblS}>{tr("Bu hafta o'rtacha:")} <b style={{ color: "var(--ink)" }}>{weekAvg} soat</b> {tr("uxlandi.")}</p>}
+          {weekAvg !== null && <p className="mt-3 text-[11px]" style={lblS}>{tr("Bu hafta o'rtacha:")} <b style={{ color: "var(--ink)" }}>{tf("{n} soat", { n: weekAvg })}</b> {tr("uxlandi.")}</p>}
         </Card>
       )}
 
@@ -3520,7 +3520,7 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
         <div className="flex items-start gap-2 rounded-xl border p-3 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
           <Icon n="checkCircle" size={16} style={{ color: "var(--green)", flex: "none", marginTop: 2 }} />
           <span>Tugatilgan: {fmtUzFull(t.completedAt!)}
-            {t.plannedDays ? <> · Reja: {t.plannedDays} kun · Amalda: <b>{diffDays(t.startDate, t.completedAt!) + 1} kun</b>{diffDays(t.startDate, t.completedAt!) + 1 <= t.plannedDays ? tr(" — rejadan oldin (bonus)") : tr(" — rejadan kech")}</> : null}
+            {t.plannedDays ? <> · {tf("Reja: {n} kun", { n: t.plannedDays })} · {tr("Amalda:")} <b>{tf("{n} kun", { n: diffDays(t.startDate, t.completedAt!) + 1 })}</b>{diffDays(t.startDate, t.completedAt!) + 1 <= t.plannedDays ? tr(" — rejadan oldin (bonus)") : tr(" — rejadan kech")}</> : null}
           </span>
         </div>
       )}
@@ -4397,7 +4397,7 @@ export default function App() {
           // vazifa vaqt oralig'i boshi — faqat vazifa kunlarida
           if (t.schedFrom) {
             const [sh, sm] = t.schedFrom.split(":").map(Number);
-            if (!isNaN(sh)) pushDaily(`${t.name} vaqti keldi${t.schedTo ? ` (${t.schedFrom}–${t.schedTo})` : ""}`, sh, sm || 0, t.days);
+            if (!isNaN(sh)) pushDaily(`${tf("{nom} vaqti keldi", { nom: t.name })}${t.schedTo ? ` (${t.schedFrom}–${t.schedTo})` : ""}`, sh, sm || 0, t.days);
           }
           // qo'shimcha eslatma
           if (t.remTime) {

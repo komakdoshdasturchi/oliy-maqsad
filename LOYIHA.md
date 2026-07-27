@@ -69,13 +69,20 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **QOIDA:** bundan keyin `ml-/mr-/pl-/pr-`, `text-left/right`, `borderLeft/Right` ishlatilmasin — mantiqiy variantlari (`ms-/me-/ps-/pe-`, `borderInlineStart/End`) qo'llanilsin
 - Hali qilinmagan: arabcha tarjima (LUGAT), arab raqamlari/sana formati, PDF da arabcha (ASCII cheklovi — ehtimol umuman imkonsiz)
 
-**4-bosqich: ENGLISH — 1/5 BOSQICH BAJARILDI** (2026-07-27). `LUGAT` da **174 / 475** (37%). `en` endi tanlanadi (holat "sinov", izoh "Sinov · qisman tarjima"). Tarjimasi yo'q matn avtomatik o'zbekcha ko'rinadi.
+**4-bosqich: ENGLISH — DAVOM ETMOQDA** (2026-07-27). `LUGAT` da **216 / 520** (42%). `en` endi tanlanadi (holat "sinov", izoh "Sinov · qisman tarjima"). Tarjimasi yo'q matn avtomatik o'zbekcha ko'rinadi.
 - Bajarilgani: interfeys so'zlari (≤12 belgi) — tugma, sarlavha, menyu, ibodat atamalari, kun/vaqt
 - **Diniy atamalar transliteratsiya qilindi, tarjima emas:** Tahajjud · Dhikr · Nafl · rak'ah · khatm · juz' · Hijri. Ingliz tilidagi qabul qilingan islomiy yozuv
 - **`tr()` TUZATILDI:** `if (v)` → `if (v !== undefined)`. Sababi: o'zbekcha "ta" sanoq yuklamasi inglizchada **ataylab bo'sh** (`"5 ta"` → `"5"`), bo'sh qiymat esa avval e'tiborsiz qolardi
 - Kalitlar tekshirildi: 174 tasi ham App.tsx da haqiqatan mavjud, o'lik yozuv yo'q
 
-**QOLGAN BOSQICHLAR (301 ta):** qisqa iboralar 13-30 belgi (~183) · jumlalar 31-60 (~69) · uzun matnlar 60+ (~49, diniy matnlardan tashqari) · **Qur'on va hadis — ALOHIDA**
+**5-bosqich: O'RALMAGAN MATNLAR TUZATILDI** (2026-07-27). Avvalgi "o'rash tugadi" degan yozuv **noto'g'ri edi** — skript JSX ichida o'rtasida qiymat turgan jumlalarni butunlay o'tkazib yuborgan. **32 ta joy** topildi va `tf()` ga o'raldi.
+- Buzilgan holat kirillda ham ko'rinardi: «Хатм 20.07.2026 **dan boshlanadi**» — bitta jumlada ikki alifbo
+- **`tf()` ga KO'PLIK qo'shildi:** tarjimada `"|"` — chapda birlik, o'ngda ko'plik (`"{n} soat": { en: "{n} hour|{n} hours" }`). Tanlov `vals` dagi birinchi son bo'yicha. O'zbek/kirillda "|" yo'q, ta'sir qilmaydi
+- **`toKiril()` XATOSI TUZATILDI (muhim):** u `{n}` egallagichini ham o'girib `{н}` qilardi, natijada `tf()` uni topa olmay ekranda «Уйқу: **{н}** соат» ko'rinardi. Endi `{...}` bloklari lotin qisqartmalar kabi chetga olinadi. **Bu xato ilgari ham bor edi** — 6 ta eski `tf()` chaqiruvi kirillda shu sababdan buzuq chiqqan
+- Sinov usuli: `npx esbuild src/tillar.ts --format=esm --outfile=X.mjs` → node bilan tr/tf ni to'g'ridan-to'g'ri sinash (localStorage yo'qligi try/catch bilan qoplangan)
+- **QOIDA:** JSX ichida qiymat bilan aralashgan matn **hech qachon** xom qoldirilmasin — butun jumla bitta `tf()` ga o'ralsin. Bo'lak-bo'lak `tr()` faqat so'z tartibi o'zgarmaydigan joyda
+
+**QOLGAN BOSQICHLAR (~300 ta):** qisqa iboralar 13-30 belgi (~183) · jumlalar 31-60 (~69) · uzun matnlar 60+ (~49, diniy matnlardan tashqari) · **Qur'on va hadis — ALOHIDA**
 - **QUR'ON/HADIS QOIDASI:** ularni o'zimiz ingliz tiliga o'girmaymiz. E'tirof etilgan tayyor tarjimalardan olinadi (Sahih International / Pickthall / Yusuf Ali) va manbasi ko'rsatiladi
 - Arabcha tarjimasi: diniy atamalar uchun **arab tilini biladigan odam ko'rib chiqishi** kerak — mashina tarjimasi yetarli emas
 - Tekshirish usuli: `LUGAT` kalitlarini App.tsx dagi `tr("...")` matnlari bilan solishtirish (comm) — o'lik kalit qolmasin

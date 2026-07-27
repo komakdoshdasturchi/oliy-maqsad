@@ -94,7 +94,12 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "o'zgarishsiz": { en: "unchanged" },
   "uxlandi": { en: "slept" },
   "uxlandi.": { en: "slept." },
-  "uxlayman": { en: "I will sleep" },
+  // SO'Z TARTIBI: "Har kuni kamida <8 soat> uxlayman" jumlasi uch bo'lakka bo'lingan.
+  // Ingliz tilida tartib boshqacha, shuning uchun bo'laklarning MA'NOSI almashtirildi:
+  // "Har kuni kamida" -> "I sleep at least",  "uxlayman" -> "every day".
+  // Natija: "I sleep at least <8 hours> every day". Ikkalasi ham faqat shu jumlada ishlatiladi.
+  "Har kuni kamida": { en: "I sleep at least" },
+  "uxlayman": { en: "every day" },
   "ta ish qoldi": { en: "tasks left" },
 
   // --- Tugmalar ---
@@ -211,6 +216,60 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Shu sabab ey": { en: "So, O" },
   "do'stim": { en: "my friend" },
   "shu nom": { en: "this name" },
+
+  // ===== 2-BOSQICH: son ichida bo'lgan jumlalar (tf) =====
+  // "|" — chapda birlik, o'ngda ko'plik. Qarang: tf() izohi.
+
+  // --- Sanoq birliklari ---
+  "{n} soat": { en: "{n} hour|{n} hours" },
+  "~{n} soat": { en: "~{n} hour|~{n} hours" },
+  "reja {n} soat": { en: "plan {n} hour|plan {n} hours" },
+  "Uyqu: {n} soat": { en: "Sleep: {n} hour|Sleep: {n} hours" },
+  "{n} kun": { en: "{n} day|{n} days" },
+  "{a}/{b} kun": { en: "{a}/{b} days" },
+  "{n} kundan keyin": { en: "in {n} day|in {n} days" },
+  "Reja: {n} kun": { en: "Plan: {n} day|Plan: {n} days" },
+  "{y}-yil · {n} kun qoldi": { en: "Year {y} · {n} day left|Year {y} · {n} days left" },
+
+  // --- Uyqu jumlasi (so'z tartibi yuqorida izohlangan) ---
+  // "Har kuni <22:00 — 06:00> da uxlayman (~8 soat)" -> ingliz tilida fe'l tushiriladi,
+  // chunki "Every day <vaqt> I sleep (~8 hours)" g'aliz eshitiladi.
+  "da uxlayman (~{n} soat)": { en: "(~{n} hour)|(~{n} hours)" },
+  "Rejaga muvofiq uyqu": { en: "Slept as planned" },
+  "✓ belgilandi": { en: "✓ marked" },
+  "✗ belgilandi": { en: "✗ marked" },
+
+  // --- Vazifa holati ---
+  "Jami:": { en: "Total:" },
+  "Amalda:": { en: "Actual:" },
+  "bugun: +{n}": { en: "today: +{n}" },
+  "{sana} gacha": { en: "until {sana}" },
+  "Muddat tugadi: {a}/{b}": { en: "Deadline passed: {a}/{b}" },
+  "{n} bajarildi": { en: "{n} completed" },
+  "{n} sababli": { en: "{n} excused" },
+  "to'liq hisobotni ko'rish": { en: "view full report" },
+  "vaqtsiz": { en: "no time set" },
+  "rejada": { en: "on plan" },
+  "{n} kam": { en: "{n} less" },
+  "{n} ko'p": { en: "{n} more" },
+  " — rejadan oldin (bonus)": { en: " — ahead of plan (bonus)" },
+  " — rejadan kech": { en: " — later than planned" },
+  "Oxirgi 7 kunda": { en: "In the last 7 days" },
+  "Davomiyligi: {v}": { en: "Duration: {v}" },
+  "Sababli: {n} marta (joriy 30 kunlik: {m}/3)": { en: "Excused: {n} time (last 30 days: {m}/3)|Excused: {n} times (last 30 days: {m}/3)" },
+
+  // --- Xabar va tavsiya jumlalari ---
+  "Xatm {sana} dan boshlanadi": { en: "Khatm starts on {sana}" },
+  "Pomodoro orqali {v} hisoblangan.": { en: "{v} counted via Pomodoro." },
+  "Barakalla, {nom}! Bugungi barcha ishlar bajarildi": { en: "Well done, {nom}! All of today's tasks are complete" },
+  "Bu vaqt «{nom}» ({a}–{b}) bilan to'qnashadi.": { en: "This time conflicts with «{nom}» ({a}–{b})." },
+  "{nom} vaqti keldi": { en: "Time for {nom}" },
+  "«{nom}» vazifasini boshlaysiz.": { en: "you will start the task «{nom}»." },
+  "{n} yillik maqsadlaringiz uchun rejangizni tuzishga tayyormisiz?": { en: "Ready to build your plan for your {n}-year goals?" },
+  "«{nom}» necha kunga to'xtatilsin? To'xtatilgan kunlar statistikaga kirmaydi.": { en: "How many days should «{nom}» be paused? Paused days are excluded from statistics." },
+  "Kunlik vaqti: {v}. Ortiqcha ajratilgan vaqt belgilashda “ziyoda”ga o'tadi.": { en: "Daily time: {v}. Any extra time you log counts as “extra”." },
+  "«{nom}» - {k}-kun (reja: {r} kun). Shoshilmang, lekin rejani ham unutmang.": { en: "«{nom}» — day {k} (plan: {r} days). Take your time, but do not lose sight of the plan." },
+  "«{nom}» so'nggi 30 kunda {n} marta sababli qoldirildi. Balki og'irlik qilayotgandir? Yengillashtirishingiz mumkin.": { en: "«{nom}» was excused {n} times in the last 30 days. Perhaps it is too demanding? You can lighten it." },
 };
 
 // Avtomatik kirill o'girish xato chiqqan matnlar (istisno):  "Ma'no": "Маъно"
@@ -239,9 +298,13 @@ const kirKesh = new Map<string, string>();
 export function toKiril(s: string): string {
   const bor = kirKesh.get(s);
   if (bor !== undefined) return bor;
-  // Lotin qisqartmalar (PDF, OK, JSON...) o'girilmaydi — vaqtincha chetga olinadi
   const keep: string[] = [];
-  let r = s.replace(/(^|[^A-Za-z])([A-Z]{2,6})(?![a-z])/g, (_m, p, ab) => { keep.push(ab); return p + "@@" + (keep.length - 1) + "@@"; });
+  // 1) tf() o'rin egallagichlari ({n}, {nom}, {sana}...) O'GIRILMASLIGI SHART.
+  //    Aks holda "{n}" -> "{н}" bo'lib qoladi va tf() uni topa olmaydi —
+  //    ekranda qiymat o'rniga "{н}" ko'rinadi.
+  let r = s.replace(/\{[A-Za-z0-9_]+\}/g, m => { keep.push(m); return "@@" + (keep.length - 1) + "@@"; });
+  // 2) Lotin qisqartmalar (PDF, OK, JSON...) ham o'girilmaydi — vaqtincha chetga olinadi
+  r = r.replace(/(^|[^A-Za-z])([A-Z]{2,6})(?![a-z])/g, (_m, p, ab) => { keep.push(ab); return p + "@@" + (keep.length - 1) + "@@"; });
   for (const [re, to] of KIR_QOIDA) r = r.replace(re, to);
   r = r.replace(/[A-Za-z]/g, ch => {
     const low = ch.toLowerCase();
@@ -275,8 +338,21 @@ export function tr(s: string): string {
 }
 
 // Ichida son/nom bo'lgan matnlar uchun:  tf("{n} kun qoldi", { n: 5 })
+//
+// KO'PLIK: o'zbekchada son qanday bo'lsa ham so'z o'zgarmaydi ("1 soat", "8 soat"),
+// ingliz tilida esa farq qiladi ("1 hour", "8 hours"). Shuning uchun tarjimada
+// "|" belgisi ishlatiladi — chapda birlik, o'ngda ko'plik:
+//     "{n} soat": { en: "{n} hour|{n} hours" }
+// Tanlov `vals` dagi BIRINCHI son bo'yicha. O'zbekcha va kirillda "|" bo'lmagani
+// uchun bu qoida ularga umuman ta'sir qilmaydi.
 export function tf(s: string, vals: Record<string, string | number>): string {
   let r = tr(s);
+  if (r.indexOf("|") >= 0) {
+    let n: number | null = null;
+    for (const k in vals) { const v = vals[k]; if (typeof v === "number") { n = v; break; } }
+    const shakl = r.split("|");
+    r = (n === 1 ? shakl[0] : shakl[1]) ?? r;
+  }
   for (const k in vals) r = r.split("{" + k + "}").join(String(vals[k]));
   return r;
 }
