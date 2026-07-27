@@ -627,8 +627,33 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "O'zingiz uchun iqtibos yoki eslatma yozing — Bugun sahifasining tanlangan joyida ko'rinib turadi.": { en: "Write a quote or reminder for yourself — it stays visible in your chosen spot on the Today page." },
   "Joylashuv: Tepada — progress ostida · O'rtada — vazifalardan oldin · Pastda — kun xulosasidan oldin.": { en: "Position: Top — under the progress · Middle — before the tasks · Bottom — before the day's summary." },
   "Masalan: yaxshi, unumli kun bo'ldi...": { en: "For example: it was a good, productive day..." },
-  "Tarjimasi hali tayyor bo'lmagan matnlar o'zbekcha ko'rinadi.": { en: "Text that is not yet translated is shown in Uzbek." },
   "Ilova tilini tanlang. Til istalgan vaqtda o'zgartirilishi mumkin.": { en: "Choose the app language. You can change it at any time." },
+
+  // ===== 5-BOSQICH: sana nomlari va til so'rovi =====
+  // OYLAR/KUNLAR/HIJRI_OYLAR massivlari xom o'zbekcha — `tr()` ular
+  // ISHLATILGAN JOYDA qo'llanadi, shuning uchun kalitlar shu yerda.
+
+  // --- Milodiy oylar (o'zbekchada kichik harf: "5-yanvar 2026") ---
+  "yanvar": { en: "January" }, "fevral": { en: "February" }, "mart": { en: "March" },
+  "aprel": { en: "April" }, "may": { en: "May" }, "iyun": { en: "June" },
+  "iyul": { en: "July" }, "avgust": { en: "August" }, "sentabr": { en: "September" },
+  "oktabr": { en: "October" }, "noyabr": { en: "November" }, "dekabr": { en: "December" },
+
+  // --- Hafta kunlari ---
+  "Yakshanba": { en: "Sunday" }, "Dushanba": { en: "Monday" }, "Seshanba": { en: "Tuesday" },
+  "Chorshanba": { en: "Wednesday" }, "Payshanba": { en: "Thursday" }, "Juma": { en: "Friday" },
+  "Shanba": { en: "Saturday" },
+
+  // --- Hijriy oylar (transliteratsiya, tarjima emas) ---
+  "muharram": { en: "Muharram" }, "safar": { en: "Safar" },
+  "rabiul-avval": { en: "Rabi' al-Awwal" }, "rabiul-oxir": { en: "Rabi' al-Thani" },
+  "jumadul-avval": { en: "Jumada al-Awwal" }, "jumadul-oxir": { en: "Jumada al-Thani" },
+  "rajab": { en: "Rajab" }, "sha'bon": { en: "Sha'ban" }, "ramazon": { en: "Ramadan" },
+  "shavvol": { en: "Shawwal" }, "zulqa'da": { en: "Dhul-Qa'dah" }, "zulhijja": { en: "Dhul-Hijjah" },
+
+  // --- Birinchi kirishdagi til so'rovi ---
+  "Qaysi tilni tanlaysiz?": { en: "Which language do you prefer?" },
+  "Til o'zgartirilganda ba'zi ma'lumotlar qayta yuklanishi mumkin.": { en: "Some data may reload when the language changes." },
 };
 
 // ---------- ARABCHA ----------
@@ -1238,8 +1263,26 @@ const LUGAT_AR: Record<string, string> = {
   "Masalan: yaxshi, unumli kun bo'ldi...": "مثال: كان يومًا طيبًا منتجًا...",
   "Masalan: Ingliz tili darsi": "مثال: درس اللغة الإنجليزية",
   "Masalan: mutolaa, sport...": "مثال: مطالعة، رياضة...",
-  "Tarjimasi hali tayyor bo'lmagan matnlar o'zbekcha ko'rinadi.": "النصوص التي لم تُترجم بعد تظهر بالأوزبكية.",
   "Ilova tilini tanlang. Til istalgan vaqtda o'zgartirilishi mumkin.": "اختر لغة التطبيق. يمكنك تغييرها في أي وقت.",
+
+  // --- Milodiy oylar ---
+  "yanvar": "يناير", "fevral": "فبراير", "mart": "مارس", "aprel": "أبريل",
+  "may": "مايو", "iyun": "يونيو", "iyul": "يوليو", "avgust": "أغسطس",
+  "sentabr": "سبتمبر", "oktabr": "أكتوبر", "noyabr": "نوفمبر", "dekabr": "ديسمبر",
+
+  // --- Hafta kunlari ---
+  "Yakshanba": "الأحد", "Dushanba": "الاثنين", "Seshanba": "الثلاثاء",
+  "Chorshanba": "الأربعاء", "Payshanba": "الخميس", "Juma": "الجمعة", "Shanba": "السبت",
+
+  // --- Hijriy oylar (arabcha ASL nomlari) ---
+  "muharram": "محرم", "safar": "صفر", "rabiul-avval": "ربيع الأول",
+  "rabiul-oxir": "ربيع الآخر", "jumadul-avval": "جمادى الأولى", "jumadul-oxir": "جمادى الآخرة",
+  "rajab": "رجب", "sha'bon": "شعبان", "ramazon": "رمضان",
+  "shavvol": "شوال", "zulqa'da": "ذو القعدة", "zulhijja": "ذو الحجة",
+
+  // --- Birinchi kirishdagi til so'rovi ---
+  "Qaysi tilni tanlaysiz?": "بأي لغة تفضّل؟",
+  "Til o'zgartirilganda ba'zi ma'lumotlar qayta yuklanishi mumkin.": "قد تُعاد بعض البيانات عند تغيير اللغة.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -1301,6 +1344,16 @@ try { const _l = localStorage.getItem("om3_lang"); if (_l) CUR = JSON.parse(_l) 
 export function setCur(l: Lang) { CUR = l; }
 export function getCur(): Lang { return CUR; }
 
+// ---------- ARAB RAQAMLARI ----------
+// Arab tilida g'arb raqamlari (0-9) o'rniga arab-hind raqamlari (٠-٩) ishlatiladi.
+// `tr()` va `tf()` chiqishiga qo'llanadi — shu bilan sana, soat, foiz va
+// hisoblar ham arabcha ko'rinadi. Qayta qo'llash zararsiz (٠-٩ [0-9] ga kirmaydi).
+const AR_RAQAM = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+export function raqam(s: string | number): string {
+  const t = String(s);
+  return CUR === "ar" ? t.replace(/[0-9]/g, d => AR_RAQAM[+d]) : t;
+}
+
 // ---------- TARJIMA ----------
 export function tr(s: string): string {
   if (!s || CUR === "uz") return s;
@@ -1308,9 +1361,10 @@ export function tr(s: string): string {
   // ATAYLAB BO'SH tarjima ham hisobga olinadi: o'zbekcha "ta", "dona" kabi sanoq
   // yuklamalari inglizchada umuman yozilmaydi ("5 ta" -> "5"). Shuning uchun
   // tekshiruv `if (v)` emas, `!== undefined` — aks holda bo'sh qiymat e'tiborsiz qolardi.
-  if (v !== undefined) return v;
+  // `raqam()` faqat arabchada ta'sir qiladi, boshqa tillarda matnni o'zgartirmaydi
+  if (v !== undefined) return raqam(v);
   if (CUR === "uzk") return KIRIL_ISTISNO[s] || toKiril(s);
-  return s;
+  return raqam(s);
 }
 
 // Ichida son/nom bo'lgan matnlar uchun:  tf("{n} kun qoldi", { n: 5 })
@@ -1330,5 +1384,6 @@ export function tf(s: string, vals: Record<string, string | number>): string {
     r = (n === 1 ? shakl[0] : shakl[1]) ?? r;
   }
   for (const k in vals) r = r.split("{" + k + "}").join(String(vals[k]));
-  return r;
+  // Qiymatlar qo'yilgandan KEYIN — shunda sana, soat va hisoblar ham arabcha chiqadi
+  return raqam(r);
 }

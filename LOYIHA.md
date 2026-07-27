@@ -114,6 +114,17 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 
 **Tekshirish usuli (har bosqichdan keyin):** `LUGAT` kalitlarini App.tsx dagi `tr("...")`/`tf("...")` matnlari bilan `comm` orqali solishtirish — o'lik kalit ham, tarjimasiz matn ham qolmasin
 
+**8-bosqich: TIL SO'ROVI, SANA NOMLARI, ARAB RAQAMLARI, OYAT KARTASI** (2026-07-27). Lug'at **552 / 552** to'rt tilda ham.
+- **`om3_langask`** (yangi kalit, 28-chi): "" = hali so'ralmagan, "1" = so'ralgan. Bir marta ishlaydi
+- **`TilSorov` oynasi ikki holatda:**
+  · YANGI o'rnatish (`!plan && !langAsk`) — salomlashuvdan **OLDIN**, to'liq ekran, **✕ YO'Q** (til tanlanishi shart). Keyingi butun onboarding tanlangan tilda ketadi
+  · YANGILANISH (`plan && !langAsk`) — ilova ustida bir marta, **✕ bilan yopib ketish mumkin**. `NewsModal` endi `langAsk` ni kutadi (avval chiqmasin)
+- **`TilRoyxat`** — til qatorlari alohida komponentga chiqarildi, `TilPage` va `TilSorov` ikkalasi ham shuni ishlatadi. Ixchamlashtirildi: plitka 56→44px, matn 15→14px, radio 24→20px
+- **ARAB RAQAMLARI:** `raqam()` (eksport qilingan) g'arb raqamlarini ٠-٩ ga o'giradi. `tr()` va `tf()` chiqishiga qo'llanadi — sana, soat, foiz, hisoblar arabcha chiqadi. Boshqa tillarda ta'sir qilmaydi
+  - **QOLGAN KAMCHILIK:** JSX ichida `tr/tf` dan o'tmaydigan xom sonlar (masalan `<b>{total}/{target}</b>`) hamon lotin raqamida. Kerak bo'lsa `raqam()` bilan o'ralsin
+- **OYLAR / KUNLAR / HIJRI_OYLAR** tarjima qilindi (32 yangi kalit). Hijriy oylar arabchada ASL nomlari bilan: محرم · صفر · ربيع الأول ...
+- **`OyatCard` qayta ishlangan:** halqa ichida kitob ikonkasi + nuqta · oyat ikki yonida oltin to'rt qirrali bezak (`Yulduzcha`) · nuqtali ajratgich chiziq · manba oltin doira ichida. Arabchada tarjima **va ajratgich** ko'rsatilmaydi
+
 ## TEXNIK XOTIRA
 - **Ma'lumot kalitlari (27 ta):** om3_plan, om3_tasks, om3_logs, om3_extras, om3_counts, om3_countlog, om3_weights, om3_notes, om3_sleepcfg, om3_sleeplog, om3_pomocfg, om3_pomolog, om3_settings, om3_ibadat, om3_khatm, om3_gender, om3_daymode, om3_ui, om3_quotes, om3_news, om3_hints, om3_lang, om3_folders, om3_ver + eski (om3_books, om3_cats, om3_groups)
 - **Migratsiya:** `om3_ver = "4"`. v3→v4 da har vazifaga `createdAt` qo'shildi (o'tmishni muzlatish — statistika buzilishini tuzatgan)

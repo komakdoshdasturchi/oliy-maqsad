@@ -866,26 +866,62 @@ function DayChips({ days, setDays }: { days: number[]; setDays: (d: number[]) =>
   );
 }
 
+// To'rt qirrali oltin bezak — oyat yonida (chap/o'ng)
+function Yulduzcha({ size = 11 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="var(--gold)" style={{ flex: "none", opacity: 0.55 }}>
+      <path d="M12 0c.6 6.4 5 10.8 12 12-7 1.2-11.4 5.6-12 12-.6-6.4-5-10.8-12-12C7 10.8 11.4 6.4 12 0z" />
+    </svg>
+  );
+}
+
 // Bugun eng pastida — Oli Imron 200-oyati (hadis va motivatsion matn o'rniga)
 function OyatCard() {
+  const arab = getCur() === "ar";
   return (
     <Card className="text-center" style={{ borderColor: "var(--line)" }}>
-      <p className="text-[11px] leading-relaxed" style={{ color: "var(--muted)" }}>{tr("Alloh taolo Oli Imron surasi 200-oyatda aytadi:")}</p>
-      <p dir="rtl" lang="ar" className="mx-auto mb-3 mt-3 max-w-[19rem] text-[16px]" style={{
-        color: "var(--ink)",
-        fontFamily: "'Noto Naskh Arabic','Droid Arabic Naskh','Geeza Pro','Arabic Typesetting',serif",
-        lineHeight: 2.15, wordSpacing: "0.06em",
-      }}>
-        يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ
-      </p>
+      {/* Yuqorida — halqa ichida kitob ikonkasi, ostida kichik nuqta */}
+      <div className="flex flex-col items-center">
+        <span className="grid place-items-center rounded-full" style={{ width: 54, height: 54, border: "1px solid var(--green)", color: "var(--green)", opacity: 0.9 }}>
+          <Icon n="bookOpen" size={22} />
+        </span>
+        <span className="mt-1.5 block rounded-full" style={{ width: 4, height: 4, background: "var(--green)", opacity: 0.7 }} />
+      </div>
+
+      <p className="mt-4 text-[11px] leading-relaxed" style={{ color: "var(--muted)" }}>{tr("Alloh taolo Oli Imron surasi 200-oyatda aytadi:")}</p>
+
+      {/* Oyatning asli — ikki yonida oltin bezak */}
+      <div className="mt-4 flex items-center justify-center gap-3">
+        <Yulduzcha />
+        <p dir="rtl" lang="ar" className="max-w-[19rem] flex-1 text-[17px]" style={{
+          color: "var(--ink)",
+          fontFamily: "'Noto Naskh Arabic','Droid Arabic Naskh','Geeza Pro','Arabic Typesetting',serif",
+          lineHeight: 2.25, wordSpacing: "0.06em",
+        }}>
+          يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ
+        </p>
+        <Yulduzcha />
+      </div>
+
       {/* Ma'no tarjimasi. ARABCHADA KO'RSATILMAYDI — yuqorida oyatning ASLI turibdi,
-          arabchada uni yana arabchaga "tarjima" qilish ma'nosiz (foydalanuvchi qarori). */}
-      {getCur() !== "ar" && (
-        <p className="mx-auto max-w-[21rem] text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
+          arabchada uni yana arabchaga "tarjima" qilish ma'nosiz (foydalanuvchi qarori).
+          Ajratgich chiziq ham faqat tarjima bo'lganda chiqadi. */}
+      {!arab && (<>
+        <div className="mx-auto mt-5 flex max-w-[13rem] items-center gap-2.5">
+          <span className="h-px flex-1" style={{ background: "var(--line)" }} />
+          <span className="rounded-full" style={{ width: 3, height: 3, background: "var(--muted)", opacity: 0.6 }} />
+          <span className="h-px flex-1" style={{ background: "var(--line)" }} />
+        </div>
+        <p className="mx-auto mt-4 max-w-[21rem] text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
           {tr("Ey mo'minlar! Sabr qilinglar va sabr-toqat qilishda ustun bo'linglar hamda doimo belingiz bog'liq bo'lib turingiz! Va Allohdan qo'rqingiz! Shoyad najot topgaysizlar!")}
         </p>
-      )}
-      <p className="mt-2.5 text-[10px] font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>{tr("Oli Imron surasi · 200-oyat")}</p>
+      </>)}
+
+      {/* Manba — oltin doira ichida */}
+      <span className="mx-auto mt-5 inline-block rounded-full px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em]"
+        style={{ color: "var(--gold)", border: "1px solid var(--line)" }}>
+        {tr("Oli Imron surasi · 200-oyat")}
+      </span>
     </Card>
   );
 }
@@ -3951,41 +3987,81 @@ function FocusOverlay({ pomo, setPomo, pomoLog, today }: {
 }
 
 // ================== TIL SAHIFASI ==================
+// Til ro'yxati — IKKI JOYDA ishlatiladi: Sozlamalar→Til sahifasi va
+// birinchi kirishdagi til so'rovi oynasi. Shuning uchun alohida komponent.
+// Ixcham o'lchamlar: plitka 44px, qator balandligi ~62px (avval 56/78 edi).
+function TilRoyxat({ lang, onPick }: { lang: Lang; onPick: (l: Lang) => void }) {
+  return (
+    <div className="om-card overflow-hidden p-0">
+      {TILLAR.map((tl, i) => {
+        const active = lang === tl.id;
+        const off = tl.holat === "tez";
+        return (
+          <button key={tl.id} disabled={off} onClick={() => { if (!off) { onPick(tl.id); buzz(); } }}
+            className={"om-press flex w-full items-center gap-3 px-3.5 py-2.5 text-left" + (i ? " border-t" : "")}
+            style={{ borderColor: "var(--line)", opacity: off ? 0.45 : 1 }}>
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-[17px] font-bold text-white" style={{ background: tl.grad }}>{tl.belgi}</span>
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[14px] font-bold" style={{ color: "var(--ink)" }}>{tl.nom}</span>
+              <span className="block text-[10.5px]" style={lblS}>{off ? tr("tez orada") : tl.izoh}</span>
+            </span>
+            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2" style={{ borderColor: active ? tl.rang : "var(--line)" }}>
+              {active && <span className="h-2.5 w-2.5 rounded-full" style={{ background: tl.rang }} />}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// Birinchi kirishdagi til so'rovi. Ikki holatda ishlaydi:
+//  · YANGI foydalanuvchi (reja yo'q): salomlashuvdan OLDIN to'liq ekranda chiqadi,
+//    ✕ YO'Q — til tanlanib "Davom etish" bosiladi. Keyingi butun onboarding
+//    tanlangan tilda ketadi (oylar, kunlar, raqamlar ham).
+//  · MAVJUD foydalanuvchi (yangilanishdan keyin): ilova ustida bir marta chiqadi,
+//    ✕ bilan tanlamasdan yopib ketish mumkin.
+// Ikkala holatda ham `om3_langask` yoziladi va boshqa so'ralmaydi.
+function TilSorov(p: { lang: Lang; setLang: (l: Lang) => void; onFinish: () => void; yopsaBoladi: boolean }) {
+  return (
+    <div className="om-overlay fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.55)" }}>
+      <div className="om-pop w-full max-w-[21rem] rounded-3xl p-4" style={{ background: "var(--card)", border: "1px solid var(--line)", boxShadow: "var(--shadow-lg)" }}>
+        <div className="mb-3 flex items-center gap-2">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl" style={{ color: "var(--green)" }}><Icon n="globe" size={19} /></span>
+          <span className="flex-1 text-[15px] font-bold" style={{ color: "var(--ink)" }}>{tr("Qaysi tilni tanlaysiz?")}</span>
+          {p.yopsaBoladi && (
+            <button onClick={p.onFinish} className="om-press grid h-8 w-8 shrink-0 place-items-center rounded-xl" style={{ color: "var(--muted)" }}>
+              <Icon n="x" size={17} />
+            </button>
+          )}
+        </div>
+
+        <TilRoyxat lang={p.lang} onPick={p.setLang} />
+
+        <button onClick={p.onFinish} className="om-press mt-3 w-full rounded-2xl py-2.5 text-[13.5px] font-semibold text-white" style={{ background: "var(--green)" }}>
+          {tr("Davom etish")}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function TilPage(p: { lang: Lang; setLang: React.Dispatch<React.SetStateAction<Lang>>; onBack: () => void }) {
   return (
-    <div className="space-y-4">
-      <div className="om-card flex items-center px-3 py-3">
+    <div className="space-y-3.5">
+      <div className="om-card flex items-center px-3 py-2.5">
         <button onClick={p.onBack} className="om-press grid h-9 w-9 place-items-center rounded-xl" style={{ color: "var(--green)" }}><Icon n="arrowLeft" size={22} /></button>
-        <span className="flex-1 text-center text-lg font-bold" style={{ color: "var(--ink)" }}>{tr("Til")}</span>
+        <span className="flex-1 text-center text-[17px] font-bold" style={{ color: "var(--ink)" }}>{tr("Til")}</span>
         <span className="h-9 w-9" />
       </div>
 
-      <p className="px-1 text-[13px] leading-relaxed" style={lblS}>{tr("Ilova tilini tanlang. Til istalgan vaqtda o'zgartirilishi mumkin.")}</p>
+      <p className="px-1 text-[12px] leading-relaxed" style={lblS}>{tr("Ilova tilini tanlang. Til istalgan vaqtda o'zgartirilishi mumkin.")}</p>
 
-      <div className="om-card overflow-hidden p-0">
-        {TILLAR.map((tl, i) => {
-          const active = p.lang === tl.id;
-          const off = tl.holat === "tez";
-          return (
-            <button key={tl.id} disabled={off} onClick={() => { if (!off) { p.setLang(tl.id); buzz(); } }}
-              className={"om-press flex w-full items-center gap-3.5 px-4 py-3.5 text-left" + (i ? " border-t" : "")}
-              style={{ borderColor: "var(--line)", opacity: off ? 0.45 : 1 }}>
-              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-2xl font-bold text-white" style={{ background: tl.grad }}>{tl.belgi}</span>
-              <span className="flex-1">
-                <span className="block text-[15px] font-bold" style={{ color: "var(--ink)" }}>{tl.nom}</span>
-                <span className="block text-[11px]" style={lblS}>{off ? tr("tez orada") : tl.izoh}</span>
-              </span>
-              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2" style={{ borderColor: active ? tl.rang : "var(--line)" }}>
-                {active && <span className="h-3 w-3 rounded-full" style={{ background: tl.rang }} />}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+      <TilRoyxat lang={p.lang} onPick={p.setLang} />
 
       <div className="flex items-start gap-2 px-1">
-        <span className="mt-px shrink-0" style={{ color: "var(--green)" }}><Icon n="info" size={15} /></span>
-        <p className="text-[12px] leading-relaxed" style={lblS}>{tr("Tarjimasi hali tayyor bo'lmagan matnlar o'zbekcha ko'rinadi.")}</p>
+        <span className="mt-px shrink-0" style={{ color: "var(--green)" }}><Icon n="info" size={14} /></span>
+        <p className="text-[11.5px] leading-relaxed" style={lblS}>{tr("Til o'zgartirilganda ba'zi ma'lumotlar qayta yuklanishi mumkin.")}</p>
       </div>
     </div>
   );
@@ -4260,6 +4336,9 @@ export default function App() {
   const [dayMode, setDayMode] = useStored<DayMode>("om3_daymode", { mode: "list", lockedUntil: "" });
   const [ui, setUi] = useStored<Record<string, boolean>>("om3_ui", {});
   const [lang, setLang] = useStored<Lang>("om3_lang", "uz");
+  // Til bir marta so'raladi: yangi o'rnatishda salomlashuvdan oldin,
+  // yangilanishda esa birinchi kirishda (yopib ketish mumkin). "1" = so'ralgan.
+  const [langAsk, setLangAsk] = useStored<string>("om3_langask", "");
   setCur(lang); // til almashsa butun ekran shu qiymat bilan qayta chiziladi
   const [pomo, setPomo] = useState<PomoState | null>(null);
   const [pomoAsk, setPomoAsk] = useState<{ min: number } | null>(null);
@@ -4525,6 +4604,17 @@ export default function App() {
     );
   }
 
+  // YANGI O'RNATISH: til so'rovi salomlashuvdan ham OLDIN. Tanlangach butun
+  // onboarding o'sha tilda ketadi. Yopib bo'lmaydi — til tanlanishi shart.
+  if (!plan && !langAsk) {
+    return (
+      <div className={settings.dark ? "om-dark" : ""} style={{ minHeight: "100vh", background: "var(--bg)" }}>
+        {styleBlock}
+        <TilSorov lang={lang} setLang={setLang} onFinish={() => setLangAsk("1")} yopsaBoladi={false} />
+      </div>
+    );
+  }
+
   if (!plan) {
     return (
       <div className={settings.dark ? "om-dark" : ""} style={{ minHeight: "100vh", background: "var(--bg)" }}>
@@ -4655,7 +4745,12 @@ export default function App() {
 
       {pomo && pomo.mode === "focus" && <FocusOverlay pomo={pomo} setPomo={setPomo} pomoLog={pomoLog} today={today} />}
 
-      {news !== NEWS_VER && gender !== null && <NewsModal hijriOffset={settings.hijriOffset} logoColor={logoColor} onClose={() => setNews(NEWS_VER)} />}
+      {/* YANGILANISHDAN KEYIN: mavjud foydalanuvchidan til bir marta so'raladi.
+          ✕ bilan tanlamasdan yopib ketish mumkin. Yangiliklar oynasidan OLDIN
+          chiqadi — shuning uchun NewsModal `langAsk` ni kutadi. */}
+      {!langAsk && <TilSorov lang={lang} setLang={setLang} onFinish={() => setLangAsk("1")} yopsaBoladi />}
+
+      {langAsk && news !== NEWS_VER && gender !== null && <NewsModal hijriOffset={settings.hijriOffset} logoColor={logoColor} onClose={() => setNews(NEWS_VER)} />}
 
       <DialogHost />
 
