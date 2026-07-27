@@ -69,8 +69,16 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **QOIDA:** bundan keyin `ml-/mr-/pl-/pr-`, `text-left/right`, `borderLeft/Right` ishlatilmasin — mantiqiy variantlari (`ms-/me-/ps-/pe-`, `borderInlineStart/End`) qo'llanilsin
 - Hali qilinmagan: arabcha tarjima (LUGAT), arab raqamlari/sana formati, PDF da arabcha (ASCII cheklovi — ehtimol umuman imkonsiz)
 
-**KEYINGI QADAM: ENGLISH.** `tillar.ts` dagi `LUGAT` ga ~479 juftlik yoziladi (`"Bugun": { en: "Today" }`). Kirilldan farqli — avtomatik emas, QO'LDA. Bo'lim-bo'lim borish shart (limitning ~30-40%). App.tsx ga umuman tegilmaydi.
-- Arabcha tarjimasi: diniy atamalar (namoz/zikr/xatm/tazkiya) uchun **arab tilini biladigan odam ko'rib chiqishi** kerak — mashina tarjimasi yetarli emas
+**4-bosqich: ENGLISH — 1/5 BOSQICH BAJARILDI** (2026-07-27). `LUGAT` da **174 / 475** (37%). `en` endi tanlanadi (holat "sinov", izoh "Sinov · qisman tarjima"). Tarjimasi yo'q matn avtomatik o'zbekcha ko'rinadi.
+- Bajarilgani: interfeys so'zlari (≤12 belgi) — tugma, sarlavha, menyu, ibodat atamalari, kun/vaqt
+- **Diniy atamalar transliteratsiya qilindi, tarjima emas:** Tahajjud · Dhikr · Nafl · rak'ah · khatm · juz' · Hijri. Ingliz tilidagi qabul qilingan islomiy yozuv
+- **`tr()` TUZATILDI:** `if (v)` → `if (v !== undefined)`. Sababi: o'zbekcha "ta" sanoq yuklamasi inglizchada **ataylab bo'sh** (`"5 ta"` → `"5"`), bo'sh qiymat esa avval e'tiborsiz qolardi
+- Kalitlar tekshirildi: 174 tasi ham App.tsx da haqiqatan mavjud, o'lik yozuv yo'q
+
+**QOLGAN BOSQICHLAR (301 ta):** qisqa iboralar 13-30 belgi (~183) · jumlalar 31-60 (~69) · uzun matnlar 60+ (~49, diniy matnlardan tashqari) · **Qur'on va hadis — ALOHIDA**
+- **QUR'ON/HADIS QOIDASI:** ularni o'zimiz ingliz tiliga o'girmaymiz. E'tirof etilgan tayyor tarjimalardan olinadi (Sahih International / Pickthall / Yusuf Ali) va manbasi ko'rsatiladi
+- Arabcha tarjimasi: diniy atamalar uchun **arab tilini biladigan odam ko'rib chiqishi** kerak — mashina tarjimasi yetarli emas
+- Tekshirish usuli: `LUGAT` kalitlarini App.tsx dagi `tr("...")` matnlari bilan solishtirish (comm) — o'lik kalit qolmasin
 
 ## TEXNIK XOTIRA
 - **Ma'lumot kalitlari (27 ta):** om3_plan, om3_tasks, om3_logs, om3_extras, om3_counts, om3_countlog, om3_weights, om3_notes, om3_sleepcfg, om3_sleeplog, om3_pomocfg, om3_pomolog, om3_settings, om3_ibadat, om3_khatm, om3_gender, om3_daymode, om3_ui, om3_quotes, om3_news, om3_hints, om3_lang, om3_folders, om3_ver + eski (om3_books, om3_cats, om3_groups)
