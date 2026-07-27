@@ -489,7 +489,7 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // tarjimalaridan olindi. Manbani o'zgartirmang, tekshirmasdan tahrirlamang.
   //   · Oyat  — Sahih International (Qur'on 3:200)
   //   · Hadis — Muhsin Khan (Sahih al-Bukhari 6465)
-  "Alloh taolo Oli Imron surasi 200-oyatda aytadi:": { en: "Allah the Exalted says in Surah Al-Imran, verse 200:" },
+  "Alloh taolo Qur'oni Karimda shunday marhamat qiladi:": { en: "Allah the Exalted says in the Noble Qur'an:" },
   "Ey mo'minlar! Sabr qilinglar va sabr-toqat qilishda ustun bo'linglar hamda doimo belingiz bog'liq bo'lib turingiz! Va Allohdan qo'rqingiz! Shoyad najot topgaysizlar!": { en: "O you who have believed, persevere and endure and remain stationed and fear Allah that you may be successful." },
   "Oisha roziyallohu anhodan rivoyat qilindi: «Nabiy sollallohu alayhi vasallamdan: “Amallarning qay biri Allohga eng suyukli?” deb so'rashdi. U zot:": { en: "Narrated Aisha: The Prophet ﷺ was asked, “Which deeds are most beloved to Allah?” He said:" },
   "“Oz bo'lsa ham, davomlirog'i”": { en: "“The most regular constant ones, even if few”" },
@@ -700,6 +700,27 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": { en: "The language list is more compact — it takes up less space." },
   "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": { en: "Fixed a font setting bug (the app was losing its own typeface)." },
   "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": { en: "Some sentences stayed in Latin script in Cyrillic mode — all fixed." },
+
+  // ===== 7-BOSQICH (v11): qisqa sana nomlari va onboarding xulosasi =====
+  // KUN_QISQA va OY_QISQA ham modul massivlari — yuqoridagi DIQQAT izohi
+  // ularga ham tegishli.
+
+  // --- Qisqa hafta kunlari (taqvim sarlavhasi, statistika ustunlari) ---
+  "Ya": { en: "Su" }, "Du": { en: "Mo" }, "Se": { en: "Tu" }, "Ch": { en: "We" },
+  "Pa": { en: "Th" }, "Ju": { en: "Fr" }, "Sh": { en: "Sa" },
+
+  // --- Qisqa oy nomlari ("may" yuqorida to'liq nom sifatida allaqachon bor) ---
+  "yan": { en: "Jan" }, "fev": { en: "Feb" }, "mar": { en: "Mar" }, "apr": { en: "Apr" },
+  "iyn": { en: "Jun" }, "iyl": { en: "Jul" }, "avg": { en: "Aug" },
+  "sen": { en: "Sep" }, "okt": { en: "Oct" }, "noy": { en: "Nov" }, "dek": { en: "Dec" },
+
+  // --- Onboarding xulosa qatori (avval xom o'zbekcha edi) ---
+  "Muddat": { en: "Duration" },
+  "Boshlanish": { en: "Start" },
+  "Hafta boshi": { en: "Week starts" },
+  "yo'q": { en: "none" },
+  "{n} yil": { en: "{n} year|{n} years" },
+  "Shoshilmang — tayyor bo'lganingizda \"Ha\"ni tanlang. Eng muhimi — niyat.": { en: "Take your time — choose \"Yes\" when you are ready. Intention matters most." },
 };
 
 // ---------- ARABCHA ----------
@@ -743,7 +764,7 @@ const LUGAT_AR: Record<string, string> = {
   "Hijriy sana": "التاريخ الهجري",
   "Hadisi sharif": "الحديث الشريف",
   "Oli Imron surasi · 200-oyat": "سورة آل عمران · الآية ٢٠٠",
-  "Alloh taolo Oli Imron surasi 200-oyatda aytadi:": "قال الله تعالى في سورة آل عمران، الآية ٢٠٠:",
+  "Alloh taolo Qur'oni Karimda shunday marhamat qiladi:": "قال الله تعالى في القرآن الكريم:",
   "Bugungi ibodat reytingi": "تقييم عبادة اليوم",
   "Assalomu alaykum va rohmatullohi va barokatuhu": "السلام عليكم ورحمة الله وبركاته",
 
@@ -1368,6 +1389,22 @@ const LUGAT_AR: Record<string, string> = {
   "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": "صارت قائمة اللغات أكثر إيجازًا — وتشغل مساحة أقل.",
   "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": "أُصلح خلل في إعداد الخط (كان التطبيق يفقد خطه الخاص).",
   "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": "كانت بعض الجمل تبقى بالحروف اللاتينية في الوضع السيريلي — أُصلحت كلها.",
+
+  // --- v11: qisqa hafta kunlari ---
+  "Ya": "أحد", "Du": "إثن", "Se": "ثلا", "Ch": "أرب", "Pa": "خمس", "Ju": "جمع", "Sh": "سبت",
+
+  // --- v11: qisqa oy nomlari ---
+  "yan": "ينا", "fev": "فبر", "mar": "مار", "apr": "أبر",
+  "iyn": "يون", "iyl": "يول", "avg": "أغس",
+  "sen": "سبت", "okt": "أكت", "noy": "نوف", "dek": "ديس",
+
+  // --- v11: onboarding xulosa qatori ---
+  "Muddat": "المدة",
+  "Boshlanish": "البداية",
+  "Hafta boshi": "بداية الأسبوع",
+  "yo'q": "لا يوجد",
+  "{n} yil": "{n} سنة|{n} سنوات",
+  "Shoshilmang — tayyor bo'lganingizda \"Ha\"ni tanlang. Eng muhimi — niyat.": "لا تستعجل — اختر «نعم» حين تكون مستعدًا. والأهم هو النية.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)

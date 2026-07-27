@@ -127,6 +127,16 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **OYLAR / KUNLAR / HIJRI_OYLAR** tarjima qilindi (32 yangi kalit). Hijriy oylar arabchada ASL nomlari bilan: محرم · صفر · ربيع الأول ...
 - **`OyatCard` qayta ishlangan:** halqa ichida kitob ikonkasi + nuqta · oyat ikki yonida oltin to'rt qirrali bezak (`Yulduzcha`) · nuqtali ajratgich chiziq · manba oltin doira ichida. Arabchada tarjima **va ajratgich** ko'rsatilmaydi
 
+## v11 — XATOLAR TUZATILDI (2026-07-28)
+Sakkizta xato yopildi. Lug'at **613 / 613** (uz · uzk · en · ar).
+1. **Oyat shrifti** — Scheherazade New / Amiri / Noto Naskh Arabic UI oldinga qo'yildi, vazn 400 ga qotirildi, o'lcham 17→19px, qator oralig'i 2.25→2.5. **Agar hali ham og'ir ko'rinsa — yagona ishonchli yechim shriftni ilova ichiga joylash (~150-400 KB)**
+2. **Oyat sarlavhasi** — «Alloh taolo Qur'oni Karimda shunday marhamat qiladi:» (eski kalit o'chirildi)
+3+6. **Hafta kunlari** — `KUN_QISQA` va `OY_QISQA` tarjima qilindi. Ikki taqvimda sarlavha **qotirib yozilgan** edi (`["Du","Se",...]`) → `KUN_QISQA_DUSH` bilan almashtirildi
+4. **Arab raqamlarini qabul qilish** — `parseInt`/`parseFloat` modul darajasida qayta e'lon qilindi, ikkalasi ham `son()` orqali ٠-٩ ni 0-9 ga o'giradi. **Bitta joyda — butun fayl uchun.** G'arb raqamlariga ta'siri yo'q, `parseISO` Date konstruktoridan foydalangani uchun tegilmagan
+5. **Onboarding xulosasi** — «Muddat / Boshlanish / Hafta boshi / yo'q» xom edi, `tr()` ga o'raldi
+7. **Taqvim raqamlari** — `raqam()` qo'llandi (`fmtUz`, `fmtUzFull`, ikki taqvim, kun oynasi, sarlavha)
+8. **«Shoshilmang...»** — `tr()` da edi, lekin lug'atda yo'q edi. **SABOQ:** ichida `\"` bo'lgan matnlarni `grep 'tr("...")'` tekshiruvi TOPMAYDI — shu sababli sezilmay qolgan
+
 ## TEXNIK XOTIRA
 - **Ma'lumot kalitlari (27 ta):** om3_plan, om3_tasks, om3_logs, om3_extras, om3_counts, om3_countlog, om3_weights, om3_notes, om3_sleepcfg, om3_sleeplog, om3_pomocfg, om3_pomolog, om3_settings, om3_ibadat, om3_khatm, om3_gender, om3_daymode, om3_ui, om3_quotes, om3_news, om3_hints, om3_lang, om3_folders, om3_ver + eski (om3_books, om3_cats, om3_groups)
 - **Migratsiya:** `om3_ver = "4"`. v3→v4 da har vazifaga `createdAt` qo'shildi (o'tmishni muzlatish — statistika buzilishini tuzatgan)

@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useRef, useState } from "react";
-import { Lang, TILLAR, tr, tf, setCur, getCur } from "./tillar";
+import { Lang, TILLAR, tr, tf, setCur, getCur, raqam } from "./tillar";
 
 // ================== TURLAR ==================
 interface Folder { id: string; name: string; importance: number; scope: "daily" | "oliy"; }
@@ -46,7 +46,21 @@ type Gender = "m" | "f";
 const OYLAR = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
 const OY_QISQA = ["yan","fev","mar","apr","may","iyn","iyl","avg","sen","okt","noy","dek"];
 const KUNLAR = ["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"];
+// ARAB RAQAMLARINI QABUL QILISH.
+// Arabcha klaviaturada foydalanuvchi "٣٠" deb yozishi mumkin, ammo o'rnatilgan
+// parseInt/parseFloat arab-hind raqamlarini TANIMAYDI va NaN qaytaradi.
+// Quyida ikkala funksiya ham modul darajasida qayta e'lon qilinadi —
+// shu bilan BUTUN fayldagi barcha son o'qishlari ikkala yozuvni ham tushunadi.
+// (G'arb raqamlariga ta'siri yo'q: almashtirish hech narsa topmaydi.)
+const AR_SON: Record<string, string> = { "٠": "0", "١": "1", "٢": "2", "٣": "3", "٤": "4", "٥": "5", "٦": "6", "٧": "7", "٨": "8", "٩": "9" };
+const son = (v: unknown) => String(v).replace(/[٠-٩]/g, d => AR_SON[d]);
+const parseFloat = (v: unknown) => globalThis.parseFloat(son(v));
+const parseInt = (v: unknown, radix?: number) => globalThis.parseInt(son(v), radix);
+
 const KUN_QISQA = ["Ya","Du","Se","Ch","Pa","Ju","Sh"];
+// Taqvim sarlavhasi dushanbadan boshlanadi. KUN_QISQA esa yakshanbadan
+// indekslangan (getDay() bilan mos), shuning uchun tartib alohida turadi.
+const KUN_QISQA_DUSH = [1, 2, 3, 4, 5, 6, 0];
 const HIJRI_OYLAR = ["muharram","safar","rabiul-avval","rabiul-oxir","jumadul-avval","jumadul-oxir","rajab","sha'bon","ramazon","shavvol","zulqa'da","zulhijja"];
 const HADIS_AR = "«الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ، وَفِي كُلٍّ خَيْرٌ. احْرِصْ عَلَى مَا يَنْفَعُكَ، وَاسْتَعِنْ بِاللَّهِ، وَلَا تَعْجِزْ. وَإِنْ أَصَابَكَ شَيْءٌ، فَلَا تَقُلْ: لَوْ أَنِّي فَعَلْتُ كَانَ كَذَا وَكَذَا، وَلَكِنْ قُلْ: قَدَرُ اللَّهِ وَمَا شَاءَ فَعَلَ، فَإِنَّ لَوْ تَفْتَحُ عَمَلَ الشَّيْطَانِ»";
 const HADIS_UZ = "“Kuchli mo'min Alloh uchun kuchsiz mo'mindan yaxshiroq va suyukliroqdir, lekin ikkisida ham yaxshilik bor. Senga foyda beradigan narsaga haris bo'lgin! Allohdan yordam so'ra! Ojizlik qilma! Senga biror musibat yetsa, «Bunday qilganimda shunday-shunday bo'lar edi», demagin, balki: «Allohning taqdiri, U Zot xohlaganini qiladi», degin, chunki «agar...» deyish shaytonning amaliga yo'l ochadi”.";
@@ -71,8 +85,8 @@ const parseISO = (s: string) => new Date(s + "T00:00:00");
 const addDays = (d: Date, n: number) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
 const addDaysISO = (s: string, n: number) => toISO(addDays(parseISO(s), n));
 const diffDays = (a: string, b: string) => Math.round((parseISO(b).getTime() - parseISO(a).getTime()) / 86400000);
-const fmtUz = (s: string) => { const d = parseISO(s); return `${d.getDate()}-${tr(OY_QISQA[d.getMonth()])}`; };
-const fmtUzFull = (s: string) => { const d = parseISO(s); return `${d.getDate()}-${tr(OYLAR[d.getMonth()])} ${d.getFullYear()}`; };
+const fmtUz = (s: string) => { const d = parseISO(s); return `${raqam(d.getDate())}-${tr(OY_QISQA[d.getMonth()])}`; };
+const fmtUzFull = (s: string) => { const d = parseISO(s); return `${raqam(d.getDate())}-${tr(OYLAR[d.getMonth()])} ${raqam(d.getFullYear())}`; };
 const fmtMin = (m: number) => m >= 60 ? `${Math.floor(m / 60)} ${tr("s")} ${m % 60 ? (m % 60) + " " + tr("daq") : ""}`.trim() : `${m} ${tr("daq")}`;
 const hmToMin = (s: string) => { const [h, m] = s.split(":").map(Number); return (h || 0) * 60 + (m || 0); };
 const minToHm = (n: number) => { const v = Math.max(Math.min(n, 1439), 0); return `${String(Math.floor(v / 60)).padStart(2, "0")}:${String(v % 60).padStart(2, "0")}`; };
@@ -651,7 +665,7 @@ function DateSheet({ value, min, hijriOffset, title, onPick, onClose }: { value:
             <button onClick={() => setM(new Date(y, mo + 1, 1))} className="om-press grid h-8 w-8 place-items-center rounded-lg" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="chevronRight" size={16} /></button>
           </div>
           <div className="grid grid-cols-7 gap-1 text-center">
-            {["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"].map(d => <span key={d} className="py-1 text-[10px] font-semibold" style={lblS}>{d}</span>)}
+            {KUN_QISQA_DUSH.map(d => <span key={d} className="py-1 text-[10px] font-semibold" style={lblS}>{tr(KUN_QISQA[d])}</span>)}
             {cells.map((iso, i) => {
               if (iso === null) return <span key={i} />;
               const dis = !!(min && iso < min);
@@ -659,7 +673,7 @@ function DateSheet({ value, min, hijriOffset, title, onPick, onClose }: { value:
               return (
                 <button key={i} disabled={dis} onClick={() => pick(iso)} className="om-press grid h-9 place-items-center rounded-lg text-[13px]"
                   style={sel ? { background: "var(--green)", color: "#fff", fontWeight: 700 } : { color: "var(--ink)", opacity: dis ? 0.25 : iso === today ? 1 : 0.85, fontWeight: iso === today ? 700 : 400 }}>
-                  {parseISO(iso).getDate()}
+                  {raqam(parseISO(iso).getDate())}
                 </button>
               );
             })}
@@ -888,15 +902,19 @@ function OyatCard() {
         <span className="mt-1.5 block rounded-full" style={{ width: 4, height: 4, background: "var(--green)", opacity: 0.7 }} />
       </div>
 
-      <p className="mt-4 text-[11px] leading-relaxed" style={{ color: "var(--muted)" }}>{tr("Alloh taolo Oli Imron surasi 200-oyatda aytadi:")}</p>
+      <p className="mt-4 text-[11px] leading-relaxed" style={{ color: "var(--muted)" }}>{tr("Alloh taolo Qur'oni Karimda shunday marhamat qiladi:")}</p>
 
       {/* Oyatning asli — ikki yonida oltin bezak */}
       <div className="mt-4 flex items-center justify-center gap-3">
         <Yulduzcha />
-        <p dir="rtl" lang="ar" className="max-w-[19rem] flex-1 text-[17px]" style={{
+        {/* SHRIFT: yengilroq va hamzasi kichikroq yozuvlar oldinga qo'yildi.
+            Scheherazade/Amiri — nozik naskh; "Noto Naskh Arabic UI" oddiy
+            Noto Naskh'dan ingichkaroq. Telefonda qaysi biri bor bo'lsa o'sha
+            ishlatiladi. Vazni 400 ga qotirildi (avval qalinroq chiqardi). */}
+        <p dir="rtl" lang="ar" className="max-w-[19rem] flex-1 text-[19px]" style={{
           color: "var(--ink)",
-          fontFamily: "'Noto Naskh Arabic','Droid Arabic Naskh','Geeza Pro','Arabic Typesetting',serif",
-          lineHeight: 2.25, wordSpacing: "0.06em",
+          fontFamily: "'Scheherazade New','Amiri','Noto Naskh Arabic UI','Noto Naskh Arabic','Traditional Arabic','Droid Arabic Naskh','Geeza Pro',serif",
+          fontWeight: 400, lineHeight: 2.5, wordSpacing: "0.08em", letterSpacing: "0.01em",
         }}>
           يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ
         </p>
@@ -1127,9 +1145,9 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
               <button onClick={() => setCalM(new Date(calM.getFullYear(), calM.getMonth() + 1, 1))} className="om-press grid h-8 w-8 place-items-center rounded-lg" style={{ background: "var(--soft)" }}><Icon n="chevronRight" size={16} style={{ color: "var(--ink)" }} /></button>
             </div>
             <div className="grid grid-cols-7 gap-1 text-center">
-              {["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"].map(dn => <span key={dn} className="py-1 text-[10px] font-semibold" style={lblS}>{dn}</span>)}
+              {KUN_QISQA_DUSH.map(dn => <span key={dn} className="py-1 text-[10px] font-semibold" style={lblS}>{tr(KUN_QISQA[dn])}</span>)}
               {calGrid().map((iso, i) => iso === null ? <span key={i} /> : (
-                <button key={i} onClick={() => setStart(iso)} className="om-press grid h-9 place-items-center rounded-lg text-[13px]" style={start === iso ? { background: "var(--green)", color: "#fff", fontWeight: 700 } : { color: "var(--ink)" }}>{parseISO(iso).getDate()}</button>
+                <button key={i} onClick={() => setStart(iso)} className="om-press grid h-9 place-items-center rounded-lg text-[13px]" style={start === iso ? { background: "var(--green)", color: "#fff", fontWeight: 700 } : { color: "var(--ink)" }}>{raqam(parseISO(iso).getDate())}</button>
               ))}
             </div>
           </div>
@@ -1175,7 +1193,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
           <IconCircle n="sparkles" /><Title>{tr("Rejangiz tayyor.")}</Title><Sub>{tr("Alloh taolo maqsadingizga yetishga sizga kuch-quvvat va bardavomlik ato etsin.")}</Sub>
           <div className="mt-6 space-y-2 rounded-2xl border p-4" style={cardS}>
             <p className="text-[11px] font-bold uppercase tracking-wider" style={lblS}>{tr("Quyidagilar keyin o'zgartirilmaydi:")}</p>
-            {([["Muddat", `${years} ${tr("yil")}`], ["Boshlanish", fmtUzFull(start)], [tr("Dam kuni"), restDay === "" ? "yo'q" : tr(KUNLAR[parseInt(restDay)])], ["Hafta boshi", tr(KUNLAR[parseInt(weekStart)])]] as [string, string][]).map(([k, v]) => (
+            {([[tr("Muddat"), tf("{n} yil", { n: years })], [tr("Boshlanish"), fmtUzFull(start)], [tr("Dam kuni"), restDay === "" ? tr("yo'q") : tr(KUNLAR[parseInt(restDay)])], [tr("Hafta boshi"), tr(KUNLAR[parseInt(weekStart)])]] as [string, string][]).map(([k, v]) => (
               <div key={k} className="flex justify-between text-sm"><span style={lblS}>{k}</span><span className="font-semibold" style={{ color: "var(--ink)" }}>{v}</span></div>
             ))}
           </div>
@@ -2241,7 +2259,7 @@ function TaqvimView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; e
             <button key={i} onClick={() => c <= p.today && c >= plan.start && setSel(c)}
               className="flex aspect-square flex-col items-center justify-center rounded-xl text-xs"
               style={{ border: "1px solid " + (c === p.today ? "var(--green)" : "var(--line)"), background: c === p.today ? "var(--soft)" : "transparent", color: "var(--ink)" }}>
-              <span>{parseISO(c).getDate()}</span>
+              <span>{raqam(parseISO(c).getDate())}</span>
               {isRest(c, plan.restDay) && c >= plan.start && c <= p.today ? <Icon n="moon" size={10} style={{ color: "var(--muted)" }} /> :
                 <span className="mt-0.5 h-1.5 w-1.5 rounded-full" style={{ background: color(c) }} />}
             </button>
@@ -2281,7 +2299,7 @@ function DayDetail(p: { date: string; onClose: () => void; plan: Plan; tasks: Ta
     return { txt: "✗ Qilinmadi", c: "var(--red)" };
   };
   return (
-    <Modal title={`${d.getDate()}-${tr(OYLAR[d.getMonth()])} · ${hijri(p.date, p.settings.hijriOffset)} · ${tr(KUNLAR[d.getDay()])}`} onClose={p.onClose}>
+    <Modal title={`${raqam(d.getDate())}-${tr(OYLAR[d.getMonth()])} · ${hijri(p.date, p.settings.hijriOffset)} · ${tr(KUNLAR[d.getDay()])}`} onClose={p.onClose}>
       {sc && (
         <p className="mb-2 rounded-lg border p-2 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
           Ibodat reytingi: <b style={{ color: "var(--green)" }}>{sc.pct}%{sc.bonus ? ` +${sc.bonus}` : ""}</b>
@@ -4673,7 +4691,7 @@ export default function App() {
             <Logo size={34} color={logoColor} />
             <div className="mt-1.5 text-[17px] font-bold leading-none tracking-tight" style={{ color: logoColor }}>{tr("Oliy maqsad")}</div>
             <div className="mt-2 text-[10.5px] font-medium uppercase tracking-wide" style={{ color: "var(--muted)" }}>
-              {parseISO(today).getDate()}-{tr(OYLAR[parseISO(today).getMonth()])} · {parseISO(today).getFullYear()} · {hijri(today, settings.hijriOffset)} · {tr(KUNLAR[parseISO(today).getDay()])}
+              {raqam(parseISO(today).getDate())}-{tr(OYLAR[parseISO(today).getMonth()])} · {raqam(parseISO(today).getFullYear())} · {hijri(today, settings.hijriOffset)} · {tr(KUNLAR[parseISO(today).getDay()])}
             </div>
           </div>
           <button onClick={() => togglePage("sozlama")} className="om-press flex flex-none flex-col items-center gap-1">
