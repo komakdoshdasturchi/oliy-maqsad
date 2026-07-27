@@ -166,7 +166,8 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- O'lchov va sanoq ---
   "O'lchov": { en: "Metric" },
   "Turkum": { en: "Category" },
-  "Turkumsiz": { en: "Uncategorized" },
+  // Vazifa kartasida `truncate` qutisida turadi — uzun matn uch nuqta bilan kesiladi
+  "Turkumsiz": { en: "No category" },
   "Papka nomi": { en: "Folder name" },
   "Turi": { en: "Type" },
   "Turi:": { en: "Type:" },
