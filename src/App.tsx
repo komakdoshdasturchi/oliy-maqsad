@@ -1,5 +1,6 @@
 ﻿import React, { useEffect, useRef, useState } from "react";
 import { Lang, TILLAR, tr, tf, setCur, getCur, raqam } from "./tillar";
+import { OYAT_SHRIFT_CSS } from "./oyat-shrift";
 
 // ================== TURLAR ==================
 interface Folder { id: string; name: string; importance: number; scope: "daily" | "oliy"; }
@@ -907,13 +908,14 @@ function OyatCard() {
       {/* Oyatning asli — ikki yonida oltin bezak */}
       <div className="mt-4 flex items-center justify-center gap-3">
         <Yulduzcha />
-        {/* SHRIFT: yengilroq va hamzasi kichikroq yozuvlar oldinga qo'yildi.
-            Scheherazade/Amiri — nozik naskh; "Noto Naskh Arabic UI" oddiy
-            Noto Naskh'dan ingichkaroq. Telefonda qaysi biri bor bo'lsa o'sha
-            ishlatiladi. Vazni 400 ga qotirildi (avval qalinroq chiqardi). */}
+        {/* SHRIFT ILOVA ICHIDA — `OyatShrift` = Amiri Quran (OFL), subset
+            holida `src/oyat-shrift.ts` da base64 ko'rinishida turadi.
+            Endi har qanday telefonda AYNAN bir xil ko'rinadi: telefonda
+            qanday arabcha shrift borligi ahamiyatsiz.
+            Ortidagilar — shrift yuklanmay qolgan holat uchun zaxira. */}
         <p dir="rtl" lang="ar" className="max-w-[19rem] flex-1 text-[19px]" style={{
           color: "var(--ink)",
-          fontFamily: "'Scheherazade New','Amiri','Noto Naskh Arabic UI','Noto Naskh Arabic','Traditional Arabic','Droid Arabic Naskh','Geeza Pro',serif",
+          fontFamily: "'OyatShrift','Scheherazade New','Amiri','Noto Naskh Arabic',serif",
           fontWeight: 400, lineHeight: 2.5, wordSpacing: "0.08em", letterSpacing: "0.01em",
         }}>
           يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ
@@ -4560,7 +4562,7 @@ export default function App() {
 
 
   const styleBlock = (
-    <style>{`
+    <style>{OYAT_SHRIFT_CSS + `
       :root {
         --bg:#F4EFE6; --card:#FFFFFF; --soft:#EFE8DB; --ink:#26221B; --muted:#8A8578;
         --line:rgba(0,0,0,0.06); --green:#2E7D57; --gold:#B8862F; --red:#C0492F; --blue:#6F7D68;
