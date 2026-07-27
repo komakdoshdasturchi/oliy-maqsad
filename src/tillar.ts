@@ -139,8 +139,11 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Yangi vazifa": { en: "New task" },
   "Yangi maqsad": { en: "New goal" },
   "Maqsad": { en: "Goal" },
-  "Oliy maqsad": { en: "Supreme Goal" },
-  "oliy maqsad": { en: "supreme goal" },
+  // ILOVA NOMI. Logo tagida, splashda, sarlavhada va bildirishnomalarda ishlatiladi.
+  // Ayni shu matn "oliy maqsad" turkumidagi vazifalar uchun ham qo'llanadi — ma'nosi bir xil.
+  // Kirill AVTOMATIK chiqadi: toKiril("Oliy maqsad") -> "Олий мақсад" (lug'atga yozish shart emas).
+  "Oliy maqsad": { en: "Ultimate goal", ar: "المقصد الأعلى" },
+  "oliy maqsad": { en: "ultimate goal", ar: "المقصد الأعلى" },
   "Reja": { en: "Plan" },
   "Reja yo'q": { en: "No plan" },
   "Yordam": { en: "Help" },

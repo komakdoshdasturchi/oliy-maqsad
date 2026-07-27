@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Telefon tizim tili O'ZBEKCHA-KIRILL bo'lganda ilova belgisi ostidagi nom.
+     `b+uz+Cyrl` — Android'ning yozuv (skript) bo'yicha til papkasi nomlash usuli. -->
+<resources>
+    <string name="app_name">Олий мақсад</string>
+    <string name="title_activity_main">Олий мақсад</string>
+</resources>

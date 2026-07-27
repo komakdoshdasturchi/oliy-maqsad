@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Telefon tizim tili INGLIZCHA bo'lganda ilova belgisi ostidagi nom.
+     Faqat nom qayta yoziladi; package_name va custom_url_scheme values/ dan olinadi. -->
+<resources>
+    <string name="app_name">Ultimate goal</string>
+    <string name="title_activity_main">Ultimate goal</string>
+</resources>

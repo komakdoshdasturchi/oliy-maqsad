@@ -82,6 +82,15 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - Sinov usuli: `npx esbuild src/tillar.ts --format=esm --outfile=X.mjs` → node bilan tr/tf ni to'g'ridan-to'g'ri sinash (localStorage yo'qligi try/catch bilan qoplangan)
 - **QOIDA:** JSX ichida qiymat bilan aralashgan matn **hech qachon** xom qoldirilmasin — butun jumla bitta `tf()` ga o'ralsin. Bo'lak-bo'lak `tr()` faqat so'z tartibi o'zgarmaydigan joyda
 
+**6-bosqich: ILOVA NOMI TARJIMA QILINDI** (2026-07-27). Logo tagidagi yozuv har tilda o'zgaradi:
+`Oliy maqsad` · `Олий мақсад` (avtomatik) · `Ultimate goal` · `المقصد الأعلى`
+- Bitta kalit — logo tagi, splash, sarlavha, **bildirishnoma sarlavhasi** va "oliy maqsad" vazifa turkumi hammasi shu yozuvdan oladi
+- Bildirishnomalarda `"Oliy Maqsad"` (bosh M) xom holda edi — `tr("Oliy maqsad")` ga o'tkazildi (3 joy). O'zbekchada bosh harf `M` → kichik `m` bo'ldi
+- `document.title` ham til bilan almashadi (brauzer yorlig'i / PWA sarlavhasi)
+- **Telefondagi ILOVA BELGISI ostidagi nom** — `android/app/src/main/res/values-en/` · `values-ar/` · `values-b+uz+Cyrl/` papkalariga `strings.xml` qo'shildi (faqat `app_name` va `title_activity_main`; `package_name`/`custom_url_scheme` `values/` dan meros)
+- **CHEKLOV (foydalanuvchiga aytilgan):** launcher nomi **telefon TIZIM tiliga** ergashadi, ilova ichidagi til tanloviga EMAS. Android web/Capacitor ilovasiga ish paytida launcher yorlig'ini o'zgartirishga ruxsat bermaydi — bu launcher ikonka cheklovi bilan bir xil sabab
+- `public/manifest.json` (PWA o'rnatish nomi) statik, o'zbekcha qoladi
+
 **QOLGAN BOSQICHLAR (~300 ta):** qisqa iboralar 13-30 belgi (~183) · jumlalar 31-60 (~69) · uzun matnlar 60+ (~49, diniy matnlardan tashqari) · **Qur'on va hadis — ALOHIDA**
 - **QUR'ON/HADIS QOIDASI:** ularni o'zimiz ingliz tiliga o'girmaymiz. E'tirof etilgan tayyor tarjimalardan olinadi (Sahih International / Pickthall / Yusuf Ali) va manbasi ko'rsatiladi
 - Arabcha tarjimasi: diniy atamalar uchun **arab tilini biladigan odam ko'rib chiqishi** kerak — mashina tarjimasi yetarli emas

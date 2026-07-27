@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Telefon tizim tili ARABCHA bo'lganda ilova belgisi ostidagi nom. -->
+<resources>
+    <string name="app_name">المقصد الأعلى</string>
+    <string name="title_activity_main">المقصد الأعلى</string>
+</resources>

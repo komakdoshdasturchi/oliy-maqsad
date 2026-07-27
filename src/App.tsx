@@ -90,7 +90,7 @@ function hijri(dISO: string, off: number) {
 }
 
 function notify(body: string) {
-  try { if ("Notification" in window && Notification.permission === "granted") new Notification("Oliy Maqsad", { body }); } catch { }
+  try { if ("Notification" in window && Notification.permission === "granted") new Notification(tr("Oliy maqsad"), { body }); } catch { }
 }
 
 // Capacitor plaginlariga xavfsiz kirish (importsiz — AI Studio saytida ham ishlaydi)
@@ -4284,6 +4284,10 @@ export default function App() {
     const el = document.documentElement;
     el.dir = lang === "ar" ? "rtl" : "ltr";
     el.lang = lang === "uzk" ? "uz" : lang;
+    // Brauzer yorlig'i va PWA sarlavhasi ham tilga ergashadi.
+    // DIQQAT: telefondagi ILOVA BELGISI ostidagi nom bunga bo'ysunmaydi —
+    // uni Android tizim tilidan oladi (android/app/src/main/res/values*/strings.xml)
+    document.title = tr("Oliy maqsad");
   }, [lang]);
 
   useEffect(() => {
@@ -4383,9 +4387,9 @@ export default function App() {
           const wanted = days && days.length ? days : [0, 1, 2, 3, 4, 5, 6];
           const eff = wanted.filter(wd => wd !== restWd);
           if (eff.length === 7) {
-            list.push({ id: id++, title: "Oliy Maqsad", body, smallIcon: "ic_stat_om", schedule: { on: { hour: h, minute: mi }, allowWhileIdle: true } });
+            list.push({ id: id++, title: tr("Oliy maqsad"), body, smallIcon: "ic_stat_om", schedule: { on: { hour: h, minute: mi }, allowWhileIdle: true } });
           } else {
-            eff.forEach(wd => list.push({ id: id++, title: "Oliy Maqsad", body, smallIcon: "ic_stat_om", schedule: { on: { weekday: wd + 1, hour: h, minute: mi }, allowWhileIdle: true } }));
+            eff.forEach(wd => list.push({ id: id++, title: tr("Oliy maqsad"), body, smallIcon: "ic_stat_om", schedule: { on: { weekday: wd + 1, hour: h, minute: mi }, allowWhileIdle: true } }));
           }
         };
         if (settings.remindersOn) settings.reminderTimes.forEach(t => {
