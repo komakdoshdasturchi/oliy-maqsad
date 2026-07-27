@@ -8,7 +8,7 @@ export type Lang = "uz" | "uzk" | "en" | "ar";
 export const TILLAR: { id: Lang; nom: string; izoh: string; belgi: string; rang: string; grad: string; holat: "tayyor" | "sinov" | "tez" }[] = [
   { id: "uz", nom: "O'zbek tili", izoh: "Lotin", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
   { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
-  { id: "en", nom: "English language", izoh: "Sinov · qisman tarjima", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "sinov" },
+  { id: "en", nom: "English language", izoh: "Latin", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tayyor" },
   { id: "ar", nom: "اللغة العربية", izoh: "Sinov · o'ngdan chapga", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "sinov" },
 ];
 
@@ -186,6 +186,7 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Jami nechta?": { en: "How many in total?" },
   "Jarayon:": { en: "Progress:" },
   "O'rtacha:": { en: "Average:" },
+  "O'rtacha": { en: "Average" },
   "Tanlangan:": { en: "Selected:" },
   "Sanaladigan": { en: "Countable" },
   "SANALADIGAN": { en: "COUNTABLE" },
@@ -480,6 +481,154 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Yo'q, hozir kerak emas": { en: "No, not needed now" },
   "Keyinroq davom ettiraman.": { en: "I will continue later." },
   "Keyinroq sozlashim mumkin.": { en: "I can set this up later." },
+
+  // ===== 4-BOSQICH: jumlalar va uzun matnlar =====
+
+  // --- QUR'ON VA HADIS ---
+  // DIQQAT: bu matnlar O'ZIMIZ tarjima QILMADIK. E'tirof etilgan ingliz
+  // tarjimalaridan olindi. Manbani o'zgartirmang, tekshirmasdan tahrirlamang.
+  //   · Oyat  — Sahih International (Qur'on 3:200)
+  //   · Hadis — Muhsin Khan (Sahih al-Bukhari 6465)
+  "Alloh taolo Oli Imron surasi 200-oyatda aytadi:": { en: "Allah the Exalted says in Surah Al-Imran, verse 200:" },
+  "Ey mo'minlar! Sabr qilinglar va sabr-toqat qilishda ustun bo'linglar hamda doimo belingiz bog'liq bo'lib turingiz! Va Allohdan qo'rqingiz! Shoyad najot topgaysizlar!": { en: "O you who have believed, persevere and endure and remain stationed and fear Allah that you may be successful." },
+  "Oisha roziyallohu anhodan rivoyat qilindi: «Nabiy sollallohu alayhi vasallamdan: “Amallarning qay biri Allohga eng suyukli?” deb so'rashdi. U zot:": { en: "Narrated Aisha: The Prophet ﷺ was asked, “Which deeds are most beloved to Allah?” He said:" },
+  "“Oz bo'lsa ham, davomlirog'i”": { en: "“The most regular constant ones, even if few”" },
+  ", dedilar. Yana: “Amallardan toqatingiz yetadiganini zimmangizga olinglar”, dedilar.»": { en: ". He added, “Take on only those deeds which are within your ability.”" },
+  "Sahihul Buxoriy, 81-kitob, 6465-hadis.": { en: "Sahih al-Bukhari, Book 81, Hadith 6465." },
+  "Assalomu alaykum va rohmatullohi va barokatuhu": { en: "As-salamu alaykum wa rahmatullahi wa barakatuh" },
+  ", solih amallardan bardavom bo'l! Garchi u oz bo'lsa ham. Alloh taolo kuch-quvvat bersin!": { en: ", be constant in righteous deeds! Even if they are few. May Allah the Exalted grant you strength!" },
+  "Alloh taolo maqsadingizga yetishga sizga kuch-quvvat va bardavomlik ato etsin.": { en: "May Allah the Exalted grant you strength and constancy to reach your goal." },
+  "Men sizga Oliy maqsadingizga erishishingiz uchun ko'makdosh bo'laman, biiznillah.": { en: "I will be your companion in reaching your ultimate goal, bi idhnillah." },
+  "Dam tugadi — yangi pomodoroni o'zingiz boshlaysiz. Bismillah!": { en: "Break is over — start the next pomodoro yourself. Bismillah!" },
+
+  // --- Ibodat bo'limi ---
+  "Ibodatlar bo'limi uchun bir savol": { en: "One question for the worship section" },
+  "Namoz belgilash to'g'ri sozlanishi uchun jinsingizni tanlang (bir marta so'raladi, saqlanadi):": { en: "Choose your gender so prayer marking is set up correctly (asked once, then saved):" },
+  "Erkaklarda har namozda “masjidda o'qidim” tugmasi bo'ladi — reytingda balandroq baholanadi.": { en: "For men, each prayer has an “I prayed at the mosque” button — it is rated higher." },
+  "Kunlik vazifalar foiziga aralashmaydi — alohida hisoblanadi. Masjid va nafllar bonus beradi.": { en: "It does not affect the daily task percentage — it is counted separately. Mosque and nafl prayers give a bonus." },
+  "Xatm rejasi o'chirilsinmi? (kunlik belgilar tarixda qoladi)": { en: "Delete the khatm plan? (daily marks stay in the history)" },
+
+  // --- Uyqu ---
+  "Hali uyqu rejasi yo'q — quyida sozlang. Reja qo'yilgach, Bugun sahifasida har kuni belgilab borasiz.": { en: "No sleep schedule yet — set one up below. Once set, you mark it each day on the Today page." },
+  "Kuniga faqat bir marta belgilanadi. Kam uxlash — yuqori reyting.": { en: "Marked only once per day. Less sleep — higher rating." },
+  "Eslatma: bu ilovada uyqu reytingi teskari — rejadan KAM uxlash yuqori baholanadi.": { en: "Note: in this app the sleep rating is inverted — sleeping LESS than planned is rated higher." },
+  "Belgilagach qaytarib o'zgartirib bo'lmaydi. Keyin yana uxlasangiz + bilan qo'shasiz.": { en: "Once marked it cannot be changed. If you sleep again later, add it with +." },
+  "Avval necha soat uxlaganingizni kiriting.": { en: "First enter how many hours you slept." },
+  "soat. Rejadan kam uxlash yuqori baholanadi.": { en: "hours. Sleeping less than planned is rated higher." },
+  "Rejadan {n} soat kam uxladingiz — reyting yuqori": { en: "You slept {n} hour less than planned — high rating|You slept {n} hours less than planned — high rating" },
+  "Rejadan {n} soat ko'p uxladingiz — reyting pasayadi": { en: "You slept {n} hour more than planned — rating drops|You slept {n} hours more than planned — rating drops" },
+  "Uxlashdan 1 soat oldin ekranlardan uzoqlashing va yengil kitob o'qing. Uxlashdan oldingi zikrlarni unutmang.": { en: "Step away from screens an hour before bed and read a light book. Do not forget the dhikr before sleep." },
+
+  // --- Pomodoro ---
+  "Ekran qorayadi, faqat taymer va bugungi hisob ko'rinadi, ekran o'chmaydi. Chuqur diqqat uchun telefonning «Bezovta qilinmasin» rejimini ham yoqib qo'ying.": { en: "The screen dims to show only the timer and today's count, and stays awake. For deep focus, also turn on your phone's «Do not disturb» mode." },
+  "Ilovadan bemalol chiqishingiz mumkin — vaqt tugaganda telefon o'zi xabar beradi.": { en: "You can leave the app freely — your phone will notify you when the time is up." },
+  "Sikl — kunlik pomodoro maqsadingiz. Yetganingizda hisob yashil rangda ko'rinadi.": { en: "Cycle — your daily pomodoro target. When you reach it, the count turns green." },
+  "Fokusdan chiqish (taymer davom etadi)": { en: "Exit focus (the timer keeps running)" },
+  "Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)": { en: "Stop the timer? (this pomodoro will not be counted)" },
+  "Yangi pomodoroni o'zingiz boshlaysiz.": { en: "You start the next pomodoro yourself." },
+  "Ish vaqti tugadi! Bu vaqtda nima qilganingizni belgilang.": { en: "Work time is over! Mark what you did during this time." },
+  "Bu vaqtda nima qilganingizni belgilang.": { en: "Mark what you did during this time." },
+  "Bu vaqtda nima qildingiz? Tanlangan vazifaga": { en: "What did you do in this time? To the selected task" },
+  "Qaysi vazifaga tegishli ekanini tanlang (yoki «Boshqa»).": { en: "Choose which task it belongs to (or «Other»)." },
+  "Qancha vaqt sarflaganingizni kiriting.": { en: "Enter how much time you spent." },
+  "Boshqa ish — vazifalarga yozilmasin": { en: "Other work — do not log it to any task" },
+  "hisoblanadi — qismiy bajarilish beradi, ortiqchasi “ziyoda”ga o'tadi.": { en: "is counted — it gives partial completion, and the surplus goes to “extra”." },
+
+  // --- Vazifa qo'shish va tahrirlash ---
+  "Hali vazifa yo'q. Yuqoridagi tugma orqali qo'shing.": { en: "No tasks yet. Add one with the button above." },
+  "Bugunga vazifa yo'q. Vazifalar ro'yxati orqali qo'shing.": { en: "No tasks for today. Add one from the task list." },
+  "Hali oliy maqsad vazifasi yo'q.": { en: "No ultimate goal task yet." },
+  "Vazifa nomi bo'yicha qidirish...": { en: "Search by task name..." },
+  "Tugash vaqti boshlanishdan keyin bo'lsin": { en: "The end time must come after the start" },
+  "Tugash vaqti boshlanishdan keyin bo'lishi kerak.": { en: "The end time must come after the start time." },
+  "Tugash sanasi boshlanishdan keyin bo'lishi kerak.": { en: "The end date must come after the start date." },
+  "Taxminan necha kunda tugataman?": { en: "In roughly how many days will I finish it?" },
+  "Sanaladigan vazifada muddat majburiy — qachongacha yetkazasiz?": { en: "A deadline is required for a countable task — by when will you finish?" },
+  "Vazifaning kunlik vaqti {v} — undan KAM vaqt ajratib bo'lmaydi.": { en: "The task's daily time is {v} — you cannot allocate LESS than that." },
+  "Vazifa katakchasini bossangiz — belgilash oynasi ochiladi: qildim, sababli yoki qilmadim.": { en: "Tap a task's box and the marking window opens: done, excused, or not done." },
+  "Bu vazifani tugatdingizmi? Tabriklaymiz!": { en: "Have you finished this task? Congratulations!" },
+  "Vazifani tashlab qo'yasizmi? Bu statistikada salbiy iz qoldiradi.": { en: "Abandon this task? It will leave a negative mark in your statistics." },
+  "Bu vazifa hali boshlanmagan. Butunlay o'chirilsinmi?": { en: "This task has not started yet. Delete it completely?" },
+  "Arxivlansinmi? Tarixi saqlanadi, ro'yxatdan chiqadi.": { en: "Archive it? Its history is kept, and it leaves the list." },
+  "Ko'pi bilan 7 kun. Undan ortig'i — vazifani tashlab qo'yish hisoblanadi.": { en: "7 days at most. Anything longer counts as abandoning the task." },
+  "Papkani o'chirish uchun avval ichidagi vazifalarni boshqa joyga ko'chiring.": { en: "To delete a folder, first move the tasks inside it elsewhere." },
+  "Tartibni o'zgartiring — birinchi vazifa «Keyingi vazifa» kartasida chiqadi.": { en: "Change the order — the first task appears on the «Next task» card." },
+  "Vaqtlar faqat reja uchun - belgilashni kun davomida istalgan payt qilasiz.": { en: "Times are only a plan — you can mark them at any point during the day." },
+  "Vazifaga tegishli bo'lsa — o'sha vazifaga «ziyoda» qo'shiladi va statistikaga kiradi.": { en: "If it belongs to a task, «extra» is added to that task and counted in the statistics." },
+  "Rejadan ortiq ish qilsangiz — Bugun'dagi “Qo'shimcha ish” bo'limiga yozing. Vijdon — eng adolatli guvoh.": { en: "If you do more than planned, log it in the “Extra work” section on Today. Your conscience is the fairest witness." },
+  "Masalan: qo'shimcha kitob o'qidim": { en: "For example: I read an extra book" },
+
+  // --- Oliy maqsad va yillik maqsadlar ---
+  "Oliy maqsadlaringizni belgilang": { en: "Set your ultimate goals" },
+  "Maqsadingizni iloji boricha aniq va batafsil yozing.": { en: "Write your goal as precisely and fully as you can." },
+  "Maqsadni qayta shakllantirasizmi?": { en: "Reshape the goal?" },
+  "Maqsadni qayta shakllantirish (tarix saqlanadi)": { en: "Reshape the goal (history is kept)" },
+  "Maqsadingizga umumiy qancha vaqtda yetishni niyat qilgansiz?": { en: "In how much time do you intend to reach your goal?" },
+  "Qachondan harakatga kirmoqchisiz?": { en: "When do you want to begin?" },
+  "Masalan: 5 yil ichida kasbimda yetuk mutaxassis bo'lish va sog'lom turmush tarziga o'tish...": { en: "For example: becoming an expert in my field within 5 years and moving to a healthy lifestyle..." },
+  "Yillik raqamli maqsad — masalan 10 kitob": { en: "A yearly numeric goal — for example 10 books" },
+  "Yillik raqamli maqsadlar hali yo'q — bosib qo'shing": { en: "No yearly numeric goals yet — tap to add one" },
+  "Yil davomida nimani nechta qilmoqchisiz? Masalan «10 kitob», «100 dars».": { en: "How many of what do you want to do this year? For example «10 books», «100 lessons»." },
+  "Yil davomida nimani nechta qilishni belgilang — masalan «yiliga 10 kitob», «100 dars». Bu raqamlar Maqsad bo'limidagi progressni yuritadi.": { en: "Set how many of what you will do this year — for example «10 books a year», «100 lessons». These numbers drive the progress in the Goal section." },
+  "«{nom}» turidagi oliy vazifa tugatilganda hisob o'zi +1 bo'ladi.": { en: "When an ultimate task of type «{nom}» is completed, the count increases by 1 automatically." },
+  "Bu maqsad qo'lda sanaladi — Bugun sahifasidagi «+1» tugmasi bilan.": { en: "This goal is counted manually — with the «+1» button on the Today page." },
+  "Bugun bo'limida «+1» tugmasi chiqadi — har safar o'zingiz bosasiz.": { en: "A «+1» button appears in the Today section — you tap it each time." },
+  "Masalan: “100 ta dars” — kunlik normasiz, umumiy son bilan boriladigan ishlar. “+” bilan qo'shing.": { en: "For example: “100 lessons” — work tracked by a total count with no daily quota. Add it with “+”." },
+  "Kunlik ulush qanday o'lchanadi?": { en: "How is the daily share measured?" },
+
+  // --- Kun, hafta, dam ---
+  "Bugun dam kuni — halovat oling": { en: "Today is a rest day — take your ease" },
+  "Dam kuni foizga kirmaydi — halovat kuni.": { en: "The rest day is excluded from the percentage — it is a day of ease." },
+  "Haftalik dam olish kuningizni belgilang!": { en: "Choose your weekly rest day!" },
+  "Haftalik statistika shu kundan hisoblanadi.": { en: "Weekly statistics are counted from this day." },
+  "Yaxshi hordiq oling. Hafta yakunini ko'rib chiqing.": { en: "Rest well. Review your week's summary." },
+  "Ajoyib — bugungi reja to'liq bajarildi": { en: "Excellent — today's plan is fully complete" },
+  "Yarmidan oshdingiz — davom eting": { en: "You are past halfway — keep going" },
+  "Rejadan biroz ortdasiz — bugun bir oz ko'proq harakat qiling.": { en: "You are slightly behind plan — push a little harder today." },
+  "Bugungi ishlaringizni tekshirib qo'ying.": { en: "Check over today's tasks." },
+  "Bugun qanday o'tdi? (bir jumla — Taqvimda saqlanadi)": { en: "How did today go? (one sentence — saved in the Calendar)" },
+  "O'tgan kunlar o'zgartirilmaydi.": { en: "Past days cannot be changed." },
+  "Oylik yakun oyning oxirgi dam kunida ochiladi.": { en: "The monthly summary opens on the last rest day of the month." },
+  "Sababingiz qanchalik o'rinli? (1 — bahona, 10 — chindan uzr)": { en: "How valid is your reason? (1 — an excuse, 10 — a genuine one)" },
+  "(ixtiyoriy — erta tugatsangiz reyting oshadi)": { en: "(optional — finishing early raises your rating)" },
+
+  // --- Vazn ---
+  "Hozirgi vazningiz qancha? (haftalik o'lchov)": { en: "What is your current weight? (weekly measurement)" },
+  "Vazningizni nazorat qilib borishni istaysizmi?": { en: "Do you want to keep track of your weight?" },
+
+  // --- Sozlamalar, zaxira, ma'lumot ---
+  "Ma'lumotlaringiz telefon xotirasiga saqlanadi": { en: "Your data is stored in your phone's memory" },
+  "Zaxira nusxa olganingizga ancha bo'ldi - Sozlamalardan yuklab oling.": { en: "It has been a while since your last backup — download one from Settings." },
+  "Zaxira nusxa hozirgina yuklab berildi. Barcha vazifalar, belgilashlar va statistika butunlay o'chadi.": { en: "A backup has just been downloaded. All tasks, marks and statistics will be erased completely." },
+  "Fayldagi ma'lumot ilovaga yuklanadi": { en: "The data in the file will be loaded into the app" },
+  "Hozirgi barcha ma'lumotlaringiz fayldagi bilan almashtiriladi. Bu amalni ortga qaytarib bo'lmaydi.": { en: "All your current data will be replaced with the file's. This action cannot be undone." },
+  "«O'rnatish» amaldagi ma'lumotni almashtiradi — ogohlantiriladi.": { en: "«Install» replaces the current data — you will be warned first." },
+  "Bu fayl Oliy Maqsad zaxirasi emas.": { en: "This file is not an Ultimate goal backup." },
+  "Fayl buzilgan yoki boshqa ilovaniki bo'lishi mumkin.": { en: "The file may be corrupted or belong to another app." },
+  "Bu amalni ortga qaytarib bo'lmaydi. Rostdan ham hammasini o'chirasizmi?": { en: "This action cannot be undone. Do you really want to delete everything?" },
+  "Butunlay noldan boshlash (hammasi o'chadi)": { en: "Start over completely (everything is erased)" },
+  "Kirish sahifasi qaytadan ochiladi, lekin barcha tarix — belgilashlar, vazifalar, xulosalar — saqlanadi.": { en: "The welcome page opens again, but all history — marks, tasks and notes — is kept." },
+  "Quyidagilar keyin o'zgartirilmaydi:": { en: "The following cannot be changed later:" },
+  "Keyingi 7 kun davomida qayta o'zgartirib bo'lmaydi.": { en: "It cannot be changed again for the next 7 days." },
+  "Majburiy bo'lim - to'ldirish shart": { en: "Required section — must be filled in" },
+  "Ma'lumot hali yetarli emas": { en: "Not enough data yet" },
+
+  // --- Yordam, yangiliklar, kanal ---
+  "Ilovaning har bo'limi haqida qisqa izoh": { en: "A short note about each section of the app" },
+  "Yangiliklar va yangilanishlar shu yerda": { en: "News and updates appear here" },
+  "Ro'yxat, qidiruv, arxiv, uyqu rejasi": { en: "List, search, archive, sleep schedule" },
+  "Quyidagi to'rt katakcha bosiladi — ibodat, uyqu, pomodoro va eslatmalar shu yerdan ochiladi.": { en: "The four boxes below are tappable — worship, sleep, pomodoro and reminders open from here." },
+  "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": { en: "Use the + button at the bottom to add daily tasks, ultimate goal tasks and yearly goals." },
+  "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": { en: "button to add a daily task or an ultimate goal task." },
+  "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": { en: "Add a task and mark it for a few days — results, charts and the weekly report will appear here." },
+  "«Oliy maqsad» telegram kanali": { en: "The «Ultimate goal» Telegram channel" },
+  "«Oliy maqsad» kanaliga o'tasizmi?": { en: "Go to the «Ultimate goal» channel?" },
+  "O'zingizga eslatma yoki iqtibos...": { en: "A reminder or quote for yourself..." },
+  "O'zingiz uchun iqtibos yoki eslatma yozing — Bugun sahifasining tanlangan joyida ko'rinib turadi.": { en: "Write a quote or reminder for yourself — it stays visible in your chosen spot on the Today page." },
+  "Joylashuv: Tepada — progress ostida · O'rtada — vazifalardan oldin · Pastda — kun xulosasidan oldin.": { en: "Position: Top — under the progress · Middle — before the tasks · Bottom — before the day's summary." },
+  "Masalan: yaxshi, unumli kun bo'ldi...": { en: "For example: it was a good, productive day..." },
+  "Tarjimasi hali tayyor bo'lmagan matnlar o'zbekcha ko'rinadi.": { en: "Text that is not yet translated is shown in Uzbek." },
+  "Ilova tilini tanlang. Til istalgan vaqtda o'zgartirilishi mumkin.": { en: "Choose the app language. You can change it at any time." },
 };
 
 // Avtomatik kirill o'girish xato chiqqan matnlar (istisno):  "Ma'no": "Маъно"
