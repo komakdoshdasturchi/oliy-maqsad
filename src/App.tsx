@@ -35,7 +35,6 @@ interface Plan {
 interface Settings { hijriOffset: number; remindersOn: boolean; reminderTimes: string[]; dark: boolean; lastBackup: string | null; }
 interface PomoCfg { work: number; rest: number; cycles?: number; }
 interface PomoState { phase: "work" | "rest"; endsAt: number; pausedLeft: number | null; mode?: "focus" | "open"; }
-interface Quote { id: string; text: string; pos: "top" | "mid" | "bottom"; }
 interface KhatmCfg { start: string; end: string; mode: "vaqt" | "pora"; daily: number; }
 interface IbadatDay { zikr: boolean[]; pr: Record<string, boolean[]>; masjid: Record<string, boolean>; tahajjud: number; nafl: number; khatm: boolean; }
 type IbadatLog = Record<string, IbadatDay>;
@@ -1523,7 +1522,6 @@ function BugunView(p: {
   ib: IbadatLog; khatm: KhatmCfg | null; dayMode: DayMode;
   ui: Record<string, boolean>;
   pomoLog: Record<string, { c: number; m: number }>;
-  quotes: Quote[];
   setLogs: React.Dispatch<React.SetStateAction<Logs>>;
   setExtras: React.Dispatch<React.SetStateAction<Extra[]>>; setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   setCounts: React.Dispatch<React.SetStateAction<Record<string, Record<string, number>>>>;
@@ -1835,14 +1833,6 @@ function BugunView(p: {
     </div>
   );
 
-  // shaxsiy iqtiboslar — tanlangan joyda ko'rinadi (Sozlamalarda boshqariladi)
-  const quotesAt = (pos: Quote["pos"]) => p.quotes.filter(q => q.pos === pos).map(q => (
-    <Card key={q.id} style={{ borderInlineStartWidth: 3, borderInlineStartColor: "var(--gold)" }}>
-      <p className="text-sm italic leading-relaxed" style={{ color: "var(--ink)" }}>
-        <Icon n="quote" size={14} style={{ color: "var(--gold)", marginInlineEnd: 6, verticalAlign: "-2px" }} />{q.text}
-      </p>
-    </Card>
-  ));
 
   const CountBlock = countTasks.length > 0 || true ? (
     <Sec id="sanaladigan" title={tr("Sanaladigan vazifalar")} icon="hash" accent="var(--blue)" ui={ui} setUi={setUi}
@@ -1904,7 +1894,6 @@ function BugunView(p: {
     return (
       <div className="space-y-4">
         {Salom}
-        {quotesAt("top")}{quotesAt("mid")}{quotesAt("bottom")}
         {IbadatBlock}
         <Card className="text-center">
           <div className="mx-auto mb-2 grid h-14 w-14 place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="moon" size={28} /></div>
@@ -1970,7 +1959,6 @@ function BugunView(p: {
 
       {MiniTiles}
 
-      {quotesAt("top")}
 
       {backupOld && <Card style={{ borderColor: "var(--gold)" }}><p className="text-sm" style={{ color: "var(--ink)" }}>{tr("Zaxira nusxa olganingizga ancha bo'ldi - Sozlamalardan yuklab oling.")}</p></Card>}
 
@@ -1994,7 +1982,6 @@ function BugunView(p: {
 
       {weightToday && <WeightCard onSave={v => p.setWeights(ws => [...ws, { date: today, kg: v }])} />}
 
-      {quotesAt("mid")}
 
       <Sec id="vazifalar" title={tr("Bugungi vazifalar")} icon="list" accent="var(--green)" ui={ui} setUi={setUi}
         right={<span>{st.done}/{Math.max(st.counted - st.excused, 0)}</span>}>
@@ -2092,7 +2079,6 @@ function BugunView(p: {
         ))}
       </Sec>
 
-      {quotesAt("bottom")}
 
       {NoteCard}
       <OyatCard />
@@ -4088,12 +4074,9 @@ function TilPage(p: { lang: Lang; setLang: React.Dispatch<React.SetStateAction<L
 }
 
 // ================== SOZLAMALAR ==================
-function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.SetStateAction<Settings>>; setPlan: React.Dispatch<React.SetStateAction<Plan | null>>; today: string; allData: () => Record<string, unknown>; quotes: Quote[]; setQuotes: React.Dispatch<React.SetStateAction<Quote[]>>; lang: Lang; openTil: () => void }) {
+function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.SetStateAction<Settings>>; setPlan: React.Dispatch<React.SetStateAction<Plan | null>>; today: string; allData: () => Record<string, unknown>; lang: Lang; openTil: () => void }) {
   const { settings, setSettings, lang } = p;
-  const [qText, setQText] = useState("");
-  const [qPos, setQPos] = useState<Quote["pos"]>("top");
-  const [qEdit, setQEdit] = useState<Quote | null>(null);
-  const POS_N: Record<Quote["pos"], string> = { top: tr("Tepada"), mid: tr("O'rtada"), bottom: tr("Pastda") };
+
   const fileRef = useRef<HTMLInputElement>(null);
   const [showHelp, setShowHelp] = useState(false);
   const openTelegram = async () => {
@@ -4257,36 +4240,6 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
 
-      <SecLabel icon="quote">{tr("Shaxsiy iqtiboslar")}</SecLabel>
-      <Card>
-        <p className="mb-2 text-[11px]" style={lblS}>{tr("O'zingiz uchun iqtibos yoki eslatma yozing — Bugun sahifasining tanlangan joyida ko'rinib turadi.")}</p>
-        {p.quotes.map(q => (
-          <div key={q.id} className="mb-1.5 flex items-start gap-2 rounded-xl border px-3 py-2" style={cardS}>
-            <span className="min-w-0 flex-1 text-sm italic" style={{ color: "var(--ink)" }}>{q.text}</span>
-            <span className="flex-none text-[10px]" style={lblS}>{POS_N[q.pos]}</span>
-            <button onClick={() => { setQEdit(q); setQText(q.text); setQPos(q.pos); }} className="flex-none" style={{ color: "var(--green)" }}><Icon n="pencil" size={15} /></button>
-            <button onClick={async () => { if (await omConfirm(tr("Iqtibos o'chirilsinmi?"))) p.setQuotes(qs => qs.filter(x => x.id !== q.id)); }} className="flex-none" style={{ color: "var(--red)" }}><Icon n="trash" size={15} /></button>
-          </div>
-        ))}
-        <textarea value={qText} onChange={e => setQText(e.target.value)} rows={2} placeholder={tr("O'zingizga eslatma yoki iqtibos...")} className={inpC + " mb-2"} style={inpS} />
-        <div className="mb-2 flex gap-1.5">
-          {(["top", "mid", "bottom"] as const).map(ps => (
-            <button key={ps} onClick={() => setQPos(ps)} className="flex-1 rounded-lg border py-1.5 text-xs font-medium"
-              style={qPos === ps ? { background: "var(--gold)", color: "#fff", borderColor: "var(--gold)" } : { ...cardS, color: "var(--ink)" }}>{POS_N[ps]}</button>
-          ))}
-        </div>
-        <div className="flex gap-2">
-          <button onClick={() => {
-            if (!qText.trim()) return;
-            if (qEdit) p.setQuotes(qs => qs.map(x => x.id === qEdit.id ? { ...x, text: qText.trim(), pos: qPos } : x));
-            else p.setQuotes(qs => [...qs, { id: uid(), text: qText.trim(), pos: qPos }]);
-            setQText(""); setQEdit(null);
-          }} className="flex-1 rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{qEdit ? tr("Saqlash") : "+ " + tr("Qo'shish")}</button>
-          {qEdit && <button onClick={() => { setQEdit(null); setQText(""); }} className="rounded-lg border px-4 py-2 text-sm" style={{ ...cardS, color: "var(--muted)" }}>{tr("Bekor")}</button>}
-        </div>
-        <p className="mt-2 text-[10px]" style={lblS}>{tr("Joylashuv: Tepada — progress ostida · O'rtada — vazifalardan oldin · Pastda — kun xulosasidan oldin.")}</p>
-      </Card>
-
       <SecLabel icon="target">{tr("Maqsad")}</SecLabel>
       <Card style={{ borderColor: "var(--gold)" }}>
         <button onClick={replan} className="mb-2 w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
@@ -4363,7 +4316,7 @@ export default function App() {
   const [pomo, setPomo] = useState<PomoState | null>(null);
   const [pomoAsk, setPomoAsk] = useState<{ min: number } | null>(null);
   const [pomoModeAsk, setPomoModeAsk] = useState(false);
-  const [quotes, setQuotes] = useStored<Quote[]>("om3_quotes", []);
+
   const [news, setNews] = useStored<string>("om3_news", "");
   const [hints, setHints] = useStored<Record<string, boolean>>("om3_hints", {});
   const doneHint = (k: string) => setHints(h => h[k] ? h : { ...h, [k]: true });
@@ -4714,7 +4667,7 @@ export default function App() {
           <VazifalarPage today={today} plan={plan} folders={folders} tasks={tasks} sleepCfg={sleepCfg} countLog={countLog}
             setFolders={setFolders} setTasks={setTasks} setSleepCfg={setSleepCfg} setPlan={setPlan} />
         ) : page === "sozlama" ? (
-          <SozlamaPage settings={settings} setSettings={setSettings} setPlan={setPlan} today={today} allData={allData} quotes={quotes} setQuotes={setQuotes} lang={lang} openTil={() => setPage("til")} />
+          <SozlamaPage settings={settings} setSettings={setSettings} setPlan={setPlan} today={today} allData={allData} lang={lang} openTil={() => setPage("til")} />
         ) : page === "til" ? (
           <TilPage lang={lang} setLang={setLang} onBack={() => setPage("sozlama")} />
         ) : page === "pomo" ? (
@@ -4728,7 +4681,7 @@ export default function App() {
               ib={ib} khatm={khatm} dayMode={dayMode} ui={ui}
               setLogs={setLogs} setExtras={setExtras} setTasks={setTasks} setCounts={setCounts} setCountLog={setCountLog}
               setWeights={setWeights} setNotes={setNotes} setSleepLog={setSleepLog}
-              setDayMode={setDayMode} setUi={setUi} pomoLog={pomoLog} quotes={quotes}
+              setDayMode={setDayMode} setUi={setUi} pomoLog={pomoLog}
               openCountForm={() => setCountForm(true)} openIbadat={() => setPage("ibodat")}
               openUyqu={() => setPage("uyqu")} openSozlama={() => setPage("sozlama")}
               openPomo={() => setPage("pomo")} openVazifalar={() => setPage("vazifalar")} openStat={() => setTab("stat")} startPomo={startPomo}
