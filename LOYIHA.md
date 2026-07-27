@@ -95,6 +95,11 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - package.json da @google/genai qoldiq turibdi — zarari yo'q
 - **NewsModal qoidasi:** yangiliklar oynasiga "Bu oyna bir marta ko'rinadi" kabi pastki izoh QO'SHILMAYDI. Faqat: logo+sarlavha, oltin versiya/sana qatori, ✕, raqamlangan ro'yxat. Keyingi yangilanishda NEWS_VER/LABEL/DATE/ITEMS ni yangilash kifoya (hozir v9)
 - **KEYINGI YANGILANISHDA ESLATISH:** ilovaning **ommaga mosligi** (mass-market) haqida gaplashish — foydalanuvchi so'radi
+- **!!! TARJIMA ISHLARI TUGAGACH ESLATISH (foydalanuvchi 2026-07-27 da so'radi): andoza qoldiqlarini tozalash.** AI Studio namunasidan qolgan, hech kim ataylab qo'shmagan (`package.json` nomi hali ham `"react-example"`, `index.html`/`index.css` 19-iyuldan beri o'zgarmagan):
+  1. `index.html` dagi `<script src="https://cdn.tailwindcss.com">` — **keraksiz**, Tailwind allaqachon `@tailwindcss/vite` orqali ichiga qurilgan. Oflayn bekor so'rov
+  2. `index.css` dagi `@import url(fonts.googleapis.com...)` — oflayn yuklanmaydi, telefonda Inter baribir ko'rinmaydi (Roboto ga tushadi). Shriftni ilova ichiga joylash kerak
+  3. `index.css` dagi namuna ranglari (`#fafafa`, `#171717`) — dizaynga mos emas, App.tsx styleBlock ustidan yozadi
+  - **EHTIYOT:** `index.css` butunlay o'lik EMAS — `main.tsx` uni yuklaydi va ichidagi `* { transition-property: ... }` qoidasi butun ilovada ishlaydi. O'chirishdan oldin o'sha qism ko'chirib olinsin
 - **SINOVDA TEKSHIRISH:** begona odam "Oliy maqsad belgilash"ni topa oladimi (u pastdagi + menyusiga ko'chirilgan)
 
 ## KELAJAK REJALARI
