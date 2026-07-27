@@ -4,7 +4,7 @@
 type Lang = "uz" | "uzk" | "en" | "ar";
 const TILLAR: { id: Lang; nom: string; izoh: string; belgi: string; rang: string; grad: string; holat: "tayyor" | "sinov" | "tez" }[] = [
   { id: "uz", nom: "O'zbek tili", izoh: "Lotin", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
-  { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл · синов", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "sinov" },
+  { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
   { id: "en", nom: "English language", izoh: "tez orada", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tez" },
   { id: "ar", nom: "اللغة العربية", izoh: "tez orada", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tez" },
 ];
@@ -30,7 +30,9 @@ const kirKesh = new Map<string, string>();
 function toKiril(s: string): string {
   const bor = kirKesh.get(s);
   if (bor !== undefined) return bor;
-  let r = s;
+  // Lotin qisqartmalar (PDF, OK, JSON...) o'girilmaydi
+  const keep: string[] = [];
+  let r = s.replace(/(^|[^A-Za-z])([A-Z]{2,6})(?![a-z])/g, (_m, p, ab) => { keep.push(ab); return p + "@@" + (keep.length - 1) + "@@"; });
   for (const [re, to] of KIR_QOIDA) r = r.replace(re, to);
   r = r.replace(/[A-Za-z]/g, ch => {
     const low = ch.toLowerCase();
@@ -38,6 +40,7 @@ function toKiril(s: string): string {
     if (!k) return ch;
     return ch === low ? k : k.toUpperCase();
   });
+  r = r.replace(/@@([0-9]+)@@/g, (_m, i) => keep[Number(i)]);
   kirKesh.set(s, r);
   return r;
 }
@@ -1130,7 +1133,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
             <RadioRow on={ready === true} label={tr("Ha, tayyorman")} sub={tr("Rejani tuzishni boshlaymiz.")} onClick={() => setReady(true)} />
             <RadioRow on={ready === false} label={tr("Yo'q, hozir emas")} sub={tr("Keyinroq davom ettiraman.")} onClick={() => setReady(false)} />
           </div>
-          {ready === false && <p className="mt-3 text-center text-[12px]" style={{ color: "var(--gold)" }}>Shoshilmang — tayyor bo'lganingizda "Ha"ni tanlang. Eng muhimi — niyat.</p>}
+          {ready === false && <p className="mt-3 text-center text-[12px]" style={{ color: "var(--gold)" }}>{tr("Shoshilmang — tayyor bo'lganingizda \"Ha\"ni tanlang. Eng muhimi — niyat.")}</p>}
         </>)}
 
         {step === 6 && (<>
@@ -1148,7 +1151,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
               ))}
             </div>
           </div>
-          <p className="mt-2 text-center text-[12px]" style={lblS}>Tanlangan: <b style={{ color: "var(--green)" }}>{fmtUzFull(start)}</b></p>
+          <p className="mt-2 text-center text-[12px]" style={lblS}>{tr("Tanlangan:")} <b style={{ color: "var(--green)" }}>{fmtUzFull(start)}</b></p>
         </>)}
 
         {step === 7 && (<>
@@ -1190,7 +1193,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
           <IconCircle n="sparkles" /><Title>{tr("Rejangiz tayyor.")}</Title><Sub>{tr("Alloh taolo maqsadingizga yetishga sizga kuch-quvvat va bardavomlik ato etsin.")}</Sub>
           <div className="mt-6 space-y-2 rounded-2xl border p-4" style={cardS}>
             <p className="text-[11px] font-bold uppercase tracking-wider" style={lblS}>{tr("Quyidagilar keyin o'zgartirilmaydi:")}</p>
-            {([["Muddat", `${years} ${tr("yil")}`], ["Boshlanish", fmtUzFull(start)], ["Dam kuni", restDay === "" ? "yo'q" : tr(KUNLAR[parseInt(restDay)])], ["Hafta boshi", tr(KUNLAR[parseInt(weekStart)])]] as [string, string][]).map(([k, v]) => (
+            {([["Muddat", `${years} ${tr("yil")}`], ["Boshlanish", fmtUzFull(start)], [tr("Dam kuni"), restDay === "" ? "yo'q" : tr(KUNLAR[parseInt(restDay)])], ["Hafta boshi", tr(KUNLAR[parseInt(weekStart)])]] as [string, string][]).map(([k, v]) => (
               <div key={k} className="flex justify-between text-sm"><span style={lblS}>{k}</span><span className="font-semibold" style={{ color: "var(--ink)" }}>{v}</span></div>
             ))}
           </div>
@@ -1200,12 +1203,12 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
           <div className="mb-4 flex items-center gap-2"><Logo size={26} /><span className="text-base font-bold" style={{ color: "var(--ink)" }}>{tr("Eslatma")}</span></div>
           <div className="rounded-2xl border p-4" style={cardS}>
             <p className="text-sm leading-relaxed" style={{ color: "var(--ink)" }}>
-              Oisha roziyallohu anhodan rivoyat qilindi: «Nabiy sollallohu alayhi vasallamdan: tr("Amallarning qay biri Allohga eng suyukli?") deb so'rashdi. U zot: <b style={{ color: "var(--green)" }}>tr("Oz bo'lsa ham, davomlirog'i")</b>, dedilar. Yana: tr("Amallardan toqatingiz yetadiganini zimmangizga olinglar"), dedilar.»
+              {tr("Oisha roziyallohu anhodan rivoyat qilindi: «Nabiy sollallohu alayhi vasallamdan: “Amallarning qay biri Allohga eng suyukli?” deb so'rashdi. U zot:")} <b style={{ color: "var(--green)" }}>{tr("“Oz bo'lsa ham, davomlirog'i”")}</b>{tr(", dedilar. Yana: “Amallardan toqatingiz yetadiganini zimmangizga olinglar”, dedilar.»")}
             </p>
             <p className="mt-2 text-[11px]" style={lblS}>{tr("Sahihul Buxoriy, 81-kitob, 6465-hadis.")}</p>
           </div>
           <div className="mt-3 rounded-2xl border p-4" style={{ ...cardS, borderColor: "var(--green)" }}>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--ink)" }}>Shu sabab ey <b>{name.trim() || "do'stim"}</b>{tr(", solih amallardan bardavom bo'l! Garchi u oz bo'lsa ham. Alloh taolo kuch-quvvat bersin!")}</p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--ink)" }}>{tr("Shu sabab ey")} <b>{name.trim() || tr("do'stim")}</b>{tr(", solih amallardan bardavom bo'l! Garchi u oz bo'lsa ham. Alloh taolo kuch-quvvat bersin!")}</p>
           </div>
         </>)}
       </div>
@@ -1359,7 +1362,7 @@ function IbadatPage(p: {
                       <button onClick={() => upd(x => ({ ...x, masjid: { ...x.masjid, [pr.id]: !x.masjid[pr.id] } }))}
                         className="om-press flex items-center gap-1 rounded-lg border px-2 py-1 text-[11px]"
                         style={masjid ? { background: "var(--gold)", color: "#fff", borderColor: "var(--gold)" } : { ...cardS, color: "var(--muted)" }}>
-                        <Icon n="mosque" size={13} /> Masjidda{masjid ? " " : ""}
+                        <Icon n="mosque" size={13} /> {tr("Masjidda")}{masjid ? " " : ""}
                       </button>
                     )}
                   </div>
@@ -1391,7 +1394,7 @@ function IbadatPage(p: {
                   <span className="flex items-center gap-2 text-sm font-medium" style={{ color: "var(--ink)" }}><Icon n={ic} size={17} style={{ color: "var(--gold)" }} />{nm}</span>
                   <div className="flex items-center gap-2">
                     {v > 0 && <button onClick={() => upd(x => ({ ...x, [key]: Math.max(v - 2, 0) }))} className="om-press grid h-8 w-8 place-items-center rounded-lg border" style={{ ...cardS, color: "var(--muted)" }}><Icon n="minus" size={16} /></button>}
-                    <span className="min-w-16 text-center text-sm font-bold" style={{ color: "var(--ink)" }}>{v} rakaat</span>
+                    <span className="min-w-16 text-center text-sm font-bold" style={{ color: "var(--ink)" }}>{v} {tr("rakaat")}</span>
                     <button onClick={() => upd(x => ({ ...x, [key]: v + 2 }))} className="om-press grid h-8 w-8 place-items-center rounded-lg text-white" style={{ background: "var(--green)" }}><Icon n="plus" size={16} /></button>
                   </div>
                 </div>
@@ -1424,7 +1427,7 @@ function IbadatPage(p: {
             </button>
           ) : (
             <div className="flex items-center gap-2 rounded-2xl border px-4 py-3 text-sm" style={cardS}>
-              <Icon n="bookOpen" size={17} style={{ color: "var(--muted)" }} /><span style={{ color: "var(--ink)" }}>Xatm tugadi: <b>{kDone}/{kTotal}</b> {tr("kun")}</span>
+              <Icon n="bookOpen" size={17} style={{ color: "var(--muted)" }} /><span style={{ color: "var(--ink)" }}>{tr("Xatm tugadi:")} <b>{kDone}/{kTotal}</b> {tr("kun")}</span>
               <button onClick={() => setShowKhatm(true)} className="ml-auto text-xs" style={{ color: "var(--green)" }}>{tr("yangi xatm")}</button>
             </div>
           )}
@@ -1459,7 +1462,7 @@ function MarkSheet({ t, m, slotMin, onSave, onClose }: {
           <button onClick={() => setMode("excuse")} className={btnC} style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="alert" size={16} /> {tr("Sababli qilmadim")}</button>
           <button onClick={() => save({ ...keep, st: "missed" })} className={btnC} style={{ background: "var(--soft)", color: "var(--red)" }}><Icon n="x" size={16} /> {tr("Umuman qilmadim")}</button>
           {m && m.st && <button onClick={() => save(keep.creditedMin ? { creditedMin: keep.creditedMin } : null)} className={btnC} style={{ ...cardS, borderWidth: 1, color: "var(--muted)" }}>{tr("Belgini olib tashlash")}</button>}
-          <p className="text-[11px] leading-relaxed" style={lblS}>Rejadan ortiq ish qilsangiz — Bugun'dagi tr("Qo'shimcha ish") bo'limiga yozing. Vijdon — eng adolatli guvoh.</p>
+          <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Rejadan ortiq ish qilsangiz — Bugun'dagi “Qo'shimcha ish” bo'limiga yozing. Vijdon — eng adolatli guvoh.")}</p>
         </div>
       )}
       {mode === "excuse" && (
@@ -1688,7 +1691,7 @@ function BugunView(p: {
       return;
     }
     const nu = sched ? "list" : "sched";
-    const ok = await omConfirm(`Rejim «${nu === "list" ? tr("Oddiy ro'yxat") : tr("Kun tartibi")}»ga o'tsinmi?`, "Keyingi 7 kun davomida qayta o'zgartirib bo'lmaydi.");
+    const ok = await omConfirm(`Rejim «${nu === "list" ? tr("Oddiy ro'yxat") : tr("Kun tartibi")}»ga o'tsinmi?`, tr("Keyingi 7 kun davomida qayta o'zgartirib bo'lmaydi."));
     if (ok) p.setDayMode({ mode: nu as "list" | "sched", lockedUntil: addDaysISO(today, 7) });
   };
 
@@ -1728,7 +1731,7 @@ function BugunView(p: {
         {diff !== null && (
           <p className="mt-1 text-[11px] font-bold" style={{ color: diff >= 0 ? "var(--green)" : "var(--gold)" }}>
             {diff > 0 ? tf("Rejadan {n} soat kam uxladingiz — reyting yuqori", { n: diff })
-              : diff === 0 ? "Rejaga aniq muvofiq"
+              : diff === 0 ? tr("Rejaga aniq muvofiq")
               : tf("Rejadan {n} soat ko'p uxladingiz — reyting pasayadi", { n: -diff })}
           </p>
         )}
@@ -1910,10 +1913,10 @@ function BugunView(p: {
           <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="stats" size={21} /></span>
           <span className="min-w-0 flex-1">
             <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>
-              {n === 0 ? "Haftalik hisobot" : `Haftangiz ${avg}%`}
+              {n === 0 ? tr("Haftalik hisobot") : `Haftangiz ${avg}%`}
             </span>
             <span className="block text-[11px]" style={lblS}>
-              {n === 0 ? "Ma'lumot hali yetarli emas" : `${doneT} bajarildi${exc ? ` · ${exc} sababli` : ""} — to'liq hisobotni ko'rish`}
+              {n === 0 ? tr("Ma'lumot hali yetarli emas") : `${doneT} bajarildi${exc ? ` · ${exc} sababli` : ""} — to'liq hisobotni ko'rish`}
             </span>
           </span>
           <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
@@ -2007,7 +2010,7 @@ function BugunView(p: {
         {act.length === 0 && (
           <div className="py-2 text-center">
             <p className="text-[13px] font-semibold" style={{ color: "var(--ink)" }}>{tr("Bugunga vazifa yo'q")}</p>
-            <p className="mx-auto mt-1 max-w-[16rem] text-[11.5px] leading-relaxed" style={lblS}>Pastdagi <b style={{ color: "var(--green)" }}>+</b> {tr("tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.")}</p>
+            <p className="mx-auto mt-1 max-w-[16rem] text-[11.5px] leading-relaxed" style={lblS}>{tr("Pastdagi")} <b style={{ color: "var(--green)" }}>+</b> {tr("tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.")}</p>
           </div>
         )}
         {act.length > 0 && !reorder && (
@@ -2196,7 +2199,7 @@ function ExtraForm({ tasks, today, onClose, onSave }: { tasks: Task[]; today: st
         </div>
         {taskId === "other" && (
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Turi <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy)")}</span></p>
+            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Turi")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy)")}</span></p>
             <input value={otherType} onChange={e => setOtherType(e.target.value)} placeholder={tr("Masalan: mutolaa, sport...")} className="w-full rounded-xl border px-3.5 py-2.5 text-sm" style={inpS} />
           </div>
         )}
@@ -2463,7 +2466,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
     const chart = Array.from({ length: 14 }, (_, i) => { const d = addDaysISO(today, -(13 - i)); return { d, v: dm(d) }; });
     let full7 = 0;
     for (let i = 0; i < 7; i++) { const d = addDaysISO(today, -i); const s = dayStats(d, tasks, logs, plan.restDay); if (s.pct !== null && s.pct >= 100) full7++; }
-    const msg = st.pct === null ? { t: "Bugun dam kuni — halovat oling", i: "moon" }
+    const msg = st.pct === null ? { t: tr("Bugun dam kuni — halovat oling"), i: "moon" }
       : pct >= 100 ? { t: tr("Ajoyib — bugungi reja to'liq bajarildi"), i: "checkCircle" }
       : pct >= 70 ? { t: tr("Yaxshi ketyapsiz, oz qoldi"), i: "sparkles" }
       : pct >= 40 ? { t: tr("Yarmidan oshdingiz — davom eting"), i: "target" }
@@ -2608,9 +2611,9 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
           <h3 className="mb-2 flex items-center gap-2 text-[13px] font-bold" style={{ color: "var(--ink)" }}><Icon n="mosque" size={15} style={{ color: "var(--green)" }} /> {tr("Ibodat")}</h3>
           {ibN === 0 ? <p className="text-[12px]" style={lblS}>{tr("Bu hafta ibodat belgilanmagan.")}</p> : (
             <div className="flex gap-4 text-[12px]" style={{ color: "var(--ink)" }}>
-              <span>O'rtacha: <b style={{ color: "var(--green)" }}>{Math.round(ibSum / ibN)}%</b></span>
-              <span style={lblS}>Masjid: <b style={{ color: "var(--ink)" }}>{masjid}</b></span>
-              <span style={lblS}>Nafl: <b style={{ color: "var(--ink)" }}>{nafl}</b></span>
+              <span>{tr("O'rtacha:")} <b style={{ color: "var(--green)" }}>{Math.round(ibSum / ibN)}%</b></span>
+              <span style={lblS}>{tr("Masjid:")} <b style={{ color: "var(--ink)" }}>{masjid}</b></span>
+              <span style={lblS}>{tr("Nafl:")} <b style={{ color: "var(--ink)" }}>{nafl}</b></span>
             </div>
           )}
         </Card>
@@ -2722,9 +2725,9 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
           <Card style={{ borderColor: "var(--gold)" }}>
             <h3 className="mb-2.5 flex items-center gap-2 text-[13px] font-bold" style={{ color: "var(--ink)" }}><Icon n="trophy" size={16} style={{ color: "var(--gold)" }} /> {tr("Oylik yakun")}</h3>
             <div className="space-y-1.5 text-[12.5px]" style={{ color: "var(--ink)" }}>
-              <p>Jami ishlangan vaqt: <b>{fmtMin(totalMin)}</b></p>
-              <p>Eng samarali kun: <b>{bestDay.d ? `${fmtUz(bestDay.d)} — ${fmtMin(bestDay.v)}` : "—"}</b></p>
-              <p>Tugatilgan oliy vazifalar: <b>{doneAll}</b></p>
+              <p>{tr("Jami ishlangan vaqt:")} <b>{fmtMin(totalMin)}</b></p>
+              <p>{tr("Eng samarali kun:")} <b>{bestDay.d ? `${fmtUz(bestDay.d)} — ${fmtMin(bestDay.v)}` : "—"}</b></p>
+              <p>{tr("Tugatilgan oliy vazifalar:")} <b>{doneAll}</b></p>
             </div>
           </Card>
         ) : (
@@ -2819,8 +2822,8 @@ function TaskDetailStat({ t, onClose, today, logs, plan }: { t: Task; onClose: (
   return (
     <Sheet title={t.name} onClose={onClose}>
       <div className="space-y-1 text-sm" style={{ color: "var(--ink)" }}>
-        {t.type && <p>Turi: <b>{t.type}</b></p>}
-        <p>Bajarildi: <b>{done}/{actD}</b> kun · Umumiy: <b>{pct === null ? "—" : pct + "%"}</b></p>
+        {t.type && <p>{tr("Turi:")} <b>{t.type}</b></p>}
+        <p>{tr("Bajarildi:")} <b>{done}/{actD}</b> {tr("kun · Umumiy:")} <b>{pct === null ? "—" : pct + "%"}</b></p>
         <p>Sababli: {exc} marta (joriy 30 kunlik: {excused30(t.id, logs, today)}/3)</p>
       </div>
       <p className="mb-1 mt-3 text-xs font-bold" style={lblS}>{tr("OXIRGI 90 KUN")}</p>
@@ -3175,9 +3178,9 @@ function VazifaTarixi({ today, plan, tasks, logs, countLog, onClose }: {
                 <div className="h-full rounded-full" style={{ width: `${s.pct || 0}%`, background: col }} />
               </div>
               <div className="mt-1.5 flex gap-3 text-[10px]" style={lblS}>
-                <span>Bajarildi: <b style={{ color: "var(--ink)" }}>{s.done}</b></span>
-                <span>Bajarilmadi: <b style={{ color: "var(--ink)" }}>{s.missed}</b></span>
-                <span>Sababli: <b style={{ color: "var(--ink)" }}>{s.exc}</b></span>
+                <span>{tr("Bajarildi:")} <b style={{ color: "var(--ink)" }}>{s.done}</b></span>
+                <span>{tr("Bajarilmadi:")} <b style={{ color: "var(--ink)" }}>{s.missed}</b></span>
+                <span>{tr("Sababli:")} <b style={{ color: "var(--ink)" }}>{s.exc}</b></span>
               </div>
             </div>
           );
@@ -3206,7 +3209,7 @@ function MetricsEdit({ plan, setPlan, onClose }: { plan: Plan; setPlan: React.Di
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-semibold" style={{ color: "var(--ink)" }}>{m.name}</span>
-                  <span className="block text-[10px]" style={lblS}>{m.kind === "type" ? "vazifa turi orqali" : "qo'lda (+1)"}</span>
+                  <span className="block text-[10px]" style={lblS}>{m.kind === "type" ? tr("vazifa turi orqali") : tr("qo'lda (+1)")}</span>
                 </span>
                 <input type="number" value={m.target} onChange={e => setMs(xs => xs.map((x, j) => j === i ? { ...x, target: parseInt(e.target.value) || 0 } : x))} className="w-16 flex-none rounded-lg border px-2 py-1.5 text-center text-sm" style={inpS} />
                 <button onClick={() => setMs(xs => xs.filter((_, j) => j !== i))} className="flex-none" style={{ color: "var(--red)" }}><Icon n="trash" size={15} /></button>
@@ -3271,8 +3274,8 @@ function SleepPlanCard({ sleepCfg, setSleepCfg }: { sleepCfg: SleepCfg | null; s
         <>
           <p className="text-sm" style={{ color: "var(--ink)" }}>
             {sleepCfg.kind === "range"
-              ? <>Har kuni <b>{sleepCfg.from} — {sleepCfg.to}</b> da uxlayman (~{sleepCfg.hours} soat)</>
-              : <>Har kuni kamida <b>{sleepCfg.hours} soat</b> {tr("uxlayman")}</>}
+              ? <>{tr("Har kuni")} <b>{sleepCfg.from} — {sleepCfg.to}</b> da uxlayman (~{sleepCfg.hours} soat)</>
+              : <>{tr("Har kuni kamida")} <b>{sleepCfg.hours} soat</b> {tr("uxlayman")}</>}
           </p>
           <div className="mt-2 flex gap-2">
             <button onClick={() => { setKind(sleepCfg.kind); setHours(String(sleepCfg.hours)); setFrom(sleepCfg.from); setTo(sleepCfg.to); setEdit(true); }}
@@ -3285,12 +3288,12 @@ function SleepPlanCard({ sleepCfg, setSleepCfg }: { sleepCfg: SleepCfg | null; s
         <div className="space-y-2">
           <button type="button" onClick={() => setKind("hours")} className="w-full rounded-lg border p-2 text-left"
             style={kind === "hours" ? { borderColor: "var(--green)", background: "var(--soft)", borderWidth: 2 } : cardS}>
-            <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>Kunlik soat bilan {kind === "hours" ? "✓" : ""}</span>
+            <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>{tr("Kunlik soat bilan")} {kind === "hours" ? "✓" : ""}</span>
           </button>
           {kind === "hours" && <input type="number" step="0.5" value={hours} onChange={e => setHours(e.target.value)} placeholder={tr("Necha soat?")} className={inpC} style={inpS} />}
           <button type="button" onClick={() => setKind("range")} className="w-full rounded-lg border p-2 text-left"
             style={kind === "range" ? { borderColor: "var(--green)", background: "var(--soft)", borderWidth: 2 } : cardS}>
-            <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>⏰ Aniq vaqt oralig'i bilan {kind === "range" ? "✓" : ""}</span>
+            <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>{tr("Aniq vaqt oralig'i bilan")} {kind === "range" ? "✓" : ""}</span>
           </button>
           {kind === "range" && (
             <>
@@ -3376,7 +3379,7 @@ function UyquPage(p: {
               </div>
             ))}
           </div>
-          {weekAvg !== null && <p className="mt-3 text-[11px]" style={lblS}>Bu hafta o'rtacha: <b style={{ color: "var(--ink)" }}>{weekAvg} soat</b> {tr("uxlandi.")}</p>}
+          {weekAvg !== null && <p className="mt-3 text-[11px]" style={lblS}>{tr("Bu hafta o'rtacha:")} <b style={{ color: "var(--ink)" }}>{weekAvg} soat</b> {tr("uxlandi.")}</p>}
         </Card>
       )}
 
@@ -3461,7 +3464,7 @@ function TaskForm({ scope: scope0, folderId, folders, types, today, initialKind,
         </div>
 
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Vazifa turi <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu tur bir papka bo'ladi)")}</span></p>
+          <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Vazifa turi")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu tur bir papka bo'ladi)")}</span></p>
           {types.length > 0 && (
             <div className="mb-1.5 flex flex-wrap gap-1.5">
               {types.map(t => {
@@ -3487,7 +3490,7 @@ function TaskForm({ scope: scope0, folderId, folders, types, today, initialKind,
         ) : (
           <>
             <div>
-              <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Qaysi vaqt oralig'ida qilasiz? <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu vaqtda eslatma keladi)")}</span></p>
+              <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Qaysi vaqt oralig'ida qilasiz?")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu vaqtda eslatma keladi)")}</span></p>
               <button onClick={() => setShowTime(true)} className="om-press flex w-full items-center gap-3 rounded-xl border px-3.5 py-3 text-left" style={cardS}>
                 <Icon n="clock" size={17} style={{ color: acc, flex: "none" }} />
                 {from && to ? (
@@ -3520,13 +3523,13 @@ function TaskForm({ scope: scope0, folderId, folders, types, today, initialKind,
 
         {kind === "time" && scope === "oliy" && (
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Taxminan necha kunda tugataman? <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy — erta tugatsangiz reyting oshadi)")}</span></p>
+            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Taxminan necha kunda tugataman?")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy — erta tugatsangiz reyting oshadi)")}</span></p>
             <input type="number" value={planned} onChange={e => setPlanned(e.target.value)} placeholder={tr("Masalan: 30")} className="w-full rounded-xl border px-3.5 py-2.5 text-sm" style={inpS} />
           </div>
         )}
 
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Qo'shimcha eslatma <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy)")}</span></p>
+          <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Qo'shimcha eslatma")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy)")}</span></p>
           <button onClick={() => setShowRem(true)} className="om-press flex w-full items-center gap-3 rounded-xl border px-3.5 py-3 text-left" style={cardS}>
             <Icon n="bell" size={16} style={{ color: remTime ? "var(--gold)" : "var(--muted)", flex: "none" }} />
             <span className="flex-1 text-sm font-semibold tabular-nums" style={{ color: remTime ? "var(--ink)" : "var(--muted)" }}>{remTime || tr("Vaqt tanlang")}</span>
@@ -3575,11 +3578,11 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
         <div className="flex items-start gap-2 rounded-xl border p-3 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
           <Icon n="checkCircle" size={16} style={{ color: "var(--green)", flex: "none", marginTop: 2 }} />
           <span>Tugatilgan: {fmtUzFull(t.completedAt!)}
-            {t.plannedDays ? <> · Reja: {t.plannedDays} kun · Amalda: <b>{diffDays(t.startDate, t.completedAt!) + 1} kun</b>{diffDays(t.startDate, t.completedAt!) + 1 <= t.plannedDays ? " — rejadan oldin (bonus)" : " — rejadan kech"}</> : null}
+            {t.plannedDays ? <> · Reja: {t.plannedDays} kun · Amalda: <b>{diffDays(t.startDate, t.completedAt!) + 1} kun</b>{diffDays(t.startDate, t.completedAt!) + 1 <= t.plannedDays ? tr(" — rejadan oldin (bonus)") : tr(" — rejadan kech")}</> : null}
           </span>
         </div>
       )}
-      {isCount && <div className="rounded-xl border p-3 text-sm" style={{ ...cardS, color: "var(--ink)" }}>Jarayon: <b style={{ color: acc }}>{cTotal}/{t.countTarget || 0}</b></div>}
+      {isCount && <div className="rounded-xl border p-3 text-sm" style={{ ...cardS, color: "var(--ink)" }}>{tr("Jarayon:")} <b style={{ color: acc }}>{cTotal}/{t.countTarget || 0}</b></div>}
 
       <div>
         <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Vazifa nomi")}</p>
@@ -3587,7 +3590,7 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
       </div>
 
       <div>
-        <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Vazifa turi <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu tur bir papka)")}</span></p>
+        <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Vazifa turi")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu tur bir papka)")}</span></p>
         {types.length > 0 && (
           <div className="mb-1.5 flex flex-wrap gap-1.5">
             {types.map(x => (
@@ -3614,7 +3617,7 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
           ) : (
             <>
               <div>
-                <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Qaysi vaqt oralig'ida qilasiz? <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu vaqtda eslatma keladi)")}</span></p>
+                <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Qaysi vaqt oralig'ida qilasiz?")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(shu vaqtda eslatma keladi)")}</span></p>
                 <button onClick={() => setShowTime(true)} className="om-press flex w-full items-center gap-3 rounded-xl border px-3.5 py-3 text-left" style={cardS}>
                   <Icon n="clock" size={17} style={{ color: acc, flex: "none" }} />
                   {from && to ? (
@@ -3633,7 +3636,7 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
                 <DayCircles days={days} setDays={setDays} accent={acc} />
               </div>
               <div>
-                <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>Qachongacha? <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(bo'sh — doimiy)")}</span></p>
+                <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Qachongacha?")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(bo'sh — doimiy)")}</span></p>
                 <button onClick={() => setShowDate(true)} className="om-press w-full rounded-xl border px-3.5 py-2.5 text-left text-sm" style={{ ...cardS, color: end ? "var(--ink)" : "var(--muted)" }}>{end ? fmtUz(end) : tr("Muddatsiz")}</button>
               </div>
             </>
@@ -3746,7 +3749,7 @@ function VazifalarPage(p: {
           <span className="flex items-center gap-1 truncate text-sm font-semibold" style={{ color: "var(--ink)" }}>{t.name}{t.remTime ? <Icon n="bell" size={12} style={{ color: "var(--muted)" }} /> : null}</span>
           <span className="block truncate text-[11px]" style={lblS}>
             {t.type || tr("Vazifa")}
-            {t.abandonedAt ? " - tashlab qo'yilgan" : ""}{paused ? " - to'xtatilgan" : ""}
+            {t.abandonedAt ? " - " + tr("tashlab qo'yilgan") : ""}{paused ? " - " + tr("to'xtatilgan") : ""}
             {!t.completedAt && t.startDate > today ? ` - ${fmtUz(t.startDate)} dan` : ""}
             {t.days.length > 0 ? ` - ${t.days.map(d => tr(KUN_QISQA[d])).join(",")}` : ""}
           </span>
@@ -3795,7 +3798,7 @@ function VazifalarPage(p: {
       )}
 
       <button onClick={() => setShowForm(true)} className="om-press flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-sm font-bold text-white" style={{ background: sub === "oliy" ? "var(--gold)" : "var(--green)" }}>
-        <Icon n="plus" size={16} /> Yangi {sub === "oliy" ? "oliy maqsad" : "kundalik"} vazifa
+        <Icon n="plus" size={16} /> {tf("Yangi {x} vazifa", { x: sub === "oliy" ? tr("oliy maqsad") : tr("kundalik") })}
       </button>
 
       {grouped.length === 0 && <Card><p className="text-sm" style={lblS}>{tr("Hali vazifa yo'q. Yuqoridagi tugma orqali qo'shing.")}</p></Card>}
@@ -3880,7 +3883,7 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
                 <Icon n="timer" size={26} style={{ color: "var(--muted)" }} />
                 <span className="mt-1 text-6xl font-bold tabular-nums" style={{ color: pomo && pomo.pausedLeft !== null ? "var(--muted)" : "var(--ink)" }}>{pomo ? `${mm}:${ss}` : `${String(cfg.work).padStart(2, "0")}:00`}</span>
                 <span className="mt-1 text-sm font-medium" style={{ color: pomo ? (pomo.pausedLeft !== null ? "var(--muted)" : col) : "var(--muted)" }}>
-                  {pomo ? (pomo.phase === "work" ? (pomo.pausedLeft !== null ? tr("Pauzada") : tr("Ish vaqti")) : "Dam olish") : "Focus vaqti"}
+                  {pomo ? (pomo.phase === "work" ? (pomo.pausedLeft !== null ? tr("Pauzada") : tr("Ish vaqti")) : tr("Dam olish")) : tr("Focus vaqti")}
                 </span>
               </div>
             </div>
@@ -3907,7 +3910,7 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
         <p className="mt-6 text-sm" style={{ color: "var(--ink)" }}>
           Bugun: <b style={{ color: tLog.c >= (cfg.cycles || 3) ? "var(--green)" : "var(--ink)" }}>{tLog.c}/{cfg.cycles || 3} pomodoro</b> · {fmtMin(tLog.m)} sof ish
         </p>
-        <p className="mt-1 text-center text-[11px]" style={lblS}>Ish vaqti tugagach "bu vaqtda nima qildingiz?" deb so'raydi va tanlangan vazifaga daqiqa yozadi.</p>
+        <p className="mt-1 text-center text-[11px]" style={lblS}>{tr("Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.")}</p>
       </Card>
 
       <Card>
@@ -3929,13 +3932,13 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
   );
 }
 
-// ish tugagach: "bu vaqtda nima qildingiz?" — tanlangan vazifaga daqiqa yoziladi
+// ish tugagach: tr("bu vaqtda nima qildingiz?") — tanlangan vazifaga daqiqa yoziladi
 function PomoAsk({ min, tasks, logs, today, onPick }: { min: number; tasks: Task[]; logs: Logs; today: string; onPick: (taskId: string | null) => void }) {
   const lg = logs[today] || {};
   const opts = tasks.filter(t => t.kind !== "count" && !t.isSleep && taskActiveOn(t, today));
   return (
     <Modal title={`${fmtMin(min)} ish tugadi`} onClose={() => onPick(null)}>
-      <p className="mb-3 text-sm" style={{ color: "var(--ink)" }}>Bu vaqtda nima qildingiz? Tanlangan vazifaga <b>{fmtMin(min)}</b> {tr("hisoblanadi — qismiy bajarilish beradi, ortiqchasi “ziyoda”ga o'tadi.")}</p>
+      <p className="mb-3 text-sm" style={{ color: "var(--ink)" }}>{tr("Bu vaqtda nima qildingiz? Tanlangan vazifaga")} <b>{fmtMin(min)}</b> {tr("hisoblanadi — qismiy bajarilish beradi, ortiqchasi “ziyoda”ga o'tadi.")}</p>
       <div className="space-y-1.5">
         {opts.map(t => {
           const m = lg[t.id];
@@ -4052,7 +4055,7 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   const fileRef = useRef<HTMLInputElement>(null);
   const [showHelp, setShowHelp] = useState(false);
   const openTelegram = async () => {
-    const ok = await omConfirm("«Oliy maqsad» kanaliga o'tasizmi?", tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
+    const ok = await omConfirm(tr("«Oliy maqsad» kanaliga o'tasizmi?"), tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
     if (ok) { try { window.open("https://telegram.me/Oliymaqsad_apk", "_blank"); } catch { location.href = "https://telegram.me/Oliymaqsad_apk"; } }
   };
   const SecLabel = ({ icon, children }: { icon: string; children: React.ReactNode }) => (
@@ -4361,7 +4364,7 @@ export default function App() {
         setPomoAsk({ min: pomoCfg.work });
         setPomo(null);
       } else {
-        notify("☕ Dam tugadi — yangi pomodoroni o'zingiz boshlaysiz. Bismillah!");
+        notify(tr("Dam tugadi — yangi pomodoroni o'zingiz boshlaysiz. Bismillah!"));
         setPomo(null);
       }
     }, 1000);

@@ -300,3 +300,17 @@ Uch bosqichli skript bilan (scratchpad/wrap*.js), har bosqichdan keyin build:
 !!! XATO VA TUZATISH (muhim saboq): funksiya nomi `t` edi — ilovada `t` HAMMA JOYDA Task o'zgaruvchisi (tasks.map(t=>...)). Shu scope'larda `t("...")` Task obyektini chaqirib "t is not a function" bilan OQ EKRAN berdi. Build o'tgan, faqat ishlaganda ko'ringan. YECHIM: global `\bt\(` → `tr(` (421 ta). Endi tarjima funksiyasi **tr()**, formatli varianti **tf()**.
 SINOV: kirill rejimida ilova ochildi, belgilash oynasi ishladi, om3_logs ga `{"st":"full"}` yozildi (texnik qiymat kirillga aylanmagan) ✓. Pastki nav: Бугун/Тақвим/Статистика/Мақсад ✓
 QOLDI (~110): modul darajasidagi massivlar (OYLAR, KUNLAR, ZIKRLAR, NAMOZLAR, HELP_ITEMS, NEWS_ITEMS — ular ishlatilgan JOYDA tr() qo'llanadi) · ichida son bor jumlalar (~15 backtick — tf() kerak) · kichik harfli va aralash matnlar (~96)
+
+## 2026-07-27 — MATNLARNI O'RASH TUGADI (479 tr + 6 tf)
+Yuqoridagi 1-to'plamdan keyingi ishlar:
+- **Modul massivlari:** OYLAR/OY_QISQA/KUNLAR/KUN_QISQA/HIJRI_OYLAR kirishlari `tr(MASSIV[i])` ga o'raldi (24 ta) — massivning O'ZI xom qoladi, chunki modul darajasida `tr()` chaqirilsa til almashganda yangilanmaydi. ZIKRLAR/NAMOZLAR/NEWS_ITEMS/HELP_ITEMS render joyida: `tr(z)`, `tr(pr.n)`, `tr(g)`, `tr(t)`, `tr(x.t)`, `tr(x.s)`
+- **Son bor jumlalar:** 17 ta shablon `tf("... {n} ...", { n })` yoki `${tr("birlik")}` ga o'tkazildi (fmtMin "s"/"daq", uyqu, hafta, prognoz, bildirishnoma matni)
+- **Aralash JSX tugunlari:** `>Matn {expr} matn<` shaklidagilar (birinchi skript ularni tashlab ketgan edi) qo'lda tuzatildi — Reja:, Bugun:, Jami:, ta ish qoldi, keyingi, kun surilgan, Masjidda, rakaat, umumiy, Kunlik soat bilan, Yangi {x} vazifa va h.k.
+- **`toKiril` HIMOYASI qo'shildi:** lotin qisqartmalar (PDF, OK, JSON) o'girilmaydi — regex bilan vaqtincha `@@N@@` belgisiga almashtiriladi, o'girish tugagach qaytariladi. Aks holda "PDF yuklab olish" → "ПДФ юклаб олиш" bo'lardi
+- **`tr()` ga himoya:** `if (!s || CUR === "uz") return s` — undefined kelsa yiqilmaydi
+!!! IKKI XATO VA TUZATISH:
+1. Skript JSX MATNI ichidagi qo'shtirnoqli iboralarni ham o'rab yubordi → ekranda `tr("Qo'shimcha ish")` degan yozuv chiqardi (2 joy: hadis matni va ziyoda izohi). Tuzatildi — matn tiklanib, butun jumla bitta `tr()` ga olindi, ichki qo'shtirnoqlar “...” ga o'zgartirildi
+2. Heredoc orqali yozilgan skriptda `\b` va `\d` haqiqiy boshqaruv belgisiga aylanib ketdi (regex buzildi, build o'tdi, ish bermadi). SABOQ: regex yozadigan skript heredoc bilan emas, Write bilan yaratilsin; yoki `\b` o'rniga `(^|[^A-Za-z])` ishlatilsin
+- **XAVFSIZLIK tekshiruvi:** ma'lumotga yoziladigan yagona joy topildi va qaytarildi — uyqu vazifasi `name: tr("Rejaga muvofiq uyqu")` → xom matn (aks holda kirill rejimida yaratilgan vazifa nomi kirillcha saqlanardi)
+- SINOV: Bugun/Taqvim/Statistika/Maqsad — 0 ta lotin so'z (faqat foydalanuvchi ma'lumoti) · Sozlamalar, Yordam, Ibodat, Til sahifasi ✓ · belgilash → `{"st":"full"}` (texnik qiymat toza) ✓ · PDF qisqartmasi saqlandi ✓
+- QOLDI (ataylab): PDF hisobot matni (ASCII), foydalanuvchi ma'lumoti, til nomlari, "Oliy Maqsad" ilova nomi

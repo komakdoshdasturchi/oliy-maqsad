@@ -48,10 +48,12 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **Ruscha olib tashlandi**, o'rniga English
 - **Alohida `TilPage` sahifasi** (`page="til"`, Sozlamalar→"Ilova tili" qatoridan ochiladi, orqaga → Sozlamalar): ro'yxat ko'rinishi, har qatorda gradient plitka (O'/ў/Aa/ض) + nom + radio. en/ar hozircha xira va o'chiq
 
-**O'RASH: 419 ta matn BAJARILDI** (JSX matnlari, proplar, ternar/dialog matnlari — skript bilan, tafsiloti TARIX.md).
-**KEYINGI QADAM (~110 matn qoldi):** modul massivlari (OYLAR/KUNLAR/ZIKRLAR/NAMOZLAR/HELP_ITEMS/NEWS_ITEMS) → ishlatilgan joyda `tr()` · ichida son bor jumlalar → `tf()` · qolgan aralash matnlar.
-- Kirill rejimida qarasa, **lotin qolgan joy = hali o'ralmagan joy** (progress ko'rsatkichi)
-- **EHTIYOT:** `tr()` ni modul darajasidagi `const` ichida CHAQIRMASLIK kerak (OYLAR/KUNLAR/NEWS_ITEMS/HELP_ITEMS xom o'zbekcha qoladi — `tr()` ular **ishlatilgan joyda** qo'llaniladi)
+**2-bosqich: O'RASH TUGADI — 479 ta `tr()` + 6 ta `tf()`.** Ilovada o'zbekcha matn qolmadi (tafsiloti TARIX.md).
+- **KIRILL TAYYOR** — avtomatik o'girish ishlaydi, lug'atga bir dona yozuv kerak bo'lmadi
+- Tarjima QILINMAYDIGANLAR (ataylab): foydalanuvchi ma'lumoti (vazifa nomi, tur, iqtibos) · PDF hisobot matni (ASCII shrift cheklovi) · lotin qisqartmalar PDF/OK (toKiril himoyalaydi) · til nomlari
+- Modul massivlari (OYLAR/KUNLAR/ZIKRLAR/NAMOZLAR/NEWS_ITEMS/HELP_ITEMS) xom holicha — `tr()` ular **ishlatilgan joyda** qo'llanadi
+
+**KEYINGI QADAM: ENGLISH.** LUGAT ga 479 ta juftlik yoziladi (`{ "Bugun": { en: "Today" } }`). Kirilldan farqli — avtomatik emas, qo'lda. Bo'lim-bo'lim borish tavsiya etiladi.
 - Arabcha **oxirida**: u faqat tarjima emas, butun ilova o'ngdan chapga (RTL) ko'zguga aylanadi — alohida katta ish
 
 ## TEXNIK XOTIRA
