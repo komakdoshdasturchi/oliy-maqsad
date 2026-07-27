@@ -24,6 +24,15 @@ Batafsil tarix (barcha bajarilgan ishlar, tuzatilgan xatolar, qarorlar) — **TA
 2. `yangilash.bat` (npm run build + npx cap sync android) — men bajarsam shart emas
 3. Android Studio → Build → Generate App Bundles or APKs → Generate APKs → telefonga o'rnatish (ma'lumot saqlanadi)
 
+## GITHUB (kod zaxirasi, 2026-07-27 da sozlandi)
+- Repo: **https://github.com/komakdoshdasturchi/oliy-maqsad** (private). Mahalliy: `C:\oliy-maqsad`, branch `main`
+- Birinchi commit `9c96bf9` = v9 holati (87 fayl, 8 MB)
+- **Faqat KOD** zaxiralanadi. Shaxsiy ma'lumot (localStorage `om3_*`) telefonda qoladi — foydalanuvchi qarori, javobgarlik o'zida
+- `.gitignore` chetlatadi: `node_modules`, `build`, `dist`, `.env*`, `*.keystore/*.jks`, `oliy-maqsad-zaxira-*.pdf`, `*.zip/*.rar`, `*.apk/*.aab`, `android/.gradle`, `android/local.properties`
+- **Har yangilanishdan keyin:** `git add -A && git commit -m "vN: ..." && git push`
+- **Ortga qaytish:** `git log --oneline` bilan versiyani top → `git checkout <hash> -- src/App.tsx`
+- Kirish Git Credential Manager orqali saqlangan (parol so'ralmaydi). Agar push qotib qolsa — foydalanuvchi terminalda o'zi bajarishi kerak (ruxsat oynasi faqat unda ochiladi)
+
 ## HOZIRGI HOLAT (v9)
 Katta yangilanish tugadi, **build ✓ va cap sync ✓**, lekin **TELEFONDA SINALMAGAN — APK qayta qurish kerak**.
 v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari va tasdiq oynasi (barcha `window.confirm/alert/prompt` almashtirildi) · Statistika butunlay qayta (Kunlik/Haftalik/Oylik) · Oliy maqsad butunlay qayta (4 blok) · Taqvim ranglari · bildirishnoma tanlangan kunlarda + oq siluet logo · ziyoda foizga qo'shilishi · emoji 0 · splash · yo'l-yo'riq ishoralari · PDF yuklab olish xatosi tuzatildi.
