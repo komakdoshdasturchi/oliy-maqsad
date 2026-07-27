@@ -14,16 +14,22 @@ Batafsil tarix (barcha bajarilgan ishlar, tuzatilgan xatolar, qarorlar) — **TA
 
 ## LOYIHA NIMA
 5 yillik shaxsiy intizom/ibodat ilovasi. React + TypeScript + Tailwind (CDN), localStorage, **AI yo'q**, to'liq o'zbekcha, oflayn.
-- Kod: **BITTA fayl — src/App.tsx** (~4650 satr). Har yangilanishda to'liq almashtiriladi
+- Kod: **`src/App.tsx`** (~4690 satr) + **`src/tillar.ts`** (til tizimi va lug'at). Ilgari bitta fayl edi — AI Studio uchun; endi shart emas
 - Dizayn: premium, jiddiy, savlatli. Tungi: #16130F fon / #201B15 karta / #59B483 yashil / #D7A94B oltin. Tonggi: krem-oq. Radius: karta 20 / tugma 18 / input 16
 - **QAT'IY QOIDALAR:** emoji YO'Q (faqat ichki SVG ikonka) · ko'k rang YO'Q · qizil faqat o'chirishda · bir sahifada max 3 urg'u rang · chaqnoq ranglar taqiq
 - Logo: tog' cho'qqisi + bayroq. Ichki SVG `Logo` komponenti. Tonggi mavzuda yashil, tungida qaymoqrang (#EADFC6)
 
 ## YANGILASH TARTIBI
-1. `src/App.tsx` → Google AI Studio'ga **qo'lda** joylash + Qayta nashr (sayt: oliy-maqsad.ai.studio)
+1. Kod VS Code orqali `C:\oliy-maqsad` da to'g'ridan-to'g'ri yangilanadi (qo'lda ko'chirish YO'Q)
 2. `yangilash.bat` (npm run build + npx cap sync android) — men bajarsam shart emas
 3. Android Studio → Build → Generate App Bundles or APKs → Generate APKs → telefonga o'rnatish (ma'lumot saqlanadi)
+4. `git add -A && git commit -m "..." && git push`
 
+!!! **GOOGLE AI STUDIO TASHLANDI (2026-07-27).** Endi u yerga hech narsa ko'chirilmaydi — kod ikki faylda,
+qo'lda nusxalash saytni buzadi. `oliy-maqsad.ai.studio` eskirgan holicha qoladi.
+**Sayt KELAJAKDA kerak** (foydalanuvchi so'zi): Play Market bosqichida iPhone va kompyuter egalari
+ilovadan sayt orqali foydalanishi uchun — GitHub'dan AVTOMATIK yangilanadigan hosting (Netlify/Vercel) sozlanadi.
+AI Studio ketgani uchun ikki eski cheklov ham bekor: (a) bitta fayl majburiyati, (b) plaginlarni import'siz chaqirish.
 ## GITHUB (kod zaxirasi, 2026-07-27 da sozlandi)
 - Repo: **https://github.com/komakdoshdasturchi/oliy-maqsad** (private). Mahalliy: `C:\oliy-maqsad`, branch `main`
 - Birinchi commit `9c96bf9` = v9 holati (87 fayl, 8 MB)
@@ -41,8 +47,9 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 **TELEFONDA SINASH RO'YXATI:** PDF yuklab olish (Filesystem+Share yo'li — brauzerda sinab bo'lmaydi) · bildirishnomalar (tanlangan kunlarda, oq logo) · haptika · Pomodoro fokus rejimi · premium tanlagichlar · Statistika 3 ko'rinish · v9 yangiliklar oynasi.
 
 ## HOZIRGI ISH: TILLAR
-**1-bosqich (poydevor) BAJARILDI** (tafsiloti TARIX.md, "TILLAR" bo'limi):
-- **`tr(s)`** va **`tf(s, vals)`** funksiyalari (nomi `t` EMAS — `t` ilovada Task o'zgaruvchisi, to'qnashadi!) · `LUGAT` (hozircha bo'sh) · `toKiril()` avto-o'girgich (kesh bilan, qoida tartibi muhim) · `KIRIL_ISTISNO`
+**Til tizimi — `src/tillar.ts`** (alohida fayl, 2026-07-27 da ajratildi). Tafsiloti TARIX.md, "TILLAR" bo'limi:
+- Eksport: `tr(s)` · `tf(s, vals)` · `setCur(lang)` · `getCur()` · `TILLAR` · `LUGAT` · `KIRIL_ISTISNO` · `toKiril()`. App.tsx da: `import { Lang, TILLAR, tr, tf, setCur } from "./tillar"` va render ichida `setCur(lang)`.
+- Nomi `t` EMAS, **`tr`** — `t` ilovada Task o'zgaruvchisi, to'qnashadi! · `LUGAT` (hozircha bo'sh) · `toKiril()` avto-o'girgich (kesh bilan, qoida tartibi muhim) · `KIRIL_ISTISNO`
 - **Kalit = o'zbekcha lotin matnning O'ZI**: `tr("Bugun")`. Tarjima topilmasa o'zbekchasi ko'rinadi — hech qachon buzilmaydi
 - Yangi kalit: `om3_lang` (default "uz"). Tillar: `uz` · `uzk` (kirill, avto, sinov) · `en` (**qo'lda** tarjima kerak) · `ar`
 - **Ruscha olib tashlandi**, o'rniga English
@@ -53,7 +60,7 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - Tarjima QILINMAYDIGANLAR (ataylab): foydalanuvchi ma'lumoti (vazifa nomi, tur, iqtibos) · PDF hisobot matni (ASCII shrift cheklovi) · lotin qisqartmalar PDF/OK (toKiril himoyalaydi) · til nomlari
 - Modul massivlari (OYLAR/KUNLAR/ZIKRLAR/NAMOZLAR/NEWS_ITEMS/HELP_ITEMS) xom holicha — `tr()` ular **ishlatilgan joyda** qo'llanadi
 
-**KEYINGI QADAM: ENGLISH.** LUGAT ga 479 ta juftlik yoziladi (`{ "Bugun": { en: "Today" } }`). Kirilldan farqli — avtomatik emas, qo'lda. Bo'lim-bo'lim borish tavsiya etiladi.
+**KEYINGI QADAM: ENGLISH.** `tillar.ts` dagi `LUGAT` ga ~479 juftlik yoziladi (`"Bugun": { en: "Today" }`). Kirilldan farqli — avtomatik emas, QO'LDA. Bo'lim-bo'lim borish shart (limitning ~30-40%). App.tsx ga umuman tegilmaydi.
 - Arabcha **oxirida**: u faqat tarjima emas, butun ilova o'ngdan chapga (RTL) ko'zguga aylanadi — alohida katta ish
 
 ## TEXNIK XOTIRA

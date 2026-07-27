@@ -314,3 +314,15 @@ Yuqoridagi 1-to'plamdan keyingi ishlar:
 - **XAVFSIZLIK tekshiruvi:** ma'lumotga yoziladigan yagona joy topildi va qaytarildi — uyqu vazifasi `name: tr("Rejaga muvofiq uyqu")` → xom matn (aks holda kirill rejimida yaratilgan vazifa nomi kirillcha saqlanardi)
 - SINOV: Bugun/Taqvim/Statistika/Maqsad — 0 ta lotin so'z (faqat foydalanuvchi ma'lumoti) · Sozlamalar, Yordam, Ibodat, Til sahifasi ✓ · belgilash → `{"st":"full"}` (texnik qiymat toza) ✓ · PDF qisqartmasi saqlandi ✓
 - QOLDI (ataylab): PDF hisobot matni (ASCII), foydalanuvchi ma'lumoti, til nomlari, "Oliy Maqsad" ilova nomi
+
+## 2026-07-27 — TIL TIZIMI ALOHIDA FAYLGA (`src/tillar.ts`) + AI STUDIO TASHLANDI
+QAROR (foydalanuvchi): Google AI Studio endi kerak emas — kod VS Code + GitHub orqali boshqariladi.
+Sayt KELAJAKDA kerak bo'ladi (Play Market bosqichida iPhone/desktop foydalanuvchilar uchun), lekin AI Studio emas —
+GitHub'dan avtomatik yangilanadigan hosting (Netlify yoki Vercel). Hozir sozlanmadi, ilova pishgach.
+NATIJA: "bitta fayl" cheklovi bekor bo'ldi → til tizimi `src/tillar.ts` ga ko'chirildi (App.tsx 4750 → 4693 satr).
+- tillar.ts eksport qiladi: `Lang`, `TILLAR`, `LUGAT`, `KIRIL_ISTISNO`, `toKiril`, `setCur`, `getCur`, `tr`, `tf`
+- `CUR` endi modul ichida yopiq (import qilingan o'zgaruvchiga qiymat berib bo'lmaydi) → App render ichida `setCur(lang)` chaqiradi
+- `tr()` ga himoya qaytarildi: `if (!s || CUR === "uz") return s`
+- Kirill kartochkasi "синов" dan **"tayyor"** holatiga o'tkazildi (o'rash tugagani uchun)
+- SINOV: ajratishdan keyin kirill ishlaydi ✓, Til sahifasidan "O'zbek tili" bosilganda lotinga qaytdi ✓, build ✓ cap sync ✓
+- ENGLISH endi FAQAT tillar.ts da yoziladi — App.tsx ga tegilmaydi (xavf kam, limit tejaladi)
