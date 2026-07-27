@@ -97,9 +97,13 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **!!! FOYDALANUVCHI TEKSHIRISHI KERAK:** bu ikki matn xotiradan yozildi, bosma manba bilan solishtirilmagan. Play Market bosqichidan oldin albatta tasdiqlansin
 - Hadis uch bo'lakka bo'lingan (o'rtasi qalin yashil) — bo'laklar ingliz tili tartibiga moslab yozilgan, alohida tahrirlanmasin
 
-**KEYINGI: ARABCHA TARJIMA.** RTL poydevori tayyor (3-bosqich), lug'atda hozircha faqat ilova nomi bor.
-- Diniy atamalar uchun **arab tilini biladigan odam ko'rib chiqishi SHART** — mashina tarjimasi yetarli emas (foydalanuvchi bilan kelishilgan)
-- Oyat va hadisning arabcha ASLI olinadi, tarjima emas
+**7-bosqich: ARABCHA BOSHLANDI** (2026-07-27). `LUGAT_AR` da **176 / 520**. `ar` holati "sinov", izoh "Sinov · qisman tarjima".
+- **Arabcha ALOHIDA blokda:** `tillar.ts` dagi `const LUGAT_AR: Record<string, string>` — pastida sodda halqa bilan `LUGAT[k].ar` ga qo'shiladi. Sabab: arab tilini biladigan odam butun tarjimani **bir joydan** ko'rib chiqa olsin
+- Bajarilgani: bo'limlar, ibodat atamalari, kun/vaqt, belgilash, tugmalar, vazifa, maqsad, uyqu/pomodoro
+- Diniy atamalar arabcha ASLIDA: العبادة · الصلوات الخمس · التهجد · الأذكار · ختم القرآن · النافلة · ركعة · التاريخ الهجري
+- **OYAT KARTASI (`OyatCard`):** arabchada ma'no tarjimasi **ko'rsatilmaydi** — yuqorida oyatning asli turibdi (`getCur() !== "ar"` sharti). Foydalanuvchi qarori: «oyat tursa bas, tarjima kerak emas»
+- **!!! TEKSHIRILMAGAN — ARAB TILINI BILADIGAN ODAM KO'RIB CHIQISHI SHART.** `tillar.ts` da ham shu izoh yozilgan. Play Market bosqichidan oldin albatta
+- **HADISNING ARABCHA ASLI YO'Q:** onboarding 11-qadamdagi Buxoriy 6465 hadisi kodda faqat o'zbekcha. Arabcha aslini **foydalanuvchi ishonchli manbadan berishi kerak** (sunnah.com yoki bosma). Xotiradan yozilmasin
 - PDF hisobotda arabcha ishlamaydi (ASCII shrift cheklovi)
 
 **Tekshirish usuli (har bosqichdan keyin):** `LUGAT` kalitlarini App.tsx dagi `tr("...")`/`tf("...")` matnlari bilan `comm` orqali solishtirish — o'lik kalit ham, tarjimasiz matn ham qolmasin

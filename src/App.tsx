@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useRef, useState } from "react";
-import { Lang, TILLAR, tr, tf, setCur } from "./tillar";
+import { Lang, TILLAR, tr, tf, setCur, getCur } from "./tillar";
 
 // ================== TURLAR ==================
 interface Folder { id: string; name: string; importance: number; scope: "daily" | "oliy"; }
@@ -878,9 +878,13 @@ function OyatCard() {
       }}>
         يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ
       </p>
-      <p className="mx-auto max-w-[21rem] text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
-        {tr("Ey mo'minlar! Sabr qilinglar va sabr-toqat qilishda ustun bo'linglar hamda doimo belingiz bog'liq bo'lib turingiz! Va Allohdan qo'rqingiz! Shoyad najot topgaysizlar!")}
-      </p>
+      {/* Ma'no tarjimasi. ARABCHADA KO'RSATILMAYDI — yuqorida oyatning ASLI turibdi,
+          arabchada uni yana arabchaga "tarjima" qilish ma'nosiz (foydalanuvchi qarori). */}
+      {getCur() !== "ar" && (
+        <p className="mx-auto max-w-[21rem] text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
+          {tr("Ey mo'minlar! Sabr qilinglar va sabr-toqat qilishda ustun bo'linglar hamda doimo belingiz bog'liq bo'lib turingiz! Va Allohdan qo'rqingiz! Shoyad najot topgaysizlar!")}
+        </p>
+      )}
       <p className="mt-2.5 text-[10px] font-semibold uppercase tracking-wider" style={{ color: "var(--gold)" }}>{tr("Oli Imron surasi · 200-oyat")}</p>
     </Card>
   );
