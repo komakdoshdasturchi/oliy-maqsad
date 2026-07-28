@@ -672,16 +672,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": { en: "Settings → Data. When you download the PDF, all your data is stored in that file. On a new phone you restore it with «Install from PDF»." },
 
   // --- Yangiliklar oynasi (v10) ---
-  "10-yangilanish (v10)": { en: "Update 10 (v10)" },
-  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.": { en: "The app now speaks four languages: Uzbek Latin, Uzbek Cyrillic, English and Arabic. Settings → App language." },
-  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.": { en: "The language is asked on first launch. You may close it without choosing — you can change it later in Settings." },
-  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.": { en: "Choosing Arabic flips the whole app right-to-left, and the numerals become Arabic too." },
-  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.": { en: "Month, weekday and Hijri month names also appear in the chosen language." },
-  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.": { en: "The app name changes with the language — including under the icon on your phone." },
-  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.": { en: "The verse card in the Today section has a new look. With Arabic selected, only the verse itself remains." },
-  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": { en: "The language list is more compact — it takes up less space." },
-  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": { en: "Fixed a font setting bug (the app was losing its own typeface)." },
-  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": { en: "Some sentences stayed in Latin script in Cyrillic mode — all fixed." },
 
   // ===== 7-BOSQICH (v11): qisqa sana nomlari va onboarding xulosasi =====
   // KUN_QISQA va OY_QISQA ham modul massivlari — yuqoridagi DIQQAT izohi
@@ -762,6 +752,18 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi.": { en: "Dhikr, the five daily prayers, nafl prayers and the Qur'an khatm. This section does not affect the daily task percentage — it is counted separately. Prayers at the mosque and nafl prayers raise your rating." },
   "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": { en: "There are two modes. In Focus the screen dims and only the timer remains. In Open mode your phone notifies you when the time is up, even if you leave the app. The minutes you work are added to the task you choose." },
   "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Qo'shimcha ish» bo'limiga yozasiz — u tegishli vazifaga ziyoda bo'lib qo'shiladi.": { en: "You start here every day. Tapping a task box opens the marking window. If you do more than planned, log it under «Extra work» — it is added to the related task as extra." },
+
+  // --- Yangiliklar oynasi (v11) ---
+  "11-yangilanish (v11)": { en: "11th update (v11)" },
+  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.": { en: "Russian has been added. The app now speaks five languages: Uzbek in Latin and Cyrillic, English, Arabic and Russian." },
+  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.": { en: "A guided tour of the app has appeared. You can reopen it any time from Settings → Data." },
+  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.": { en: "Settings are now split into sections — four compact groups instead of one long list." },
+  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.": { en: "The light and dark themes have moved to the top of the Today page. When tapped, the new background spreads out from the button in a circle." },
+  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.": { en: "Sleep and the day summary are now compact — they stay collapsed and open when you need them." },
+  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.": { en: "Task notes and extra work entries can now be edited and deleted." },
+  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": { en: "The Qur'anic typeface is now built into the app — it looks the same on every phone and is easier to read." },
+  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": { en: "The Hijri date adjuster has been removed from Settings. It is now offered once at the start of each Hijri month." },
+  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": { en: "Weekday names, month names and calendar numbers now display correctly in every language." },
 };
 
 // ---------- ARABCHA ----------
@@ -1401,16 +1403,6 @@ const LUGAT_AR: Record<string, string> = {
   "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": "الإعدادات ← البيانات. وعند تنزيل ملف PDF تُحفظ فيه كل بياناتك. وفي هاتف جديد تستعيدها بـ«التثبيت من PDF».",
 
   // --- Yangiliklar oynasi (v10) ---
-  "10-yangilanish (v10)": "التحديث العاشر (v10)",
-  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.": "صار التطبيق بأربع لغات: الأوزبكية اللاتينية، والأوزبكية السيريلية، والإنجليزية، والعربية. الإعدادات ← لغة التطبيق.",
-  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.": "تُسأل عن اللغة عند أول تشغيل. ويمكنك إغلاقها دون اختيار — ثم تغيّرها لاحقًا من الإعدادات.",
-  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.": "عند اختيار العربية ينقلب التطبيق كله من اليمين إلى اليسار، وتظهر الأرقام عربية أيضًا.",
-  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.": "وتظهر أسماء الأشهر والأيام والأشهر الهجرية باللغة المختارة أيضًا.",
-  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.": "ويتغيّر اسم التطبيق مع اللغة — حتى تحت الأيقونة في هاتفك.",
-  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.": "بطاقة الآية في قسم اليوم بحُلّة جديدة. وعند اختيار العربية لا يبقى إلا نص الآية.",
-  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": "صارت قائمة اللغات أكثر إيجازًا — وتشغل مساحة أقل.",
-  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": "أُصلح خلل في إعداد الخط (كان التطبيق يفقد خطه الخاص).",
-  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": "كانت بعض الجمل تبقى بالحروف اللاتينية في الوضع السيريلي — أُصلحت كلها.",
 
   // --- v11: qisqa hafta kunlari ---
   "Ya": "أحد", "Du": "إثن", "Se": "ثلا", "Ch": "أرب", "Pa": "خمس", "Ju": "جمع", "Sh": "سبت",
@@ -1484,6 +1476,20 @@ const LUGAT_AR: Record<string, string> = {
   "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi.": "الأذكار والصلوات الخمس وصلوات النوافل وختم القرآن. هذا القسم لا يؤثر على نسبة المهام اليومية، بل يُحسب على حدة. والصلاة في المسجد والنوافل ترفع التقييم.",
   "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": "هناك وضعان. في التركيز تُعتَّم الشاشة ولا يبقى إلا المؤقّت. وفي الوضع المفتوح ينبّهك هاتفك عند انتهاء الوقت ولو خرجت من التطبيق. والدقائق التي تعملها تُضاف إلى المهمة التي تختارها.",
   "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Qo'shimcha ish» bo'limiga yozasiz — u tegishli vazifaga ziyoda bo'lib qo'shiladi.": "تبدأ من هنا كل يوم. وعند الضغط على مربّع المهمة تُفتح نافذة التسجيل. وإن عملت أكثر من المخطط فسجّله في «عمل إضافي» — يُضاف إلى المهمة المرتبطة كزيادة.",
+
+  // --- Yangiliklar oynasi (v11) ---
+  // Versiya raqami arabchada aralash chiqmasligi uchun qavs olib tashlandi
+  // ("(v11)" -> raqam() uni "(v١١)" qilardi — lotin harf + arab raqam)
+  "11-yangilanish (v11)": "التحديث الحادي عشر",
+  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.": "أُضيفت اللغة الروسية. صار التطبيق بخمس لغات: الأوزبكية باللاتينية والسيريلية، والإنجليزية، والعربية، والروسية.",
+  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.": "ظهر دليل تعريفي بالتطبيق. ويمكنك فتحه مجددًا في أي وقت من الإعدادات ← البيانات.",
+  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.": "قُسّمت الإعدادات إلى أقسام — أربعة أقسام مرتّبة بدل القائمة الطويلة.",
+  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.": "انتقل الوضعان الفاتح والداكن إلى أعلى صفحة اليوم. وعند الضغط تنتشر الخلفية الجديدة من الزر على شكل دائرة.",
+  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.": "صار النوم وملخّص اليوم أكثر إيجازًا — يبقيان مطويين ويُفتحان عند الحاجة.",
+  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.": "صار بالإمكان تعديل ملاحظات المهام والأعمال الإضافية وحذفها.",
+  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": "أُدمج خطّ الآية داخل التطبيق — صار موحّدًا على كل هاتف وأسهل في القراءة.",
+  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "أُزيل ضابط التاريخ الهجري من الإعدادات. وصار يُعرض مرة واحدة في بداية كل شهر هجري.",
+  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "صارت أسماء أيام الأسبوع والشهور وأرقام التقويم تظهر بشكل صحيح في كل اللغات.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -1930,7 +1936,6 @@ const LUGAT_RU: Record<string, string> = {
   "Maqsad bo'limi": "Раздел цели",
   "Qo'shish tugmasi": "Кнопка добавления",
   "Bugun sahifasi": "Страница «Сегодня»",
-  "10-yangilanish (v10)": "10-е обновление (v10)",
 
   // ===== 3-to'plam: jumlalar va uzun matnlar =====
 
@@ -2148,15 +2153,18 @@ const LUGAT_RU: Record<string, string> = {
   "Barakalla, {nom}! Bugungi barcha ishlar bajarildi": "Молодец, {nom}! Все дела на сегодня выполнены",
 
   // --- Yangiliklar oynasi (v10) ---
-  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.": "Приложение теперь на четырёх языках: узбекский латиницей, узбекский кириллицей, английский и арабский. Настройки → Язык приложения.",
-  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.": "Язык спрашивается при первом входе. Можно закрыть без выбора — позже измените в настройках.",
-  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.": "При выборе арабского приложение полностью разворачивается справа налево, цифры тоже становятся арабскими.",
-  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.": "Названия месяцев, дней и месяцев по хиджре тоже выводятся на выбранном языке.",
-  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.": "Название приложения меняется на каждом языке — в том числе под значком на телефоне.",
-  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.": "Карточка аята в разделе «Сегодня» обновлена. При выборе арабского остаётся только сам аят.",
-  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.": "Список выбора языка стал компактнее — занимает меньше места.",
-  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).": "Исправлена ошибка в настройке шрифта (приложение теряло свой шрифт).",
-  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.": "В кириллическом режиме некоторые фразы оставались латиницей — всё исправлено.",
+
+  // --- Yangiliklar oynasi (v11) ---
+  "11-yangilanish (v11)": "11-е обновление (v11)",
+  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.": "Добавлен русский язык. Теперь приложение на пяти языках: узбекский латиницей и кириллицей, английский, арабский и русский.",
+  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.": "Появилось руководство-экскурсия по приложению. Открыть его снова можно в любой момент в Настройках → Данные.",
+  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.": "Настройки разделены на разделы — теперь вместо длинного списка четыре компактных раздела.",
+  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.": "Светлая и тёмная темы переехали наверх страницы «Сегодня». При нажатии новый фон расходится от кнопки кругом.",
+  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.": "Сон и итог дня стали компактнее — они свёрнуты и открываются при необходимости.",
+  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.": "Заметки к задачам и дополнительные работы теперь можно изменять и удалять.",
+  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": "Шрифт аята встроен в приложение — теперь он одинаков на любом телефоне и читается легче.",
+  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "Корректировка даты по хиджре убрана из настроек. Теперь она предлагается один раз в начале каждого месяца по хиджре.",
+  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "Названия дней недели, месяцев и числа в календаре теперь отображаются правильно на всех языках.",
 };
 
 // Ruschani LUGAT ga qo'shamiz
@@ -2166,7 +2174,11 @@ for (const k in LUGAT_RU) {
 }
 
 // Avtomatik kirill o'girish xato chiqqan matnlar (istisno):  "Ma'no": "Маъно"
-export const KIRIL_ISTISNO: Record<string, string> = {};
+export const KIRIL_ISTISNO: Record<string, string> = {
+  // Versiya belgisi LOTIN qolishi kerak: toKiril() "v11" ni "в11" qilib yuborardi.
+  // (Qisqartma himoyasi faqat BOSH harfli qisqartmalarni saqlaydi, "v" esa kichik.)
+  "11-yangilanish (v11)": "11-янгиланиш (v11)",
+};
 
 // ---------- LOTIN → KIRILL ----------
 const KIR_HARF: Record<string, string> = { a: "а", b: "б", c: "ц", d: "д", e: "е", f: "ф", g: "г", h: "ҳ", i: "и", j: "ж", k: "к", l: "л", m: "м", n: "н", o: "о", p: "п", q: "қ", r: "р", s: "с", t: "т", u: "у", v: "в", x: "х", y: "й", z: "з" };

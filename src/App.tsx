@@ -973,19 +973,19 @@ function OyatCard() {
 }
 
 // ================== ILOVA YANGILIKLARI (bir martalik oyna) ==================
-const NEWS_VER = "v10";
-const NEWS_LABEL = "10-yangilanish (v10)";
-const NEWS_DATE = "2026-07-27";
+const NEWS_VER = "v11";
+const NEWS_LABEL = "11-yangilanish (v11)";
+const NEWS_DATE = "2026-07-28";
 const NEWS_ITEMS = [
-  "Ilova endi to'rt tilda: o'zbekcha lotin, o'zbekcha kirill, ingliz va arab tillari. Sozlamalar → Ilova tili.",
-  "Til birinchi kirishda so'raladi. Xohlasangiz tanlamasdan yopib ketasiz — keyin Sozlamalardan o'zgartirasiz.",
-  "Arabcha tanlansa ilova butunlay o'ngdan chapga aylanadi, raqamlar ham arabcha ko'rinadi.",
-  "Oy, kun va hijriy oy nomlari ham tanlangan tilda chiqadi.",
-  "Ilova nomi har tilda o'zgaradi — telefondagi belgi ostida ham.",
-  "Bugun bo'limidagi oyat kartasi yangi ko'rinishda. Arabcha tanlansa faqat oyatning o'zi qoladi.",
-  "Til tanlash ro'yxati ixchamlashdi — kamroq joy egallaydi.",
-  "Shrift sozlamasidagi xato tuzatildi (ilova o'z shriftini yo'qotayotgan edi).",
-  "Kirill rejimida ba'zi jumlalar lotin bo'lib qolayotgan edi — hammasi tuzatildi.",
+  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.",
+  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.",
+  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.",
+  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.",
+  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.",
+  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.",
+  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.",
+  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.",
+  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.",
 ];
 
 function NewsModal({ hijriOffset, logoColor, onClose }: { hijriOffset: number; logoColor: string; onClose: () => void }) {
