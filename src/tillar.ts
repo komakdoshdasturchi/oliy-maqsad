@@ -717,6 +717,10 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- v11: hijriy oy boshidagi tuzatish taklifi ---
   "Yangi hijriy oy boshlandi. Sana to'g'ri ko'rsatilyaptimi? Kerak bo'lsa bir kunga suring.": { en: "A new Hijri month has begun. Is the date shown correctly? Shift it by a day if needed." },
   "To'g'ri, davom etamiz": { en: "Correct, let us continue" },
+
+  // --- v11: ixcham yig'iladigan kartalar ---
+  "Kun xulosasi": { en: "Day summary" },
+  "Hali yozilmagan": { en: "Not written yet" },
 };
 
 // ---------- ARABCHA ----------
@@ -1397,6 +1401,10 @@ const LUGAT_AR: Record<string, string> = {
   // --- v11: hijriy oy boshidagi tuzatish taklifi ---
   "Yangi hijriy oy boshlandi. Sana to'g'ri ko'rsatilyaptimi? Kerak bo'lsa bir kunga suring.": "بدأ شهر هجري جديد. هل التاريخ معروض بشكل صحيح؟ حرّكه يومًا إن لزم.",
   "To'g'ri, davom etamiz": "صحيح، لنكمل",
+
+  // --- v11: ixcham yig'iladigan kartalar ---
+  "Kun xulosasi": "ملخّص اليوم",
+  "Hali yozilmagan": "لم يُكتب بعد",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)

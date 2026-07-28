@@ -540,6 +540,25 @@ function Card({ children, style, className, onClick }: { children: React.ReactNo
   return <div onClick={onClick} className={"om-card p-5 " + (onClick ? "om-press " : "") + (className || "")} style={style}>{children}</div>;
 }
 
+// Ixcham yig'iladigan karta: yopiq holatda BITTA qator — ikonka, nom va holat.
+// Bosilganda ochiladi. Bugun sahifasida joy tejash uchun (uyqu, kun xulosasi):
+// avval ikkalasi ham to'liq karta bo'lib katta joy egallardi.
+function IxchamKarta(p: { icon: string; tint: string; nom: string; holat?: string; ochiq: boolean; setOchiq: (v: boolean) => void; children: React.ReactNode }) {
+  return (
+    <div className="om-card overflow-hidden p-0">
+      <button onClick={() => { p.setOchiq(!p.ochiq); buzz(); }} className="om-press flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left">
+        <span className="grid h-8 w-8 flex-none place-items-center rounded-xl" style={{ background: "var(--soft)", color: p.tint }}><Icon n={p.icon} size={16} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[12.5px] font-bold" style={{ color: "var(--ink)" }}>{p.nom}</span>
+          {p.holat ? <span className="block truncate text-[10.5px]" style={lblS}>{p.holat}</span> : null}
+        </span>
+        <Icon n={p.ochiq ? "chevronUp" : "chevronDown"} size={15} style={{ color: "var(--muted)" }} />
+      </button>
+      {p.ochiq && <div className="border-t px-3.5 pb-3.5 pt-3" style={{ borderColor: "var(--line)" }}>{p.children}</div>}
+    </div>
+  );
+}
+
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
   useBack(onClose);
   return (
@@ -1703,6 +1722,10 @@ function BugunView(p: {
     if (ok) p.setDayMode({ mode: nu as "list" | "sched", lockedUntil: addDaysISO(today, 7) });
   };
 
+  // Uyqu va kun xulosasi ixcham yig'ilgan holda turadi (joy tejash uchun)
+  const [ochiqUyqu, setOchiqUyqu] = useState(false);
+  const [ochiqXulosa, setOchiqXulosa] = useState(false);
+
   // Uyqu: teskari reyting — rejadan KAM uxlash yaxshi. Kuniga bir marta belgilanadi,
   // keyin faqat + bilan soat qo'shiladi (qo'shilgach reja oshsa reyting tushadi).
   const SleepCard = sleepTask && p.sleepCfg ? (() => {
@@ -1727,14 +1750,16 @@ function BugunView(p: {
       p.setSleepLog(sl => ({ ...sl, [today]: Math.round(((sl[today] || 0) + v) * 10) / 10 }));
       setSleepH("");
     };
+    // Yig'ilgan qatorda ko'rinadigan qisqa holat
+    const holat = locked
+      ? (m!.st === "full" ? tr("✓ belgilandi") : tr("✗ belgilandi"))
+      : slept !== undefined ? `${tr("uxlandi")}: ${raqam(slept)} ${tr("soat")}`
+      : tr("Belgilanmagan");
     return (
-      <Card style={{ borderInlineStartWidth: 3, borderInlineStartColor: "var(--blue)" }}>
-        <div className="text-sm font-medium" style={{ color: "var(--ink)" }}>
-          <Icon n="moon" size={15} style={{ marginInlineEnd: 5, verticalAlign: "-2px" }} />{tr("Rejaga muvofiq uyqu")}{locked ? (m!.st === "full" ? ` · ${tr("✓ belgilandi")}` : ` · ${tr("✗ belgilandi")}`) : ""}
-        </div>
+      <IxchamKarta icon="moon" tint="var(--blue)" nom={tr("Rejaga muvofiq uyqu")} holat={holat} ochiq={ochiqUyqu} setOchiq={setOchiqUyqu}>
         <div className="text-[11px]" style={{ color: "var(--muted)" }}>
-          Reja: {p.sleepCfg.kind === "range" ? `${p.sleepCfg.from} — ${p.sleepCfg.to} (~${planH} ${tr("soat")})` : `${planH} ${tr("soat")}`}
-          {slept !== undefined ? ` · ${tr("uxlandi")}: ${slept} ${tr("soat")}` : ""}
+          {tr("Reja")}: {p.sleepCfg.kind === "range" ? `${p.sleepCfg.from} — ${p.sleepCfg.to} (~${raqam(planH)} ${tr("soat")})` : `${raqam(planH)} ${tr("soat")}`}
+          {slept !== undefined ? ` · ${tr("uxlandi")}: ${raqam(slept)} ${tr("soat")}` : ""}
         </div>
         {diff !== null && (
           <p className="mt-1 text-[11px] font-bold" style={{ color: diff >= 0 ? "var(--green)" : "var(--gold)" }}>
@@ -1760,19 +1785,21 @@ function BugunView(p: {
             <button onClick={addSleep} className="rounded-lg px-4 py-1.5 text-sm font-bold text-white" style={{ background: "var(--blue)" }}>+</button>
           </div>
         )}
-      </Card>
+      </IxchamKarta>
     );
   })() : null;
 
   const NoteCard = (
-    <Card>
+    <IxchamKarta icon="pencil" tint="var(--gold)" nom={tr("Kun xulosasi")}
+      holat={p.notes[today] ? p.notes[today] : tr("Hali yozilmagan")}
+      ochiq={ochiqXulosa} setOchiq={setOchiqXulosa}>
       <label className={lblC} style={lblS}>{tr("Bugun qanday o'tdi? (bir jumla — Taqvimda saqlanadi)")}</label>
       <div className="mt-1 flex gap-2">
         <input value={dayNote} onChange={e => setDayNote(e.target.value)} placeholder={tr("Masalan: yaxshi, unumli kun bo'ldi...")} className={inpC + " flex-1"} style={inpS} />
         <button onClick={() => p.setNotes(ns => ({ ...ns, [today]: dayNote.trim() }))} className="rounded-lg px-3 py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("OK")}</button>
       </div>
       {p.notes[today] && <p className="mt-1 text-[11px]" style={{ color: "var(--green)" }}>{tr("Saqlandi ✓")}</p>}
-    </Card>
+    </IxchamKarta>
   );
 
   const Salom = null;
@@ -4738,6 +4765,13 @@ export default function App() {
             </div>
           </div>
           <div className="flex flex-none items-start gap-2">
+            <button onClick={() => togglePage("uyqu")} className="om-press flex flex-none flex-col items-center gap-1">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl"
+                style={{ background: page === "uyqu" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "uyqu" ? "var(--green)" : "var(--line)"), color: page === "uyqu" ? "#fff" : "var(--blue)", boxShadow: "var(--shadow)" }}>
+                <Icon n="moon" size={19} />
+              </span>
+              <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Uyqu")}</span>
+            </button>
             <MavzuTugma dark={settings.dark} setDark={v => setSettings(s => ({ ...s, dark: v }))} />
             <button onClick={() => togglePage("sozlama")} className="om-press flex flex-none flex-col items-center gap-1">
               <span className="grid h-11 w-11 place-items-center rounded-2xl"
