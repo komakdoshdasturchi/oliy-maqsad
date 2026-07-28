@@ -3791,6 +3791,7 @@ function VazifalarPage(p: {
   setFolders: React.Dispatch<React.SetStateAction<Folder[]>>; setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   setSleepCfg: React.Dispatch<React.SetStateAction<SleepCfg | null>>;
   setPlan: React.Dispatch<React.SetStateAction<Plan | null>>;
+  hints: Record<string, boolean>; doneHint: (k: string) => void;
 }) {
   const [sub, setSub] = useState<"daily" | "oliy">("daily");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -3851,7 +3852,7 @@ function VazifalarPage(p: {
 
       {qq !== "" && (
         <Card>
-          <h3 className="mb-2 font-bold" style={{ color: "var(--ink)" }}>Qidiruv natijalari ({results.length})</h3>
+          <h3 className="mb-2 font-bold" style={{ color: "var(--ink)" }}>{tf("Qidiruv natijalari ({n})", { n: results.length })}</h3>
           {results.length === 0 && <p className="text-xs" style={lblS}>{tr("Hech narsa topilmadi.")}</p>}
           {results.map(t => <TaskBtn key={t.id} t={t} />)}
         </Card>
@@ -3859,6 +3860,13 @@ function VazifalarPage(p: {
 
       {qq === "" && <>
       {sub === "daily" && <SleepPlanCard sleepCfg={p.sleepCfg} setSleepCfg={p.setSleepCfg} />}
+      {/* Ko'p yillik rejada: oliy vazifalar YILMA-YIL yoziladi. Buni oldindan
+          aytmasak, foydalanuvchi 5 yillik hamma ishni birdan kiritmoqchi bo'ladi. */}
+      {sub === "oliy" && p.plan.years > 1 && (
+        <Hint id="birinchiYil" hints={p.hints} done={p.doneHint}
+          text={tf("Hozircha faqat birinchi yil vazifalarini belgilaysiz. Yil tugagach keyingi yilnikini qo'shasiz — o'tgan yil ma'lumotlari saqlanib qoladi ({n} yillik reja shunday boriladi).", { n: p.plan.years })} />
+      )}
+
       {sub === "oliy" && (
         <button onClick={() => setShowMetrics(true)} className="om-press om-card flex w-full items-center gap-3 p-4 text-left">
           <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="target" size={21} /></span>
@@ -4842,7 +4850,8 @@ export default function App() {
           <IbadatPage today={today} ib={ib} setIb={setIb} gender={gender || "m"} khatm={khatm} setKhatm={setKhatm} />
         ) : page === "vazifalar" ? (
           <VazifalarPage today={today} plan={plan} folders={folders} tasks={tasks} sleepCfg={sleepCfg} countLog={countLog}
-            setFolders={setFolders} setTasks={setTasks} setSleepCfg={setSleepCfg} setPlan={setPlan} />
+            setFolders={setFolders} setTasks={setTasks} setSleepCfg={setSleepCfg} setPlan={setPlan}
+            hints={hints} doneHint={doneHint} />
         ) : page === "sozlama" ? (
           <SozlamaPage settings={settings} setSettings={setSettings} setPlan={setPlan} today={today} allData={allData} lang={lang} openTil={() => setPage("til")} />
         ) : page === "til" ? (

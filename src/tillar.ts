@@ -726,6 +726,10 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Xulosani tahrirlang...": { en: "Edit the note..." },
   "Xulosa o'chirilsinmi?": { en: "Delete this note?" },
   "Qo'shimcha ish o'chirilsinmi?": { en: "Delete this extra work entry?" },
+
+  // --- v11: birinchi yil izohi va qidiruv ---
+  "Hozircha faqat birinchi yil vazifalarini belgilaysiz. Yil tugagach keyingi yilnikini qo'shasiz — o'tgan yil ma'lumotlari saqlanib qoladi ({n} yillik reja shunday boriladi).": { en: "For now you set only the first year's tasks. When the year ends you add the next year's — the past year's data is kept ({n}-year plans work this way)." },
+  "Qidiruv natijalari ({n})": { en: "Search results ({n})" },
 };
 
 // ---------- ARABCHA ----------
@@ -1415,6 +1419,10 @@ const LUGAT_AR: Record<string, string> = {
   "Xulosani tahrirlang...": "عدّل الملاحظة...",
   "Xulosa o'chirilsinmi?": "هل تُحذف هذه الملاحظة؟",
   "Qo'shimcha ish o'chirilsinmi?": "هل يُحذف هذا العمل الإضافي؟",
+
+  // --- v11: birinchi yil izohi va qidiruv ---
+  "Hozircha faqat birinchi yil vazifalarini belgilaysiz. Yil tugagach keyingi yilnikini qo'shasiz — o'tgan yil ma'lumotlari saqlanib qoladi ({n} yillik reja shunday boriladi).": "في الوقت الحالي تحدّد مهام السنة الأولى فقط. وعند انتهاء السنة تضيف مهام السنة التالية — وتبقى بيانات السنة الماضية محفوظة (هكذا تسير الخطة ذات {n} سنوات).",
+  "Qidiruv natijalari ({n})": "نتائج البحث ({n})",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
