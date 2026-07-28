@@ -94,13 +94,21 @@ const emptyIb = (): IbadatDay => ({ zikr: [false, false, false], pr: {}, masjid:
 const b64enc = (s: string) => btoa(unescape(encodeURIComponent(s)));
 const b64dec = (s: string) => decodeURIComponent(escape(atob(s)));
 
-function hijri(dISO: string, off: number) {
+// Hijriy sanani BO'LAKLAB qaytaradi. Oyning birinchi kunini aniqlash uchun
+// kerak (oyda bir marta chiqadigan tuzatish taklifi shunga tayanadi).
+function hijriQism(dISO: string, off: number): { kun: number; oy: number; yil: number } | null {
   try {
     const d = addDays(parseISO(dISO), off);
     const p = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", { day: "numeric", month: "numeric", year: "numeric" }).formatToParts(d);
     const g = (t: string) => Number((p.find(x => x.type === t) || { value: "0" }).value);
-    return `${g("day")}-${tr(HIJRI_OYLAR[g("month") - 1]) || ""} ${g("year")}`;
-  } catch { return ""; }
+    return { kun: g("day"), oy: g("month"), yil: g("year") };
+  } catch { return null; }
+}
+
+function hijri(dISO: string, off: number) {
+  const q = hijriQism(dISO, off);
+  if (!q) return "";
+  return `${raqam(q.kun)}-${tr(HIJRI_OYLAR[q.oy - 1]) || ""} ${raqam(q.yil)}`;
 }
 
 function notify(body: string) {
@@ -4087,6 +4095,31 @@ function MavzuTugma({ dark, setDark }: { dark: boolean; setDark: (v: boolean) =>
   );
 }
 
+// Har hijriy oyning BIRINCHI kunida bir marta chiqadi.
+// Sabab: hijriy sana joyga qarab bir kun farq qilishi mumkin, ammo bu ehtiyoj
+// oyda bir marta tug'iladi — Sozlamalarda doimiy joy egallashi shart emas.
+function HijriySorov(p: { today: string; off: number; setOff: (n: number) => void; onClose: () => void }) {
+  const [n, setN] = useState(p.off);
+  return (
+    <Modal title={tr("Hijriy sana")} onClose={p.onClose}>
+      <p className="mb-3 text-[12.5px] leading-relaxed" style={lblS}>
+        {tr("Yangi hijriy oy boshlandi. Sana to'g'ri ko'rsatilyaptimi? Kerak bo'lsa bir kunga suring.")}
+      </p>
+      <div className="mb-3 rounded-2xl border p-4 text-center" style={cardS}>
+        <div className="text-lg font-bold" style={{ color: "var(--green)" }}>{hijri(p.today, n)}</div>
+      </div>
+      <div className="mb-4 flex items-center justify-center gap-3">
+        <button onClick={() => setN(n - 1)} className="om-press grid h-10 w-10 place-items-center rounded-xl" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="minus" size={17} /></button>
+        <span className="w-14 text-center text-sm font-bold tabular-nums" style={{ color: "var(--ink)" }}>{n > 0 ? "+" : ""}{raqam(n)}</span>
+        <button onClick={() => setN(n + 1)} className="om-press grid h-10 w-10 place-items-center rounded-xl" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="plus" size={17} /></button>
+      </div>
+      <button onClick={() => { p.setOff(n); p.onClose(); }} className="om-press w-full rounded-2xl py-2.5 text-sm font-bold text-white" style={{ background: "var(--green)" }}>
+        {n === p.off ? tr("To'g'ri, davom etamiz") : tr("Saqlash")}
+      </button>
+    </Modal>
+  );
+}
+
 function TilPage(p: { lang: Lang; setLang: React.Dispatch<React.SetStateAction<Lang>>; onBack: () => void }) {
   return (
     <div className="space-y-3.5">
@@ -4115,7 +4148,7 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   const fileRef = useRef<HTMLInputElement>(null);
   const [showHelp, setShowHelp] = useState(false);
   // null = asosiy ro'yxat, aks holda ochiq ichki sahifa
-  const [sub, setSub] = useState<null | "malumot" | "korinish">(null);
+  const [sub, setSub] = useState<null | "malumot">(null);
   const openTelegram = async () => {
     const ok = await omConfirm(tr("«Oliy maqsad» kanaliga o'tasizmi?"), tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
     if (ok) { try { window.open("https://telegram.me/Oliymaqsad_apk", "_blank"); } catch { location.href = "https://telegram.me/Oliymaqsad_apk"; } }
@@ -4258,29 +4291,6 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
     </div>
   );
 
-  // ---------- ICHKI: HIJRIY SANA ----------
-  // Tonggi/tungi tugmalari bu yerdan OLIB TASHLANDI — ular endi Bugun
-  // sahifasining yuqorisida, `MavzuTugma` da (foydalanuvchi qarori).
-  if (sub === "korinish") return (
-    <div className="space-y-3.5">
-      {sarlavha(tr("Hijriy sana"))}
-
-      <Card>
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-sm font-semibold" style={{ color: "var(--ink)" }}>{tr("Hijriy sana")}</div>
-            <div className="text-[11px]" style={lblS}>{settings.hijriOffset > 0 ? "+" : ""}{raqam(settings.hijriOffset)} {tr("kun surilgan")}</div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button onClick={() => setSettings(s => ({ ...s, hijriOffset: s.hijriOffset - 1 }))} className="om-press grid h-9 w-9 place-items-center rounded-xl" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="minus" size={16} /></button>
-            <span className="w-8 text-center text-sm font-bold tabular-nums" style={{ color: "var(--ink)" }}>{settings.hijriOffset > 0 ? "+" : ""}{raqam(settings.hijriOffset)}</span>
-            <button onClick={() => setSettings(s => ({ ...s, hijriOffset: s.hijriOffset + 1 }))} className="om-press grid h-9 w-9 place-items-center rounded-xl" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="plus" size={16} /></button>
-          </div>
-        </div>
-      </Card>
-    </div>
-  );
-
   // ---------- ASOSIY RO'YXAT ----------
   const jorTil = TILLAR.find(x => x.id === lang) || TILLAR[0];
   return (
@@ -4302,15 +4312,6 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova tili")}</span>
           <span className="block text-[11px]" style={lblS}>{jorTil.nom}</span>
-        </span>
-        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
-      </button>
-
-      <button onClick={() => setSub("korinish")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
-        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="calendar" size={21} /></span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Hijriy sana")}</span>
-          <span className="block text-[11px]" style={lblS}>{settings.hijriOffset > 0 ? "+" : ""}{raqam(settings.hijriOffset)} {tr("kun surilgan")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
@@ -4389,6 +4390,8 @@ export default function App() {
   // Til bir marta so'raladi: yangi o'rnatishda salomlashuvdan oldin,
   // yangilanishda esa birinchi kirishda (yopib ketish mumkin). "1" = so'ralgan.
   const [langAsk, setLangAsk] = useStored<string>("om3_langask", "");
+  // Hijriy sana tuzatish taklifi oyda bir marta. Qiymat: "yil-oy" (so'ralgan oy).
+  const [hijriAsk, setHijriAsk] = useStored<string>("om3_hijriask", "");
   setCur(lang); // til almashsa butun ekran shu qiymat bilan qayta chiziladi
   const [pomo, setPomo] = useState<PomoState | null>(null);
   const [pomoAsk, setPomoAsk] = useState<{ min: number } | null>(null);
@@ -4810,6 +4813,18 @@ export default function App() {
           ✕ bilan tanlamasdan yopib ketish mumkin. Yangiliklar oynasidan OLDIN
           chiqadi — shuning uchun NewsModal `langAsk` ni kutadi. */}
       {!langAsk && <TilSorov lang={lang} setLang={setLang} onFinish={() => setLangAsk("1")} yopsaBoladi />}
+
+      {/* Hijriy oyning 1-kuni: sana to'g'rimi deb bir marta so'raymiz.
+          Til so'rovi tugagach chiqadi — ikkalasi bir vaqtda ochilmasin. */}
+      {(() => {
+        const hq = hijriQism(today, settings.hijriOffset);
+        if (!langAsk || !hq || hq.kun !== 1) return null;
+        const kalit = `${hq.yil}-${hq.oy}`;
+        if (hijriAsk === kalit) return null;
+        return <HijriySorov today={today} off={settings.hijriOffset}
+          setOff={n => setSettings(s => ({ ...s, hijriOffset: n }))}
+          onClose={() => setHijriAsk(kalit)} />;
+      })()}
 
       {langAsk && news !== NEWS_VER && gender !== null && <NewsModal hijriOffset={settings.hijriOffset} logoColor={logoColor} onClose={() => setNews(NEWS_VER)} />}
 

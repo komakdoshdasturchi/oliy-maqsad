@@ -48,7 +48,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "keyingi": { en: "next" },
   "bugun tugadi": { en: "finished today" },
   "shu davrda": { en: "in this period" },
-  "kun surilgan": { en: "days postponed" },
   "Hijriy sana": { en: "Hijri date" },
   "Sana tanlang": { en: "Select a date" },
   "Vaqt tanlang": { en: "Select a time" },
@@ -714,6 +713,10 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "O'chirishdan oldin zaxira saqlab qo'yish tavsiya etiladi.": { en: "Saving a backup before deleting is recommended." },
   "Ha, yuklansin": { en: "Yes, download it" },
   "Yangilanish sanasi": { en: "Updated" },
+
+  // --- v11: hijriy oy boshidagi tuzatish taklifi ---
+  "Yangi hijriy oy boshlandi. Sana to'g'ri ko'rsatilyaptimi? Kerak bo'lsa bir kunga suring.": { en: "A new Hijri month has begun. Is the date shown correctly? Shift it by a day if needed." },
+  "To'g'ri, davom etamiz": { en: "Correct, let us continue" },
 };
 
 // ---------- ARABCHA ----------
@@ -968,7 +971,6 @@ const LUGAT_AR: Record<string, string> = {
   "Bir haftadan": "بعد أسبوع",
   "{sana} gacha": "حتى {sana}",
   "shu davrda": "في هذه الفترة",
-  "kun surilgan": "يومًا مؤجلًا",
   "bugun tugadi": "انتهى اليوم",
   "Qachondan boshlanadi?": "من متى يبدأ؟",
   "Qaysi kuni so'ralsin?": "في أي يوم يُسأل؟",
@@ -1391,6 +1393,10 @@ const LUGAT_AR: Record<string, string> = {
   "O'chirishdan oldin zaxira saqlab qo'yish tavsiya etiladi.": "يُنصح بحفظ نسخة احتياطية قبل الحذف.",
   "Ha, yuklansin": "نعم، نزّلها",
   "Yangilanish sanasi": "تاريخ التحديث",
+
+  // --- v11: hijriy oy boshidagi tuzatish taklifi ---
+  "Yangi hijriy oy boshlandi. Sana to'g'ri ko'rsatilyaptimi? Kerak bo'lsa bir kunga suring.": "بدأ شهر هجري جديد. هل التاريخ معروض بشكل صحيح؟ حرّكه يومًا إن لزم.",
+  "To'g'ri, davom etamiz": "صحيح، لنكمل",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
