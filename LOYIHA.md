@@ -137,6 +137,17 @@ Sakkizta xato yopildi. Lug'at **613 / 613** (uz · uzk · en · ar).
 7. **Taqvim raqamlari** — `raqam()` qo'llandi (`fmtUz`, `fmtUzFull`, ikki taqvim, kun oynasi, sarlavha)
 8. **«Shoshilmang...»** — `tr()` da edi, lekin lug'atda yo'q edi. **SABOQ:** ichida `\"` bo'lgan matnlarni `grep 'tr("...")'` tekshiruvi TOPMAYDI — shu sababli sezilmay qolgan
 
+## v11 — RUS TILI QO'SHILDI (2026-07-28)
+Lug'at **633 / 633** BESH tilda: uz · uzk · en · ar · **ru**.
+- Sabab (foydalanuvchi): rusiyzabon musulmonlar. v3 da ruscha olib tashlangan edi — bu qaror QAYTARILDI
+- `LUGAT_RU` alohida blokda (arabcha kabi), pastida halqa bilan `LUGAT[k].ru` ga qo'shiladi
+- Diniy atamalar rus tilidagi qabul qilingan islomiy yozuvda: намаз · зикр · нафль · ракаат · хатм · джуз · тахаджуд · Фаджр/Зухр/Аср/Магриб/Иша
+- Oyat — Э. Кулиев tarjimasi; hadis — mashhur rivoyat. **Ikkalasi ham TEKSHIRILMAGAN**
+- `holat: "sinov"` — ona tili sohibi ko'rmaguncha shunday qolsin
+- **KO'PLIK CHEKLOVI:** rus tilida uch shakl (1 / 2-4 / 5+), `tf()` faqat ikkitasini beradi. 2-4 oralig'ida grammatik jihatdan aniq emas
+- Android: `values-ru/strings.xml` → «Высшая цель»
+- **SABOQ:** `LUGAT_RU` ga LUGAT da YO'Q kalit yozilsa, u jimgina yangi kalit yaratadi va sezilmaydi. Tekshiruv: `ru` bor-u `en` yo'q kalitlarni sanash (shu yo'l bilan 4 ta xato topildi)
+
 ## TEXNIK XOTIRA
 - **Ma'lumot kalitlari (27 ta):** om3_plan, om3_tasks, om3_logs, om3_extras, om3_counts, om3_countlog, om3_weights, om3_notes, om3_sleepcfg, om3_sleeplog, om3_pomocfg, om3_pomolog, om3_settings, om3_ibadat, om3_khatm, om3_gender, om3_daymode, om3_ui, om3_quotes, om3_news, om3_hints, om3_lang, om3_folders, om3_ver + eski (om3_books, om3_cats, om3_groups)
 - **Migratsiya:** `om3_ver = "4"`. v3→v4 da har vazifaga `createdAt` qo'shildi (o'tmishni muzlatish — statistika buzilishini tuzatgan)

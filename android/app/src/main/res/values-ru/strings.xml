@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Telefon tizim tili RUSCHA bo'lganda ilova belgisi ostidagi nom. -->
+<resources>
+    <string name="app_name">Высшая цель</string>
+    <string name="title_activity_main">Высшая цель</string>
+</resources>
