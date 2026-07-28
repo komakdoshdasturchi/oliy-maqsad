@@ -1879,8 +1879,9 @@ function BugunView(p: {
   const remList = act.reduce<string[]>((a, t) => { if (t.schedFrom) a.push(t.schedFrom); if (t.remTime) a.push(t.remTime); return a; }, []).sort();
   const nextRem = remList.find(x => x >= `${String(new Date().getHours()).padStart(2, "0")}:${String(new Date().getMinutes()).padStart(2, "0")}`);
   const sleepMarked = !!(sleepTask && lg[sleepTask.id] && lg[sleepTask.id].st);
-  const Tile = ({ label, value, sub, icon, tint, onClick }: { label: string; value: string; sub: string; icon: string; tint: string; onClick: () => void }) => (
-    <button onClick={onClick} className="om-press om-card flex min-w-0 flex-col items-start gap-1 p-2.5 text-left">
+  // `tur` — tanishtiruv turida shu elementni ajratib ko'rsatish uchun belgi
+  const Tile = ({ label, value, sub, icon, tint, onClick, tur }: { label: string; value: string; sub: string; icon: string; tint: string; onClick: () => void; tur?: string }) => (
+    <button data-tur={tur} onClick={onClick} className="om-press om-card flex min-w-0 flex-col items-start gap-1 p-2.5 text-left">
       <span className="flex w-full min-w-0 items-center gap-1 text-[10px] font-semibold" style={{ color: "var(--muted)" }}>
         <Icon n={icon} size={12} style={{ color: tint }} /><span className="truncate">{label}</span>
       </span>
@@ -1891,9 +1892,9 @@ function BugunView(p: {
   const openTile = (fn: () => void) => () => { p.doneHint("tiles"); fn(); };
   const MiniTiles = (
     <div className="grid grid-cols-4 gap-1.5">
-      <Tile label={tr("Ibodatlar")} icon="mosque" tint="var(--green)" value={`${ibSc.pct}%`} sub={tr("Majburiy bo'lim")} onClick={openTile(p.openIbadat)} />
+      <Tile tur="ibodat" label={tr("Ibodatlar")} icon="mosque" tint="var(--green)" value={`${ibSc.pct}%`} sub={tr("Majburiy bo'lim")} onClick={openTile(p.openIbadat)} />
       <Tile label={tr("Uyqu")} icon="moon" tint="var(--blue)" value={p.sleepCfg ? `${p.sleepCfg.hours} ${tr("soat")}` : "—"} sub={p.sleepCfg ? (sleepMarked ? tr("Belgilandi") : tr("Belgilanmagan")) : tr("Reja yo'q")} onClick={p.openUyqu} />
-      <Tile label={tr("Pomodoro")} icon="timer" tint="var(--red)" value={`${tPomo.c} ${tr("ta")}`} sub={tPomo.m > 0 ? fmtMin(tPomo.m) : tr("Boshlash")} onClick={p.openPomo} />
+      <Tile tur="pomodoro" label={tr("Pomodoro")} icon="timer" tint="var(--red)" value={`${tPomo.c} ${tr("ta")}`} sub={tPomo.m > 0 ? fmtMin(tPomo.m) : tr("Boshlash")} onClick={p.openPomo} />
       <Tile label={tr("Eslatma")} icon="bell" tint="var(--gold)" value={remList.length > 0 ? `${remList.length} ${tr("ta")}` : "—"} sub={nextRem ? `${tr("keyingi")} ${nextRem}` : remList.length > 0 ? tr("bugun tugadi") : tr("vaqt yo'q")} onClick={p.openVazifalar} />
     </div>
   );
@@ -4207,6 +4208,69 @@ function HijriySorov(p: { today: string; off: number; setOff: (n: number) => voi
   );
 }
 
+// ================== TANISHTIRUV TURI ==================
+// STRELKA CHIZILMAYDI. Ko'rsatilayotgan element O'Z JOYIDA qolgan holda
+// "ko'tariladi" (z-index + oltin halqa), atrofi qoraytirilib xiralashadi.
+// Shu sababli hech qanday koordinata hisoblanmaydi — ekran o'lchami,
+// sahifa siljishi va arabchadagi o'ngdan chapga aylanish o'z-o'zidan to'g'ri
+// ishlaydi. Strelkali usul aynan shu uchtasida sinardi.
+type TurQadam = { tur: string | null; nom: string; matn: string };
+
+function Tanishtiruv({ qadamlar, onFinish }: { qadamlar: TurQadam[]; onFinish: () => void }) {
+  const [i, setI] = useState(0);
+  const [kartaPastda, setKartaPastda] = useState(true);
+  const q = qadamlar[Math.min(i, qadamlar.length - 1)];
+
+  useEffect(() => {
+    if (!q.tur) { setKartaPastda(true); return; }
+    const el = document.querySelector(`[data-tur="${q.tur}"]`) as HTMLElement | null;
+    if (!el) { setKartaPastda(true); return; }
+    el.classList.add("om-tur-faol");
+    // Element `position: fixed` konteyner ichida bo'lsa (pastki menyu), o'sha
+    // konteyner alohida qatlam yaratadi va bola undan chiqa olmaydi —
+    // shuning uchun konteynerni ham ko'taramiz.
+    let a: HTMLElement | null = el.parentElement, ust: HTMLElement | null = null;
+    while (a && a !== document.body) {
+      if (getComputedStyle(a).position === "fixed") { ust = a; break; }
+      a = a.parentElement;
+    }
+    if (ust) ust.classList.add("om-tur-ust");
+    const r = el.getBoundingClientRect();
+    // Element yuqori yarmda bo'lsa karta pastda, aks holda tepada — to'smasin
+    setKartaPastda(r.top + r.height / 2 < window.innerHeight / 2);
+    try { el.scrollIntoView({ block: "center", behavior: "smooth" }); } catch { }
+    return () => { el.classList.remove("om-tur-faol"); if (ust) ust.classList.remove("om-tur-ust"); };
+  }, [i, q.tur]);
+
+  const oxirgi = i >= qadamlar.length - 1;
+  return (
+    <div className="om-tur-fon fixed inset-0 z-50">
+      <div className={"fixed inset-x-0 z-[70] px-4 " + (kartaPastda ? "bottom-6" : "top-6")}>
+        <div className="om-pop mx-auto max-w-[22rem] rounded-3xl p-4" style={{ background: "var(--card)", border: "1px solid var(--line)", boxShadow: "var(--shadow-lg)" }}>
+          <div className="mb-2 flex items-center gap-2">
+            <span className="grid h-8 w-8 flex-none place-items-center rounded-xl" style={{ background: "var(--soft)" }}>
+              <Logo size={17} color="var(--green)" />
+            </span>
+            <span className="min-w-0 flex-1 text-[14px] font-bold" style={{ color: "var(--ink)" }}>{tr(q.nom)}</span>
+          </div>
+          <p className="text-[12.5px] leading-relaxed" style={lblS}>{tr(q.matn)}</p>
+          <div className="mt-3.5 flex items-center gap-2">
+            <div className="flex flex-1 items-center gap-1.5">
+              {qadamlar.map((_, j) => (
+                <span key={j} className="rounded-full" style={{ width: j === i ? 13 : 5, height: 5, background: j === i ? "var(--gold)" : "var(--line)" }} />
+              ))}
+            </div>
+            {!oxirgi && <button onClick={onFinish} className="om-press flex-none text-[11px]" style={lblS}>{tr("O'tkazib yuborish")}</button>}
+            <button onClick={() => (oxirgi ? onFinish() : setI(i + 1))} className="om-press flex-none rounded-xl px-4 py-2 text-[12.5px] font-bold text-white" style={{ background: "var(--green)" }}>
+              {oxirgi ? tr("Tushunarli") : tr("Keyingisi")}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TilPage(p: { lang: Lang; setLang: React.Dispatch<React.SetStateAction<Lang>>; onBack: () => void }) {
   return (
     <div className="space-y-3.5">
@@ -4229,7 +4293,7 @@ function TilPage(p: { lang: Lang; setLang: React.Dispatch<React.SetStateAction<L
 }
 
 // ================== SOZLAMALAR ==================
-function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.SetStateAction<Settings>>; setPlan: React.Dispatch<React.SetStateAction<Plan | null>>; today: string; allData: () => Record<string, unknown>; lang: Lang; openTil: () => void }) {
+function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.SetStateAction<Settings>>; setPlan: React.Dispatch<React.SetStateAction<Plan | null>>; today: string; allData: () => Record<string, unknown>; lang: Lang; openTil: () => void; startTur: () => void }) {
   const { settings, setSettings, lang } = p;
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -4355,10 +4419,22 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
       </div>
       <p className="px-1 text-[11px]" style={lblS}>{tr("Oxirgi zaxira")}: {settings.lastBackup ? fmtUzFull(settings.lastBackup) : tr("hali olinmagan")}. {tr("«O'rnatish» amaldagi ma'lumotni almashtiradi — ogohlantiriladi.")}</p>
 
-      <button onClick={() => setShowHelp(true)} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
-        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="info" size={21} /></span>
+      {/* Qo'llanma — tanishtiruv turini QAYTA ishga tushiradi (tafsilotli to'plam).
+          Tur Bugun sahifasidagi elementlarni ko'rsatgani uchun App avval
+          sozlamalar sahifasidan chiqadi. */}
+      <button onClick={p.startTur} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="sparkles" size={21} /></span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilovani ishlatish bo'yicha qo'llanma")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Ilova bo'ylab qadam-baqadam yuriladi")}</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      <button onClick={() => setShowHelp(true)} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="info" size={21} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Qanday ishlaydi?")}</span>
           <span className="block text-[11px]" style={lblS}>{tr("Ilovaning har bo'limi haqida qisqa izoh")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
@@ -4420,6 +4496,29 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   );
 }
 
+// Tanishtiruv qadamlari. IKKI TO'PLAM:
+//  · TUR_QISQA — birinchi kirishda, 6 qadam, har biri bir-ikki jumla
+//  · TUR_TOLIQ — Sozlamalar → Ma'lumotlar → Qo'llanma dan ochilganda,
+//    o'sha 6 qadam, ammo tafsilotliroq matn bilan
+// `tur` — `data-tur` belgisi; null bo'lsa hech nima ajratilmaydi (kirish so'zi).
+const TUR_QISQA: TurQadam[] = [
+  { tur: null, nom: "Oliy maqsad", matn: "Bu ilova bir narsaga xizmat qiladi: katta maqsadingizni har kungi kichik ishlarga bo'lib berish va ularni halol hisobda yuritish. Keling, asosiy joylarni ko'rsataman." },
+  { tur: "nav-maqsad", nom: "Maqsad bo'limi", matn: "Avval shu yerda oliy maqsadingizni yozasiz — nimaga erishmoqchisiz va necha yilda. Yillik raqamli maqsadlar ham shu yerda turadi." },
+  { tur: "qoshish", nom: "Qo'shish tugmasi", matn: "Maqsadga eltuvchi vazifalarni shu tugma orqali qo'shasiz. Kundalik vazifa ham, oliy maqsad vazifasi ham shu yerdan." },
+  { tur: "ibodat", nom: "Ibodatlar", matn: "Zikr, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi. Alohida hisoblanadi — kundalik foizga aralashmaydi." },
+  { tur: "pomodoro", nom: "Pomodoro", matn: "Diqqatni bir joyga jamlab ishlash uchun taymer. Ishlagan vaqtingiz tegishli vazifaga o'zi yozib boriladi." },
+  { tur: "nav-bugun", nom: "Bugun sahifasi", matn: "Kunning yuragi shu yerda. Har kuni vazifalarni belgilab borasiz — qildim, sababli qilmadim yoki umuman qilmadim." },
+];
+
+const TUR_TOLIQ: TurQadam[] = [
+  { tur: null, nom: "Oliy maqsad", matn: "Ilovaning maqsadi — uzoq yo'lni har kungi kichik qadamlarga bo'lish. Siz maqsad qo'yasiz, unga eltuvchi vazifalarni belgilaysiz, ilova esa bajarganingizni halol hisobda yuritadi. Vijdon — eng adolatli guvoh." },
+  { tur: "nav-maqsad", nom: "Maqsad bo'limi", matn: "Oliy maqsadingiz matni, natija halqasi va yillik raqamli maqsadlaringiz shu yerda. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz, eskisi saqlanib qoladi." },
+  { tur: "qoshish", nom: "Qo'shish tugmasi", matn: "Uch xil narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa, va yillik raqamli maqsad. Har vazifaga vaqt oralig'i berilsa, o'sha payt telefonga eslatma keladi — ilova yopiq bo'lsa ham." },
+  { tur: "ibodat", nom: "Ibodatlar", matn: "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi." },
+  { tur: "pomodoro", nom: "Pomodoro", matn: "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi." },
+  { tur: "nav-bugun", nom: "Bugun sahifasi", matn: "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Qo'shimcha ish» bo'limiga yozasiz — u tegishli vazifaga ziyoda bo'lib qo'shiladi." },
+];
+
 // tr("Qanday ishlaydi?") — har bo'lim haqida qisqa izoh
 const HELP_ITEMS: { icon: string; t: string; s: string }[] = [
   { icon: "home", t: "Bugun", s: "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim." },
@@ -4479,6 +4578,10 @@ export default function App() {
   const [langAsk, setLangAsk] = useStored<string>("om3_langask", "");
   // Hijriy sana tuzatish taklifi oyda bir marta. Qiymat: "yil-oy" (so'ralgan oy).
   const [hijriAsk, setHijriAsk] = useStored<string>("om3_hijriask", "");
+  // Tanishtiruv turi: "" = hali taklif qilinmagan, "1" = taklif ko'rsatilgan
+  const [turAsk, setTurAsk] = useStored<string>("om3_tur", "");
+  // null = yurmayapti; aks holda qaysi to'plam bilan yuryapti
+  const [turYur, setTurYur] = useState<TurQadam[] | null>(null);
   setCur(lang); // til almashsa butun ekran shu qiymat bilan qayta chiziladi
   const [pomo, setPomo] = useState<PomoState | null>(null);
   const [pomoAsk, setPomoAsk] = useState<{ min: number } | null>(null);
@@ -4711,6 +4814,12 @@ export default function App() {
       /* Quyosh <-> oy: ikonka burilib, kichrayib almashadi */
       @keyframes omMavzu { from { opacity:0; transform: rotate(-90deg) scale(.4); } to { opacity:1; transform:none; } }
       .om-mavzu { animation: omMavzu .42s cubic-bezier(.4,0,.2,1); }
+      /* Tanishtiruv turi: fon qoraytiriladi, ko'rsatilayotgan element esa
+         o'z joyida qolib oltin halqa bilan yorib chiqadi. */
+      .om-tur-fon { background: rgba(0,0,0,.62); backdrop-filter: blur(2.5px); -webkit-backdrop-filter: blur(2.5px); animation: omFadeIn .25s; }
+      .om-tur-faol { position: relative; z-index: 60; border-radius: 20px;
+        box-shadow: 0 0 0 2px var(--gold), 0 0 0 7px rgba(184,134,47,.22), 0 0 34px rgba(184,134,47,.4); }
+      .om-tur-ust { z-index: 60 !important; }
       /* Mavzu almashuvi: standart xiralashuv o'chiriladi, o'rniga yangi fon
          tugma markazidan doira bo'lib yoyiladi (MavzuTugma dagi animate()). */
       ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
@@ -4805,7 +4914,7 @@ export default function App() {
   const NavBtn = ({ k, icon, label }: { k: "bugun" | "taqvim" | "stat" | "maqsad"; icon: string; label: string }) => {
     const on = tab === k;
     return (
-      <button onClick={() => setTab(k)} className="om-press flex flex-1 flex-col items-center gap-1 py-1">
+      <button data-tur={"nav-" + k} onClick={() => setTab(k)} className="om-press flex flex-1 flex-col items-center gap-1 py-1">
         <span className="grid h-8 w-14 place-items-center rounded-full" style={{ background: on ? "var(--soft)" : "transparent", color: on ? "var(--green)" : "var(--muted)" }}><Icon n={icon} size={22} /></span>
         <span className="text-[10px] font-semibold" style={{ color: on ? "var(--green)" : "var(--muted)" }}>{label}</span>
       </button>
@@ -4853,7 +4962,8 @@ export default function App() {
             setFolders={setFolders} setTasks={setTasks} setSleepCfg={setSleepCfg} setPlan={setPlan}
             hints={hints} doneHint={doneHint} />
         ) : page === "sozlama" ? (
-          <SozlamaPage settings={settings} setSettings={setSettings} setPlan={setPlan} today={today} allData={allData} lang={lang} openTil={() => setPage("til")} />
+          <SozlamaPage settings={settings} setSettings={setSettings} setPlan={setPlan} today={today} allData={allData} lang={lang} openTil={() => setPage("til")}
+            startTur={() => { setPage(null); setTab("bugun"); setTurYur(TUR_TOLIQ); }} />
         ) : page === "til" ? (
           <TilPage lang={lang} setLang={setLang} onBack={() => setPage("sozlama")} />
         ) : page === "pomo" ? (
@@ -4908,6 +5018,21 @@ export default function App() {
           ✕ bilan tanlamasdan yopib ketish mumkin. Yangiliklar oynasidan OLDIN
           chiqadi — shuning uchun NewsModal `langAsk` ni kutadi. */}
       {!langAsk && <TilSorov lang={lang} setLang={setLang} onFinish={() => setLangAsk("1")} yopsaBoladi />}
+
+      {/* Tanishtiruv turi. Til so'rovidan keyin bir marta taklif qilinadi. */}
+      {turYur && <Tanishtiruv qadamlar={turYur} onFinish={() => setTurYur(null)} />}
+
+      {langAsk && !turAsk && !turYur && page === null && (
+        <Modal title={tr("Ilova bilan tanishib chiqasizmi?")} onClose={() => setTurAsk("1")}>
+          <p className="mb-4 text-[12.5px] leading-relaxed" style={lblS}>
+            {tr("Asosiy bo'limlarni qisqacha ko'rsataman — bir daqiqa vaqt oladi. Keyinroq Sozlamalar → Ma'lumotlar dan qayta ochishingiz mumkin.")}
+          </p>
+          <div className="flex gap-2">
+            <button onClick={() => { setTurAsk("1"); setTab("bugun"); setTurYur(TUR_QISQA); }} className="om-press flex-1 rounded-2xl py-2.5 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Ha, ko'rsating")}</button>
+            <button onClick={() => setTurAsk("1")} className="om-press rounded-2xl border px-4 py-2.5 text-sm" style={{ ...cardS, color: "var(--muted)" }}>{tr("O'tkazib yuborish")}</button>
+          </div>
+        </Modal>
+      )}
 
       {/* Hijriy oyning 1-kuni: sana to'g'rimi deb bir marta so'raymiz.
           Til so'rovi tugagach chiqadi — ikkalasi bir vaqtda ochilmasin. */}
@@ -4977,7 +5102,7 @@ export default function App() {
           <div className="mx-auto flex max-w-2xl items-end justify-around px-3 pt-2" style={{ background: "var(--card)", borderTop: "1px solid var(--line)", boxShadow: "0 -8px 28px rgba(0,0,0,0.14)", paddingBottom: "calc(8px + env(safe-area-inset-bottom))" }}>
             <NavBtn k="bugun" icon="home" label={tr("Bugun")} />
             <NavBtn k="taqvim" icon="calendar" label={tr("Taqvim")} />
-            <button onClick={() => { doneHint("add"); setAddMenu(true); }} className="om-press -mt-8 grid h-16 w-16 flex-none place-items-center rounded-full text-white" style={{ background: "var(--green)", boxShadow: "0 10px 24px rgba(46,125,87,0.5)" }}><Icon n="plus" size={30} /></button>
+            <button data-tur="qoshish" onClick={() => { doneHint("add"); setAddMenu(true); }} className="om-press -mt-8 grid h-16 w-16 flex-none place-items-center rounded-full text-white" style={{ background: "var(--green)", boxShadow: "0 10px 24px rgba(46,125,87,0.5)" }}><Icon n="plus" size={30} /></button>
             <NavBtn k="stat" icon="stats" label={tr("Statistika")} />
             <NavBtn k="maqsad" icon="target" label={tr("Maqsad")} />
           </div>

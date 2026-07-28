@@ -730,6 +730,37 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- v11: birinchi yil izohi va qidiruv ---
   "Hozircha faqat birinchi yil vazifalarini belgilaysiz. Yil tugagach keyingi yilnikini qo'shasiz — o'tgan yil ma'lumotlari saqlanib qoladi ({n} yillik reja shunday boriladi).": { en: "For now you set only the first year's tasks. When the year ends you add the next year's — the past year's data is kept ({n}-year plans work this way)." },
   "Qidiruv natijalari ({n})": { en: "Search results ({n})" },
+
+  // ===== v11: TANISHTIRUV TURI =====
+  // Qadam matnlari TUR_QISQA/TUR_TOLIQ massivlarida — `tr()` ular
+  // ISHLATILGAN JOYDA qo'llanadi, shu sababli kalitlar shu yerda.
+  "Ilova bilan tanishib chiqasizmi?": { en: "Would you like a quick tour?" },
+  "Asosiy bo'limlarni qisqacha ko'rsataman — bir daqiqa vaqt oladi. Keyinroq Sozlamalar → Ma'lumotlar dan qayta ochishingiz mumkin.": { en: "I will show you the main sections briefly — it takes about a minute. You can reopen it later from Settings → Data." },
+  "Ha, ko'rsating": { en: "Yes, show me" },
+  "O'tkazib yuborish": { en: "Skip" },
+  "Keyingisi": { en: "Next" },
+  "Ilova bo'ylab qadam-baqadam yuriladi": { en: "A step-by-step walk through the app" },
+
+  // --- Qadam sarlavhalari ---
+  "Maqsad bo'limi": { en: "The Goal section" },
+  "Qo'shish tugmasi": { en: "The add button" },
+  "Bugun sahifasi": { en: "The Today page" },
+
+  // --- Qisqa to'plam ---
+  "Bu ilova bir narsaga xizmat qiladi: katta maqsadingizni har kungi kichik ishlarga bo'lib berish va ularni halol hisobda yuritish. Keling, asosiy joylarni ko'rsataman.": { en: "This app serves one purpose: breaking your big goal into small daily actions and keeping an honest account of them. Let me show you the main places." },
+  "Avval shu yerda oliy maqsadingizni yozasiz — nimaga erishmoqchisiz va necha yilda. Yillik raqamli maqsadlar ham shu yerda turadi.": { en: "First you write your ultimate goal here — what you want to reach and in how many years. Your yearly numeric goals live here too." },
+  "Maqsadga eltuvchi vazifalarni shu tugma orqali qo'shasiz. Kundalik vazifa ham, oliy maqsad vazifasi ham shu yerdan.": { en: "You add the tasks that lead to your goal with this button — both daily tasks and ultimate goal tasks." },
+  "Zikr, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi. Alohida hisoblanadi — kundalik foizga aralashmaydi.": { en: "Dhikr, the five daily prayers, nafl prayers and the Qur'an khatm are marked here. Counted separately — it does not affect the daily percentage." },
+  "Diqqatni bir joyga jamlab ishlash uchun taymer. Ishlagan vaqtingiz tegishli vazifaga o'zi yozib boriladi.": { en: "A timer for focused work. The time you put in is logged to the related task automatically." },
+  "Kunning yuragi shu yerda. Har kuni vazifalarni belgilab borasiz — qildim, sababli qilmadim yoki umuman qilmadim.": { en: "The heart of the day is here. Each day you mark your tasks — done, excused, or not done at all." },
+
+  // --- To'liq to'plam (Sozlamalardan ochilganda) ---
+  "Ilovaning maqsadi — uzoq yo'lni har kungi kichik qadamlarga bo'lish. Siz maqsad qo'yasiz, unga eltuvchi vazifalarni belgilaysiz, ilova esa bajarganingizni halol hisobda yuritadi. Vijdon — eng adolatli guvoh.": { en: "The app exists to break a long road into small daily steps. You set a goal, define the tasks leading to it, and the app keeps an honest account of what you do. Your conscience is the fairest witness." },
+  "Oliy maqsadingiz matni, natija halqasi va yillik raqamli maqsadlaringiz shu yerda. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz, eskisi saqlanib qoladi.": { en: "Your goal text, the result ring and your yearly numeric goals are here. Tap any goal to see its progress — by week, month, six months and year. In a multi-year plan each year is kept separately: when a year ends you add the next year's tasks, and the old ones remain." },
+  "Uch xil narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa, va yillik raqamli maqsad. Har vazifaga vaqt oralig'i berilsa, o'sha payt telefonga eslatma keladi — ilova yopiq bo'lsa ham.": { en: "Three things can be added: a daily task that repeats every day, an ultimate task leading to the bigger goal, and a yearly numeric goal. If a task has a time range, a reminder arrives on your phone at that time — even if the app is closed." },
+  "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi.": { en: "Dhikr, the five daily prayers, nafl prayers and the Qur'an khatm. This section does not affect the daily task percentage — it is counted separately. Prayers at the mosque and nafl prayers raise your rating." },
+  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": { en: "There are two modes. In Focus the screen dims and only the timer remains. In Open mode your phone notifies you when the time is up, even if you leave the app. The minutes you work are added to the task you choose." },
+  "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Qo'shimcha ish» bo'limiga yozasiz — u tegishli vazifaga ziyoda bo'lib qo'shiladi.": { en: "You start here every day. Tapping a task box opens the marking window. If you do more than planned, log it under «Extra work» — it is added to the related task as extra." },
 };
 
 // ---------- ARABCHA ----------
@@ -1423,6 +1454,35 @@ const LUGAT_AR: Record<string, string> = {
   // --- v11: birinchi yil izohi va qidiruv ---
   "Hozircha faqat birinchi yil vazifalarini belgilaysiz. Yil tugagach keyingi yilnikini qo'shasiz — o'tgan yil ma'lumotlari saqlanib qoladi ({n} yillik reja shunday boriladi).": "في الوقت الحالي تحدّد مهام السنة الأولى فقط. وعند انتهاء السنة تضيف مهام السنة التالية — وتبقى بيانات السنة الماضية محفوظة (هكذا تسير الخطة ذات {n} سنوات).",
   "Qidiruv natijalari ({n})": "نتائج البحث ({n})",
+
+  // ===== v11: TANISHTIRUV TURI =====
+  "Ilova bilan tanishib chiqasizmi?": "هل تودّ جولة سريعة في التطبيق؟",
+  "Asosiy bo'limlarni qisqacha ko'rsataman — bir daqiqa vaqt oladi. Keyinroq Sozlamalar → Ma'lumotlar dan qayta ochishingiz mumkin.": "سأعرض عليك الأقسام الرئيسية باختصار — تستغرق دقيقة تقريبًا. ويمكنك فتحها لاحقًا من الإعدادات ← البيانات.",
+  "Ha, ko'rsating": "نعم، اعرضها",
+  "O'tkazib yuborish": "تخطّي",
+  "Keyingisi": "التالي",
+  "Ilova bo'ylab qadam-baqadam yuriladi": "جولة خطوة بخطوة في التطبيق",
+
+  // --- Qadam sarlavhalari ---
+  "Maqsad bo'limi": "قسم الهدف",
+  "Qo'shish tugmasi": "زر الإضافة",
+  "Bugun sahifasi": "صفحة اليوم",
+
+  // --- Qisqa to'plam ---
+  "Bu ilova bir narsaga xizmat qiladi: katta maqsadingizni har kungi kichik ishlarga bo'lib berish va ularni halol hisobda yuritish. Keling, asosiy joylarni ko'rsataman.": "هذا التطبيق يخدم غرضًا واحدًا: تقسيم مقصدك الكبير إلى أعمال يومية صغيرة، وحفظ حساب أمين لها. دعني أريك الأماكن الرئيسية.",
+  "Avval shu yerda oliy maqsadingizni yozasiz — nimaga erishmoqchisiz va necha yilda. Yillik raqamli maqsadlar ham shu yerda turadi.": "هنا تكتب أولًا مقصدك الأعلى — ما تريد بلوغه وفي كم سنة. وأهدافك السنوية الرقمية هنا أيضًا.",
+  "Maqsadga eltuvchi vazifalarni shu tugma orqali qo'shasiz. Kundalik vazifa ham, oliy maqsad vazifasi ham shu yerdan.": "بهذا الزر تضيف المهام التي تقود إلى مقصدك — المهام اليومية ومهام المقصد الأعلى معًا.",
+  "Zikr, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi. Alohida hisoblanadi — kundalik foizga aralashmaydi.": "هنا تُسجَّل الأذكار والصلوات الخمس والنوافل وختم القرآن. تُحسب على حدة — ولا تؤثر على النسبة اليومية.",
+  "Diqqatni bir joyga jamlab ishlash uchun taymer. Ishlagan vaqtingiz tegishli vazifaga o'zi yozib boriladi.": "مؤقّت للعمل بتركيز. والوقت الذي تعمله يُسجَّل تلقائيًا للمهمة المرتبطة به.",
+  "Kunning yuragi shu yerda. Har kuni vazifalarni belgilab borasiz — qildim, sababli qilmadim yoki umuman qilmadim.": "قلب اليوم هنا. كل يوم تسجّل مهامك — فعلتُ، أو بعذر، أو لم أفعل مطلقًا.",
+
+  // --- To'liq to'plam ---
+  "Ilovaning maqsadi — uzoq yo'lni har kungi kichik qadamlarga bo'lish. Siz maqsad qo'yasiz, unga eltuvchi vazifalarni belgilaysiz, ilova esa bajarganingizni halol hisobda yuritadi. Vijdon — eng adolatli guvoh.": "غاية التطبيق تقسيم الطريق الطويل إلى خطوات يومية صغيرة. أنت تضع الهدف وتحدّد المهام التي تقود إليه، والتطبيق يحفظ حسابًا أمينًا لما تفعله. والضمير أعدل شاهد.",
+  "Oliy maqsadingiz matni, natija halqasi va yillik raqamli maqsadlaringiz shu yerda. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz, eskisi saqlanib qoladi.": "هنا نصّ مقصدك الأعلى وحلقة النتيجة وأهدافك السنوية الرقمية. اضغط أي هدف لترى تقدّمه — أسبوعيًا وشهريًا ونصف سنوي وسنوي. وفي الخطة متعددة السنوات تُحفظ كل سنة على حدة: عند انتهاء السنة تضيف مهام السنة التالية، وتبقى القديمة.",
+  "Uch xil narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa, va yillik raqamli maqsad. Har vazifaga vaqt oralig'i berilsa, o'sha payt telefonga eslatma keladi — ilova yopiq bo'lsa ham.": "تُضاف ثلاثة أشياء: مهمة يومية تتكرر كل يوم، ومهمة عليا تقود إلى الهدف الأكبر، وهدف سنوي رقمي. وإن حدّدت للمهمة فترة زمنية وصلك تذكير على هاتفك في وقتها — حتى لو كان التطبيق مغلقًا.",
+  "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi.": "الأذكار والصلوات الخمس وصلوات النوافل وختم القرآن. هذا القسم لا يؤثر على نسبة المهام اليومية، بل يُحسب على حدة. والصلاة في المسجد والنوافل ترفع التقييم.",
+  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": "هناك وضعان. في التركيز تُعتَّم الشاشة ولا يبقى إلا المؤقّت. وفي الوضع المفتوح ينبّهك هاتفك عند انتهاء الوقت ولو خرجت من التطبيق. والدقائق التي تعملها تُضاف إلى المهمة التي تختارها.",
+  "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Qo'shimcha ish» bo'limiga yozasiz — u tegishli vazifaga ziyoda bo'lib qo'shiladi.": "تبدأ من هنا كل يوم. وعند الضغط على مربّع المهمة تُفتح نافذة التسجيل. وإن عملت أكثر من المخطط فسجّله في «عمل إضافي» — يُضاف إلى المهمة المرتبطة كزيادة.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
