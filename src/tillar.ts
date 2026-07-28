@@ -38,7 +38,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Har kuni": { en: "Every day" },
   "kun": { en: "day" },
   "hafta": { en: "week" },
-  "yil": { en: "year" },
   "Yil": { en: "Year" },
   "soat": { en: "hour" },
   "daqiqa": { en: "minute" },
@@ -146,7 +145,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "oliy maqsad": { en: "ultimate goal", ar: "المقصد الأعلى" },
   "Reja": { en: "Plan" },
   "Reja yo'q": { en: "No plan" },
-  "Yordam": { en: "Help" },
   "Til": { en: "Language" },
   "Ilova tili": { en: "App language" },
   "Ko'rinish": { en: "Appearance" },
@@ -285,7 +283,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "to'liq o'qildi": { en: "fully recited" },
   "Bugungi ibodat reytingi": { en: "Today's worship rating" },
   "Bu hafta ibodat belgilanmagan.": { en: "No worship marked this week." },
-  "Hijriy sana tuzatgichi": { en: "Hijri date adjustment" },
   "Bismillah — boshlaymiz!": { en: "Bismillah — let us begin!" },
 
   // --- Vazifa turlari va ro'yxatlar ---
@@ -445,7 +442,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Tashlab qo'yish": { en: "Abandon" },
   "tashlab qo'yilgan": { en: "abandoned" },
   "Qayta tiklash": { en: "Restore" },
-  "Hammasini o'chirasizmi?": { en: "Delete everything?" },
   "Ma'lumot almashtirilsinmi?": { en: "Replace the data?" },
   "Zaxira saqlandi": { en: "Backup saved" },
   "Oxirgi zaxira": { en: "Last backup" },
@@ -557,7 +553,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Oliy maqsadlaringizni belgilang": { en: "Set your ultimate goals" },
   "Maqsadingizni iloji boricha aniq va batafsil yozing.": { en: "Write your goal as precisely and fully as you can." },
   "Maqsadni qayta shakllantirasizmi?": { en: "Reshape the goal?" },
-  "Maqsadni qayta shakllantirish (tarix saqlanadi)": { en: "Reshape the goal (history is kept)" },
   "Maqsadingizga umumiy qancha vaqtda yetishni niyat qilgansiz?": { en: "In how much time do you intend to reach your goal?" },
   "Qachondan harakatga kirmoqchisiz?": { en: "When do you want to begin?" },
   "Masalan: 5 yil ichida kasbimda yetuk mutaxassis bo'lish va sog'lom turmush tarziga o'tish...": { en: "For example: becoming an expert in my field within 5 years and moving to a healthy lifestyle..." },
@@ -594,14 +589,12 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- Sozlamalar, zaxira, ma'lumot ---
   "Ma'lumotlaringiz telefon xotirasiga saqlanadi": { en: "Your data is stored in your phone's memory" },
   "Zaxira nusxa olganingizga ancha bo'ldi - Sozlamalardan yuklab oling.": { en: "It has been a while since your last backup — download one from Settings." },
-  "Zaxira nusxa hozirgina yuklab berildi. Barcha vazifalar, belgilashlar va statistika butunlay o'chadi.": { en: "A backup has just been downloaded. All tasks, marks and statistics will be erased completely." },
   "Fayldagi ma'lumot ilovaga yuklanadi": { en: "The data in the file will be loaded into the app" },
   "Hozirgi barcha ma'lumotlaringiz fayldagi bilan almashtiriladi. Bu amalni ortga qaytarib bo'lmaydi.": { en: "All your current data will be replaced with the file's. This action cannot be undone." },
   "«O'rnatish» amaldagi ma'lumotni almashtiradi — ogohlantiriladi.": { en: "«Install» replaces the current data — you will be warned first." },
   "Bu fayl Oliy Maqsad zaxirasi emas.": { en: "This file is not an Ultimate goal backup." },
   "Fayl buzilgan yoki boshqa ilovaniki bo'lishi mumkin.": { en: "The file may be corrupted or belong to another app." },
   "Bu amalni ortga qaytarib bo'lmaydi. Rostdan ham hammasini o'chirasizmi?": { en: "This action cannot be undone. Do you really want to delete everything?" },
-  "Butunlay noldan boshlash (hammasi o'chadi)": { en: "Start over completely (everything is erased)" },
   "Kirish sahifasi qaytadan ochiladi, lekin barcha tarix — belgilashlar, vazifalar, xulosalar — saqlanadi.": { en: "The welcome page opens again, but all history — marks, tasks and notes — is kept." },
   "Quyidagilar keyin o'zgartirilmaydi:": { en: "The following cannot be changed later:" },
   "Keyingi 7 kun davomida qayta o'zgartirib bo'lmaydi.": { en: "It cannot be changed again for the next 7 days." },
@@ -713,6 +706,17 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "yo'q": { en: "none" },
   "{n} yil": { en: "{n} year|{n} years" },
   "Shoshilmang — tayyor bo'lganingizda \"Ha\"ni tanlang. Eng muhimi — niyat.": { en: "Take your time — choose \"Yes\" when you are ready. Intention matters most." },
+
+  // --- v11: sozlamalar bo'limlarga ajratildi ---
+  "Zaxira, qo'llanma, maqsadni qayta tuzish": { en: "Backup, guide, rebuilding the goal" },
+  "Ilovani ishlatish bo'yicha qo'llanma": { en: "How to use the app" },
+  "Maqsadni qayta shakllantirish": { en: "Reshape the goal" },
+  "Maqsadni qaytadan tuzish": { en: "Rebuild the goal from scratch" },
+  "Ushbu amal barcha ma'lumotlaringizni o'chiradi: vazifalar, belgilashlar, statistika. Ortga qaytarib bo'lmaydi.": { en: "This deletes all your data: tasks, marks and statistics. It cannot be undone." },
+  "Ma'lumotlaringiz PDF shaklida yuklansinmi?": { en: "Download your data as a PDF?" },
+  "O'chirishdan oldin zaxira saqlab qo'yish tavsiya etiladi.": { en: "Saving a backup before deleting is recommended." },
+  "Ha, yuklansin": { en: "Yes, download it" },
+  "Yangilanish sanasi": { en: "Updated" },
 };
 
 // ---------- ARABCHA ----------
@@ -731,7 +735,6 @@ const LUGAT_AR: Record<string, string> = {
   "Statistika": "الإحصائيات",
   "Sozlamalar": "الإعدادات",
   "Vazifalar": "المهام",
-  "Yordam": "المساعدة",
   "Til": "اللغة",
   "Ilova tili": "لغة التطبيق",
 
@@ -772,7 +775,6 @@ const LUGAT_AR: Record<string, string> = {
   "Shu hafta": "هذا الأسبوع",
   "kun": "يوم",
   "hafta": "أسبوع",
-  "yil": "سنة",
   "Yil": "السنة",
   "soat": "ساعة",
   "daqiqa": "دقيقة",
@@ -1073,7 +1075,6 @@ const LUGAT_AR: Record<string, string> = {
   // --- Ibodat (davomi) ---
   "Qur'on xatmini rejalash": "التخطيط لختم القرآن",
   "xatm rejasini tahrirlash": "تعديل خطة الختمة",
-  "Hijriy sana tuzatgichi": "ضبط التاريخ الهجري",
   "Bismillah — boshlaymiz!": "بسم الله — لنبدأ!",
   "HALOL BO'L!": "كن حلالًا!",
 
@@ -1092,7 +1093,6 @@ const LUGAT_AR: Record<string, string> = {
   "Majburiy bo'lim": "قسم إلزامي",
   "Rejani o'chirish": "حذف الخطة",
   "Rejangiz tayyor.": "خطتك جاهزة.",
-  "Hammasini o'chirasizmi?": "هل تحذف كل شيء؟",
   "Saqlab bo'lmadi": "تعذّر الحفظ",
   "Oxirgi zaxira": "آخر نسخة احتياطية",
   "Oxirgi tasdiq": "آخر تأكيد",
@@ -1238,7 +1238,6 @@ const LUGAT_AR: Record<string, string> = {
   "Hali oliy maqsad belgilanmagan": "لم يُحدَّد مقصد أعلى بعد",
   "Maqsadingizni iloji boricha aniq va batafsil yozing.": "اكتب هدفك بأدقّ وأوفى ما تستطيع.",
   "Maqsadni qayta shakllantirasizmi?": "هل تعيد صياغة الهدف؟",
-  "Maqsadni qayta shakllantirish (tarix saqlanadi)": "إعادة صياغة الهدف (يُحفظ السجل)",
   "Maqsadingizga umumiy qancha vaqtda yetishni niyat qilgansiz?": "في كم من الوقت تنوي بلوغ مقصدك؟",
   "Qachondan harakatga kirmoqchisiz?": "متى تريد أن تبدأ؟",
   "Masalan: 5 yil ichida kasbimda yetuk mutaxassis bo'lish va sog'lom turmush tarziga o'tish...": "مثال: أن أصير خبيرًا متمكّنًا في مهنتي خلال ٥ سنوات وأنتقل إلى نمط حياة صحي...",
@@ -1290,10 +1289,8 @@ const LUGAT_AR: Record<string, string> = {
   "Bu fayl Oliy Maqsad zaxirasi emas.": "هذا الملف ليس نسخة احتياطية للمقصد الأعلى.",
   "Fayl buzilgan yoki boshqa ilovaniki bo'lishi mumkin.": "قد يكون الملف تالفًا أو تابعًا لتطبيق آخر.",
   "Bu amalni ortga qaytarib bo'lmaydi. Rostdan ham hammasini o'chirasizmi?": "لا يمكن التراجع عن هذا الإجراء. هل تحذف كل شيء حقًا؟",
-  "Butunlay noldan boshlash (hammasi o'chadi)": "البدء من الصفر تمامًا (يُمحى كل شيء)",
   "Kirish sahifasi qaytadan ochiladi, lekin barcha tarix — belgilashlar, vazifalar, xulosalar — saqlanadi.": "تُفتح صفحة البداية من جديد، لكن يبقى كل السجل — التحديدات والمهام والملاحظات.",
   "Zaxira nusxa olganingizga ancha bo'ldi - Sozlamalardan yuklab oling.": "مضى وقت طويل على آخر نسخة احتياطية — نزِّل واحدة من الإعدادات.",
-  "Zaxira nusxa hozirgina yuklab berildi. Barcha vazifalar, belgilashlar va statistika butunlay o'chadi.": "نُزِّلت نسخة احتياطية للتو. ستُمحى كل المهام والتحديدات والإحصائيات تمامًا.",
   "Majburiy bo'lim - to'ldirish shart": "قسم إلزامي — يجب ملؤه",
   "Rejani tuzishni boshlaymiz.": "لنبدأ في وضع الخطة.",
   "Iltimos, ismingizni kiriting.": "من فضلك أدخل اسمك.",
@@ -1389,6 +1386,17 @@ const LUGAT_AR: Record<string, string> = {
   "yo'q": "لا يوجد",
   "{n} yil": "{n} سنة|{n} سنوات",
   "Shoshilmang — tayyor bo'lganingizda \"Ha\"ni tanlang. Eng muhimi — niyat.": "لا تستعجل — اختر «نعم» حين تكون مستعدًا. والأهم هو النية.",
+
+  // --- v11: sozlamalar bo'limlarga ajratildi ---
+  "Zaxira, qo'llanma, maqsadni qayta tuzish": "النسخ الاحتياطي، الدليل، إعادة بناء الهدف",
+  "Ilovani ishlatish bo'yicha qo'llanma": "دليل استخدام التطبيق",
+  "Maqsadni qayta shakllantirish": "إعادة صياغة الهدف",
+  "Maqsadni qaytadan tuzish": "إعادة بناء الهدف من جديد",
+  "Ushbu amal barcha ma'lumotlaringizni o'chiradi: vazifalar, belgilashlar, statistika. Ortga qaytarib bo'lmaydi.": "سيحذف هذا كل بياناتك: المهام والتحديدات والإحصائيات. ولا يمكن التراجع عنه.",
+  "Ma'lumotlaringiz PDF shaklida yuklansinmi?": "هل تُنزَّل بياناتك بصيغة PDF؟",
+  "O'chirishdan oldin zaxira saqlab qo'yish tavsiya etiladi.": "يُنصح بحفظ نسخة احتياطية قبل الحذف.",
+  "Ha, yuklansin": "نعم، نزّلها",
+  "Yangilanish sanasi": "تاريخ التحديث",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)

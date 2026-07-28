@@ -4079,14 +4079,12 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [showHelp, setShowHelp] = useState(false);
+  // null = asosiy ro'yxat, aks holda ochiq ichki sahifa
+  const [sub, setSub] = useState<null | "malumot" | "korinish">(null);
   const openTelegram = async () => {
     const ok = await omConfirm(tr("«Oliy maqsad» kanaliga o'tasizmi?"), tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
     if (ok) { try { window.open("https://telegram.me/Oliymaqsad_apk", "_blank"); } catch { location.href = "https://telegram.me/Oliymaqsad_apk"; } }
   };
-  const SecLabel = ({ icon, children }: { icon: string; children: React.ReactNode }) => (
-    <p className="flex items-center gap-2 px-1 pt-2 text-[11px] font-bold uppercase tracking-wider" style={lblS}><Icon n={icon} size={13} /> {children}</p>
-  );
-
   const pdfBackup = async () => {
     const data = p.allData() as Record<string, any>;
     const plan = (data.om3_plan || {}) as Plan;
@@ -4150,21 +4148,44 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   };
 
   const fullReset = async () => {
-    await pdfBackup();
-    const ok1 = await omConfirm(tr("Hammasini o'chirasizmi?"), tr("Zaxira nusxa hozirgina yuklab berildi. Barcha vazifalar, belgilashlar va statistika butunlay o'chadi."), { danger: true, okText: tr("Davom etish") });
+    // Avval OGOHLANTIRAMIZ, keyin zaxirani SO'RAYMIZ. Ilgari PDF avtomatik
+    // yuklanardi — foydalanuvchi nima bo'layotganini tushunmay qolardi.
+    const ok1 = await omConfirm(tr("Maqsadni qaytadan tuzish"), tr("Ushbu amal barcha ma'lumotlaringizni o'chiradi: vazifalar, belgilashlar, statistika. Ortga qaytarib bo'lmaydi."), { danger: true, okText: tr("Davom etish") });
     if (!ok1) return;
+    const zaxira = await omConfirm(tr("Ma'lumotlaringiz PDF shaklida yuklansinmi?"), tr("O'chirishdan oldin zaxira saqlab qo'yish tavsiya etiladi."), { okText: tr("Ha, yuklansin") });
+    if (zaxira) await pdfBackup();
     const ok2 = await omConfirm(tr("Oxirgi tasdiq"), tr("Bu amalni ortga qaytarib bo'lmaydi. Rostdan ham hammasini o'chirasizmi?"), { danger: true, okText: tr("Ha, o'chirilsin") });
     if (!ok2) return;
     Object.keys(localStorage).filter(k => k.startsWith("om3_")).forEach(k => localStorage.removeItem(k));
     window.location.reload();
   };
 
-  return (
-    <div className="space-y-4">
-      <h2 className="mb-1 flex items-center gap-2.5 text-2xl font-bold" style={{ color: "var(--ink)" }}><span className="grid h-9 w-9 place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="settings" size={20} /></span>{tr("Sozlamalar")}</h2>
+  // Sozlamalar endi IKKI QAVATLI: asosiy ro'yxat + ichki sahifalar.
+  // `sub` — qaysi ichki sahifa ochiq (null = asosiy ro'yxat).
+  // Til ichki sahifa emas: u alohida `TilPage` bo'lib, `p.openTil()` ochadi.
+  const orqa = (
+    <button onClick={() => setSub(null)} className="om-press grid h-9 w-9 place-items-center rounded-xl" style={{ color: "var(--green)" }}><Icon n="arrowLeft" size={22} /></button>
+  );
+  const sarlavha = (nom: string) => (
+    <div className="om-card flex items-center px-3 py-2.5">
+      {orqa}
+      <span className="flex-1 text-center text-[17px] font-bold" style={{ color: "var(--ink)" }}>{nom}</span>
+      <span className="h-9 w-9" />
+    </div>
+  );
 
-      <input ref={fileRef} type="file" accept=".pdf,.json" onChange={e => e.target.files && e.target.files[0] && importFile(e.target.files[0])} style={{ display: "none" }} />
-      <SecLabel icon="database">{tr("Ma'lumotlar")}</SecLabel>
+  // Fayl tanlagich ro'yxat bilan ichki sahifa orasida yo'qolmasligi uchun
+  // har doim chiqadi (yashirin turadi).
+  const faylTanlagich = (
+    <input ref={fileRef} type="file" accept=".pdf,.json" onChange={e => e.target.files && e.target.files[0] && importFile(e.target.files[0])} style={{ display: "none" }} />
+  );
+
+  // ---------- ICHKI: MA'LUMOTLAR ----------
+  if (sub === "malumot") return (
+    <div className="space-y-3.5">
+      {faylTanlagich}
+      {sarlavha(tr("Ma'lumotlar"))}
+
       <div className="grid grid-cols-2 gap-2.5">
         <button onClick={pdfBackup} className="om-press om-card flex flex-col items-center gap-2 p-4 text-center">
           <span className="grid h-11 w-11 place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="download" size={22} /></span>
@@ -4179,19 +4200,34 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
       </div>
       <p className="px-1 text-[11px]" style={lblS}>{tr("Oxirgi zaxira")}: {settings.lastBackup ? fmtUzFull(settings.lastBackup) : tr("hali olinmagan")}. {tr("«O'rnatish» amaldagi ma'lumotni almashtiradi — ogohlantiriladi.")}</p>
 
-      <SecLabel icon="globe">{tr("Til")}</SecLabel>
-      <Card onClick={p.openTil} className="flex items-center gap-3.5">
-        {(() => { const cur = TILLAR.find(x => x.id === lang) || TILLAR[0]; return (<>
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-lg font-bold text-white" style={{ background: cur.grad }}>{cur.belgi}</span>
-          <span className="flex-1">
-            <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova tili")}</span>
-            <span className="block text-[11px]" style={lblS}>{cur.nom}</span>
-          </span>
-          <Icon n="chevronRight" size={18} style={{ color: "var(--muted)" }} />
-        </>); })()}
+      <button onClick={() => setShowHelp(true)} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="info" size={21} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilovani ishlatish bo'yicha qo'llanma")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Ilovaning har bo'limi haqida qisqa izoh")}</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      {/* Maqsad amallari — bo'limning ENG TAGIDA, chunki ikkalasi ham jiddiy */}
+      <Card style={{ borderColor: "var(--gold)" }}>
+        <button onClick={replan} className="mb-2 w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
+          {tr("Maqsadni qayta shakllantirish")}
+        </button>
+        <button onClick={fullReset} className="w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--red)" }}>
+          {tr("Maqsadni qaytadan tuzish")}
+        </button>
       </Card>
 
-      <SecLabel icon="palette">{tr("Ko'rinish")}</SecLabel>
+      {showHelp && <HelpSheet onClose={() => setShowHelp(false)} />}
+    </div>
+  );
+
+  // ---------- ICHKI: KO'RINISH ----------
+  if (sub === "korinish") return (
+    <div className="space-y-3.5">
+      {sarlavha(tr("Ko'rinish"))}
+
       <div className="grid grid-cols-2 gap-2.5">
         <button onClick={() => setSettings(s => ({ ...s, dark: false }))} className="om-press flex flex-col items-center gap-2 rounded-2xl border p-4" style={!settings.dark ? { borderColor: "var(--green)", background: "var(--soft)", borderWidth: 2 } : { ...cardS, borderWidth: 2 }}>
           <Icon n="sun" size={24} style={{ color: !settings.dark ? "var(--green)" : "var(--muted)" }} />
@@ -4205,33 +4241,57 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         </button>
       </div>
 
-      <SecLabel icon="calendar">{tr("Hijriy sana tuzatgichi")}</SecLabel>
       <Card>
         <div className="flex items-center justify-between">
           <div>
             <div className="text-sm font-semibold" style={{ color: "var(--ink)" }}>{tr("Hijriy sana")}</div>
-            <div className="text-[11px]" style={lblS}>{settings.hijriOffset > 0 ? "+" : ""}{settings.hijriOffset} {tr("kun surilgan")}</div>
+            <div className="text-[11px]" style={lblS}>{settings.hijriOffset > 0 ? "+" : ""}{raqam(settings.hijriOffset)} {tr("kun surilgan")}</div>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => setSettings(s => ({ ...s, hijriOffset: s.hijriOffset - 1 }))} className="om-press grid h-9 w-9 place-items-center rounded-xl" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="minus" size={16} /></button>
-            <span className="w-8 text-center text-sm font-bold tabular-nums" style={{ color: "var(--ink)" }}>{settings.hijriOffset > 0 ? "+" : ""}{settings.hijriOffset}</span>
+            <span className="w-8 text-center text-sm font-bold tabular-nums" style={{ color: "var(--ink)" }}>{settings.hijriOffset > 0 ? "+" : ""}{raqam(settings.hijriOffset)}</span>
             <button onClick={() => setSettings(s => ({ ...s, hijriOffset: s.hijriOffset + 1 }))} className="om-press grid h-9 w-9 place-items-center rounded-xl" style={{ background: "var(--soft)", color: "var(--ink)" }}><Icon n="plus" size={16} /></button>
           </div>
         </div>
       </Card>
+    </div>
+  );
 
-      <SecLabel icon="info">{tr("Yordam")}</SecLabel>
-      <button onClick={() => setShowHelp(true)} className="om-press om-card flex w-full items-center gap-3 p-4 text-left">
-        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="info" size={21} /></span>
+  // ---------- ASOSIY RO'YXAT ----------
+  const jorTil = TILLAR.find(x => x.id === lang) || TILLAR[0];
+  return (
+    <div className="space-y-3">
+      {faylTanlagich}
+      <h2 className="mb-1 flex items-center gap-2.5 text-2xl font-bold" style={{ color: "var(--ink)" }}><span className="grid h-9 w-9 place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="settings" size={20} /></span>{tr("Sozlamalar")}</h2>
+
+      <button onClick={() => setSub("malumot")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="database" size={21} /></span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Qanday ishlaydi?")}</span>
-          <span className="block text-[11px]" style={lblS}>{tr("Ilovaning har bo'limi haqida qisqa izoh")}</span>
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ma'lumotlar")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Zaxira, qo'llanma, maqsadni qayta tuzish")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
 
-      <SecLabel icon="send">{tr("Ilova yangiliklari")}</SecLabel>
-      <button onClick={openTelegram} className="om-press om-card flex w-full items-center gap-3 p-4 text-left">
+      <button onClick={p.openTil} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none shrink-0 place-items-center rounded-2xl text-lg font-bold text-white" style={{ background: jorTil.grad }}>{jorTil.belgi}</span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova tili")}</span>
+          <span className="block text-[11px]" style={lblS}>{jorTil.nom}</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      <button onClick={() => setSub("korinish")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="palette" size={21} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ko'rinish")}</span>
+          <span className="block text-[11px]" style={lblS}>{settings.dark ? tr("Tungi") : tr("Tonggi")} · {tr("Hijriy sana")}</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      <button onClick={openTelegram} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
         <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "#229ED9" }}><Icon n="send" size={22} style={{ color: "#fff" }} /></span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("«Oliy maqsad» telegram kanali")}</span>
@@ -4240,17 +4300,10 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
 
-      <SecLabel icon="target">{tr("Maqsad")}</SecLabel>
-      <Card style={{ borderColor: "var(--gold)" }}>
-        <button onClick={replan} className="mb-2 w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
-          {tr("Maqsadni qayta shakllantirish (tarix saqlanadi)")}
-        </button>
-        <button onClick={fullReset} className="w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--red)" }}>
-          {tr("Butunlay noldan boshlash (hammasi o'chadi)")}
-        </button>
-      </Card>
-
-      {showHelp && <HelpSheet onClose={() => setShowHelp(false)} />}
+      {/* Ro'yxatning eng tagida — qaysi yangilanish o'rnatilgani */}
+      <p className="pt-1 text-center text-[10.5px] leading-relaxed" style={lblS}>
+        {tr(NEWS_LABEL)} · {tr("Yangilanish sanasi")}: {fmtUzFull(NEWS_DATE)}
+      </p>
     </div>
   );
 }
