@@ -148,6 +148,20 @@ Lug'at **633 / 633** BESH tilda: uz · uzk · en · ar · **ru**.
 - Android: `values-ru/strings.xml` → «Высшая цель»
 - **SABOQ:** `LUGAT_RU` ga LUGAT da YO'Q kalit yozilsa, u jimgina yangi kalit yaratadi va sezilmaydi. Tekshiruv: `ru` bor-u `en` yo'q kalitlarni sanash (shu yo'l bilan 4 ta xato topildi)
 
+## TO'LIQ TEKSHIRUV (2026-07-28) — natija toza
+`npx tsc --noEmit` → **0 xato** · qurilish toza · lug'at **634/634** (en·ar·ru) · takror yo'q · o'ralmagan matn yo'q.
+
+**Uchta muammo topildi va tuzatildi:**
+1. **`@types/react` UMUMAN O'RNATILMAGAN edi** — `package.json` da ham yo'q edi. Shu sababli `tsc` JSX ni tekshira olmasdi va 14 ta soxta «key» xatosi berardi. **Bu eng jiddiy topilma:** tekshirgich ko'r bo'lgani uchun HAQIQIY xatolar ham ko'rinmay yotgan. `npm i -D @types/react @types/react-dom` → 0 xato
+2. **Lug'atda 3 ta takrorlangan kalit** (`Boshlanish` ×2, `Xulosalarim`) — qiymatlari bir xil edi, shuning uchun tarjima yo'qolmagan, ammo takror kelajakda tuzoq: biri tahrirlansa ikkinchisi jimgina g'olib chiqadi
+3. **Ekranlangan qo'shtirnoqli matn tarjimasiz qolgan** (`Ish vaqti tugagach \"...\"`) — 8-xatodagi tuzoqning takrori
+
+**TEKSHIRUV SKRIPTLARI (yana kerak bo'lsa qayta yozilsin):**
+- Takror kalit: har `};` blokida kalitlarni Map bilan sanash
+- Massiv matnlari: OYLAR/KUNLAR/NAMOZLAR/HELP_ITEMS/NEWS_ITEMS/TUR_* dan qatorlarni olib lug'at bilan solishtirish (id lar — `bomdod`, `nav-maqsad` — tarjima emas, chetlansin)
+- **DIQQAT:** `"..."` bo'yicha oddiy regex ekranlangan qo'shtirnoqdan keyin ADASHADI va soxta «o'lik kalit» beradi. `tr\("((?:[^"\\]|\\.)*)"` shaklini ishlating
+- **Bash heredoc teskari chiziqni yeydi** — regexli skriptlarni Write bilan yozing, `cat > ... <<'EOF'` bilan emas
+
 ## TEXNIK XOTIRA
 - **Ma'lumot kalitlari (27 ta):** om3_plan, om3_tasks, om3_logs, om3_extras, om3_counts, om3_countlog, om3_weights, om3_notes, om3_sleepcfg, om3_sleeplog, om3_pomocfg, om3_pomolog, om3_settings, om3_ibadat, om3_khatm, om3_gender, om3_daymode, om3_ui, om3_quotes, om3_news, om3_hints, om3_lang, om3_folders, om3_ver + eski (om3_books, om3_cats, om3_groups)
 - **Migratsiya:** `om3_ver = "4"`. v3→v4 da har vazifaga `createdAt` qo'shildi (o'tmishni muzlatish — statistika buzilishini tuzatgan)

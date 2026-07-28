@@ -688,7 +688,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
 
   // --- Onboarding xulosa qatori (avval xom o'zbekcha edi) ---
   "Muddat": { en: "Duration" },
-  "Boshlanish": { en: "Start" },
   "Hafta boshi": { en: "Week starts" },
   "yo'q": { en: "none" },
   "{n} yil": { en: "{n} year|{n} years" },
@@ -764,6 +763,7 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": { en: "The Qur'anic typeface is now built into the app — it looks the same on every phone and is easier to read." },
   "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": { en: "The Hijri date adjuster has been removed from Settings. It is now offered once at the start of each Hijri month." },
   "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": { en: "Weekday names, month names and calendar numbers now display correctly in every language." },
+  "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": { en: "When the work time ends it asks \"what did you do in this time?\" and logs the minutes to the chosen task." },
 };
 
 // ---------- ARABCHA ----------
@@ -1124,7 +1124,6 @@ const LUGAT_AR: Record<string, string> = {
   "HALOL BO'L!": "كن حلالًا!",
 
   // --- Xulosa, iqtibos, eslatma ---
-  "Xulosalarim": "ملاحظاتي",
   "Yangi xulosa...": "ملاحظة جديدة...",
   "Hali xulosa yo'q.": "لا توجد ملاحظات بعد.",
   "Qo'shimcha eslatma": "تذكير إضافي",
@@ -1414,7 +1413,6 @@ const LUGAT_AR: Record<string, string> = {
 
   // --- v11: onboarding xulosa qatori ---
   "Muddat": "المدة",
-  "Boshlanish": "البداية",
   "Hafta boshi": "بداية الأسبوع",
   "yo'q": "لا يوجد",
   "{n} yil": "{n} سنة|{n} سنوات",
@@ -1490,6 +1488,7 @@ const LUGAT_AR: Record<string, string> = {
   "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": "أُدمج خطّ الآية داخل التطبيق — صار موحّدًا على كل هاتف وأسهل في القراءة.",
   "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "أُزيل ضابط التاريخ الهجري من الإعدادات. وصار يُعرض مرة واحدة في بداية كل شهر هجري.",
   "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "صارت أسماء أيام الأسبوع والشهور وأرقام التقويم تظهر بشكل صحيح في كل اللغات.",
+  "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "عند انتهاء وقت العمل يسأل: «ماذا فعلت في هذا الوقت؟» ويسجّل الدقائق للمهمة المختارة.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2165,6 +2164,7 @@ const LUGAT_RU: Record<string, string> = {
   "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": "Шрифт аята встроен в приложение — теперь он одинаков на любом телефоне и читается легче.",
   "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "Корректировка даты по хиджре убрана из настроек. Теперь она предлагается один раз в начале каждого месяца по хиджре.",
   "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "Названия дней недели, месяцев и числа в календаре теперь отображаются правильно на всех языках.",
+  "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "По окончании рабочего времени спрашивает «чем вы занимались в это время?» и записывает минуты к выбранной задаче.",
 };
 
 // Ruschani LUGAT ga qo'shamiz
