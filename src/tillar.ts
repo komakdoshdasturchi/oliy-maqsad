@@ -147,7 +147,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Reja yo'q": { en: "No plan" },
   "Til": { en: "Language" },
   "Ilova tili": { en: "App language" },
-  "Ko'rinish": { en: "Appearance" },
   "Ma'lumotlar": { en: "Data" },
   "Xulosalarim": { en: "My notes" },
   "Eslatma": { en: "Reminder" },
@@ -199,8 +198,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Pastdagi": { en: "The one below" },
   "Tonggi": { en: "Light" },
   "Tungi": { en: "Dark" },
-  "Ochiq fon": { en: "Light background" },
-  "To'q fon": { en: "Dark background" },
 
   // --- Qolganlari ---
   "Erkak": { en: "Male" },
@@ -895,7 +892,6 @@ const LUGAT_AR: Record<string, string> = {
   // --- Boshqa ---
   "Erkak": "ذكر",
   "Ayol": "أنثى",
-  "Ko'rinish": "المظهر",
   "Ma'lumotlar": "البيانات",
   "Eslatma": "تذكير",
   "Eslatma vaqti": "وقت التذكير",
@@ -1098,8 +1094,6 @@ const LUGAT_AR: Record<string, string> = {
   "Oxirgi tasdiq": "آخر تأكيد",
   "hali olinmagan": "لم تؤخذ بعد",
   "PDF o'rnatish": "التثبيت من PDF",
-  "To'q fon": "خلفية داكنة",
-  "Ochiq fon": "خلفية فاتحة",
   "Pastdagi": "الذي في الأسفل",
   "E'tibor bering": "انتبه",
   "Kuchli tomon": "نقطة القوة",

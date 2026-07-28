@@ -4052,6 +4052,41 @@ function TilSorov(p: { lang: Lang; setLang: (l: Lang) => void; onFinish: () => v
   );
 }
 
+// Tonggi/tungi almashtirgich — Bugun sahifasining yuqorisida, Sozlamalar yonida.
+// Bosilganda yangi fon AYNAN SHU TUGMA MARKAZIDAN doira bo'lib yoyiladi.
+// Buning uchun View Transitions ishlatiladi. Eski WebView'da u yo'q —
+// o'shanda oddiy, animatsiyasiz almashuv bo'ladi (ilova buzilmaydi).
+function MavzuTugma({ dark, setDark }: { dark: boolean; setDark: (v: boolean) => void }) {
+  const bosildi = (e: React.MouseEvent<HTMLButtonElement>) => {
+    buzz();
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    // Eng uzoq burchakkacha bo'lgan masofa — doira butun ekranni qoplashi uchun
+    const rad = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    const almash = () => setDark(!dark);
+    const d = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+    if (!d.startViewTransition) { almash(); return; }
+    d.startViewTransition(almash).ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: "cubic-bezier(.4,0,.2,1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    }).catch(() => { /* qo'llab-quvvatlanmasa — jimgina o'tadi */ });
+  };
+  return (
+    <button onClick={bosildi} className="om-press flex flex-none flex-col items-center gap-1" aria-label={dark ? tr("Tonggi") : tr("Tungi")}>
+      <span className="grid h-11 w-11 place-items-center overflow-hidden rounded-2xl"
+        style={{ background: "var(--card)", border: "1px solid var(--line)", color: dark ? "var(--gold)" : "var(--green)", boxShadow: "var(--shadow)" }}>
+        {/* `key` o'zgargani uchun element qayta yaratiladi — animatsiya har safar qaytadan o'ynaydi */}
+        <span key={dark ? "d" : "l"} className="om-mavzu grid place-items-center">
+          <Icon n={dark ? "moon" : "sun"} size={20} />
+        </span>
+      </span>
+      <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{dark ? tr("Tungi") : tr("Tonggi")}</span>
+    </button>
+  );
+}
+
 function TilPage(p: { lang: Lang; setLang: React.Dispatch<React.SetStateAction<Lang>>; onBack: () => void }) {
   return (
     <div className="space-y-3.5">
@@ -4223,23 +4258,12 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
     </div>
   );
 
-  // ---------- ICHKI: KO'RINISH ----------
+  // ---------- ICHKI: HIJRIY SANA ----------
+  // Tonggi/tungi tugmalari bu yerdan OLIB TASHLANDI — ular endi Bugun
+  // sahifasining yuqorisida, `MavzuTugma` da (foydalanuvchi qarori).
   if (sub === "korinish") return (
     <div className="space-y-3.5">
-      {sarlavha(tr("Ko'rinish"))}
-
-      <div className="grid grid-cols-2 gap-2.5">
-        <button onClick={() => setSettings(s => ({ ...s, dark: false }))} className="om-press flex flex-col items-center gap-2 rounded-2xl border p-4" style={!settings.dark ? { borderColor: "var(--green)", background: "var(--soft)", borderWidth: 2 } : { ...cardS, borderWidth: 2 }}>
-          <Icon n="sun" size={24} style={{ color: !settings.dark ? "var(--green)" : "var(--muted)" }} />
-          <span className="text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Tonggi")}</span>
-          <span className="text-[10px]" style={lblS}>{tr("Ochiq fon")}</span>
-        </button>
-        <button onClick={() => setSettings(s => ({ ...s, dark: true }))} className="om-press flex flex-col items-center gap-2 rounded-2xl border p-4" style={settings.dark ? { borderColor: "var(--green)", background: "var(--soft)", borderWidth: 2 } : { ...cardS, borderWidth: 2 }}>
-          <Icon n="moon" size={24} style={{ color: settings.dark ? "var(--green)" : "var(--muted)" }} />
-          <span className="text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Tungi")}</span>
-          <span className="text-[10px]" style={lblS}>{tr("To'q fon")}</span>
-        </button>
-      </div>
+      {sarlavha(tr("Hijriy sana"))}
 
       <Card>
         <div className="flex items-center justify-between">
@@ -4283,10 +4307,10 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
       </button>
 
       <button onClick={() => setSub("korinish")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
-        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="palette" size={21} /></span>
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="calendar" size={21} /></span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ko'rinish")}</span>
-          <span className="block text-[11px]" style={lblS}>{settings.dark ? tr("Tungi") : tr("Tonggi")} · {tr("Hijriy sana")}</span>
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Hijriy sana")}</span>
+          <span className="block text-[11px]" style={lblS}>{settings.hijriOffset > 0 ? "+" : ""}{raqam(settings.hijriOffset)} {tr("kun surilgan")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
@@ -4594,6 +4618,14 @@ export default function App() {
       @keyframes omFadeIn { from { opacity:0; } to { opacity:1; } }
       @keyframes omSlideL { from { opacity:0; transform: translateX(30px); } to { opacity:1; transform:none; } }
       @keyframes omSlideR { from { opacity:0; transform: translateX(-30px); } to { opacity:1; transform:none; } }
+      /* Quyosh <-> oy: ikonka burilib, kichrayib almashadi */
+      @keyframes omMavzu { from { opacity:0; transform: rotate(-90deg) scale(.4); } to { opacity:1; transform:none; } }
+      .om-mavzu { animation: omMavzu .42s cubic-bezier(.4,0,.2,1); }
+      /* Mavzu almashuvi: standart xiralashuv o'chiriladi, o'rniga yangi fon
+         tugma markazidan doira bo'lib yoyiladi (MavzuTugma dagi animate()). */
+      ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+      ::view-transition-old(root) { z-index: 1; }
+      ::view-transition-new(root) { z-index: 2; }
       .om-slide-l { animation: omSlideL .34s cubic-bezier(.22,.61,.36,1); }
       .om-slide-r { animation: omSlideR .34s cubic-bezier(.22,.61,.36,1); }
       .om-fade { animation: omFade .3s cubic-bezier(.22,.61,.36,1); }
@@ -4702,13 +4734,16 @@ export default function App() {
               {raqam(parseISO(today).getDate())}-{tr(OYLAR[parseISO(today).getMonth()])} · {raqam(parseISO(today).getFullYear())} · {hijri(today, settings.hijriOffset)} · {tr(KUNLAR[parseISO(today).getDay()])}
             </div>
           </div>
-          <button onClick={() => togglePage("sozlama")} className="om-press flex flex-none flex-col items-center gap-1">
-            <span className="grid h-11 w-11 place-items-center rounded-2xl"
-              style={{ background: page === "sozlama" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "sozlama" ? "var(--green)" : "var(--line)"), color: page === "sozlama" ? "#fff" : "var(--ink)", boxShadow: "var(--shadow)" }}>
-              <Icon n="gear" size={20} />
-            </span>
-            <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Sozlamalar")}</span>
-          </button>
+          <div className="flex flex-none items-start gap-2">
+            <MavzuTugma dark={settings.dark} setDark={v => setSettings(s => ({ ...s, dark: v }))} />
+            <button onClick={() => togglePage("sozlama")} className="om-press flex flex-none flex-col items-center gap-1">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl"
+                style={{ background: page === "sozlama" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "sozlama" ? "var(--green)" : "var(--line)"), color: page === "sozlama" ? "#fff" : "var(--ink)", boxShadow: "var(--shadow)" }}>
+                <Icon n="gear" size={20} />
+              </span>
+              <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Sozlamalar")}</span>
+            </button>
+          </div>
         </header>
 
         {gender === null && <GenderModal onPick={g => setGender(g)} />}
