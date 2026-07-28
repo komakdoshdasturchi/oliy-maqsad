@@ -1631,6 +1631,36 @@ function BugunView(p: {
   const alerts = act.filter(t => excused30(t.id, logs, today) > 3);
   const backupOld = settings.lastBackup ? diffDays(settings.lastBackup, today) > 30 : Object.keys(logs).length > 5;
   const todayExtras = p.extras.filter(e => e.date === today);
+
+  // Qo'shimcha ishni o'chirish. Agar u biror vazifaga bog'langan bo'lsa,
+  // o'sha vazifaga berilgan vaqt krediti ham QAYTARILADI — aks holda
+  // yozuv yo'qoladi-yu, statistikadagi foiz oshgancha qolaveradi.
+  // Belgining O'ZI (qildim/qilmadim) tegilmaydi: uni foydalanuvchi qo'lda
+  // qo'ygan bo'lishi mumkin, kredit tufayli emas.
+  const extraniOchir = async (e: Extra) => {
+    if (!(await omConfirm(tr("Qo'shimcha ish o'chirilsinmi?")))) return;
+    if (e.taskId) {
+      const tid = e.taskId;
+      p.setLogs(ls => {
+        const day = { ...(ls[e.date] || {}) };
+        const cur: MarkV5 = { ...(day[tid] || {}) };
+        let qoldi = e.minutes;
+        if (cur.extraMin) {
+          const k = Math.min(cur.extraMin, qoldi);
+          cur.extraMin -= k; qoldi -= k;
+          if (!cur.extraMin) delete cur.extraMin;
+        }
+        if (qoldi > 0 && cur.creditedMin) {
+          cur.creditedMin = Math.max(cur.creditedMin - qoldi, 0);
+          if (!cur.creditedMin) delete cur.creditedMin;
+        }
+        if (cur.st === "extra" && !cur.extraMin) cur.st = "full";
+        day[tid] = cur;
+        return { ...ls, [e.date]: day };
+      });
+    }
+    p.setExtras(xs => xs.filter(x => x.id !== e.id));
+  };
   const manualMetrics = plan.metrics.filter(m => m.kind === "manual");
   const wd = parseISO(today).getDay();
   const weightToday = plan.weightOn && wd === plan.weightDay && today >= plan.start && !p.weights.some(w => w.date === today);
@@ -2107,9 +2137,10 @@ function BugunView(p: {
         right={todayExtras.length ? <span>{todayExtras.length} {tr("ta")}</span> : undefined}>
         <button onClick={() => setShowExtra(true)} className="w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--gold)" }}>{tr("Qo'shish")}</button>
         {todayExtras.map(e => (
-          <div key={e.id} className="mt-2 flex justify-between rounded-lg border px-3 py-2 text-sm" style={cardS}>
-            <span style={{ color: "var(--ink)" }}>{e.name}</span>
-            <span style={{ color: "var(--muted)" }}>{fmtMin(e.minutes)}</span>
+          <div key={e.id} className="mt-2 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm" style={cardS}>
+            <span className="min-w-0 flex-1 truncate" style={{ color: "var(--ink)" }}>{e.name}</span>
+            <span className="flex-none" style={{ color: "var(--muted)" }}>{fmtMin(e.minutes)}</span>
+            <button onClick={() => extraniOchir(e)} className="om-press flex-none" style={{ color: "var(--red)" }}><Icon n="trash" size={14} /></button>
           </div>
         ))}
       </Sec>
@@ -3583,6 +3614,8 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
   const [remTime, setRemTime] = useState(t.remTime || "");
   const [remText, setRemText] = useState(t.remText);
   const [note, setNote] = useState("");
+  // Qaysi xulosa tahrirlanmoqda (indeks). null = yangi xulosa yozilmoqda.
+  const [noteEdit, setNoteEdit] = useState<number | null>(null);
   const [days, setDays] = useState<number[]>(t.days || []);
   const [showTime, setShowTime] = useState(false);
   const [showRem, setShowRem] = useState(false);
@@ -3719,14 +3752,33 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
         <div>
           <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider" style={lblS}>{tr("Xulosalarim")}</p>
           {t.notes.length === 0 && <p className="text-xs" style={lblS}>{tr("Hali xulosa yo'q.")}</p>}
+          {/* Har bir xulosa tahrirlanadi va o'chiriladi — avval faqat qo'shib
+              bo'lardi, xato yozilsa tuzatishning iloji yo'q edi. */}
           {t.notes.map((n, i) => (
-            <div key={i} className="mb-1.5 rounded-lg border p-2 text-sm" style={cardS}>
-              <div className="text-[10px]" style={lblS}>{fmtUzFull(n.date)}</div>
-              <div style={{ color: "var(--ink)" }}>{n.text}</div>
+            <div key={i} className="mb-1.5 flex items-start gap-2 rounded-lg border p-2 text-sm" style={noteEdit === i ? { ...cardS, borderColor: "var(--green)" } : cardS}>
+              <div className="min-w-0 flex-1">
+                <div className="text-[10px]" style={lblS}>{fmtUzFull(n.date)}</div>
+                <div style={{ color: "var(--ink)" }}>{n.text}</div>
+              </div>
+              <button onClick={() => { setNoteEdit(i); setNote(n.text); }} className="om-press flex-none" style={{ color: "var(--green)" }}><Icon n="pencil" size={14} /></button>
+              <button onClick={async () => {
+                if (await omConfirm(tr("Xulosa o'chirilsinmi?"))) {
+                  upd(x => ({ ...x, notes: x.notes.filter((_, j) => j !== i) }));
+                  if (noteEdit === i) { setNoteEdit(null); setNote(""); }
+                }
+              }} className="om-press flex-none" style={{ color: "var(--red)" }}><Icon n="trash" size={14} /></button>
             </div>
           ))}
-          <textarea value={note} onChange={e => setNote(e.target.value)} rows={2} placeholder={tr("Yangi xulosa...")} className={inpC + " mt-1"} style={inpS} />
-          <button onClick={() => { if (note.trim()) { upd(x => ({ ...x, notes: [...x.notes, { date: today, text: note.trim() }] })); setNote(""); } }} className="om-press mt-1 w-full rounded-xl border py-2.5 text-sm" style={{ ...cardS, color: "var(--green)" }}>{tr("Xulosa qo'shish")}</button>
+          <textarea value={note} onChange={e => setNote(e.target.value)} rows={2} placeholder={noteEdit !== null ? tr("Xulosani tahrirlang...") : tr("Yangi xulosa...")} className={inpC + " mt-1"} style={inpS} />
+          <div className="mt-1 flex gap-2">
+            <button onClick={() => {
+              if (!note.trim()) return;
+              if (noteEdit !== null) upd(x => ({ ...x, notes: x.notes.map((v, j) => j === noteEdit ? { ...v, text: note.trim() } : v) }));
+              else upd(x => ({ ...x, notes: [...x.notes, { date: today, text: note.trim() }] }));
+              setNote(""); setNoteEdit(null);
+            }} className="om-press flex-1 rounded-xl border py-2.5 text-sm" style={{ ...cardS, color: "var(--green)" }}>{noteEdit !== null ? tr("Saqlash") : tr("Xulosa qo'shish")}</button>
+            {noteEdit !== null && <button onClick={() => { setNoteEdit(null); setNote(""); }} className="om-press rounded-xl border px-4 py-2.5 text-sm" style={{ ...cardS, color: "var(--muted)" }}>{tr("Bekor")}</button>}
+          </div>
         </div>
       )}
       </div>

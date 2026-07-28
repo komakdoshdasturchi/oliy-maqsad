@@ -721,6 +721,11 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- v11: ixcham yig'iladigan kartalar ---
   "Kun xulosasi": { en: "Day summary" },
   "Hali yozilmagan": { en: "Not written yet" },
+
+  // --- v11: yozilgan narsalarni tahrirlash ---
+  "Xulosani tahrirlang...": { en: "Edit the note..." },
+  "Xulosa o'chirilsinmi?": { en: "Delete this note?" },
+  "Qo'shimcha ish o'chirilsinmi?": { en: "Delete this extra work entry?" },
 };
 
 // ---------- ARABCHA ----------
@@ -1405,6 +1410,11 @@ const LUGAT_AR: Record<string, string> = {
   // --- v11: ixcham yig'iladigan kartalar ---
   "Kun xulosasi": "ملخّص اليوم",
   "Hali yozilmagan": "لم يُكتب بعد",
+
+  // --- v11: yozilgan narsalarni tahrirlash ---
+  "Xulosani tahrirlang...": "عدّل الملاحظة...",
+  "Xulosa o'chirilsinmi?": "هل تُحذف هذه الملاحظة؟",
+  "Qo'shimcha ish o'chirilsinmi?": "هل يُحذف هذا العمل الإضافي؟",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
