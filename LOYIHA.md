@@ -234,6 +234,67 @@ konsol xatosi yo'q · `rounded-3xl`→24px, `text-[11px]`→11px (uslublar buzil
   o'tganda tiklanadi, lekin kuniga bir marta va faqat quvvat+Wi-Fi da. Kundalik himoya sifatida yaramaydi
 - `Logolar/` — git omborida 5.3 MB (`Mockup.psd` 3.4 MB). APK ga tushmaydi, lekin har `clone` da yuklanadi
 
+## TIL TAHLILI VA TUZATISH (2026-07-29)
+532 ta interfeys matni ko'rib chiqildi, foydalanuvchi bilan birma-bir kelishildi. Lug'at **633/633/633**.
+
+### ATAMA QARORLARI — bundan keyin shu ishlatilsin
+| Tushuncha | To'g'ri so'z | Ishlatilmaydi |
+|---|---|---|
+| Vazifa turkumi | **Vazifa turi** | ~~Turkum~~ ~~Turi~~ ~~Turkumsiz~~ |
+| Turi bo'sh (vazifa ostida) | **Turi yo'q** | |
+| Turi bo'sh (guruh sarlavhasi) | **Qolgan vazifalar** | |
+| Pomodoroni to'xtatib turish | **To'xtatish** / holat: **To'xtatilgan** | ~~Pauza~~ ~~Pauzada~~ |
+| Pomodoroni butunlay tugatish | **Tugatish** | |
+| Vazifani muzlatish | **Vaqtincha to'xtatish** | |
+| Qorong'i pomodoro rejimi | **Diqqatni jamlash** | ~~Fokus~~ ~~Focus~~ |
+| Rejadan ortiq bajarilgan vaqt | **«qo'shimcha»** | ~~ziyoda~~ |
+| Reja tashqarisidagi ish bo'limi | **Rejadan tashqari amallar** | ~~Qo'shimcha ish~~ |
+| Kunlik norma (xatm) | **miqdor** | ~~ulush~~ |
+| Dam kuni | **dam olish** | ~~halovat~~ |
+
+**Tinish belgilari qoidasi:** uzun tire `—` (qisqa `-` emas) · qo'shtirnoq `«...»`.
+**ISTISNO:** onboarding'dagi hadis ichidagi `“...”` — u qo'shtirnoq ichidagi qo'shtirnoq, TEGILMAYDI.
+
+### SIKL OLIB TASHLANDI
+Pomodoroning kunlik maqsadi (`cycles`) butunlay ketdi: sozlama maydoni, izohi va
+«2/3 pomodoro» dagi maqsad qismi. `PomoCfg.cycles` maydoni faqat eski saqlangan
+sozlama o'qilganda xato bermasligi uchun turibdi — hech qayerda ishlatilmaydi.
+
+### !!! XAVFLI HOLAT TUZATILDI
+Sozlamalar → Ma'lumotlar da ikki tugma bir-birining ostida turardi va nomlari
+deyarli bir xil edi, ikkinchisi esa **hamma ma'lumotni o'chiradi**. Endi:
+**«Rejani qaytadan tuzish»** (tarix saqlanadi) va **«Hammasini o'chirib, boshidan boshlash»** (qizil).
+
+### YANA UCH TARJIMASIZ MATN TOPILDI (5-bosqich tuzog'ining davomi)
+`"Pauzada"` (Fokus rejimi) · `Bugungi ulush: {n} daqiqa/pora` (Ibodatlar) ·
+`Bugun: {n}/{m} pomodoro ... sof ish` (Pomodoro). Uchalasi ham `tr()`/`tf()` ga o'raldi.
+
+### !!! ENG MUHIM SABOQ — kalitni o'zgartirsangiz TARJIMA ORQADA QOLADI
+Kalit nomi almashtirilganda `en`/`ar`/`ru` qiymatlari **eski ma'noda** qolib ketadi va
+buni lug'at tekshiruvi **TOPMAYDI** (kalit bor, tarjima bor — lekin ma'nosi noto'g'ri).
+17 ta shunday holat topildi, masalan `ar`/`ru` da hamon «fokus vaqti», inglizchada
+«daily share», «reshape the goal» turardi.
+**Yagona ishonchli usul:** `npx esbuild src/tillar.ts --format=esm --outfile=X.mjs`
+→ node bilan `setCur(til)` qilib **besh tilda chiqishni ko'zdan kechirish**.
+
+### TEKSHIRUV SKRIPTLARI — ikki xil kerak
+1. `tr()`/`tf()` matnlari ↔ lug'at kalitlari
+2. **Modul massivlari** (`HELP_ITEMS`, `TUR_TOLIQ`, `NEWS_ITEMS`, `NAMOZLAR`...) ↔ lug'at —
+   bular `tr()` orqali o'tmaydi, 1-skript ularni **KO'RMAYDI**. Shu yo'l bilan 3 ta
+   tarjimasiz qolgan matn topildi
+- **DIQQAT:** lug'atda ba'zi kalitlar **bitta satrda bir nechtadan** yozilgan
+  (`"Yakshanba": {...}, "Dushanba": {...},`). Regexni satr boshiga bog'lash (`^`) XATO —
+  faqat birinchisini topadi. Shu sababdan dastlab 20 ta soxta «tarjimasiz» chiqdi
+- Takror kalit tekshiruvida **izoh satrlari chetlansin** — izohdagi namuna (`// "Bugun": {...}`)
+  soxta «takror» beradi
+
+### HAL QILINMAGAN MAYDA IZLAR
+- Sozlamalardagi «Zaxira, qo'llanma, **maqsadni qayta tuzish**» izohi — tugmalar nomi
+  o'zgargani uchun biroz eskirdi
+- `NEWS_ITEMS` (v11) da «**qo'shimcha ishlar**» yozuvi bor — tarixiy yozuv, ataylab tegilmadi
+- «Eltuvchi» so'zi: foydalanuvchi tanlovi bo'yicha 3 joyda qoldi, 1 joyda «olib boradigan»
+  bo'ldi — ataylab, bir xil emas
+
 ## KELAJAK REJALARI
 - **!!! PLAY MARKET BOSQICHIDA BIRINCHI NAVBATDA ESLATISH (foydalanuvchi maxsus so'radi):** tashqi ilova belgisi (launcher ikonka) tanlovi funksiyasini qo'shish — Sozlamalar→Ko'rinishdan oq/yashil/sariq/4-variant logolardan birini tanlash. **Web/Capacitor'da MUMKIN EMAS** (Android activity-alias + native Kotlin/Java kerak). Logolar tayyor: `C:\oliy-maqsad\Logolar\`
 - Play Market: $25 hisob, Capacitor AAB, ~12 sinovchi 14 kun yopiq test, maxfiylik siyosati sahifasi
