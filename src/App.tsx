@@ -65,9 +65,6 @@ const KUN_QISQA = ["Ya","Du","Se","Ch","Pa","Ju","Sh"];
 // indekslangan (getDay() bilan mos), shuning uchun tartib alohida turadi.
 const KUN_QISQA_DUSH = [1, 2, 3, 4, 5, 6, 0];
 const HIJRI_OYLAR = ["muharram","safar","rabiul-avval","rabiul-oxir","jumadul-avval","jumadul-oxir","rajab","sha'bon","ramazon","shavvol","zulqa'da","zulhijja"];
-const HADIS_AR = "«الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ، وَفِي كُلٍّ خَيْرٌ. احْرِصْ عَلَى مَا يَنْفَعُكَ، وَاسْتَعِنْ بِاللَّهِ، وَلَا تَعْجِزْ. وَإِنْ أَصَابَكَ شَيْءٌ، فَلَا تَقُلْ: لَوْ أَنِّي فَعَلْتُ كَانَ كَذَا وَكَذَا، وَلَكِنْ قُلْ: قَدَرُ اللَّهِ وَمَا شَاءَ فَعَلَ، فَإِنَّ لَوْ تَفْتَحُ عَمَلَ الشَّيْطَانِ»";
-const HADIS_UZ = "“Kuchli mo'min Alloh uchun kuchsiz mo'mindan yaxshiroq va suyukliroqdir, lekin ikkisida ham yaxshilik bor. Senga foyda beradigan narsaga haris bo'lgin! Allohdan yordam so'ra! Ojizlik qilma! Senga biror musibat yetsa, «Bunday qilganimda shunday-shunday bo'lar edi», demagin, balki: «Allohning taqdiri, U Zot xohlaganini qiladi», degin, chunki «agar...» deyish shaytonning amaliga yo'l ochadi”.";
-const HADIS_ROVIY = "Abu Hurayra roziyallohu anhudan rivoyat. Imom Muslim — 6627";
 
 const ZIKRLAR = ["Tonggi zikrlar", "Kechki zikrlar", "Uxlashdan oldingi zikrlar"];
 const NAMOZLAR: { id: string; n: string; g: string[] }[] = [
@@ -1022,41 +1019,6 @@ function NewsModal({ hijriOffset, logoColor, onClose }: { hijriOffset: number; l
   );
 }
 
-function HadisCard() {
-  const [open, setOpen] = useState(false);
-  return (
-    <Card>
-      <button onClick={() => setOpen(o => !o)} className="flex w-full items-center justify-between text-left">
-        <span className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-wider" style={{ color: "var(--gold)" }}>
-          <Icon n="bookOpen" size={16} /> {tr("Hadisi sharif")}
-        </span>
-        <Icon n={open ? "chevronUp" : "chevronDown"} size={17} style={{ color: "var(--muted)" }} />
-      </button>
-      {open ? (
-        <div className="mt-3 space-y-2.5">
-          <p dir="rtl" className="text-right text-base leading-loose" style={{ color: "var(--ink)" }}>{HADIS_AR}</p>
-          <p className="text-sm leading-relaxed" style={{ color: "var(--ink)" }}>{HADIS_UZ}</p>
-          <p className="text-[11px]" style={{ color: "var(--muted)" }}>{HADIS_ROVIY}</p>
-        </div>
-      ) : (
-        <p className="mt-2 text-sm italic leading-relaxed" style={{ color: "var(--muted)" }}>{HADIS_UZ.slice(0, 88)}...</p>
-      )}
-    </Card>
-  );
-}
-
-
-function HalolCard() {
-  return (
-    <Card style={{ borderColor: "var(--green)", borderWidth: 2 }}>
-      <p className="text-sm leading-relaxed" style={{ color: "var(--ink)" }}>
-        Bu ilova — sening shaxsiy rivojlanishing va maqsadlaringga oson erishishing uchun ko'makdosh xolos.
-        Baribir asosiy ishni o'zing qilasan. Hozir o'zingni aldashing mumkin.
-        Ammo ertaga Allohni alday olmaysan! <b style={{ color: "var(--green)" }}>{tr("HALOL BO'L!")}</b>
-      </p>
-    </Card>
-  );
-}
 
 // ================== KIRISH SAHIFASI ==================
 function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {

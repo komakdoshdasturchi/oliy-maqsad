@@ -211,7 +211,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Masalan: 10": { en: "For example: 10" },
   "Masalan: 30": { en: "For example: 30" },
   "tez orada": { en: "coming soon" },
-  "HALOL BO'L!": { en: "BE HALAL!" },
   "Shu sabab ey": { en: "So, O" },
   "do'stim": { en: "my friend" },
   "shu nom": { en: "this name" },
@@ -273,7 +272,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // ===== 3-BOSQICH: qisqa iboralar =====
 
   // --- Ibodat ---
-  "Hadisi sharif": { en: "Noble hadith" },
   "Oli Imron surasi · 200-oyat": { en: "Surah Al-Imran · verse 200" },
   "Nafl namozlar (bonus)": { en: "Nafl prayers (bonus)" },
   "Kunduzgi nafl": { en: "Daytime nafl" },
@@ -809,7 +807,6 @@ const LUGAT_AR: Record<string, string> = {
   "Masjid:": "المسجد:",
   "Masjidda": "في المسجد",
   "Hijriy sana": "التاريخ الهجري",
-  "Hadisi sharif": "الحديث الشريف",
   "Oli Imron surasi · 200-oyat": "سورة آل عمران · الآية ٢٠٠",
   "Alloh taolo Qur'oni Karimda shunday marhamat qiladi:": "قال الله تعالى في القرآن الكريم:",
   "Bugungi ibodat reytingi": "تقييم عبادة اليوم",
@@ -1120,7 +1117,6 @@ const LUGAT_AR: Record<string, string> = {
   "Qur'on xatmini rejalash": "التخطيط لختم القرآن",
   "xatm rejasini tahrirlash": "تعديل خطة الختمة",
   "Bismillah — boshlaymiz!": "بسم الله — لنبدأ!",
-  "HALOL BO'L!": "كن حلالًا!",
 
   // --- Xulosa, iqtibos, eslatma ---
   "Yangi xulosa...": "ملاحظة جديدة...",
@@ -1538,7 +1534,6 @@ const LUGAT_RU: Record<string, string> = {
   "Masjid:": "Мечеть:",
   "Masjidda": "В мечети",
   "Hijriy sana": "Дата по хиджре",
-  "Hadisi sharif": "Благородный хадис",
   "Oli Imron surasi · 200-oyat": "Сура Аль-Имран · аят 200",
   "Alloh taolo Qur'oni Karimda shunday marhamat qiladi:": "Всевышний Аллах говорит в Благородном Коране:",
   "Bugungi ibodat reytingi": "Оценка поклонения за сегодня",
@@ -1749,7 +1744,6 @@ const LUGAT_RU: Record<string, string> = {
   "Qur'on xatmini rejalash": "Запланировать хатм Корана",
   "xatm rejasini tahrirlash": "изменить план хатма",
   "Bismillah — boshlaymiz!": "Бисмиллях — начнём!",
-  "HALOL BO'L!": "БУДЬ ЧЕСТЕН!",
 
   // --- Vaqt va sana ---
   "Vaqtli": "Со временем",
