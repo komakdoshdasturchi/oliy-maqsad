@@ -33,6 +33,9 @@ interface Plan {
   metrics: Metric[];
 }
 interface Settings { hijriOffset: number; remindersOn: boolean; reminderTimes: string[]; dark: boolean; lastBackup: string | null; }
+// cycles — ESKI maydon. "Sikl" (kunlik pomodoro maqsadi) 2026-07-29 da olib
+// tashlandi; maydon faqat eski saqlangan sozlama o'qilganda xato bermasligi
+// uchun turibdi, hech qayerda ishlatilmaydi.
 interface PomoCfg { work: number; rest: number; cycles?: number; }
 interface PomoState { phase: "work" | "rest"; endsAt: number; pausedLeft: number | null; mode?: "focus" | "open"; }
 interface KhatmCfg { start: string; end: string; mode: "vaqt" | "pora"; daily: number; }
@@ -1165,7 +1168,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
         </>)}
 
         {step === 6 && (<>
-          <IconCircle n="calendar" /><Title>{tr("Qachondan harakatga kirmoqchisiz?")}</Title><Sub>{tr("Boshlanish sanasini belgilang.")}</Sub>
+          <IconCircle n="calendar" /><Title>{tr("Qachondan boshlaysiz?")}</Title><Sub>{tr("Boshlanish sanasini belgilang.")}</Sub>
           <div className="mt-6 rounded-2xl border p-3" style={cardS}>
             <div className="mb-2 flex items-center justify-between">
               <button onClick={() => setCalM(new Date(calM.getFullYear(), calM.getMonth() - 1, 1))} className="om-press grid h-8 w-8 place-items-center rounded-lg" style={{ background: "var(--soft)" }}><Icon n="chevronLeft" size={16} style={{ color: "var(--ink)" }} /></button>
@@ -1183,7 +1186,7 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
         </>)}
 
         {step === 7 && (<>
-          <IconCircle n="sun" /><Title>{tr("Haftalik dam olish kuningizni belgilang!")}</Title><Sub>{tr("Dam kuni foizga kirmaydi — halovat kuni.")}</Sub>
+          <IconCircle n="sun" /><Title>{tr("Haftalik dam olish kuningizni belgilang!")}</Title><Sub>{tr("Dam kuni foizga kirmaydi — bemalol dam oling.")}</Sub>
           <div className="mt-5 space-y-1.5">
             <RadioRow on={restDay === ""} label={tr("Dam olishsiz")} onClick={() => setRestDay("")} />
             {DAYS_ORD.map(d => <RadioRow key={d} on={restDay === String(d)} label={tr(KUNLAR[d])} onClick={() => setRestDay(String(d))} />)}
@@ -1268,7 +1271,7 @@ function GenderModal({ onPick }: { onPick: (g: Gender) => void }) {
           <button onClick={() => onPick("m")} className="rounded-xl py-3 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Erkak")}</button>
           <button onClick={() => onPick("f")} className="rounded-xl py-3 text-sm font-bold text-white" style={{ background: "var(--gold)" }}>{tr("Ayol")}</button>
         </div>
-        <p className="mt-3 text-[11px]" style={lblS}>{tr("Erkaklarda har namozda “masjidda o'qidim” tugmasi bo'ladi — reytingda balandroq baholanadi.")}</p>
+        <p className="mt-3 text-[11px]" style={lblS}>{tr("Erkaklarda har namozda «masjidda o'qidim» tugmasi bo'ladi — reytingda balandroq baholanadi.")}</p>
       </div>
     </div>
   );
@@ -1282,11 +1285,11 @@ function KhatmModal({ khatm, today, onSave, onClose }: { khatm: KhatmCfg | null;
   const [daily, setDaily] = useState(khatm ? String(khatm.daily) : "30");
   return (
     <Modal title={tr("Qur'on xatmini rejalash")} onClose={onClose}>
-      <label className={lblC} style={lblS}>{tr("Qachon boshlanadi?")}</label>
+      <label className={lblC} style={lblS}>{tr("Qachondan boshlanadi?")}</label>
       <input type="date" value={start} onChange={e => setStart(e.target.value)} className={inpC + " mb-2"} style={inpS} />
       <label className={lblC} style={lblS}>{tr("Qachon tugaydi?")}</label>
       <input type="date" value={end} onChange={e => setEnd(e.target.value)} className={inpC + " mb-2"} style={inpS} />
-      <label className={lblC} style={lblS}>{tr("Kunlik ulush qanday o'lchanadi?")}</label>
+      <label className={lblC} style={lblS}>{tr("Kunlik miqdor qanday o'lchanadi?")}</label>
       <select value={mode} onChange={e => setMode(e.target.value as "vaqt" | "pora")} className={inpC + " mb-2"} style={inpS}>
         <option value="vaqt">{tr("Vaqt bilan (daqiqa)")}</option>
         <option value="pora">{tr("Pora bilan")}</option>
@@ -1296,7 +1299,7 @@ function KhatmModal({ khatm, today, onSave, onClose }: { khatm: KhatmCfg | null;
       <button onClick={() => {
         const d = parseFloat(daily) || 0;
         if (!start || !end || end <= start) { omAlert(tr("Tugash sanasi boshlanishdan keyin bo'lishi kerak.")); return; }
-        if (d <= 0) { omAlert(tr("Kunlik ulushni kiriting.")); return; }
+        if (d <= 0) { omAlert(tr("Kunlik miqdorni kiriting!")); return; }
         onSave({ start, end, mode, daily: d }); onClose();
       }} className="w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
       {khatm && (
@@ -1448,7 +1451,7 @@ function IbadatPage(p: {
               style={d.khatm ? { borderColor: "var(--green)", background: "var(--soft)" } : cardS}>
               <Icon n="bookOpen" size={18} style={{ color: "var(--green)" }} />
               <span className="flex-1 text-left" style={{ color: d.khatm ? "var(--green)" : "var(--ink)", fontWeight: d.khatm ? 700 : 500 }}>
-                Bugungi ulush: {khatm.daily} {khatm.mode === "vaqt" ? "daqiqa" : "pora"}
+                {tf("Bugungi miqdor: {n} {b}", { n: khatm.daily, b: khatm.mode === "vaqt" ? tr("daqiqa") : tr("pora") })}
               </span>
               <span className="text-[11px]" style={lblS}>{tf("{a}/{b} kun", { a: kDone, b: kTotal })}</span>
               <Icon n={d.khatm ? "checkCircle" : "circle"} size={19} style={{ color: d.khatm ? "var(--green)" : "var(--muted)", opacity: d.khatm ? 1 : 0.4 }} />
@@ -1490,7 +1493,7 @@ function MarkSheet({ t, m, slotMin, onSave, onClose }: {
           <button onClick={() => setMode("excuse")} className={btnC} style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="alert" size={16} /> {tr("Sababli qilmadim")}</button>
           <button onClick={() => save({ ...keep, st: "missed" })} className={btnC} style={{ background: "var(--soft)", color: "var(--red)" }}><Icon n="x" size={16} /> {tr("Umuman qilmadim")}</button>
           {m && m.st && <button onClick={() => save(keep.creditedMin ? { creditedMin: keep.creditedMin } : null)} className={btnC} style={{ ...cardS, borderWidth: 1, color: "var(--muted)" }}>{tr("Belgini olib tashlash")}</button>}
-          <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Rejadan ortiq ish qilsangiz — Bugun'dagi “Qo'shimcha ish” bo'limiga yozing. Vijdon — eng adolatli guvoh.")}</p>
+          <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Rejadan ortiq ish qilsangiz — Bugun bo'limidagi «Rejadan tashqari amallar» bo'limiga yozing. Vijdon — eng adolatli guvoh.")}</p>
         </div>
       )}
       {mode === "excuse" && (
@@ -1532,7 +1535,7 @@ function SchedSheet({ t, others, onSave, onClose }: {
         <input type="time" value={to} onChange={e => setTo(e.target.value)} className={inpC} style={inpS} />
         <span style={lblS}>{tr("gacha")}</span>
       </div>
-      {t.minutes > 0 && <p className="mb-2 text-[11px]" style={lblS}>{tf("Kunlik vaqti: {v}. Ortiqcha ajratilgan vaqt belgilashda “ziyoda”ga o'tadi.", { v: fmtMin(t.minutes) })}</p>}
+      {t.minutes > 0 && <p className="mb-2 text-[11px]" style={lblS}>{tf("Kunlik vaqti: {v}. Ortiqcha ajratilgan vaqt belgilashda «qo'shimcha»ga o'tadi.", { v: fmtMin(t.minutes) })}</p>}
       <button onClick={save} className="w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
       {t.schedFrom && (
         <button onClick={() => { onSave("", ""); }} className="mt-2 w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--red)" }}>{tr("Vaqtni olib tashlash")}</button>
@@ -1638,7 +1641,7 @@ function BugunView(p: {
   // Belgining O'ZI (qildim/qilmadim) tegilmaydi: uni foydalanuvchi qo'lda
   // qo'ygan bo'lishi mumkin, kredit tufayli emas.
   const extraniOchir = async (e: Extra) => {
-    if (!(await omConfirm(tr("Qo'shimcha ish o'chirilsinmi?")))) return;
+    if (!(await omConfirm(tr("Rejadan tashqari amal o'chirilsinmi?")))) return;
     if (e.taskId) {
       const tid = e.taskId;
       p.setLogs(ls => {
@@ -1720,7 +1723,7 @@ function BugunView(p: {
             : <Icon n="circle" size={19} style={{ color: "var(--muted)", opacity: 0.4 }} />}
         </div>
         <span className="text-[12px] font-semibold leading-tight" style={{ color: "var(--ink)", textDecoration: done ? "line-through" : "none", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as any, overflow: "hidden", minHeight: "2.2em" }}>{t.name}</span>
-        <span className="truncate text-[10px]" style={lblS}>{(t.type || "").trim() || tr("Turkumsiz")}</span>
+        <span className="truncate text-[10px]" style={lblS}>{(t.type || "").trim() || tr("Turi yo'q")}</span>
         <span className="text-[10px] font-semibold" style={{ color: acc }}>{t.minutes > 0 ? fmtMin(t.minutes) : "—"}</span>
       </button>
     );
@@ -1786,7 +1789,7 @@ function BugunView(p: {
       : slept !== undefined ? `${tr("uxlandi")}: ${raqam(slept)} ${tr("soat")}`
       : tr("Belgilanmagan");
     return (
-      <IxchamKarta icon="moon" tint="var(--blue)" nom={tr("Rejaga muvofiq uyqu")} holat={holat} ochiq={ochiqUyqu} setOchiq={setOchiqUyqu}>
+      <IxchamKarta icon="moon" tint="var(--blue)" nom={tr("Rejaga ko'ra uyqu")} holat={holat} ochiq={ochiqUyqu} setOchiq={setOchiqUyqu}>
         <div className="text-[11px]" style={{ color: "var(--muted)" }}>
           {tr("Reja")}: {p.sleepCfg.kind === "range" ? `${p.sleepCfg.from} — ${p.sleepCfg.to} (~${raqam(planH)} ${tr("soat")})` : `${raqam(planH)} ${tr("soat")}`}
           {slept !== undefined ? ` · ${tr("uxlandi")}: ${raqam(slept)} ${tr("soat")}` : ""}
@@ -1794,7 +1797,7 @@ function BugunView(p: {
         {diff !== null && (
           <p className="mt-1 text-[11px] font-bold" style={{ color: diff >= 0 ? "var(--green)" : "var(--gold)" }}>
             {diff > 0 ? tf("Rejadan {n} soat kam uxladingiz — reyting yuqori", { n: diff })
-              : diff === 0 ? tr("Rejaga aniq muvofiq")
+              : diff === 0 ? tr("Rejaga muvofiq")
               : tf("Rejadan {n} soat ko'p uxladingiz — reyting pasayadi", { n: -diff })}
           </p>
         )}
@@ -1840,7 +1843,7 @@ function BugunView(p: {
       <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="mosque" size={22} /></span>
       <div className="min-w-0 flex-1">
         <div className="text-[15px] font-bold" style={{ color: "var(--ink)" }}>{tr("Ibodatlar")}</div>
-        <div className="text-[11px] font-medium" style={{ color: "var(--gold)" }}>{tr("Majburiy bo'lim - to'ldirish shart")}</div>
+        <div className="text-[11px] font-medium" style={{ color: "var(--gold)" }}>{tr("Majburiy bo'lim — to'ldirish shart!")}</div>
       </div>
       <span className="flex flex-none items-center gap-1 text-sm font-bold" style={{ color: "var(--green)" }}>{ibSc.pct}%{ibSc.bonus > 0 ? ` +${ibSc.bonus}` : ""}<Icon n="chevronRight" size={16} /></span>
     </button>
@@ -1903,7 +1906,7 @@ function BugunView(p: {
   const CountBlock = countTasks.length > 0 || true ? (
     <Sec id="sanaladigan" title={tr("Sanaladigan vazifalar")} icon="hash" accent="var(--blue)" ui={ui} setUi={setUi}
       right={<button onClick={e => { e.stopPropagation(); p.openCountForm(); }} className="rounded-lg px-2 py-0.5 font-bold text-white" style={{ background: "var(--blue)" }}>+</button>}>
-      {countTasks.length === 0 && <p className="text-xs" style={lblS}>{tr("Masalan: “100 ta dars” — kunlik normasiz, umumiy son bilan boriladigan ishlar. “+” bilan qo'shing.")}</p>}
+      {countTasks.length === 0 && <p className="text-xs" style={lblS}>{tr("Masalan: «100 ta dars» — kunlik normasiz, umumiy son bilan boriladigan ishlar. «+» bilan qo'shing.")}</p>}
       <div className="space-y-1.5">
         {countTasks.map(t => {
           const total = countTotal(t);
@@ -2026,7 +2029,7 @@ function BugunView(p: {
       {MiniTiles}
 
 
-      {backupOld && <Card style={{ borderColor: "var(--gold)" }}><p className="text-sm" style={{ color: "var(--ink)" }}>{tr("Zaxira nusxa olganingizga ancha bo'ldi - Sozlamalardan yuklab oling.")}</p></Card>}
+      {backupOld && <Card style={{ borderColor: "var(--gold)" }}><p className="text-sm" style={{ color: "var(--ink)" }}>{tr("Zaxira nusxa olganingizga ancha bo'ldi — Sozlamalardan yuklab oling.")}</p></Card>}
 
       {soon.map(t => (
         <Card key={t.id} style={{ borderColor: "var(--gold)" }}>
@@ -2036,7 +2039,7 @@ function BugunView(p: {
 
       {overdue.map(t => (
         <Card key={t.id}>
-          <p className="text-sm" style={{ color: "var(--ink)" }}>{tf("«{nom}» - {k}-kun (reja: {r} kun). Shoshilmang, lekin rejani ham unutmang.", { nom: t.name, k: diffDays(t.startDate, today) + 1, r: t.plannedDays || 0 })}</p>
+          <p className="text-sm" style={{ color: "var(--ink)" }}>{tf("«{nom}» — {k}-kun (reja: {r} kun). Shoshilmang, lekin rejani ham unutmang.", { nom: t.name, k: diffDays(t.startDate, today) + 1, r: t.plannedDays || 0 })}</p>
         </Card>
       ))}
 
@@ -2081,7 +2084,7 @@ function BugunView(p: {
                 <span className="w-5 flex-none text-center text-[11px] font-bold tabular-nums" style={lblS}>{i + 1}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium" style={{ color: "var(--ink)" }}>{t.name}</span>
-                  <span className="block truncate text-[10px]" style={lblS}>{(t.type || "").trim() || tr("Turkumsiz")}</span>
+                  <span className="block truncate text-[10px]" style={lblS}>{(t.type || "").trim() || tr("Turi yo'q")}</span>
                 </span>
                 <button onClick={() => moveTask(t.id, -1)} disabled={i === 0} className="om-press grid h-8 w-8 flex-none place-items-center rounded-lg" style={{ background: "var(--soft)", color: i === 0 ? "var(--muted)" : "var(--ink)", opacity: i === 0 ? 0.35 : 1 }}><Icon n="chevronUp" size={15} /></button>
                 <button onClick={() => moveTask(t.id, 1)} disabled={i === act.length - 1} className="om-press grid h-8 w-8 flex-none place-items-center rounded-lg" style={{ background: "var(--soft)", color: i === act.length - 1 ? "var(--muted)" : "var(--ink)", opacity: i === act.length - 1 ? 0.35 : 1 }}><Icon n="chevronDown" size={15} /></button>
@@ -2108,7 +2111,7 @@ function BugunView(p: {
                 ))}
               </div>
             )}
-            <p className="text-[10px]" style={lblS}>{tr("Vaqtlar faqat reja uchun - belgilashni kun davomida istalgan payt qilasiz.")}</p>
+            <p className="text-[10px]" style={lblS}>{tr("Vaqtlar faqat reja uchun — belgilashni kun davomida istalgan payt qilasiz.")}</p>
           </div>
         )}
       </Sec>
@@ -2134,7 +2137,7 @@ function BugunView(p: {
 
       {SleepCard}
 
-      <Sec id="extra" title={tr("Qo'shimcha ishlar")} icon="plus" accent="var(--gold)" ui={ui} setUi={setUi}
+      <Sec id="extra" title={tr("Rejadan tashqari amallar")} icon="plus" accent="var(--gold)" ui={ui} setUi={setUi}
         right={todayExtras.length ? <span>{todayExtras.length} {tr("ta")}</span> : undefined}>
         <button onClick={() => setShowExtra(true)} className="w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--gold)" }}>{tr("Qo'shish")}</button>
         {todayExtras.map(e => (
@@ -2220,7 +2223,7 @@ function ExtraForm({ tasks, today, onClose, onSave }: { tasks: Task[]; today: st
   const [otherType, setOtherType] = useState("");
   const picked = taskId && taskId !== "other" ? tasks.find(t => t.id === taskId) : null;
   return (
-    <Sheet onClose={onClose} title={tr("Qo'shimcha ish")}>
+    <Sheet onClose={onClose} title={tr("Rejadan tashqari amal")}>
       <div className="space-y-3.5">
         <div>
           <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Nima ish qildingiz?")}</p>
@@ -2240,7 +2243,7 @@ function ExtraForm({ tasks, today, onClose, onSave }: { tasks: Task[]; today: st
                 <button key={t.id} onClick={() => setTaskId(t.id)} className="om-press flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left" style={on ? { borderColor: acc, background: "var(--soft)", borderWidth: 2 } : { ...cardS, borderWidth: 2 }}>
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-medium" style={{ color: "var(--ink)" }}>{t.name}</span>
-                    <span className="block text-[10px]" style={lblS}>{t.type || tr("Turkumsiz")}</span>
+                    <span className="block text-[10px]" style={lblS}>{t.type || tr("Turi yo'q")}</span>
                   </span>
                   <Icon n={on ? "checkCircle" : "circle"} size={18} style={{ color: on ? acc : "var(--muted)", opacity: on ? 1 : 0.4, flex: "none" }} />
                 </button>
@@ -2254,8 +2257,8 @@ function ExtraForm({ tasks, today, onClose, onSave }: { tasks: Task[]; today: st
         </div>
         {taskId === "other" && (
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Turi")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy)")}</span></p>
-            <input value={otherType} onChange={e => setOtherType(e.target.value)} placeholder={tr("Masalan: mutolaa, sport...")} className="w-full rounded-xl border px-3.5 py-2.5 text-sm" style={inpS} />
+            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Vazifa turi")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>{tr("(ixtiyoriy)")}</span></p>
+            <input value={otherType} onChange={e => setOtherType(e.target.value)} placeholder={tr("Masalan: Qur'on o'qish, sport...")} className="w-full rounded-xl border px-3.5 py-2.5 text-sm" style={inpS} />
           </div>
         )}
         <button onClick={() => {
@@ -2265,7 +2268,7 @@ function ExtraForm({ tasks, today, onClose, onSave }: { tasks: Task[]; today: st
           if (taskId === null) { omAlert(tr("Qaysi vazifaga tegishli ekanini tanlang (yoki «Boshqa»).")); return; }
           onSave({ name: name.trim(), minutes: m, taskId: taskId === "other" ? null : taskId, type: picked ? picked.type : otherType.trim() });
         }} className="om-press w-full rounded-2xl py-3.5 text-sm font-bold text-white" style={{ background: "var(--green)", boxShadow: "0 8px 20px rgba(46,125,87,0.28)" }}>{tr("Saqlash")}</button>
-        <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Vazifaga tegishli bo'lsa — o'sha vazifaga «ziyoda» qo'shiladi va statistikaga kiradi.")}</p>
+        <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Vazifaga tegishli bo'lsa — o'sha vazifaga «qo'shimcha» qo'shiladi va statistikaga kiradi.")}</p>
       </div>
     </Sheet>
   );
@@ -2384,7 +2387,7 @@ function DayDetail(p: { date: string; onClose: () => void; plan: Plan; tasks: Ta
       )}
       {ex.length > 0 && (
         <div className="mt-3">
-          <p className="mb-1 text-xs font-bold" style={lblS}>{tr("QO'SHIMCHA ISHLAR")}</p>
+          <p className="mb-1 text-xs font-bold" style={lblS}>{tr("REJADAN TASHQARI AMALLAR")}</p>
           {ex.map(e => <div key={e.id} className="text-sm" style={{ color: "var(--ink)" }}>➕ {e.name} — {fmtMin(e.minutes)}</div>)}
         </div>
       )}
@@ -2521,7 +2524,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
     const chart = Array.from({ length: 14 }, (_, i) => { const d = addDaysISO(today, -(13 - i)); return { d, v: dm(d) }; });
     let full7 = 0;
     for (let i = 0; i < 7; i++) { const d = addDaysISO(today, -i); const s = dayStats(d, tasks, logs, plan.restDay); if (s.pct !== null && s.pct >= 100) full7++; }
-    const msg = st.pct === null ? { t: tr("Bugun dam kuni — halovat oling"), i: "moon" }
+    const msg = st.pct === null ? { t: tr("Bugun dam oling! Yaxshi dam — mehnatga hamdam"), i: "moon" }
       : pct >= 100 ? { t: tr("Ajoyib — bugungi reja to'liq bajarildi"), i: "checkCircle" }
       : pct >= 70 ? { t: tr("Yaxshi ketyapsiz, oz qoldi"), i: "sparkles" }
       : pct >= 40 ? { t: tr("Yarmidan oshdingiz — davom eting"), i: "target" }
@@ -2627,7 +2630,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
         <div className="grid grid-cols-3 gap-2">
           <StatCard icon="clock" tint="var(--gold)" label={tr("Jami vaqt")} value={fmtMin(a.min)}><Delta2 now={a.min} prev={pa.min} fmt={fmtMin} /></StatCard>
           <StatCard icon="checkCircle" tint="var(--green)" label={tr("Bajarildi")} value={String(a.done)}><Delta2 now={a.done} prev={pa.done} /></StatCard>
-          <StatCard icon="sparkles" tint="var(--blue)" label={tr("Ziyoda")} value={fmtMin(a.extra)}><Delta2 now={a.extra} prev={pa.extra} fmt={fmtMin} /></StatCard>
+          <StatCard icon="sparkles" tint="var(--blue)" label={tr("Qo'shimcha")} value={fmtMin(a.extra)}><Delta2 now={a.extra} prev={pa.extra} fmt={fmtMin} /></StatCard>
         </div>
 
         {(bw.best || bw.worst) && (
@@ -2652,7 +2655,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
         <Card>
           <div className="mb-2 flex items-center justify-between">
             <h3 className="flex items-center gap-2 text-[13px] font-bold" style={{ color: "var(--ink)" }}><Icon n="moon" size={15} style={{ color: "var(--blue)" }} /> {tr("Uyqu")}</h3>
-            <button onClick={() => setSleepList(true)} className="om-press text-[11px] font-semibold" style={{ color: "var(--blue)" }}>{tr("Uyqu kundaligi")}</button>
+            <button onClick={() => setSleepList(true)} className="om-press text-[11px] font-semibold" style={{ color: "var(--blue)" }}>{tr("Uyqu")}</button>
           </div>
           {sAvg === null ? <p className="text-[12px]" style={lblS}>{tr("Bu hafta uyqu yozilmagan.")}</p> : (
             <p className="text-[13px]" style={{ color: "var(--ink)" }}>
@@ -2754,7 +2757,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
         <div className="grid grid-cols-3 gap-2">
           <StatCard icon="clock" tint="var(--gold)" label={tr("Jami vaqt")} value={fmtMin(a.min)}><Delta2 now={a.min} prev={pa.min} fmt={fmtMin} /></StatCard>
           <StatCard icon="checkCircle" tint="var(--green)" label={tr("Bajarildi")} value={String(a.done)}><Delta2 now={a.done} prev={pa.done} /></StatCard>
-          <StatCard icon="sparkles" tint="var(--blue)" label={tr("Ziyoda")} value={fmtMin(a.extra)}><Delta2 now={a.extra} prev={pa.extra} fmt={fmtMin} /></StatCard>
+          <StatCard icon="sparkles" tint="var(--blue)" label={tr("Qo'shimcha")} value={fmtMin(a.extra)}><Delta2 now={a.extra} prev={pa.extra} fmt={fmtMin} /></StatCard>
         </div>
 
         {(bw.best || bw.worst) && (
@@ -2821,7 +2824,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
 function UyquKundaligi({ today, plan, sleepLog, sleepCfg, onClose }: { today: string; plan: Plan; sleepLog: Record<string, number>; sleepCfg: SleepCfg | null; onClose: () => void }) {
   const rows = Object.keys(sleepLog).filter(d => d <= today).sort().reverse().slice(0, 40);
   return (
-    <Sheet title={<span className="flex items-center gap-2"><Icon n="moon" size={16} style={{ color: "var(--blue)" }} /> {tr("Uyqu kundaligi")}</span>} onClose={onClose}>
+    <Sheet title={<span className="flex items-center gap-2"><Icon n="moon" size={16} style={{ color: "var(--blue)" }} /> {tr("Uyqu")}</span>} onClose={onClose}>
       {rows.length === 0 ? <p className="text-[12px]" style={lblS}>{tr("Hali uyqu yozuvi yo'q.")}</p> : (
         <div className="space-y-1.5">
           {sleepCfg && <p className="mb-2 text-[11px]" style={lblS}>{tr("Reja")}: {sleepCfg.hours} {tr("soat. Rejadan kam uxlash yuqori baholanadi.")}</p>}
@@ -2877,7 +2880,7 @@ function TaskDetailStat({ t, onClose, today, logs, plan }: { t: Task; onClose: (
   return (
     <Sheet title={t.name} onClose={onClose}>
       <div className="space-y-1 text-sm" style={{ color: "var(--ink)" }}>
-        {t.type && <p>{tr("Turi:")} <b>{t.type}</b></p>}
+        {t.type && <p>{tr("Vazifa turi:")} <b>{t.type}</b></p>}
         <p>{tr("Bajarildi:")} <b>{done}/{actD}</b> {tr("kun · Umumiy:")} <b>{pct === null ? "—" : pct + "%"}</b></p>
         <p>{tf("Sababli: {n} marta (joriy 30 kunlik: {m}/3)", { n: exc, m: excused30(t.id, logs, today) })}</p>
       </div>
@@ -3160,7 +3163,7 @@ function JarayonSheet({ m, today, plan, tasks, logs, counts, countLog, onClose }
 
         {inPeriod > 0 && (
           <p className="text-[12px] leading-relaxed" style={lblS}>
-            {tr("Shu tempda yil oxirida taxminan")} <b style={{ color: forecast >= m.target ? "var(--green)" : "var(--ink)" }}>{forecast}</b> {tr("ta bo'ladi (maqsad —")} {m.target}).
+            {tr("Shunday davom etsangiz, yil oxirida taxminan")} <b style={{ color: forecast >= m.target ? "var(--green)" : "var(--ink)" }}>{forecast}</b> {tr("ta bo'ladi (maqsad —")} {m.target}).
           </p>
         )}
 
@@ -3253,7 +3256,7 @@ function MetricsEdit({ plan, setPlan, onClose }: { plan: Plan; setPlan: React.Di
   return (
     <Sheet onClose={onClose} title={tr("Oliy maqsadlaringiz")}>
       <div className="space-y-3.5">
-        <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Yil davomida nimani nechta qilishni belgilang — masalan «yiliga 10 kitob», «100 dars». Bu raqamlar Maqsad bo'limidagi progressni yuritadi.")}</p>
+        <p className="text-[11px] leading-relaxed" style={lblS}>{tr("Yil davomida nimani nechta qilishni belgilang — masalan «yiliga 10 kitob», «100 dars». Bu raqamlar Maqsad bo'limidagi natijani yuritadi.")}</p>
 
         {ms.length > 0 && (
           <div className="space-y-1.5">
@@ -3497,7 +3500,7 @@ function TaskForm({ scope: scope0, folderId, folders, types, today, initialKind,
       <div className="space-y-3.5">
         {scopePick && (
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Turkum")}</p>
+            <p className="mb-1.5 text-[11px] font-semibold" style={lblS}>{tr("Vazifa turi")}</p>
             <div className="flex gap-2">
               <Seg on={scope === "daily"} label={tr("Kundalik")} tint="var(--green)" onClick={() => { setScope("daily"); setType(""); }} />
               <Seg on={scope === "oliy"} label={tr("Oliy maqsad")} tint="var(--gold)" onClick={() => { setScope("oliy"); setType(""); }} />
@@ -3732,7 +3735,7 @@ function TaskEdit({ t, folders, types, today, countLog, onClose, setTasks }: { t
               className="om-press col-span-2 flex items-center justify-center gap-2 rounded-xl border py-2.5 text-sm" style={{ ...cardS, color: "var(--red)" }}><Icon n="trash" size={15} /> {tr("O'chirish")}</button>
           )}
           {!t.abandonedAt && !paused && t.startDate <= today && (
-            <button onClick={() => setShowPause(true)} className="om-press flex items-center justify-center gap-1.5 rounded-xl border py-2.5 text-sm" style={{ ...cardS, color: "var(--gold)" }}><Icon n="pause" size={14} /> {tr("To'xtatish")}</button>
+            <button onClick={() => setShowPause(true)} className="om-press flex items-center justify-center gap-1.5 rounded-xl border py-2.5 text-sm" style={{ ...cardS, color: "var(--gold)" }}><Icon n="pause" size={14} /> {tr("Vaqtincha to'xtatish")}</button>
           )}
           {paused && <button onClick={() => { upd(x => ({ ...x, pauses: x.pauses.map(pp => (today >= pp.from && today <= pp.to) ? { from: pp.from, to: addDaysISO(today, -1) } : pp).filter(pp => pp.to >= pp.from) })); onClose(); }} className="om-press flex items-center justify-center gap-1.5 rounded-xl border py-2.5 text-sm" style={{ ...cardS, color: "var(--green)" }}><Icon n="play" size={13} /> {tr("Davom ettirish")}</button>}
           {!t.abandonedAt && t.startDate <= today ? (
@@ -3807,7 +3810,7 @@ function VazifalarPage(p: {
   // tur bo'yicha guruhlash (tur = papka)
   const grouped = (() => {
     const g: Record<string, Task[]> = {};
-    p.tasks.filter(visible).forEach(t => { const k = (t.type || "").trim() || tr("Turkumsiz"); (g[k] = g[k] || []).push(t); });
+    p.tasks.filter(visible).forEach(t => { const k = (t.type || "").trim() || tr("Qolgan vazifalar"); (g[k] = g[k] || []).push(t); });
     return Object.keys(g).sort((a, b) => a.localeCompare(b)).map(k => ({ name: k, items: g[k] }));
   })();
   const qq = q.trim().toLowerCase();
@@ -3937,7 +3940,6 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
   const [, setTick] = useState(0);
   const [w, setW] = useState(String(cfg.work));
   const [r, setR] = useState(String(cfg.rest));
-  const [c, setC] = useState(String(cfg.cycles || 3));
   useEffect(() => {
     const iv = setInterval(() => setTick(t => t + 1), 500);
     return () => clearInterval(iv);
@@ -3967,7 +3969,7 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
                 <Icon n="timer" size={26} style={{ color: "var(--muted)" }} />
                 <span className="mt-1 text-6xl font-bold tabular-nums" style={{ color: pomo && pomo.pausedLeft !== null ? "var(--muted)" : "var(--ink)" }}>{pomo ? `${mm}:${ss}` : `${String(cfg.work).padStart(2, "0")}:00`}</span>
                 <span className="mt-1 text-sm font-medium" style={{ color: pomo ? (pomo.pausedLeft !== null ? "var(--muted)" : col) : "var(--muted)" }}>
-                  {pomo ? (pomo.phase === "work" ? (pomo.pausedLeft !== null ? tr("Pauzada") : tr("Ish vaqti")) : tr("Dam olish")) : tr("Focus vaqti")}
+                  {pomo ? (pomo.phase === "work" ? (pomo.pausedLeft !== null ? tr("To'xtatilgan") : tr("Ish vaqti")) : tr("Dam olish")) : tr("Boshlashga tayyor")}
                 </span>
               </div>
             </div>
@@ -3980,19 +3982,21 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
             <>
               {pomo.phase === "work" && pomo.pausedLeft === null && (
                 <button onClick={() => setPomo(pp => pp ? { ...pp, pausedLeft: Math.max(pp.endsAt - Date.now(), 0) } : pp)}
-                  className="om-press flex items-center gap-1.5 rounded-2xl border px-6 py-3.5 text-sm font-bold" style={{ ...cardS, color: "var(--gold)" }}><Icon n="pause" size={18} /> {tr("Pauza")}</button>
+                  className="om-press flex items-center gap-1.5 rounded-2xl border px-6 py-3.5 text-sm font-bold" style={{ ...cardS, color: "var(--gold)" }}><Icon n="pause" size={18} /> {tr("To'xtatish")}</button>
               )}
               {pomo.phase === "work" && pomo.pausedLeft !== null && (
                 <button onClick={() => setPomo(pp => pp ? { ...pp, endsAt: Date.now() + (pp.pausedLeft || 0), pausedLeft: null } : pp)}
                   className="om-press flex items-center gap-1.5 rounded-2xl px-7 py-3.5 text-sm font-bold text-white" style={{ background: "var(--green)" }}><Icon n="play" size={18} /> {tr("Davom")}</button>
               )}
               <button onClick={async () => { if (await omConfirm(tr("Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)"))) setPomo(null); }}
-                className="om-press flex items-center gap-1.5 rounded-2xl border px-6 py-3.5 text-sm font-bold" style={{ ...cardS, color: "var(--red)" }}><Icon n="stop" size={15} /> {tr("To'xtatish")}</button>
+                className="om-press flex items-center gap-1.5 rounded-2xl border px-6 py-3.5 text-sm font-bold" style={{ ...cardS, color: "var(--red)" }}><Icon n="stop" size={15} /> {tr("Tugatish")}</button>
             </>
           )}
         </div>
+        {/* Kunlik pomodoro maqsadi (sikl) 2026-07-29 da olib tashlandi —
+            shuning uchun bu yerda "{n}/{maqsad}" emas, faqat bajarilgan soni turadi. */}
         <p className="mt-6 text-sm" style={{ color: "var(--ink)" }}>
-          Bugun: <b style={{ color: tLog.c >= (cfg.cycles || 3) ? "var(--green)" : "var(--ink)" }}>{tLog.c}/{cfg.cycles || 3} pomodoro</b> · {fmtMin(tLog.m)} sof ish
+          {tr("Bugun:")} <b>{tf("{n} pomodoro", { n: tLog.c })}</b> · {tf("{v} sof ish", { v: fmtMin(tLog.m) })}
         </p>
         <p className="mt-1 text-center text-[11px]" style={lblS}>{tr("Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.")}</p>
       </Card>
@@ -4004,13 +4008,10 @@ function PomoPage({ cfg, setCfg, pomo, setPomo, pomoLog, today, onStart }: {
           <input type="number" value={w} onChange={e => setW(e.target.value)} className="w-14 rounded-lg border px-2 py-1.5 text-sm" style={inpS} />
           <span>{tr("daq · Dam:")}</span>
           <input type="number" value={r} onChange={e => setR(e.target.value)} className="w-14 rounded-lg border px-2 py-1.5 text-sm" style={inpS} />
-          <span>{tr("daq · Sikl:")}</span>
-          <input type="number" value={c} onChange={e => setC(e.target.value)} className="w-14 rounded-lg border px-2 py-1.5 text-sm" style={inpS} />
-          <span>{tr("marta")}</span>
-          <button onClick={() => { const wv = parseInt(w) || 25, rv = parseInt(r) || 5, cv = parseInt(c) || 3; if (wv > 0 && rv > 0 && cv > 0) setCfg({ work: wv, rest: rv, cycles: cv }); }}
+          <span>{tr("daq")}</span>
+          <button onClick={() => { const wv = parseInt(w) || 25, rv = parseInt(r) || 5; if (wv > 0 && rv > 0) setCfg({ work: wv, rest: rv }); }}
             className="ms-auto rounded-lg px-3 py-1.5 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
         </div>
-        <p className="mt-2 text-[11px]" style={lblS}>{tr("Sikl — kunlik pomodoro maqsadingiz. Yetganingizda hisob yashil rangda ko'rinadi.")}</p>
       </Card>
     </div>
   );
@@ -4022,7 +4023,7 @@ function PomoAsk({ min, tasks, logs, today, onPick }: { min: number; tasks: Task
   const opts = tasks.filter(t => t.kind !== "count" && !t.isSleep && taskActiveOn(t, today));
   return (
     <Modal title={`${fmtMin(min)} ish tugadi`} onClose={() => onPick(null)}>
-      <p className="mb-3 text-sm" style={{ color: "var(--ink)" }}>{tr("Bu vaqtda nima qildingiz? Tanlangan vazifaga")} <b>{fmtMin(min)}</b> {tr("hisoblanadi — qismiy bajarilish beradi, ortiqchasi “ziyoda”ga o'tadi.")}</p>
+      <p className="mb-3 text-sm" style={{ color: "var(--ink)" }}>{tr("Bu vaqtda nima qildingiz? Tanlangan vazifaga")} <b>{fmtMin(min)}</b> {tr("hisoblanadi — qismiy bajarilish beradi, ortiqchasi «qo'shimcha»ga o'tadi.")}</p>
       <div className="space-y-1.5">
         {opts.map(t => {
           const m = lg[t.id];
@@ -4066,20 +4067,20 @@ function FocusOverlay({ pomo, setPomo, pomoLog, today }: {
       <Icon n="timer" size={30} style={{ color: "#59B483" }} />
       <div className="mt-4 text-[80px] font-bold leading-none tabular-nums" style={{ color: paused ? "#555" : "#F5F5F5" }}>{mm}:{ss}</div>
       <div className="mt-4 text-sm font-medium" style={{ color: paused ? "#777" : pomo.phase === "work" ? "#59B483" : "#D7A94B" }}>
-        {paused ? "Pauzada" : pomo.phase === "work" ? tr("Fokus — ish vaqti") : tr("Dam olish")}
+        {paused ? tr("To'xtatilgan") : pomo.phase === "work" ? tr("Ish vaqti") : tr("Dam olish")}
       </div>
       <div className="mt-2 text-xs" style={{ color: "#666" }}>Bugun: {tLog.c} pomodoro · {fmtMin(tLog.m)} sof ish</div>
       <div className="mt-12 flex items-center gap-3">
         {pomo.phase === "work" && !paused && (
           <button onClick={() => setPomo(pp => pp ? { ...pp, pausedLeft: Math.max(pp.endsAt - Date.now(), 0) } : pp)}
-            className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#D7A94B" }}>{tr("Pauza")}</button>
+            className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#D7A94B" }}>{tr("To'xtatish")}</button>
         )}
         {pomo.phase === "work" && paused && (
           <button onClick={() => setPomo(pp => pp ? { ...pp, endsAt: Date.now() + (pp.pausedLeft || 0), pausedLeft: null } : pp)}
             className="om-press rounded-2xl px-7 py-3 text-sm font-bold text-white" style={{ background: "#59B483" }}>{tr("Davom")}</button>
         )}
         <button onClick={async () => { if (await omConfirm(tr("Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)"))) setPomo(null); }}
-          className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#E5674F" }}>{tr("To'xtatish")}</button>
+          className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#E5674F" }}>{tr("Tugatish")}</button>
       </div>
       <button onClick={() => setPomo(pp => pp ? { ...pp, mode: "open" } : pp)} className="mt-8 text-xs" style={{ color: "#666" }}>
         {tr("Fokusdan chiqish (taymer davom etadi)")}
@@ -4362,14 +4363,14 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   };
 
   const replan = async () => {
-    const ok = await omConfirm(tr("Maqsadni qayta shakllantirasizmi?"), tr("Kirish sahifasi qaytadan ochiladi, lekin barcha tarix — belgilashlar, vazifalar, xulosalar — saqlanadi."));
+    const ok = await omConfirm(tr("Rejani qaytadan tuzasizmi?"), tr("Kirish sahifasi qaytadan ochiladi, lekin barcha tarix — belgilashlar, vazifalar, xulosalar — saqlanadi."));
     if (ok) p.setPlan(null);
   };
 
   const fullReset = async () => {
     // Avval OGOHLANTIRAMIZ, keyin zaxirani SO'RAYMIZ. Ilgari PDF avtomatik
     // yuklanardi — foydalanuvchi nima bo'layotganini tushunmay qolardi.
-    const ok1 = await omConfirm(tr("Maqsadni qaytadan tuzish"), tr("Ushbu amal barcha ma'lumotlaringizni o'chiradi: vazifalar, belgilashlar, statistika. Ortga qaytarib bo'lmaydi."), { danger: true, okText: tr("Davom etish") });
+    const ok1 = await omConfirm(tr("Hammasini o'chirib, boshidan boshlash"), tr("Ushbu amal barcha ma'lumotlaringizni o'chiradi: vazifalar, belgilashlar, statistika. Ortga qaytarib bo'lmaydi."), { danger: true, okText: tr("Davom etish") });
     if (!ok1) return;
     const zaxira = await omConfirm(tr("Ma'lumotlaringiz PDF shaklida yuklansinmi?"), tr("O'chirishdan oldin zaxira saqlab qo'yish tavsiya etiladi."), { okText: tr("Ha, yuklansin") });
     if (zaxira) await pdfBackup();
@@ -4443,10 +4444,10 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
       {/* Maqsad amallari — bo'limning ENG TAGIDA, chunki ikkalasi ham jiddiy */}
       <Card style={{ borderColor: "var(--gold)" }}>
         <button onClick={replan} className="mb-2 w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--ink)" }}>
-          {tr("Maqsadni qayta shakllantirish")}
+          {tr("Rejani qaytadan tuzish")}
         </button>
         <button onClick={fullReset} className="w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--red)" }}>
-          {tr("Maqsadni qaytadan tuzish")}
+          {tr("Hammasini o'chirib, boshidan boshlash")}
         </button>
       </Card>
 
@@ -4511,12 +4512,12 @@ const TUR_QISQA: TurQadam[] = [
 ];
 
 const TUR_TOLIQ: TurQadam[] = [
-  { tur: null, nom: "Oliy maqsad", matn: "Ilovaning maqsadi — uzoq yo'lni har kungi kichik qadamlarga bo'lish. Siz maqsad qo'yasiz, unga eltuvchi vazifalarni belgilaysiz, ilova esa bajarganingizni halol hisobda yuritadi. Vijdon — eng adolatli guvoh." },
+  { tur: null, nom: "Oliy maqsad", matn: "Ilovaning maqsadi — uzoq yo'lni har kungi kichik qadamlarga bo'lish. Siz maqsad qo'yasiz, unga olib boradigan vazifalarni belgilaysiz, ilova esa bajarganingizni halol hisobda yuritadi. Vijdon — eng adolatli guvoh." },
   { tur: "nav-maqsad", nom: "Maqsad bo'limi", matn: "Oliy maqsadingiz matni, natija halqasi va yillik raqamli maqsadlaringiz shu yerda. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz, eskisi saqlanib qoladi." },
   { tur: "qoshish", nom: "Qo'shish tugmasi", matn: "Uch xil narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa, va yillik raqamli maqsad. Har vazifaga vaqt oralig'i berilsa, o'sha payt telefonga eslatma keladi — ilova yopiq bo'lsa ham." },
   { tur: "ibodat", nom: "Ibodatlar", matn: "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi." },
   { tur: "pomodoro", nom: "Pomodoro", matn: "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi." },
-  { tur: "nav-bugun", nom: "Bugun sahifasi", matn: "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Qo'shimcha ish» bo'limiga yozasiz — u tegishli vazifaga ziyoda bo'lib qo'shiladi." },
+  { tur: "nav-bugun", nom: "Bugun sahifasi", matn: "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Rejadan tashqari amallar» bo'limiga yozasiz — u tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi." },
 ];
 
 // tr("Qanday ishlaydi?") — har bo'lim haqida qisqa izoh
@@ -4524,7 +4525,7 @@ const HELP_ITEMS: { icon: string; t: string; s: string }[] = [
   { icon: "home", t: "Bugun", s: "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim." },
   { icon: "plus", t: "Qo'shish (+)", s: "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz." },
   { icon: "clock", t: "Vazifa vaqti", s: "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin." },
-  { icon: "sparkles", t: "Qo'shimcha ish", s: "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi." },
+  { icon: "sparkles", t: "Rejadan tashqari amallar", s: "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi." },
   { icon: "mosque", t: "Ibodatlar", s: "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi." },
   { icon: "timer", t: "Pomodoro", s: "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi." },
   { icon: "calendar", t: "Taqvim", s: "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi." },
@@ -4999,7 +5000,7 @@ export default function App() {
             <button onClick={() => startWithMode("focus")} className="om-press flex w-full items-start gap-3 rounded-2xl border p-3.5 text-left" style={cardS}>
               <span className="grid h-10 w-10 flex-none place-items-center rounded-xl" style={{ background: "#16130F", color: "#F5F5F5" }}><Icon n="moon" size={19} /></span>
               <span className="min-w-0">
-                <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Fokus rejimi")}</span>
+                <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Diqqatni jamlash")}</span>
                 <span className="block text-[11px] leading-relaxed" style={lblS}>{tr("Ekran qorayadi, faqat taymer va bugungi hisob ko'rinadi, ekran o'chmaydi. Chuqur diqqat uchun telefonning «Bezovta qilinmasin» rejimini ham yoqib qo'ying.")}</span>
               </span>
             </button>
@@ -5059,7 +5060,7 @@ export default function App() {
         <Sheet title={tr("Nima qo'shamiz?")} onClose={() => setAddMenu(false)}>
           <div className="space-y-2">
             {([
-              { k: "daily", icon: "list", tint: "var(--green)", t: tr("Kundalik vazifa"), s: tr("Har kuni takrorlanadigan ish") },
+              { k: "daily", icon: "list", tint: "var(--green)", t: tr("Kundalik reja"), s: tr("Har kuni takrorlanadigan ish") },
               { k: "oliy", icon: "target", tint: "var(--gold)", t: tr("Oliy maqsad vazifasi"), s: tr("Katta maqsadga eltuvchi ish") },
               { k: "metric", icon: "flag", tint: "var(--gold)", t: tr("Oliy maqsad belgilash"), s: tr("Yillik raqamli maqsad — masalan 10 kitob") },
             ] as const).map(o => (
