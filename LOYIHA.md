@@ -174,15 +174,65 @@ Lug'at **633 / 633** BESH tilda: uz · uzk · en · ar · **ru**.
 - **SABOQ (2026-07-27):** avtomatik `tr()` o'rash skripti `<style>` bloki ichidagi CSS ga ham tegib ketgan edi — `font-family: tr("Inter")` chiqib, butun shrift qoidasi buzilgan (v9 dan beri, `3a439b1` da tuzatildi). Shablon satri (backtick) ichida `tr()` **bajarilmaydi**, matn holicha qoladi. Skript ishlatilsa, `<style>` va boshqa backtick bloklari chetlab o'tilsin
 - AI Studio'da kod FAQAT qo'lda joylanadi (Gemini chatiga ishonilmaydi)
 - Android Studio yangilash takliflari doim RAD etiladi
-- package.json da @google/genai qoldiq turibdi — zarari yo'q
+- ~~package.json da @google/genai qoldiq turibdi~~ — 2026-07-29 da olib tashlandi
 - **NewsModal qoidasi:** yangiliklar oynasiga "Bu oyna bir marta ko'rinadi" kabi pastki izoh QO'SHILMAYDI. Faqat: logo+sarlavha, oltin versiya/sana qatori, ✕, raqamlangan ro'yxat. Keyingi yangilanishda NEWS_VER/LABEL/DATE/ITEMS ni yangilash kifoya (hozir v9)
 - **KEYINGI YANGILANISHDA ESLATISH:** ilovaning **ommaga mosligi** (mass-market) haqida gaplashish — foydalanuvchi so'radi
-- **!!! TARJIMA ISHLARI TUGAGACH ESLATISH (foydalanuvchi 2026-07-27 da so'radi): andoza qoldiqlarini tozalash.** AI Studio namunasidan qolgan, hech kim ataylab qo'shmagan (`package.json` nomi hali ham `"react-example"`, `index.html`/`index.css` 19-iyuldan beri o'zgarmagan):
-  1. `index.html` dagi `<script src="https://cdn.tailwindcss.com">` — **keraksiz**, Tailwind allaqachon `@tailwindcss/vite` orqali ichiga qurilgan. Oflayn bekor so'rov
-  2. `index.css` dagi `@import url(fonts.googleapis.com...)` — oflayn yuklanmaydi, telefonda Inter baribir ko'rinmaydi (Roboto ga tushadi). Shriftni ilova ichiga joylash kerak
-  3. `index.css` dagi namuna ranglari (`#fafafa`, `#171717`) — dizaynga mos emas, App.tsx styleBlock ustidan yozadi
-  - **EHTIYOT:** `index.css` butunlay o'lik EMAS — `main.tsx` uni yuklaydi va ichidagi `* { transition-property: ... }` qoidasi butun ilovada ishlaydi. O'chirishdan oldin o'sha qism ko'chirib olinsin
+- **ANDOZA QOLDIQLARI — TOZALANDI ✓ (2026-07-29).** Pastdagi «TAFTISH» bo'limiga qarang
 - **SINOVDA TEKSHIRISH:** begona odam "Oliy maqsad belgilash"ni topa oladimi (u pastdagi + menyusiga ko'chirilgan)
+
+## TAFTISH VA TOZALASH (2026-07-29)
+Sabab: ko'ngillilar «ilova sekin» deyishdi. Bir dasturchi «lazy loading yo'qligidan» dedi — **noto'g'ri tashxis**.
+Butun kod, papka va sozlamalar taftish qilindi. Haqiqiy sabab: AI Studio andozasidan qolgan uch qator.
+
+**Tiklash nuqtasi: `05b04e2`** (tozalashdan oldingi holat). Ortga qaytish: `git checkout 05b04e2 -- <fayl>`
+
+### BAJARILDI
+1. **`index.html` — Tailwind CDN skripti olib tashlandi.** To'suvchi skript edi, ilova har ochilganda
+   tarmoq javobini kutardi. Tekshirildi: kodda dinamik sinf nomi (`` className={`...`} ``) **0 ta**,
+   qurilgan CSS da 354 qoida (jumladan `text-[11px]` kabi ixtiyoriy qiymatlilar) — CDN hech narsa bermayotgan edi
+2. **`src/index.css` — Google Fonts `@import` olib tashlandi.** CSS `@import` chizishni **to'sadi**;
+   oflayn baribir yuklanmasdi. Body ranglari `#fafafa/#171717` → `#F4EFE6/#26221B` (dizayn rangi)
+   - **`* { transition-property: ... }` qoidasi ATAYLAB saqlandi** — u butun ilovada ishlaydi
+3. **`public/icon.png` — 2.15 MB → 101 KB** (1254×1254 → 192×192). APK dagi vazifasi **nol** edi:
+   favicon va PWA ikonkasi, ikkalasi ham APK da ma'nosiz. Haqiqiy ilova belgisi `res/mipmap-*` dan
+   - Natija: **APK web fayllari 2.7 MB → 739 KB**
+4. **Splash 1250 ms → 600 ms.** `om-pop` animatsiyasi 220 ms; qolgan ~1030 ms ekran qotib turardi
+5. **8 ta ishlatilmaydigan paket olib tashlandi:** `@google/genai` (17 MB), `lucide-react`, `motion`,
+   `express`, `dotenv`, `@types/express`, `autoprefixer`, `tsx` + `dependencies` dagi ortiqcha `vite`.
+   `npm install`: 129 paket ketdi. **5 Capacitor plagini saqlandi — hammasi ishlatiladi**
+6. **O'chirildi:** `metadata.json` (tavsifi «AI faqat maslahat beradi» — ilovada AI yo'q), `.env.example`
+7. **Qayta yozildi:** `README.md` (Google banneri o'rniga o'z hujjati), `vite.config.ts` (DISABLE_HMR va
+   ishlatilmaydigan `@` alias ketdi), `package.json` (nomi `react-example` → `oliy-maqsad`)
+
+**Tekshiruv:** `tsc --noEmit` 0 xato · qurilish toza · brauzerda **tashqi stylesheet 0 ta** ·
+konsol xatosi yo'q · `rounded-3xl`→24px, `text-[11px]`→11px (uslublar buzilmagan)
+
+### TOPILDI, LEKIN HALI TUZATILMAGAN — navbat bilan
+**Ma'lumot xavfsizligi (Play Market'dan oldin):**
+- `useStored` da `localStorage.setItem` **`try/catch` siz** — xotira to'lsa ilova jimgina yiqiladi
+- `importFile` faqat `data.om3_plan` borligini tekshiradi — buzuq fayl ustiga yozadi, ortga yo'l yo'q
+- `.json` shaklidagi zaxira yo'q (faqat PDF; PDF siqilsa ichidagi base64 buziladi)
+
+**Sifat poydevori (Play Market'dan keyin):**
+- **`tsconfig.json` da `"strict": true` YO'Q** → `strictNullChecks` o'chiq. Kodda `.find(...)` juda ko'p,
+  har biri potensial qulash, tekshirgich ularni **ko'rmayapti**. Yoqilsa ~50–200 xato chiqishi kutiladi —
+  ular yangi emas, **hozir ham mavjud**, shunchaki ko'rinadigan bo'ladi. (`@types/react` yo'qligining ukasi)
+- Memoizatsiya **nol** (`useMemo`/`useCallback`/`memo` = 0) — har belgilashda butun ekran va butun
+  statistika qayta hisoblanadi. Yillar o'tgani sari yomonlashadi
+- `* { transition }` qoidasi **har bir elementga** tegadi — kerakli joylarga toraytirilsin
+- Test **umuman yo'q** — `markFrac`, `ibScore`, `periodAvg` xatosi jimgina noto'g'ri raqam ko'rsatadi
+- `App.tsx` 5113 satr · `capPlug` → `(window as any)`, tip xavfsizligi yo'q · `parseInt`/`parseFloat`
+  soyalash · `setCur(lang)` render tanasida (React qoidasiga zid)
+- `build.gradle` da `minifyEnabled false` — **ehtiyot bilan**: R8 Capacitor plaginlarini buzishi mumkin
+- `npm audit`: 2 ta zaiflik (`brace-expansion`, `tar`) — **faqat qurish vositalarida**, telefonga tushmaydi
+
+**Yetishmayotgan:**
+- **Shrift ilova ichida emas** — Inter hech qachon yuklanmaydi, telefonda Roboto ko'rinadi.
+  Namuna bor: `src/oyat-shrift.ts` (Amiri Quran, base64, OFL). Foydalanuvchi hajmdan qo'rqmaydi
+- `AndroidManifest.xml` da `screenOrientation` yo'q — ilova yonboshlatilsa buziladi
+- `allowBackup="true"` — Android avtomatik zaxirasi **yoqilgan** (Google hisobiga). Yangi telefonga
+  o'tganda tiklanadi, lekin kuniga bir marta va faqat quvvat+Wi-Fi da. Kundalik himoya sifatida yaramaydi
+- `Logolar/` — git omborida 5.3 MB (`Mockup.psd` 3.4 MB). APK ga tushmaydi, lekin har `clone` da yuklanadi
 
 ## KELAJAK REJALARI
 - **!!! PLAY MARKET BOSQICHIDA BIRINCHI NAVBATDA ESLATISH (foydalanuvchi maxsus so'radi):** tashqi ilova belgisi (launcher ikonka) tanlovi funksiyasini qo'shish — Sozlamalar→Ko'rinishdan oq/yashil/sariq/4-variant logolardan birini tanlash. **Web/Capacitor'da MUMKIN EMAS** (Android activity-alias + native Kotlin/Java kerak). Logolar tayyor: `C:\oliy-maqsad\Logolar\`
