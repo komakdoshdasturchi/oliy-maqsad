@@ -317,17 +317,6 @@ function periodAvg(from: string, to: string, tasks: Task[], logs: Logs, restDay:
   return n ? Math.round(sum / n) : null;
 }
 
-function uzluksizlik(startISO: string, today: string, tasks: Task[], logs: Logs, restDay: number | null) {
-  let run = 0, best = 0;
-  for (let d = startISO; d <= today; d = addDaysISO(d, 1)) {
-    const s = dayStats(d, tasks, logs, restDay);
-    if (s.rest || s.pct === null) continue;
-    if (s.pct === 100 && s.excused === 0) { run++; if (run > best) best = run; }
-    else if (d !== today) run = 0;
-  }
-  return { current: run, best };
-}
-
 // bir kunda ishlangan jami daqiqa (soatlar hisobiga kiruvchilar)
 function dayMinutes(d: string, tasks: Task[], logs: Logs, extras: Extra[]): number {
   const lg = logs[d] || {};
@@ -841,38 +830,6 @@ function Ring({ done, total, pct }: { done: number; total: number; pct?: number 
   );
 }
 
-function Bars({ data }: { data: { label: string; pct: number | null }[] }) {
-  return (
-    <div className="flex items-end gap-1">
-      {data.map((d, i) => (
-        <div key={i} className="flex flex-1 flex-col items-center gap-1" title={`${d.label}: ${d.pct === null ? "—" : d.pct + "%"}`}>
-          <div className="flex h-24 w-full items-end">
-            <div className="w-full rounded-t" style={{ height: `${Math.max(d.pct || 0, 3)}%`, background: d.pct === null ? "var(--line)" : "var(--green)" }} />
-          </div>
-          <span className="text-[9px]" style={{ color: "var(--muted)" }}>{d.label}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// qiymatli ustunlar (daqiqa, reyting...) — eng kattasiga nisbatan masshtablanadi
-function ValBars({ data, color, fmt }: { data: { label: string; v: number | null }[]; color?: string; fmt?: (v: number) => string }) {
-  const mx = Math.max(...data.map(d => d.v || 0), 1);
-  return (
-    <div className="flex items-end gap-1">
-      {data.map((d, i) => (
-        <div key={i} className="flex flex-1 flex-col items-center gap-1" title={`${d.label}: ${d.v === null ? "—" : (fmt ? fmt(d.v) : d.v)}`}>
-          <div className="flex h-24 w-full items-end">
-            <div className="w-full rounded-t" style={{ height: `${Math.max(((d.v || 0) / mx) * 100, 3)}%`, background: d.v === null ? "var(--line)" : (color || "var(--green)") }} />
-          </div>
-          <span className="text-[9px]" style={{ color: "var(--muted)" }}>{d.label}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function DurationField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [unit, setUnit] = useState<"daq" | "soat">("daq");
   const disp = value === "" ? "" : unit === "soat" ? String(Math.round((parseFloat(value) / 60) * 100) / 100) : value;
@@ -885,24 +842,6 @@ function DurationField({ value, onChange }: { value: string; onChange: (v: strin
         <option value="daq">{tr("daqiqa")}</option>
         <option value="soat">{tr("soat")}</option>
       </select>
-    </div>
-  );
-}
-
-function DayChips({ days, setDays }: { days: number[]; setDays: (d: number[]) => void }) {
-  const ORDER = [1, 2, 3, 4, 5, 6, 0];
-  return (
-    <div className="flex flex-wrap gap-1">
-      {ORDER.map(i => {
-        const on = days.includes(i);
-        return (
-          <button key={i} type="button" onClick={() => setDays(on ? days.filter(x => x !== i) : [...days, i])}
-            className="rounded-lg border px-2 py-1 text-xs"
-            style={on ? { background: "var(--green)", color: "#fff", borderColor: "var(--green)" } : { ...cardS, color: "var(--muted)" }}>
-            {tr(KUN_QISQA[i])}
-          </button>
-        );
-      })}
     </div>
   );
 }
@@ -3867,27 +3806,6 @@ function VazifalarPage(p: {
       {editTask && <TaskEdit t={p.tasks.find(x => x.id === editTask.id) || editTask} folders={p.folders} types={types} today={today} countLog={p.countLog} onClose={() => setEditTask(null)} setTasks={p.setTasks} />}
       {showMetrics && <MetricsEdit plan={p.plan} setPlan={p.setPlan} onClose={() => setShowMetrics(false)} />}
     </div>
-  );
-}
-
-function FolderEdit({ f, onClose, setFolders, empty }: { f: Folder; onClose: () => void; setFolders: React.Dispatch<React.SetStateAction<Folder[]>>; empty: boolean }) {
-  const [name, setName] = useState(f.name);
-  const [imp, setImp] = useState(String(f.importance));
-  return (
-    <Modal title={`${f.name}`} onClose={onClose}>
-      <label className={lblC} style={lblS}>{tr("Papka nomi")}</label>
-      <input value={name} onChange={e => setName(e.target.value)} className={inpC + " mb-2"} style={inpS} />
-      <label className={lblC} style={lblS}>{tr("Muhimlik darajasi (1-10)")}</label>
-      <input type="number" min={1} max={10} value={imp} onChange={e => setImp(e.target.value)} className={inpC + " mb-3"} style={inpS} />
-      <button onClick={() => { const im = Math.min(Math.max(parseInt(imp) || 5, 1), 10); setFolders(fs => fs.map(x => x.id === f.id ? { ...x, name: name.trim() || x.name, importance: im } : x)); onClose(); }}
-        className="mb-2 w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("Saqlash")}</button>
-      {empty ? (
-        <button onClick={async () => { if (await omConfirm(tr("Papka o'chirilsinmi?"))) { setFolders(fs => fs.filter(x => x.id !== f.id)); onClose(); } }}
-          className="w-full rounded-lg border py-2 text-sm" style={{ ...cardS, color: "var(--red)" }}>{tr("O'chirish")}</button>
-      ) : (
-        <p className="text-[11px]" style={lblS}>{tr("Papkani o'chirish uchun avval ichidagi vazifalarni boshqa joyga ko'chiring.")}</p>
-      )}
-    </Modal>
   );
 }
 
