@@ -1,20 +1,51 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Oliy maqsad
 
-# Run and deploy your AI Studio app
+5 yillik shaxsiy intizom, ibodat va maqsad kuzatuvchi Android ilovasi.
 
-This contains everything you need to run your app locally.
+- **To'liq oflayn** — server yo'q, hisob yo'q, AI yo'q, telemetriya yo'q
+- **Ma'lumot faqat telefonda** — brauzer `localStorage` ida (`om3_*` kalitlari)
+- **Besh til:** o'zbek (lotin) · o'zbek (kirill) · English · العربية · русский
+- **Zaxira:** PDF hisobot ichiga yashiringan to'liq nusxa (Sozlamalar → Zaxira)
 
-View your app in AI Studio: https://ai.studio/apps/ef0ea789-d3fd-4afb-b116-1c1bc95cefb7
+## Texnologiya
 
-## Run Locally
+React 19 + TypeScript + Tailwind CSS v4 + Vite. Android qobig'i — Capacitor.
 
-**Prerequisites:**  Node.js
+| Fayl | Nima |
+|---|---|
+| `src/App.tsx` | Butun ilova — ekranlar, hisoblar, ma'lumot modeli |
+| `src/tillar.ts` | Til tizimi va besh tilli lug'at |
+| `src/oyat-shrift.ts` | Amiri Quran shrifti (subset, base64, OFL litsenziyasi) |
 
+## Ishga tushirish
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Talab: Node.js
+
+```
+npm install
+npm run dev
+```
+
+Brauzerda `http://localhost:3000` ochiladi.
+
+## APK qurish
+
+```
+npm run build
+npx cap sync android
+```
+
+Keyin Android Studio → Build → Generate App Bundles or APKs.
+
+Versiya raqami bitta joyda: `android/app/build.gradle` boshidagi
+`omVersiya` va `omVersiyaKodi`.
+
+## Muhim qoidalar
+
+- **Tailwind CDN skripti `index.html` ga qo'shilmasin** — Tailwind qurish paytida
+  CSS ga joylanadi. CDN oflayn ilovada faqat kutish qo'shadi
+- **Google Fonts `@import` `index.css` ga qo'shilmasin** — chizishni to'sadi va
+  oflayn baribir yuklanmaydi. Shrift kerak bo'lsa ilova ichiga joylansin
+- Har yangilanishdan oldin telefondan PDF zaxira olinsin
+
+Batafsil: `LOYIHA.md` (joriy holat) va `TARIX.md` (to'liq tarix).
