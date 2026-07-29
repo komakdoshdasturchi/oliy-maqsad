@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+// ILOVA VERSIYASI — BITTA JOYDA.
+// Bu yerdan uch narsa oladi: Android versionCode, versionName va APK fayl nomi.
+// Yangi yangilanish chiqarganda faqat shu ikki qatorni o'zgartiring.
+def omVersiya = "11"          // "Oliy maqsad v11.apk" va Sozlamalardagi versiya
+def omVersiyaKodi = 11        // Android uchun: har chiqarishda OSHIB borishi shart
+
 android {
     namespace = "com.oliymaqsad.app"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -7,8 +13,8 @@ android {
         applicationId "com.oliymaqsad.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode omVersiyaKodi
+        versionName omVersiya
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -20,6 +26,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // APK FAYL NOMI AVTOMATIK: "Oliy maqsad v11.apk"
+    // Avval har safar `app-debug.apk` chiqib, qo'lda qayta nomlash kerak edi.
+    // Debug qurilishida oxiriga " (debug)" qo'shiladi — chalkashmasin.
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def qoshimcha = variant.buildType.name == 'release' ? '' : ' (' + variant.buildType.name + ')'
+            outputFileName = "Oliy maqsad v" + omVersiya + qoshimcha + ".apk"
         }
     }
 }
