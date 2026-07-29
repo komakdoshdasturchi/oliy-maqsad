@@ -4602,7 +4602,9 @@ export default function App() {
   const [today, setToday] = useState(todayStr());
   const [splash, setSplash] = useState(true);
 
-  useEffect(() => { const t = setTimeout(() => setSplash(false), 1250); return () => clearTimeout(t); }, []);
+  // 600 ms: om-pop animatsiyasi 220 ms, qolgani logo ko'rinib tursin uchun.
+  // Ilgari 1250 edi — animatsiya tugagach ekran ~1 soniya qotib turardi.
+  useEffect(() => { const t = setTimeout(() => setSplash(false), 600); return () => clearTimeout(t); }, []);
 
   // Til almashganda hujjat yo'nalishi: arabcha — o'ngdan chapga (RTL), qolgani chapdan o'ngga.
   // <html> ga qo'yiladi, shunda modal/sheet kabi barcha qatlamlar ham to'g'ri joylashadi.
