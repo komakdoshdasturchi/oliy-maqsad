@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* DIQQAT: bu yerga Google Fonts @import QAYTA QO'SHILMASIN.
+   CSS @import chizishni TO'SADI — brauzer so'rov tugamaguncha ekranga hech narsa
+   chizmaydi. Oflayn ilovada u baribir yuklanmaydi, ya'ni kutish bor, foyda yo'q.
+   Shrift kerak bo'lsa — src/oyat-shrift.ts kabi ilova ICHIGA joylansin. */
 @import "tailwindcss";
 
 @theme {
@@ -6,11 +9,13 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
-/* Custom scrollbar and ambient styles for an elegant feel */
+/* Birinchi chizish (React hali ishga tushmagan payt) uchun fon.
+   Ilgari andozadan qolgan #fafafa turardi — dizaynga mos emas edi va
+   ochilishda oq yalt etib ketardi. Endi tonggi mavzu foni (App.tsx --bg). */
 body {
   font-family: var(--font-sans);
-  background-color: #fafafa;
-  color: #171717;
+  background-color: #F4EFE6;
+  color: #26221B;
   overflow-x: hidden;
 }
 
