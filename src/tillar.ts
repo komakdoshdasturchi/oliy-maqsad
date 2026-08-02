@@ -773,6 +773,9 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Tarixi bo'lsa arxivga tushadi": { en: "If it has history it goes to the archive" },
   "yoki mavjudlarini boshqaring": { en: "or manage existing ones" },
   "Ko'rish, tahrirlash, papkalarga ajratish, arxiv": { en: "View, edit, sort into folders, archive" },
+
+  // --- v12: namoz ixcham qatori ---
+  "masjidda o'qildi": { en: "prayed in the mosque" },
 };
 
 // ---------- ARABCHA ----------
@@ -1507,6 +1510,9 @@ const LUGAT_AR: Record<string, string> = {
   "Tarixi bo'lsa arxivga tushadi": "إن كان له سجل فسينتقل إلى الأرشيف",
   "yoki mavjudlarini boshqaring": "أو أدِر الموجودة",
   "Ko'rish, tahrirlash, papkalarga ajratish, arxiv": "العرض والتعديل والتوزيع على المجلدات والأرشيف",
+
+  // --- v12: namoz ixcham qatori ---
+  "masjidda o'qildi": "أُدّيت في المسجد",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2192,6 +2198,9 @@ const LUGAT_RU: Record<string, string> = {
   "Tarixi bo'lsa arxivga tushadi": "Если есть история — уйдёт в архив",
   "yoki mavjudlarini boshqaring": "или управляйте существующими",
   "Ko'rish, tahrirlash, papkalarga ajratish, arxiv": "Просмотр, изменение, распределение по папкам, архив",
+
+  // --- v12: namoz ixcham qatori ---
+  "masjidda o'qildi": "прочитано в мечети",
 };
 
 // Ruschani LUGAT ga qo'shamiz

@@ -1292,11 +1292,16 @@ function IbadatPage(p: {
   const sc = ibScore(d, kActive);
 
   const upd = (fn: (x: IbadatDay) => IbadatDay) => { buzz(); p.setIb(l => ({ ...l, [today]: fn(l[today] || emptyIb()) })); };
-  const togglePr = (pid: string, gi: number) => upd(x => {
-    const arr = [...(x.pr[pid] || [])];
+  const togglePr = (pid: string, gi: number) => {
+    const pr = NAMOZLAR.find(x => x.id === pid);
+    const arr = [...(d.pr[pid] || [])];
     arr[gi] = !arr[gi];
-    return { ...x, pr: { ...x.pr, [pid]: arr } };
-  });
+    // To'liq bo'lsa — ixcham holatga qaytadi (avval ochilgan bo'lsa ham).
+    // Biror guruh olib tashlansa — ochiq qoladi.
+    const all = !!pr && pr.g.every((_, i) => arr[i]);
+    setOpenPr(o => ({ ...o, [pid]: !all }));
+    upd(x => ({ ...x, pr: { ...x.pr, [pid]: arr } }));
+  };
 
   // xatm jarayoni: boshlanishdan bugungacha nechta kun belgilangan
   let kDone = 0, kTotal = 0;
@@ -1345,13 +1350,25 @@ function IbadatPage(p: {
               const all = pr.g.every((_, i) => arr[i]);
               const masjid = !!d.masjid[pr.id];
               if (all && !openPr[pr.id]) {
+                // Ixcham holatda ham «Masjidda» tugmasi qoladi — namozni
+                // belgilagach uni bosishga ulgurmay qolish muammosi shundan.
                 return (
-                  <button key={pr.id} onClick={() => setOpenPr(o => ({ ...o, [pr.id]: true }))}
-                    className="om-press flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-sm"
+                  <div key={pr.id} role="button" tabIndex={0}
+                    onClick={() => setOpenPr(o => ({ ...o, [pr.id]: true }))}
+                    className="om-press flex w-full cursor-pointer items-center justify-between gap-2 rounded-2xl border px-4 py-2.5 text-sm"
                     style={{ borderColor: "var(--green)", background: "var(--soft)", color: "var(--green)" }}>
-                    <span className="flex items-center gap-2 font-bold"><Icon n="checkCircle" size={18} />{tr(pr.n)}{masjid ? <Icon n="mosque" size={15} style={{ marginInlineStart: 2 }} /> : null}</span>
-                    <span className="text-[11px]" style={lblS}>{tr("to'liq o'qildi")}</span>
-                  </button>
+                    <span className="flex flex-col items-start">
+                      <span className="flex items-center gap-2 font-bold"><Icon n="checkCircle" size={18} />{tr(pr.n)}</span>
+                      <span className="text-[11px]" style={{ ...lblS, marginInlineStart: 26 }}>{tr(masjid ? "masjidda o'qildi" : "to'liq o'qildi")}</span>
+                    </span>
+                    {gender === "m" && (
+                      <button onClick={e => { e.stopPropagation(); upd(x => ({ ...x, masjid: { ...x.masjid, [pr.id]: !x.masjid[pr.id] } })); }}
+                        className="om-press flex shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-[11px]"
+                        style={masjid ? { background: "var(--gold)", color: "#fff", borderColor: "var(--gold)" } : { ...cardS, color: "var(--muted)" }}>
+                        <Icon n="mosque" size={13} /> {tr("Masjidda")}
+                      </button>
+                    )}
+                  </div>
                 );
               }
               return (
