@@ -594,7 +594,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- Yordam, yangiliklar, kanal ---
   "Ilovaning har bo'limi haqida qisqa izoh": { en: "A short note about each section of the app" },
   "Yangiliklar va yangilanishlar shu yerda": { en: "News and updates appear here" },
-  "Ro'yxat, qidiruv, arxiv, uyqu rejasi": { en: "List, search, archive, sleep schedule" },
   "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": { en: "Use the + button at the bottom to add daily tasks, ultimate goal tasks and yearly goals." },
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": { en: "button to add a daily task or an ultimate goal task." },
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": { en: "Add a task and mark it for a few days — results, charts and the weekly report will appear here." },
@@ -767,6 +766,13 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Yangi boshlayman": { en: "I am starting fresh" },
   "Zaxiradan tiklayman": { en: "I will restore from a backup" },
   "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": { en: "If you have used the app before and have a PDF backup, all your data will be restored from that file." },
+
+  // --- v12: vazifani bosib turib tahrirlash ---
+  "Tahrirlash": { en: "Edit" },
+  "Nomi, vaqti, kunlari va turi": { en: "Name, time, days and type" },
+  "Tarixi bo'lsa arxivga tushadi": { en: "If it has history it goes to the archive" },
+  "yoki mavjudlarini boshqaring": { en: "or manage existing ones" },
+  "Ko'rish, tahrirlash, papkalarga ajratish, arxiv": { en: "View, edit, sort into folders, archive" },
 };
 
 // ---------- ARABCHA ----------
@@ -1338,7 +1344,6 @@ const LUGAT_AR: Record<string, string> = {
   // --- Yordam va kanal ---
   "Ilovaning har bo'limi haqida qisqa izoh": "شرح موجز لكل قسم من التطبيق",
   "Yangiliklar va yangilanishlar shu yerda": "الأخبار والتحديثات هنا",
-  "Ro'yxat, qidiruv, arxiv, uyqu rejasi": "القائمة، البحث، الأرشيف، خطة النوم",
   "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": "بزر + في الأسفل تضيف المهام اليومية ومهام المقصد الأعلى وأهدافك السنوية.",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "لإضافة مهمة يومية أو مهمة للمقصد الأعلى.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "أضِف مهمة وسجّلها بضعة أيام — ستظهر هنا النتائج والرسوم البيانية والتقرير الأسبوعي.",
@@ -1495,6 +1500,13 @@ const LUGAT_AR: Record<string, string> = {
   "Yangi boshlayman": "سأبدأ من جديد",
   "Zaxiradan tiklayman": "سأستعيد من نسخة احتياطية",
   "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": "إن كنت قد استخدمت التطبيق من قبل ولديك نسخة PDF، فستُستعاد كل بياناتك من ذلك الملف.",
+
+  // --- v12: vazifani bosib turib tahrirlash ---
+  "Tahrirlash": "تعديل",
+  "Nomi, vaqti, kunlari va turi": "الاسم والوقت والأيام والنوع",
+  "Tarixi bo'lsa arxivga tushadi": "إن كان له سجل فسينتقل إلى الأرشيف",
+  "yoki mavjudlarini boshqaring": "أو أدِر الموجودة",
+  "Ko'rish, tahrirlash, papkalarga ajratish, arxiv": "العرض والتعديل والتوزيع على المجلدات والأرشيف",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2128,7 +2140,6 @@ const LUGAT_RU: Record<string, string> = {
   "Ilovani ishlatish bo'yicha qo'llanma": "Руководство по использованию",
   "Ilova bo'ylab qadam-baqadam yuriladi": "Пошаговая экскурсия по приложению",
   "Yangiliklar va yangilanishlar shu yerda": "Новости и обновления здесь",
-  "Ro'yxat, qidiruv, arxiv, uyqu rejasi": "Список, поиск, архив, режим сна",
   "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": "Кнопкой + внизу вы добавляете ежедневные задачи, задачи высшей цели и годовые цели.",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "чтобы добавить ежедневную задачу или задачу высшей цели.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "Добавьте задачу и отмечайте её несколько дней — здесь появятся результаты, графики и недельный отчёт.",
@@ -2174,6 +2185,13 @@ const LUGAT_RU: Record<string, string> = {
   "Yangi boshlayman": "Начинаю заново",
   "Zaxiradan tiklayman": "Восстановлю из копии",
   "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": "Если вы уже пользовались приложением и у вас есть PDF-копия, все ваши данные восстановятся из этого файла.",
+
+  // --- v12: vazifani bosib turib tahrirlash ---
+  "Tahrirlash": "Изменить",
+  "Nomi, vaqti, kunlari va turi": "Название, время, дни и тип",
+  "Tarixi bo'lsa arxivga tushadi": "Если есть история — уйдёт в архив",
+  "yoki mavjudlarini boshqaring": "или управляйте существующими",
+  "Ko'rish, tahrirlash, papkalarga ajratish, arxiv": "Просмотр, изменение, распределение по папкам, архив",
 };
 
 // Ruschani LUGAT ga qo'shamiz

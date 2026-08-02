@@ -1531,6 +1531,9 @@ function BugunView(p: {
   setUi: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
   openCountForm: () => void;
   openIbadat: () => void;
+  // Vazifa ustini bosib turganda «Tahrirlash» bosilsa chaqiriladi:
+  // Vazifalar bo'limiga o'tib, o'sha vazifaning tahrir oynasini ochadi
+  openTaskEdit: (t: Task) => void;
   openUyqu: () => void;
   openSozlama: () => void;
   openPomo: () => void;
@@ -1678,12 +1681,69 @@ function BugunView(p: {
     if (/it |dastur|code|komp|texnolog/.test(q)) return "sparkles";
     return "target";
   };
+  // VAZIFA USTINI BOSIB TURSA — tahrirlash/o'chirish oynasi chiqadi.
+  // Oddiy bosish avvalgidek belgilash oynasini ochadi.
+  const [amalTask, setAmalTask] = useState<Task | null>(null);
+  const bosish = useRef<{ timer: number | null; uzun: boolean }>({ timer: null, uzun: false });
+  const bekor = () => { if (bosish.current.timer) { clearTimeout(bosish.current.timer); bosish.current.timer = null; } };
+  const bosib = (t: Task) => ({
+    onPointerDown: () => {
+      bosish.current.uzun = false;
+      bosish.current.timer = window.setTimeout(() => { bosish.current.uzun = true; buzz(); setAmalTask(t); }, 480);
+    },
+    onPointerUp: bekor,
+    onPointerLeave: bekor,
+    onPointerCancel: bekor,
+    // Uzoq bosishdan keyin keladigan oddiy bosishni o'tkazib yuboramiz
+    onClick: () => { if (bosish.current.uzun) { bosish.current.uzun = false; return; } setSheetTask(t); },
+    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+  });
+
+  // O'chirish ilovaning mavjud qoidasiga BO'YSUNADI:
+  // tarixi yo'q vazifa butunlay o'chadi, tarixi bor vazifa esa ARXIVGA tushadi —
+  // aks holda o'tgan kunlar statistikasi buzilardi.
+  const vazifaniOchir = async (t: Task) => {
+    const tarixiBor = Object.values(logs).some(d => !!(d && d[t.id]));
+    if (!tarixiBor) {
+      if (!(await omConfirm(tr("Bu vazifa hali boshlanmagan. Butunlay o'chirilsinmi?")))) return;
+      p.setTasks(ts => ts.filter(x => x.id !== t.id));
+    } else {
+      if (!(await omConfirm(tr("Arxivlansinmi? Tarixi saqlanadi, ro'yxatdan chiqadi.")))) return;
+      p.setTasks(ts => ts.map(x => x.id === t.id ? { ...x, archivedAt: today } : x));
+    }
+    setAmalTask(null);
+  };
+
+  const AmalSheet = amalTask ? (
+    <Sheet onClose={() => setAmalTask(null)} title={amalTask.name}>
+      <div className="space-y-2">
+        <button onClick={() => { const t = amalTask; setAmalTask(null); p.openTaskEdit(t); }}
+          className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+          <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="pencil" size={19} /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Tahrirlash")}</span>
+            <span className="block text-[11px]" style={lblS}>{tr("Nomi, vaqti, kunlari va turi")}</span>
+          </span>
+          <Icon n="chevronRight" size={15} style={{ color: "var(--muted)" }} />
+        </button>
+        <button onClick={() => vazifaniOchir(amalTask)}
+          className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+          <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--red)" }}><Icon n="trash" size={19} /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("O'chirish")}</span>
+            <span className="block text-[11px]" style={lblS}>{tr("Tarixi bo'lsa arxivga tushadi")}</span>
+          </span>
+        </button>
+      </div>
+    </Sheet>
+  ) : null;
+
   const Cell = ({ t, first }: { t: Task; first?: boolean }) => {
     const m = lg[t.id];
     const done = m && (m.st === "full" || m.st === "extra");
     const acc = t.scope === "oliy" ? "var(--gold)" : "var(--green)";
     return (
-      <button id={first ? "om-first-pend" : undefined} onClick={() => setSheetTask(t)}
+      <button id={first ? "om-first-pend" : undefined} {...bosib(t)}
         className="om-press flex flex-col gap-1.5 rounded-2xl p-3 text-left" style={{ background: "var(--card)", border: "1px solid var(--line)", boxShadow: "var(--shadow)", opacity: m && m.st ? 0.62 : 1 }}>
         <div className="flex items-center justify-between">
           <span className="grid h-8 w-8 place-items-center rounded-xl" style={{ background: "var(--soft)", color: acc }}><Icon n={typeIcon(t)} size={17} /></span>
@@ -1703,7 +1763,7 @@ function BugunView(p: {
     const m = lg[t.id];
     const done = m && (m.st === "full" || m.st === "extra");
     return (
-      <button onClick={() => setSheetTask(t)} className="flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left"
+      <button {...bosib(t)} className="flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left"
         style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: t.scope === "oliy" ? "var(--gold)" : "var(--green)", opacity: m && m.st ? 0.6 : 1 }}>
         <span className="w-24 flex-none text-[11px] font-bold tabular-nums" style={{ color: "var(--green)" }}>{t.schedFrom}–{t.schedTo}</span>
         <span className="min-w-0 flex-1 truncate text-sm" style={{ color: "var(--ink)", textDecoration: done ? "line-through" : "none" }}>{t.name}</span>
@@ -1996,6 +2056,7 @@ function BugunView(p: {
         {SleepCard}
         {NoteCard}
         {DumaloqQator}
+        {AmalSheet}
         {sheetTask && <MarkSheet t={sheetTask} m={lg[sheetTask.id]} slotMin={null} onClose={() => setSheetTask(null)}
           onSave={mk => { setMark(sheetTask.id, mk); setSheetTask(null); }} />}
       </div>
@@ -2146,6 +2207,7 @@ function BugunView(p: {
 
       {NoteCard}
       {DumaloqQator}
+      {AmalSheet}
 
       {showExtra && <ExtraForm tasks={act} onClose={() => setShowExtra(false)} today={today}
         onSave={({ name, minutes, taskId, type }) => {
@@ -3790,11 +3852,18 @@ function VazifalarPage(p: {
   setSleepCfg: React.Dispatch<React.SetStateAction<SleepCfg | null>>;
   setPlan: React.Dispatch<React.SetStateAction<Plan | null>>;
   hints: Record<string, boolean>; doneHint: (k: string) => void;
+  // Bugun sahifasidan «Tahrirlash» orqali kelinganda ochiladigan vazifa
+  boshEdit?: Task | null; boshEditTozala?: () => void;
 }) {
   const [sub, setSub] = useState<"daily" | "oliy">("daily");
   const [searchOpen, setSearchOpen] = useState(false);
   const [q, setQ] = useState("");
-  const [editTask, setEditTask] = useState<Task | null>(null);
+  const [editTask, setEditTask] = useState<Task | null>(p.boshEdit || null);
+  // Bugun sahifasidan kelingan bo'lsa tahrir oynasini darhol ochamiz,
+  // so'ng belgini tozalaymiz — sahifaga qayta kirilganda qayta ochilmasin
+  useEffect(() => {
+    if (p.boshEdit) { setEditTask(p.boshEdit); p.boshEditTozala && p.boshEditTozala(); }
+  }, [p.boshEdit]);
   const [showForm, setShowForm] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const { today } = p;
@@ -4553,6 +4622,9 @@ export default function App() {
   const [page, setPage] = useState<null | "ibodat" | "vazifalar" | "sozlama" | "pomo" | "uyqu" | "til">(null);
   const [countForm, setCountForm] = useState(false);
   const [addMenu, setAddMenu] = useState(false);
+  // Bugun sahifasida vazifa ustini bosib turib «Tahrirlash» bosilsa —
+  // Vazifalar bo'limi shu vazifaning tahrir oynasi bilan ochiladi
+  const [boshEdit, setBoshEdit] = useState<Task | null>(null);
   const [showAdd, setShowAdd] = useState<null | "daily" | "oliy">(null);
   const [showMetrics, setShowMetrics] = useState(false);
   const [today, setToday] = useState(todayStr());
@@ -4925,6 +4997,7 @@ export default function App() {
           <IbadatPage today={today} ib={ib} setIb={setIb} gender={gender || "m"} khatm={khatm} setKhatm={setKhatm} />
         ) : page === "vazifalar" ? (
           <VazifalarPage today={today} plan={plan} folders={folders} tasks={tasks} sleepCfg={sleepCfg} countLog={countLog}
+            boshEdit={boshEdit} boshEditTozala={() => setBoshEdit(null)}
             setFolders={setFolders} setTasks={setTasks} setSleepCfg={setSleepCfg} setPlan={setPlan}
             hints={hints} doneHint={doneHint} />
         ) : page === "sozlama" ? (
@@ -4945,6 +5018,7 @@ export default function App() {
               setWeights={setWeights} setNotes={setNotes} setSleepLog={setSleepLog}
               setDayMode={setDayMode} setUi={setUi} pomoLog={pomoLog}
               openCountForm={() => setCountForm(true)} openIbadat={() => setPage("ibodat")}
+              openTaskEdit={t => { setBoshEdit(t); setPage("vazifalar"); }}
               openUyqu={() => setPage("uyqu")} openSozlama={() => setPage("sozlama")}
               openPomo={() => setPage("pomo")} openVazifalar={() => setPage("vazifalar")} openStat={() => setTab("stat")} startPomo={startPomo}
               hints={hints} doneHint={doneHint} />}
@@ -5037,11 +5111,19 @@ export default function App() {
                 <Icon n="chevronRight" size={15} style={{ color: "var(--muted)" }} />
               </button>
             ))}
+            {/* Bu qator yangi narsa QO'SHMAYDI — mavjudlarini boshqarish uchun.
+                Shuning uchun ajratgich chiziq va alohida sarlavha bilan
+                yuqoridagi «qo'shish» tugmalaridan ajratib turibdi. */}
+            <div className="flex items-center gap-2.5 pt-3">
+              <span className="h-px flex-1" style={{ background: "var(--line)" }} />
+              <span className="text-[10px] font-bold uppercase tracking-wider" style={lblS}>{tr("yoki mavjudlarini boshqaring")}</span>
+              <span className="h-px flex-1" style={{ background: "var(--line)" }} />
+            </div>
             <button onClick={() => { setAddMenu(false); setPage("vazifalar"); }} className="om-press flex w-full items-center gap-3 rounded-2xl border p-3.5 text-left" style={cardS}>
               <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--muted)" }}><Icon n="folder" size={20} /></span>
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Barcha vazifalar")}</span>
-                <span className="block text-[11px]" style={lblS}>{tr("Ro'yxat, qidiruv, arxiv, uyqu rejasi")}</span>
+                <span className="block text-[11px]" style={lblS}>{tr("Ko'rish, tahrirlash, papkalarga ajratish, arxiv")}</span>
               </span>
               <Icon n="chevronRight" size={15} style={{ color: "var(--muted)" }} />
             </button>
