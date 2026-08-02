@@ -127,6 +127,24 @@ v9 da bajarilganlar (tafsiloti TARIX.md da): premium vaqt/sana/kun tanlagichlari
 - **OYLAR / KUNLAR / HIJRI_OYLAR** tarjima qilindi (32 yangi kalit). Hijriy oylar arabchada ASL nomlari bilan: محرم · صفر · ربيع الأول ...
 - **`OyatCard` qayta ishlangan:** halqa ichida kitob ikonkasi + nuqta · oyat ikki yonida oltin to'rt qirrali bezak (`Yulduzcha`) · nuqtali ajratgich chiziq · manba oltin doira ichida. Arabchada tarjima **va ajratgich** ko'rsatilmaydi
 
+## v12 (2026-08-02) — UZOQ BOSISH, IKKILANGAN QO'LLANMA, MA'LUMOTNOMA
+Lug'at **648 kalit**, en/ar/ru da **647 tadan** ("ta" ataylab bo'sh).
+APK haqiqiy build bilan tekshirildi: `Oliy maqsad v12 (debug).apk`.
+
+**Qo'shilgan/o'zgargan:**
+- **Uzoq bosish (480 ms) = tahrirlash.** Ikki joyda: Bugundagi faol vazifa (→ Tahrirlash/O'chirish, `bosib()` BugunView da) va Ibodatlardagi xatm qatori (→ reja tahriri, `uzunBosish()` IbadatPage da). Ikkalasida ham `onPointerDown` da `uzun=false` qilinadi — shu sabab modal bosishni yutib yuborsa ham keyingi teginish buzilmaydi
+- **Namoz kartasi:** to'liq belgilangach «Masjidda» tugmasi IXCHAM qatorda ham qoladi. `togglePr` endi to'liq bo'lganda `openPr[pid]=false` qiladi — ilgari bir marta ochilgach hech qachon yopilmasdi
+- **`bed` ikonkasi** uyqu uchun. Ilgari uyqu ham, mavzu tugmasi ham `moon` edi
+- **`OyatCard`** dan kitob ikonkasi + nuqta olib tashlandi (128-qatordagi ta'rif eskirdi)
+- **Eski `Hint` ishoralari o'chirildi** (`add`, `tiles`, `mark`) — tanishtiruv turi bilan ikkilanardi. **`birinchiYil` QOLDI** — u tur ko'rsatmaydigan narsani aytadi
+- **«Qanday ishlaydi?» → «Har bo'lim nima qiladi?»**, 10 banddan 19 ga kengaydi. Turdan farqi izohda aytiladi: tur *ko'rsatib boradi*, ma'lumotnoma *o'qib chiqiladi*
+
+**TOPILGAN VA TUZATILGAN XATOLAR:**
+1. **`MPER` da modul darajasidagi `tr()`** — `const MPER = [{ n: tr("Hafta") }...]` modul yuklanganda BIR MARTA hisoblanardi, til almashtirilsa eski tilda qolib ketardi. «Oy» va «6 oy» esa umuman o'ralmagan edi. Matnlar xom saqlanadigan bo'ldi, `tr()` chizishda chaqiriladi. **QOIDA: modul darajasidagi const ichida `tr()` CHAQIRILMAYDI** (funksiya ichida bo'lsa mayli — `fmtUz`, `fmtMin` shunday)
+2. **`raqam()` versiya belgisini buzardi** — arabchada "(v12)" → "(v١٢)". Endi lotin harfiga yopishgan raqamlar o'girilmaydi: `/[A-Za-z][0-9]+|[0-9]/`. Oddiy sonlarga ta'siri yo'q ("08:00", "100%", "2026-yil" hammasi avvalgidek). Kirillchada shu muammo `KIRIL_ISTISNO` orqali hal qilingan
+
+**YANGILANISH CHIQARISHDA UCH JOY:** `NEWS_VER/LABEL/DATE/ITEMS` (App.tsx) · `KIRIL_ISTISNO` dagi versiya qatori (tillar.ts) · `omVersiya`/`omVersiyaKodi` (build.gradle) · `package.json` version
+
 ## v11 — XATOLAR TUZATILDI (2026-07-28)
 Sakkizta xato yopildi. Lug'at **613 / 613** (uz · uzk · en · ar).
 1. **Oyat shrifti** — Scheherazade New / Amiri / Noto Naskh Arabic UI oldinga qo'yildi, vazn 400 ga qotirildi, o'lcham 17→19px, qator oralig'i 2.25→2.5. **Agar hali ham og'ir ko'rinsa — yagona ishonchli yechim shriftni ilova ichiga joylash (~150-400 KB)**

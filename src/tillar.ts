@@ -726,16 +726,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Rejadan tashqari amallar» bo'limiga yozasiz — u tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi.": { en: "You start here every day. Tapping a task box opens the marking window. If you do more than planned, log it under «Extra work» — it is added to the related task as extra." },
 
   // --- Yangiliklar oynasi (v11) ---
-  "11-yangilanish (v11)": { en: "11th update (v11)" },
-  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.": { en: "Russian has been added. The app now speaks five languages: Uzbek in Latin and Cyrillic, English, Arabic and Russian." },
-  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.": { en: "A guided tour of the app has appeared. You can reopen it any time from Settings → Data." },
-  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.": { en: "Settings are now split into sections — four compact groups instead of one long list." },
-  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.": { en: "The light and dark themes have moved to the top of the Today page. When tapped, the new background spreads out from the button in a circle." },
-  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.": { en: "Sleep and the day summary are now compact — they stay collapsed and open when you need them." },
-  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.": { en: "Task notes and extra work entries can now be edited and deleted." },
-  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": { en: "The Qur'anic typeface is now built into the app — it looks the same on every phone and is easier to read." },
-  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": { en: "The Hijri date adjuster has been removed from Settings. It is now offered once at the start of each Hijri month." },
-  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": { en: "Weekday names, month names and calendar numbers now display correctly in every language." },
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": { en: "When the work time ends it asks \"what did you do in this time?\" and logs the minutes to the chosen task." },
 
   // --- v12: dumaloq tugmalar ---
@@ -789,6 +779,17 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": { en: "Settings → Data. Tap «Download PDF» and all your data is saved into a single file. When you move to a new phone you restore everything through «Install PDF». Your data stays only on your phone — it is never sent anywhere." },
   "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": { en: "There are five languages: Uzbek in Latin and Cyrillic script, English, Arabic and Russian. If Arabic is chosen the whole app turns right-to-left." },
   "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": { en: "The sun or moon button in the header switches the app's colours. Turn on the dark appearance in the evening so your eyes do not tire." },
+
+  // --- v12 yangiliklari ---
+  "12-yangilanish (v12)": { en: "Update 12 (v12)" },
+  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.": { en: "Hold a task on the Today page and «Edit» and «Delete» buttons appear." },
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": { en: "The «At the mosque» button now stays in place after a prayer is marked — there is time to tap it." },
+  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.": { en: "Hold the Qur'an khatm row to open the plan editor." },
+  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.": { en: "Sleep now has its own icon. Before, it was the same crescent as the dark-appearance button." },
+  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.": { en: "«How does it work?» in Settings became «What does each section do?» and grew to nineteen entries." },
+  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": { en: "The old hints that popped up on screen were removed — they repeated what the guided tour already says." },
+  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": { en: "«All tasks» is now set apart in the add menu: it is not for adding, but for managing what exists." },
+  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": { en: "The «Month» and «6 months» buttons in goal progress now display correctly in the other languages too." },
 };
 
 // ---------- ARABCHA ----------
@@ -1476,16 +1477,6 @@ const LUGAT_AR: Record<string, string> = {
   // --- Yangiliklar oynasi (v11) ---
   // Versiya raqami arabchada aralash chiqmasligi uchun qavs olib tashlandi
   // ("(v11)" -> raqam() uni "(v١١)" qilardi — lotin harf + arab raqam)
-  "11-yangilanish (v11)": "التحديث الحادي عشر",
-  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.": "أُضيفت اللغة الروسية. صار التطبيق بخمس لغات: الأوزبكية باللاتينية والسيريلية، والإنجليزية، والعربية، والروسية.",
-  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.": "ظهر دليل تعريفي بالتطبيق. ويمكنك فتحه مجددًا في أي وقت من الإعدادات ← البيانات.",
-  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.": "قُسّمت الإعدادات إلى أقسام — أربعة أقسام مرتّبة بدل القائمة الطويلة.",
-  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.": "انتقل الوضعان الفاتح والداكن إلى أعلى صفحة اليوم. وعند الضغط تنتشر الخلفية الجديدة من الزر على شكل دائرة.",
-  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.": "صار النوم وملخّص اليوم أكثر إيجازًا — يبقيان مطويين ويُفتحان عند الحاجة.",
-  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.": "صار بالإمكان تعديل ملاحظات المهام والأعمال الإضافية وحذفها.",
-  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": "أُدمج خطّ الآية داخل التطبيق — صار موحّدًا على كل هاتف وأسهل في القراءة.",
-  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "أُزيل ضابط التاريخ الهجري من الإعدادات. وصار يُعرض مرة واحدة في بداية كل شهر هجري.",
-  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "صارت أسماء أيام الأسبوع والشهور وأرقام التقويم تظهر بشكل صحيح في كل اللغات.",
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "عند انتهاء وقت العمل يسأل: «ماذا فعلت في هذا الوقت؟» ويسجّل الدقائق للمهمة المختارة.",
 
   // --- v12: dumaloq tugmalar ---
@@ -1539,6 +1530,17 @@ const LUGAT_AR: Record<string, string> = {
   "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": "الإعدادات ← البيانات. اضغط «تنزيل PDF» فتُحفظ كل بياناتك في ملف واحد. وإذا انتقلت إلى هاتف جديد استعدت كل شيء عبر «تثبيت PDF». وتبقى بياناتك في هاتفك وحده — ولا تُرسل إلى أي مكان.",
   "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": "هناك خمس لغات: الأوزبكية بالحرفين اللاتيني والسيريلي، والإنجليزية، والعربية، والروسية. وإذا اخترت العربية انقلب التطبيق كله من اليمين إلى اليسار.",
   "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": "زر الشمس أو القمر في الترويسة يبدّل ألوان التطبيق. فشغّل المظهر الليلي في المساء كي لا تتعب عيناك.",
+
+  // --- v12 yangiliklari ---
+  "12-yangilanish (v12)": "التحديث ١٢ (v12)",
+  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.": "اضغط مطولًا على مهمة في صفحة اليوم فيظهر زرّا «تعديل» و«حذف».",
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": "يبقى زر «في المسجد» في مكانه بعد تعليم الصلاة — فصار هناك وقت للضغط عليه.",
+  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.": "اضغط مطولًا على سطر ختمة القرآن ليُفتح تعديل الخطة.",
+  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.": "صار للنوم أيقونة خاصة. وكان قبلُ هلالًا مثل زر المظهر الليلي نفسه.",
+  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.": "صار «كيف يعمل؟» في الإعدادات «ماذا يفعل كل قسم؟» واتّسع إلى تسعة عشر بندًا.",
+  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": "أُزيلت التلميحات القديمة التي كانت تظهر على الشاشة — فقد كانت تكرّر ما يقوله دليل التعريف.",
+  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": "فُصل «كل المهام» في قائمة الإضافة: فهو ليس للإضافة بل لإدارة الموجود.",
+  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": "صار زرّا «شهر» و«٦ أشهر» في تقدّم الهدف يظهران بشكل صحيح في اللغات الأخرى أيضًا.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2177,16 +2179,6 @@ const LUGAT_RU: Record<string, string> = {
   // --- Yangiliklar oynasi (v10) ---
 
   // --- Yangiliklar oynasi (v11) ---
-  "11-yangilanish (v11)": "11-е обновление (v11)",
-  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.": "Добавлен русский язык. Теперь приложение на пяти языках: узбекский латиницей и кириллицей, английский, арабский и русский.",
-  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.": "Появилось руководство-экскурсия по приложению. Открыть его снова можно в любой момент в Настройках → Данные.",
-  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.": "Настройки разделены на разделы — теперь вместо длинного списка четыре компактных раздела.",
-  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.": "Светлая и тёмная темы переехали наверх страницы «Сегодня». При нажатии новый фон расходится от кнопки кругом.",
-  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.": "Сон и итог дня стали компактнее — они свёрнуты и открываются при необходимости.",
-  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.": "Заметки к задачам и дополнительные работы теперь можно изменять и удалять.",
-  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.": "Шрифт аята встроен в приложение — теперь он одинаков на любом телефоне и читается легче.",
-  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "Корректировка даты по хиджре убрана из настроек. Теперь она предлагается один раз в начале каждого месяца по хиджре.",
-  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "Названия дней недели, месяцев и числа в календаре теперь отображаются правильно на всех языках.",
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "По окончании рабочего времени спрашивает «чем вы занимались в это время?» и записывает минуты к выбранной задаче.",
 
   // --- v12: dumaloq tugmalar ---
@@ -2240,6 +2232,17 @@ const LUGAT_RU: Record<string, string> = {
   "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": "Настройки → Данные. Нажмите «Скачать PDF» — и все ваши данные сохранятся в один файл. Перейдя на новый телефон, вы восстановите всё через «Установить PDF». Данные хранятся только на вашем телефоне и никуда не отправляются.",
   "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": "Пять языков: узбекский латиницей и кириллицей, английский, арабский и русский. При выборе арабского всё приложение разворачивается справа налево.",
   "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": "Кнопка солнца или луны в шапке переключает цвета приложения. Вечером включайте тёмный вид, чтобы глаза не уставали.",
+
+  // --- v12 yangiliklari ---
+  "12-yangilanish (v12)": "Обновление 12 (v12)",
+  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.": "Удержите задачу на странице «Сегодня» — появятся кнопки «Изменить» и «Удалить».",
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": "Кнопка «В мечети» теперь остаётся на месте после отметки намаза — успеваете её нажать.",
+  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.": "Удержите строку хатма Корана — откроется изменение плана.",
+  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.": "У сна теперь своя иконка. Раньше это был тот же полумесяц, что и у кнопки тёмного вида.",
+  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.": "«Как это работает?» в настройках стало «Что делает каждый раздел?» и выросло до девятнадцати пунктов.",
+  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": "Старые подсказки, всплывавшие на экране, убраны — они повторяли то, что уже говорит обучающий тур.",
+  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": "«Все задачи» отделены в меню добавления: это не для добавления, а для управления тем, что есть.",
+  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": "Кнопки «Месяц» и «6 месяцев» в ходе цели теперь правильно отображаются и на других языках.",
 };
 
 // Ruschani LUGAT ga qo'shamiz
@@ -2250,9 +2253,10 @@ for (const k in LUGAT_RU) {
 
 // Avtomatik kirill o'girish xato chiqqan matnlar (istisno):  "Ma'no": "Маъно"
 export const KIRIL_ISTISNO: Record<string, string> = {
-  // Versiya belgisi LOTIN qolishi kerak: toKiril() "v11" ni "в11" qilib yuborardi.
+  // Versiya belgisi LOTIN qolishi kerak: toKiril() "v12" ni "в12" qilib yuborardi.
   // (Qisqartma himoyasi faqat BOSH harfli qisqartmalarni saqlaydi, "v" esa kichik.)
-  "11-yangilanish (v11)": "11-янгиланиш (v11)",
+  // YANGILANISHDA: bu qatorni ham yangi versiyaga o'zgartirish esdan chiqmasin.
+  "12-yangilanish (v12)": "12-янгиланиш (v12)",
 };
 
 // ---------- LOTIN → KIRILL ----------
@@ -2310,9 +2314,14 @@ export function getCur(): Lang { return CUR; }
 // `tr()` va `tf()` chiqishiga qo'llanadi — shu bilan sana, soat, foiz va
 // hisoblar ham arabcha ko'rinadi. Qayta qo'llash zararsiz (٠-٩ [0-9] ga kirmaydi).
 const AR_RAQAM = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+// LOTIN HARFIGA YOPISHGAN RAQAM O'GIRILMAYDI: "v12" -> "v12" (ilgari "v١٢"
+// chiqib, versiya belgisi buzilardi). Xuddi shu qoida kirillcha uchun
+// KIRIL_ISTISNO orqali hal qilingan. Oddiy sonlarga ta'sir qilmaydi:
+// "08:00", "100%", "5 kun" — ularning oldida lotin harfi yo'q.
 export function raqam(s: string | number): string {
   const t = String(s);
-  return CUR === "ar" ? t.replace(/[0-9]/g, d => AR_RAQAM[+d]) : t;
+  if (CUR !== "ar") return t;
+  return t.replace(/[A-Za-z][0-9]+|[0-9]/g, m => /[A-Za-z]/.test(m) ? m : AR_RAQAM[+m]);
 }
 
 // ---------- TARJIMA ----------

@@ -909,19 +909,18 @@ function OyatCard() {
 }
 
 // ================== ILOVA YANGILIKLARI (bir martalik oyna) ==================
-const NEWS_VER = "v11";
-const NEWS_LABEL = "11-yangilanish (v11)";
-const NEWS_DATE = "2026-07-28";
+const NEWS_VER = "v12";
+const NEWS_LABEL = "12-yangilanish (v12)";
+const NEWS_DATE = "2026-08-02";
 const NEWS_ITEMS = [
-  "Rus tili qo'shildi. Ilova endi besh tilda: o'zbekcha lotin va kirill, ingliz, arab, rus.",
-  "Ilova bilan tanishtiruvchi qo'llanma paydo bo'ldi. Sozlamalar → Ma'lumotlar dan istalgan vaqtda qayta ochasiz.",
-  "Sozlamalar bo'limlarga ajratildi — endi uzun ro'yxat emas, to'rtta ixcham bo'lim.",
-  "Tonggi va tungi ko'rinish Bugun sahifasining tepasiga chiqdi. Bosilganda yangi fon tugmadan doira bo'lib yoyiladi.",
-  "Uyqu va kun xulosasi ixcham bo'ldi — yig'ilgan holda turadi, kerak bo'lganda ochiladi.",
-  "Vazifa xulosalari va qo'shimcha ishlar endi tahrirlanadi va o'chiriladi.",
-  "Oyat shrifti ilova ichiga joylandi — endi har qanday telefonda bir xil va o'qish osonroq.",
-  "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.",
-  "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.",
+  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.",
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.",
+  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.",
+  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.",
+  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.",
+  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.",
+  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.",
+  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.",
 ];
 
 function NewsModal({ hijriOffset, logoColor, onClose }: { hijriOffset: number; logoColor: string; onClose: () => void }) {
