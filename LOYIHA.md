@@ -167,6 +167,8 @@ Lug'at **633 / 633** BESH tilda: uz · uzk · en · ar · **ru**.
 - **Migratsiya:** `om3_ver = "4"`. v3→v4 da har vazifaga `createdAt` qo'shildi (o'tmishni muzlatish — statistika buzilishini tuzatgan)
 - **Plaginlar (5):** @capacitor/app, haptics, local-notifications, filesystem, share. Kirish **importsiz** — `capPlug(name)` orqali `window.Capacitor.Plugins` (AI Studio saytiga xavfsiz)
 - **Android:** `res/drawable/ic_stat_om.xml` — bildirishnoma oq siluet logosi. `mipmap-*` — yashil launcher ikonkalari (shaffof fon)
+- **APK NOMI AVTOMATIK ✓ (2026-08-02 da haqiqiy build bilan tasdiqlandi).** `android/app/build.gradle` boshidagi `omVersiya` va `omVersiyaKodi` — yagona manba. Undan `versionName`, `versionCode` va fayl nomi olinadi. Natija: `Oliy maqsad v11 (debug).apk`, release da esa `Oliy maqsad v11.apk`. Yangilanish chiqarganda **faqat shu ikki qatorni** o'zgartirish kifoya
+- **JAVA TUZOG'I:** tizimdagi `java` — **8-versiya**, Gradle esa 11+ talab qiladi. Terminaldan qurish uchun har safar `$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"` (u yerda Java 21). Shu qilinmasa «This build uses a Java 8 JVM» xatosi chiqadi. Xuddi shu sabab VS Code «Gradle for Java» kengaytmasi ham qulardi («Unrecognized option: --add-opens») — 2026-08-02 da VS Code `settings.json` ga `java.jdt.ls.java.home` va `java.import.gradle.java.home` yozib qo'yildi
 - **Ishlatilmayotgan (o'chirilishi mumkin):** uzluksizlik(), DayChips, FolderEdit, HadisCard, HalolCard, Folder.importance, settings.remindersOn/reminderTimes (UI yo'q)
 
 ## MUHIM ESLATMALAR
