@@ -595,7 +595,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ilovaning har bo'limi haqida qisqa izoh": { en: "A short note about each section of the app" },
   "Yangiliklar va yangilanishlar shu yerda": { en: "News and updates appear here" },
   "Ro'yxat, qidiruv, arxiv, uyqu rejasi": { en: "List, search, archive, sleep schedule" },
-  "Quyidagi to'rt katakcha bosiladi — ibodat, uyqu, pomodoro va eslatmalar shu yerdan ochiladi.": { en: "The four boxes below are tappable — worship, sleep, pomodoro and reminders open from here." },
   "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": { en: "Use the + button at the bottom to add daily tasks, ultimate goal tasks and yearly goals." },
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": { en: "button to add a daily task or an ultimate goal task." },
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": { en: "Add a task and mark it for a few days — results, charts and the weekly report will appear here." },
@@ -757,6 +756,11 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": { en: "The Hijri date adjuster has been removed from Settings. It is now offered once at the start of each Hijri month." },
   "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": { en: "Weekday names, month names and calendar numbers now display correctly in every language." },
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": { en: "When the work time ends it asks \"what did you do in this time?\" and logs the minutes to the chosen task." },
+
+  // --- v12: dumaloq tugmalar ---
+  "Kun iqtiboslari": { en: "Quotes of the day" },
+  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
+  "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": { en: "The four round buttons below are tappable — worship, countable tasks, work beyond the plan and the quotes of the day open from here." },
 };
 
 // ---------- ARABCHA ----------
@@ -1329,7 +1333,6 @@ const LUGAT_AR: Record<string, string> = {
   "Ilovaning har bo'limi haqida qisqa izoh": "شرح موجز لكل قسم من التطبيق",
   "Yangiliklar va yangilanishlar shu yerda": "الأخبار والتحديثات هنا",
   "Ro'yxat, qidiruv, arxiv, uyqu rejasi": "القائمة، البحث، الأرشيف، خطة النوم",
-  "Quyidagi to'rt katakcha bosiladi — ibodat, uyqu, pomodoro va eslatmalar shu yerdan ochiladi.": "المربعات الأربعة أدناه قابلة للضغط — العبادة والنوم والبومودورو والتذكيرات تُفتح من هنا.",
   "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": "بزر + في الأسفل تضيف المهام اليومية ومهام المقصد الأعلى وأهدافك السنوية.",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "لإضافة مهمة يومية أو مهمة للمقصد الأعلى.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "أضِف مهمة وسجّلها بضعة أيام — ستظهر هنا النتائج والرسوم البيانية والتقرير الأسبوعي.",
@@ -1475,6 +1478,11 @@ const LUGAT_AR: Record<string, string> = {
   "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "أُزيل ضابط التاريخ الهجري من الإعدادات. وصار يُعرض مرة واحدة في بداية كل شهر هجري.",
   "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "صارت أسماء أيام الأسبوع والشهور وأرقام التقويم تظهر بشكل صحيح في كل اللغات.",
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "عند انتهاء وقت العمل يسأل: «ماذا فعلت في هذا الوقت؟» ويسجّل الدقائق للمهمة المختارة.",
+
+  // --- v12: dumaloq tugmalar ---
+  "Kun iqtiboslari": "اقتباسات اليوم",
+  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا كل ما تفعله فوق المخطط. يُضاف إلى المهمة المرتبطة كـ«زيادة» ويرفع نسبتك فوق ١٠٠٪ في الإحصائيات.",
+  "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": "الأزرار الدائرية الأربعة أدناه قابلة للضغط — العبادة والمهام القابلة للعد والأعمال خارج الخطة واقتباسات اليوم تُفتح من هنا.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2109,7 +2117,6 @@ const LUGAT_RU: Record<string, string> = {
   "Ilova bo'ylab qadam-baqadam yuriladi": "Пошаговая экскурсия по приложению",
   "Yangiliklar va yangilanishlar shu yerda": "Новости и обновления здесь",
   "Ro'yxat, qidiruv, arxiv, uyqu rejasi": "Список, поиск, архив, режим сна",
-  "Quyidagi to'rt katakcha bosiladi — ibodat, uyqu, pomodoro va eslatmalar shu yerdan ochiladi.": "Четыре квадрата ниже нажимаются — отсюда открываются поклонение, сон, помодоро и напоминания.",
   "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": "Кнопкой + внизу вы добавляете ежедневные задачи, задачи высшей цели и годовые цели.",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "чтобы добавить ежедневную задачу или задачу высшей цели.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "Добавьте задачу и отмечайте её несколько дней — здесь появятся результаты, графики и недельный отчёт.",
@@ -2144,6 +2151,11 @@ const LUGAT_RU: Record<string, string> = {
   "Hijriy sana tuzatgichi Sozlamalardan olib tashlandi. Endi har hijriy oy boshida bir marta so'raladi.": "Корректировка даты по хиджре убрана из настроек. Теперь она предлагается один раз в начале каждого месяца по хиджре.",
   "Hafta kunlari, oy nomlari va taqvim raqamlari barcha tillarda to'g'ri chiqadigan bo'ldi.": "Названия дней недели, месяцев и числа в календаре теперь отображаются правильно на всех языках.",
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "По окончании рабочего времени спрашивает «чем вы занимались в это время?» и записывает минуты к выбранной задаче.",
+
+  // --- v12: dumaloq tugmalar ---
+  "Kun iqtiboslari": "Цитаты дня",
+  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "Сюда записывайте всё, что сделали сверх плана. Это добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
+  "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": "Четыре круглые кнопки ниже нажимаются — отсюда открываются поклонение, подсчитываемые задачи, работы сверх плана и цитаты дня.",
 };
 
 // Ruschani LUGAT ga qo'shamiz

@@ -1777,36 +1777,19 @@ function BugunView(p: {
     </div>
   ) : null;
 
-  // 4 ta mini-kartochka: Ibodatlar / Uyqu / Pomodoro / Eslatmalar
-  const tPomo = p.pomoLog[today] || { c: 0, m: 0 };
-  // bugungi eslatmalar: vazifa vaqt oralig'i boshi + qo'shimcha eslatma vaqtlari
-  const remList = act.reduce<string[]>((a, t) => { if (t.schedFrom) a.push(t.schedFrom); if (t.remTime) a.push(t.remTime); return a; }, []).sort();
-  const nextRem = remList.find(x => x >= `${String(new Date().getHours()).padStart(2, "0")}:${String(new Date().getMinutes()).padStart(2, "0")}`);
-  const sleepMarked = !!(sleepTask && lg[sleepTask.id] && lg[sleepTask.id].st);
-  // `tur` — tanishtiruv turida shu elementni ajratib ko'rsatish uchun belgi
-  const Tile = ({ label, value, sub, icon, tint, onClick, tur }: { label: string; value: string; sub: string; icon: string; tint: string; onClick: () => void; tur?: string }) => (
-    <button data-tur={tur} onClick={onClick} className="om-press om-card flex min-w-0 flex-col items-start gap-1 p-2.5 text-left">
-      <span className="flex w-full min-w-0 items-center gap-1 text-[10px] font-semibold" style={{ color: "var(--muted)" }}>
-        <Icon n={icon} size={12} style={{ color: tint }} /><span className="truncate">{label}</span>
-      </span>
-      <span className="w-full truncate text-[14px] font-bold leading-tight" style={{ color: "var(--ink)" }}>{value}</span>
-      <span className="w-full truncate text-[9px]" style={{ color: "var(--muted)" }}>{sub}</span>
-    </button>
-  );
-  const openTile = (fn: () => void) => () => { p.doneHint("tiles"); fn(); };
-  const MiniTiles = (
-    <div className="grid grid-cols-4 gap-1.5">
-      <Tile tur="ibodat" label={tr("Ibodatlar")} icon="mosque" tint="var(--green)" value={`${ibSc.pct}%`} sub={tr("Majburiy bo'lim")} onClick={openTile(p.openIbadat)} />
-      <Tile label={tr("Uyqu")} icon="moon" tint="var(--blue)" value={p.sleepCfg ? `${p.sleepCfg.hours} ${tr("soat")}` : "—"} sub={p.sleepCfg ? (sleepMarked ? tr("Belgilandi") : tr("Belgilanmagan")) : tr("Reja yo'q")} onClick={p.openUyqu} />
-      <Tile tur="pomodoro" label={tr("Pomodoro")} icon="timer" tint="var(--red)" value={`${tPomo.c} ${tr("ta")}`} sub={tPomo.m > 0 ? fmtMin(tPomo.m) : tr("Boshlash")} onClick={p.openPomo} />
-      <Tile label={tr("Eslatma")} icon="bell" tint="var(--gold)" value={remList.length > 0 ? `${remList.length} ${tr("ta")}` : "—"} sub={nextRem ? `${tr("keyingi")} ${nextRem}` : remList.length > 0 ? tr("bugun tugadi") : tr("vaqt yo'q")} onClick={p.openVazifalar} />
-    </div>
-  );
+  // `tPomo`, `remList`, `nextRem`, `sleepMarked` va `Tile` komponenti
+  // to'rtta mini-katakcha bilan birga olib tashlandi (v12).
 
+  // Pastdagi dumaloq tugmalardan qaysi oyna ochilgan (null = yopiq)
+  const [oyna, setOyna] = useState<null | "sanoq" | "tashqari" | "iqtibos">(null);
 
-  const CountBlock = countTasks.length > 0 || true ? (
-    <Sec id="sanaladigan" title={tr("Sanaladigan vazifalar")} icon="hash" accent="var(--blue)" ui={ui} setUi={setUi}
-      right={<button onClick={e => { e.stopPropagation(); p.openCountForm(); }} className="rounded-lg px-2 py-0.5 font-bold text-white" style={{ background: "var(--blue)" }}>+</button>}>
+  // Sanaladigan vazifalar bo'limi. Avval `|| true` turgan edi (sinovdan qolgan)
+  // va bitta ham vazifa bo'lmasa ham bo'lim doim ko'rinardi — olib tashlandi.
+  // Sanaladigan vazifalar — endi `Sec` emas, dumaloq tugma bosilganda oynada chiqadi.
+  // Shuning uchun bu yerda faqat ICHKI qismi turadi, sarlavhani `Sheet` beradi.
+  const CountBlock = (
+    <>
+      <button onClick={p.openCountForm} className="om-press mb-3 w-full rounded-xl py-2 text-sm font-bold text-white" style={{ background: "var(--blue)" }}>+ {tr("Qo'shish")}</button>
       {countTasks.length === 0 && <p className="text-xs" style={lblS}>{tr("Masalan: «100 ta dars» — kunlik normasiz, umumiy son bilan boriladigan ishlar. «+» bilan qo'shing.")}</p>}
       <div className="space-y-1.5">
         {countTasks.map(t => {
@@ -1845,8 +1828,67 @@ function BugunView(p: {
           );
         })}
       </div>
-    </Sec>
-  ) : null;
+    </>
+  );
+
+  // Rejadan tashqari amallar — ichki qismi (sarlavhani `Sheet` beradi)
+  const ExtraBlock = (
+    <>
+      <button onClick={() => setShowExtra(true)} className="om-press mb-3 w-full rounded-xl py-2 text-sm font-bold text-white" style={{ background: "var(--gold)" }}>+ {tr("Qo'shish")}</button>
+      {todayExtras.length === 0 && <p className="text-xs leading-relaxed" style={lblS}>{tr("Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.")}</p>}
+      {todayExtras.map(e => (
+        <div key={e.id} className="mt-2 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm" style={cardS}>
+          <span className="min-w-0 flex-1 truncate" style={{ color: "var(--ink)" }}>{e.name}</span>
+          <span className="flex-none" style={{ color: "var(--muted)" }}>{fmtMin(e.minutes)}</span>
+          <button onClick={() => extraniOchir(e)} className="om-press flex-none" style={{ color: "var(--red)" }}><Icon n="trash" size={14} /></button>
+        </div>
+      ))}
+    </>
+  );
+
+  // Bugun sahifasining pastidagi TO'RTTA DUMALOQ TUGMA.
+  // Avval bu bo'limlar ekranda ochiq turardi va sahifani uzaytirardi —
+  // endi tugma bosilganda oyna bo'lib ochiladi.
+  const dumaloq = [
+    { id: "ibodat", ic: "mosque", nom: tr("Ibodatlar"), tint: "var(--green)", bos: () => p.openIbadat() },
+    { id: "sanoq", ic: "hash", nom: tr("Sanaladigan"), tint: "var(--blue)", bos: () => setOyna("sanoq") },
+    { id: "tashqari", ic: "plus", nom: tr("Rejadan tashqari amallar"), tint: "var(--gold)", bos: () => setOyna("tashqari") },
+    { id: "iqtibos", ic: "quote", nom: tr("Kun iqtiboslari"), tint: "var(--ink)", bos: () => setOyna("iqtibos") },
+  ];
+
+  const DumaloqQator = (
+    <>
+      <div className="flex items-start justify-around gap-1 px-1 pt-1">
+        {dumaloq.map(b => (
+          <button key={b.id} data-tur={b.id === "ibodat" ? "ibodat" : undefined}
+            onClick={() => { p.doneHint("tiles"); buzz(); b.bos(); }}
+            className="om-press flex w-[4.6rem] flex-none flex-col items-center gap-1.5">
+            <span className="grid h-12 w-12 place-items-center rounded-full"
+              style={{ background: "var(--card)", border: "1px solid var(--line)", color: b.tint, boxShadow: "var(--shadow)" }}>
+              <Icon n={b.ic} size={20} />
+            </span>
+            <span className="text-center text-[9px] font-semibold leading-tight" style={{ color: "var(--muted)" }}>{b.nom}</span>
+          </button>
+        ))}
+      </div>
+
+      {oyna === "sanoq" && (
+        <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="hash" size={15} style={{ color: "var(--blue)" }} /> {tr("Sanaladigan vazifalar")}</span>}>
+          {CountBlock}
+        </Sheet>
+      )}
+      {oyna === "tashqari" && (
+        <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="plus" size={15} style={{ color: "var(--gold)" }} /> {tr("Rejadan tashqari amallar")}</span>}>
+          {ExtraBlock}
+        </Sheet>
+      )}
+      {oyna === "iqtibos" && (
+        <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="quote" size={15} style={{ color: "var(--gold)" }} /> {tr("Kun iqtiboslari")}</span>}>
+          <OyatCard />
+        </Sheet>
+      )}
+    </>
+  );
 
   // ==== DAM KUNI ====
   if (isRest(today, plan.restDay)) {
@@ -1885,7 +1927,7 @@ function BugunView(p: {
         {weightToday && <WeightCard onSave={v => p.setWeights(ws => [...ws, { date: today, kg: v }])} />}
         {SleepCard}
         {NoteCard}
-        <OyatCard />
+        {DumaloqQator}
         {sheetTask && <MarkSheet t={sheetTask} m={lg[sheetTask.id]} slotMin={null} onClose={() => setSheetTask(null)}
           onSave={mk => { setMark(sheetTask.id, mk); setSheetTask(null); }} />}
       </div>
@@ -1925,9 +1967,7 @@ function BugunView(p: {
       {NextCard}
 
       <Hint id="tiles" hints={p.hints} done={p.doneHint}
-        text={tr("Quyidagi to'rt katakcha bosiladi — ibodat, uyqu, pomodoro va eslatmalar shu yerdan ochiladi.")} />
-
-      {MiniTiles}
+        text={tr("Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.")} />
 
 
       {backupOld && <Card style={{ borderColor: "var(--gold)" }}><p className="text-sm" style={{ color: "var(--ink)" }}>{tr("Zaxira nusxa olganingizga ancha bo'ldi — Sozlamalardan yuklab oling.")}</p></Card>}
@@ -2017,8 +2057,6 @@ function BugunView(p: {
         )}
       </Sec>
 
-      {CountBlock}
-
       {manualMetrics.map(m => {
         const cToday = (p.counts[m.id] || {})[today] || 0;
         const cTotal = Object.values(p.counts[m.id] || {}).reduce((a, b) => a + b, 0);
@@ -2038,21 +2076,8 @@ function BugunView(p: {
 
       {SleepCard}
 
-      <Sec id="extra" title={tr("Rejadan tashqari amallar")} icon="plus" accent="var(--gold)" ui={ui} setUi={setUi}
-        right={todayExtras.length ? <span>{todayExtras.length} {tr("ta")}</span> : undefined}>
-        <button onClick={() => setShowExtra(true)} className="w-full rounded-lg py-2 text-sm font-bold text-white" style={{ background: "var(--gold)" }}>{tr("Qo'shish")}</button>
-        {todayExtras.map(e => (
-          <div key={e.id} className="mt-2 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm" style={cardS}>
-            <span className="min-w-0 flex-1 truncate" style={{ color: "var(--ink)" }}>{e.name}</span>
-            <span className="flex-none" style={{ color: "var(--muted)" }}>{fmtMin(e.minutes)}</span>
-            <button onClick={() => extraniOchir(e)} className="om-press flex-none" style={{ color: "var(--red)" }}><Icon n="trash" size={14} /></button>
-          </div>
-        ))}
-      </Sec>
-
-
       {NoteCard}
-      <OyatCard />
+      {DumaloqQator}
 
       {showExtra && <ExtraForm tasks={act} onClose={() => setShowExtra(false)} today={today}
         onSave={({ name, minutes, taskId, type }) => {
@@ -4825,6 +4850,14 @@ export default function App() {
               <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Uyqu")}</span>
             </button>
             <MavzuTugma dark={settings.dark} setDark={v => setSettings(s => ({ ...s, dark: v }))} />
+            {/* Pomodoro — avval pastdagi to'rtta katakchada edi, sarlavhaga ko'chdi */}
+            <button data-tur="pomodoro" onClick={() => togglePage("pomo")} className="om-press flex flex-none flex-col items-center gap-1">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl"
+                style={{ background: page === "pomo" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "pomo" ? "var(--green)" : "var(--line)"), color: page === "pomo" ? "#fff" : "var(--red)", boxShadow: "var(--shadow)" }}>
+                <Icon n="timer" size={19} />
+              </span>
+              <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Pomodoro")}</span>
+            </button>
             <button onClick={() => togglePage("sozlama")} className="om-press flex flex-none flex-col items-center gap-1">
               <span className="grid h-11 w-11 place-items-center rounded-2xl"
                 style={{ background: page === "sozlama" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "sozlama" ? "var(--green)" : "var(--line)"), color: page === "sozlama" ? "#fff" : "var(--ink)", boxShadow: "var(--shadow)" }}>
