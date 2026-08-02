@@ -761,6 +761,12 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Kun iqtiboslari": { en: "Quotes of the day" },
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
   "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": { en: "The four round buttons below are tappable — worship, countable tasks, work beyond the plan and the quotes of the day open from here." },
+
+  // --- v12: kirishdagi yangi/zaxira tanlovi ---
+  "Nimadan boshlaymiz?": { en: "Where shall we begin?" },
+  "Yangi boshlayman": { en: "I am starting fresh" },
+  "Zaxiradan tiklayman": { en: "I will restore from a backup" },
+  "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": { en: "If you have used the app before and have a PDF backup, all your data will be restored from that file." },
 };
 
 // ---------- ARABCHA ----------
@@ -1483,6 +1489,12 @@ const LUGAT_AR: Record<string, string> = {
   "Kun iqtiboslari": "اقتباسات اليوم",
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا كل ما تفعله فوق المخطط. يُضاف إلى المهمة المرتبطة كـ«زيادة» ويرفع نسبتك فوق ١٠٠٪ في الإحصائيات.",
   "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": "الأزرار الدائرية الأربعة أدناه قابلة للضغط — العبادة والمهام القابلة للعد والأعمال خارج الخطة واقتباسات اليوم تُفتح من هنا.",
+
+  // --- v12: kirishdagi yangi/zaxira tanlovi ---
+  "Nimadan boshlaymiz?": "من أين نبدأ؟",
+  "Yangi boshlayman": "سأبدأ من جديد",
+  "Zaxiradan tiklayman": "سأستعيد من نسخة احتياطية",
+  "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": "إن كنت قد استخدمت التطبيق من قبل ولديك نسخة PDF، فستُستعاد كل بياناتك من ذلك الملف.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2156,6 +2168,12 @@ const LUGAT_RU: Record<string, string> = {
   "Kun iqtiboslari": "Цитаты дня",
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "Сюда записывайте всё, что сделали сверх плана. Это добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
   "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": "Четыре круглые кнопки ниже нажимаются — отсюда открываются поклонение, подсчитываемые задачи, работы сверх плана и цитаты дня.",
+
+  // --- v12: kirishdagi yangi/zaxira tanlovi ---
+  "Nimadan boshlaymiz?": "С чего начнём?",
+  "Yangi boshlayman": "Начинаю заново",
+  "Zaxiradan tiklayman": "Восстановлю из копии",
+  "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": "Если вы уже пользовались приложением и у вас есть PDF-копия, все ваши данные восстановятся из этого файла.",
 };
 
 // Ruschani LUGAT ga qo'shamiz

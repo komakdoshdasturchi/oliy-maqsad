@@ -960,6 +960,30 @@ function NewsModal({ hijriOffset, logoColor, onClose }: { hijriOffset: number; l
 
 
 // ================== KIRISH SAHIFASI ==================
+// PDF yoki JSON zaxiradan ma'lumotni tiklash.
+// MODUL DARAJASIDA turadi, chunki IKKI joyda ishlatiladi:
+// Sozlamalar → Ma'lumotlar, va kirishdagi «Zaxiradan tiklayman» tugmasi.
+// DIQQAT: tiklanganda BARCHA `om3_*` kalitlari ustiga yoziladi, jumladan
+// `om3_lang` ham. Ya'ni o'zbekchani tanlab ruscha zaxirani tiklasa, ilova
+// ruscha ochiladi — bu to'g'ri xatti-harakat (tiklash = to'liq tiklash).
+function importFile(f: File) {
+  const r = new FileReader();
+  r.onload = async () => {
+    const txt = String(r.result);
+    let data: Record<string, any> | null = null;
+    try { data = JSON.parse(txt); } catch {
+      const i = txt.lastIndexOf("%%OMDATA:");
+      if (i >= 0) { try { data = JSON.parse(b64dec(txt.slice(i + 9).trim())); } catch { } }
+    }
+    if (!data || !data.om3_plan) { omAlert(tr("Bu fayl Oliy Maqsad zaxirasi emas."), tr("Fayl buzilgan yoki boshqa ilovaniki bo'lishi mumkin.")); return; }
+    const ok = await omConfirm(tr("Ma'lumot almashtirilsinmi?"), tr("Hozirgi barcha ma'lumotlaringiz fayldagi bilan almashtiriladi. Bu amalni ortga qaytarib bo'lmaydi."), { danger: true, okText: tr("Ha, o'rnatilsin") });
+    if (!ok) return;
+    Object.keys(data).forEach(k => { if (k.startsWith("om3_")) localStorage.setItem(k, JSON.stringify(data![k])); });
+    window.location.reload();
+  };
+  r.readAsText(f);
+}
+
 function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
   const [step, setStep] = useState(1);
   const [dir, setDir] = useState<"l" | "r">("l"); // l = oldinga (o'ngdan chapga), r = orqaga
@@ -976,6 +1000,11 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
   const [weightDay, setWeightDay] = useState("4");
   const TOTAL = 11;
   const GOAL_MAX = 300;
+  // «Yangi boshlayman / Zaxiradan tiklayman» ekrani salomlashuvdan KEYIN chiqadi.
+  // Qadam raqamlari ataylab SURILMADI (1..11 va `canNext` shartlari o'z holicha) —
+  // buning o'rniga 1-qadamdan 2-qadamga o'tish shu ekran orqali bo'ladi.
+  const [tanlovOchiq, setTanlovOchiq] = useState(false);
+  const zaxiraRef = useRef<HTMLInputElement>(null);
 
   const submit = () => {
     const rd = restDay === "" ? null : parseInt(restDay);
@@ -993,7 +1022,12 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
     step === 9 ? weightOn !== null :
     true;
   const back = () => { setDir("r"); setStep(s => Math.max(s - 1, 1)); };
-  const next = () => { setDir("l"); setStep(s => Math.min(s + 1, TOTAL)); };
+  // 1-qadam (salomlashuv) tugagach to'g'ridan-to'g'ri 2-qadamga o'tmaymiz —
+  // avval «yangi / zaxiradan» tanlovi ko'rsatiladi.
+  const next = () => {
+    if (step === 1) { setTanlovOchiq(true); return; }
+    setDir("l"); setStep(s => Math.min(s + 1, TOTAL));
+  };
 
   const IconCircle = ({ n, logo }: { n?: string; logo?: boolean }) => (
     <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full" style={{ background: "var(--soft)" }}>
@@ -1021,6 +1055,40 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
     for (let d = 1; d <= dim; d++) cells.push(toISO(new Date(y, mo, d)));
     return cells;
   };
+
+  // ==== YANGI / ZAXIRADAN — salomlashuv bilan savollar orasidagi ekran ====
+  if (tanlovOchiq) return (
+    <div className="mx-auto flex min-h-screen max-w-md flex-col px-5 pb-6 pt-5">
+      <BackCloser key="ob-tanlov" onClose={() => setTanlovOchiq(false)} />
+      <div className="mb-4 flex items-center gap-3">
+        <button onClick={() => setTanlovOchiq(false)} className="om-press grid h-9 w-9 flex-none place-items-center rounded-xl" style={cardS}><Icon n="chevronLeft" size={18} style={{ color: "var(--ink)" }} /></button>
+        <span className="flex items-center gap-1.5"><Logo size={22} /><span className="text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Oliy maqsad")}</span></span>
+      </div>
+
+      <div className="flex flex-1 flex-col justify-center">
+        <IconCircle n="flag" />
+        <Title>{tr("Nimadan boshlaymiz?")}</Title>
+
+        <div className="mt-8 space-y-3">
+          <button onClick={() => { buzz(); setTanlovOchiq(false); setDir("l"); setStep(2); }}
+            className="om-press w-full rounded-2xl py-4 text-base font-bold text-white" style={{ background: "var(--green)" }}>
+            {tr("Yangi boshlayman")}
+          </button>
+          <button onClick={() => zaxiraRef.current?.click()}
+            className="om-press w-full rounded-2xl border py-4 text-base font-semibold" style={{ ...cardS, borderWidth: 2, color: "var(--ink)" }}>
+            {tr("Zaxiradan tiklayman")}
+          </button>
+        </div>
+
+        <p className="mx-auto mt-4 max-w-xs text-center text-[12px] leading-relaxed" style={lblS}>
+          {tr("Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.")}
+        </p>
+      </div>
+
+      <input ref={zaxiraRef} type="file" accept=".pdf,.json" style={{ display: "none" }}
+        onChange={e => e.target.files && e.target.files[0] && importFile(e.target.files[0])} />
+    </div>
+  );
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col px-5 pb-6 pt-5">
@@ -4247,24 +4315,6 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
     const blob = makePdf(lines, b64enc(JSON.stringify(data)));
     await saveFile(blob, `oliy-maqsad-zaxira-${p.today}.pdf`);
     setSettings(s => ({ ...s, lastBackup: p.today }));
-  };
-
-  const importFile = (f: File) => {
-    const r = new FileReader();
-    r.onload = async () => {
-      const txt = String(r.result);
-      let data: Record<string, any> | null = null;
-      try { data = JSON.parse(txt); } catch {
-        const i = txt.lastIndexOf("%%OMDATA:");
-        if (i >= 0) { try { data = JSON.parse(b64dec(txt.slice(i + 9).trim())); } catch { } }
-      }
-      if (!data || !data.om3_plan) { omAlert(tr("Bu fayl Oliy Maqsad zaxirasi emas."), tr("Fayl buzilgan yoki boshqa ilovaniki bo'lishi mumkin.")); return; }
-      const ok = await omConfirm(tr("Ma'lumot almashtirilsinmi?"), tr("Hozirgi barcha ma'lumotlaringiz fayldagi bilan almashtiriladi. Bu amalni ortga qaytarib bo'lmaydi."), { danger: true, okText: tr("Ha, o'rnatilsin") });
-      if (!ok) return;
-      Object.keys(data).forEach(k => { if (k.startsWith("om3_")) localStorage.setItem(k, JSON.stringify(data![k])); });
-      window.location.reload();
-    };
-    r.readAsText(f);
   };
 
   const replan = async () => {
