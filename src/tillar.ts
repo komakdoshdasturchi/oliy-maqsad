@@ -275,7 +275,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Nafl namozlar (bonus)": { en: "Nafl prayers (bonus)" },
   "Kunduzgi nafl": { en: "Daytime nafl" },
   "Qur'on xatmini rejalash": { en: "Plan a Qur'an khatm" },
-  "xatm rejasini tahrirlash": { en: "edit khatm plan" },
   "Kuniga necha pora?": { en: "How many juz' per day?" },
   "to'liq o'qildi": { en: "fully recited" },
   "Bugungi ibodat reytingi": { en: "Today's worship rating" },
@@ -443,7 +442,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "PDF yuklab olish": { en: "Download PDF" },
   "PDF o'rnatish": { en: "Install from PDF" },
   "Ilova yangiliklari": { en: "What's new" },
-  "Qanday ishlaydi?": { en: "How does it work?" },
   "E'tibor bering": { en: "Please note" },
   "Telegram ilovasi ochiladi.": { en: "The Telegram app will open." },
 
@@ -527,7 +525,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Taxminan necha kunda tugataman?": { en: "In roughly how many days will I finish it?" },
   "Sanaladigan vazifada muddat majburiy — qachongacha yetkazasiz?": { en: "A deadline is required for a countable task — by when will you finish?" },
   "Vazifaning kunlik vaqti {v} — undan KAM vaqt ajratib bo'lmaydi.": { en: "The task's daily time is {v} — you cannot allocate LESS than that." },
-  "Vazifa katakchasini bossangiz — belgilash oynasi ochiladi: qildim, sababli yoki qilmadim.": { en: "Tap a task's box and the marking window opens: done, excused, or not done." },
   "Bu vazifani tugatdingizmi? Tabriklaymiz!": { en: "Have you finished this task? Congratulations!" },
   "Vazifani tashlab qo'yasizmi? Bu statistikada salbiy iz qoldiradi.": { en: "Abandon this task? It will leave a negative mark in your statistics." },
   "Bu vazifa hali boshlanmagan. Butunlay o'chirilsinmi?": { en: "This task has not started yet. Delete it completely?" },
@@ -592,9 +589,7 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ma'lumot hali yetarli emas": { en: "Not enough data yet" },
 
   // --- Yordam, yangiliklar, kanal ---
-  "Ilovaning har bo'limi haqida qisqa izoh": { en: "A short note about each section of the app" },
   "Yangiliklar va yangilanishlar shu yerda": { en: "News and updates appear here" },
-  "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": { en: "Use the + button at the bottom to add daily tasks, ultimate goal tasks and yearly goals." },
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": { en: "button to add a daily task or an ultimate goal task." },
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": { en: "Add a task and mark it for a few days — results, charts and the weekly report will appear here." },
   "«Oliy maqsad» telegram kanali": { en: "The «Ultimate goal» Telegram channel" },
@@ -649,18 +644,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- Yordam bo'limi (sarlavhalar; "Bugun/Ibodatlar/Pomodoro/Taqvim/
   //     Statistika/Oliy maqsad/Qo'shimcha ish" yuqorida allaqachon bor) ---
   "Qo'shish (+)": { en: "Add (+)" },
-  "Vazifa vaqti": { en: "Task time" },
-  "Zaxira": { en: "Backup" },
-  "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim.": { en: "The heart of the day. Today's result at the top, then your tasks. Tap a box and the marking window opens: done, excused, or not done at all." },
-  "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz.": { en: "The green button at the bottom. Use it to add a daily task, an ultimate goal task or a yearly goal, and to open the full task list." },
-  "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin.": { en: "Each task gets a time range — for example 08:00–09:00. A reminder arrives on your phone at that time, even if the app is closed. You can also choose the days." },
-  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
-  "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi.": { en: "A separate section that does not affect the daily percentage. Dhikr, the five daily prayers, nafl prayers and the Qur'an khatm are marked here." },
-  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi.": { en: "There are two modes. In Focus the screen dims and only the timer remains. In Open mode you get a notification when the time is up, even if you leave the app." },
-  "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi.": { en: "Each day is coloured by its result: a fully completed day is green, more than half is amber, below that is red. The rest day has no colour — it is not counted." },
-  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": { en: "Daily, weekly and monthly views. Next to each figure is the change from the previous period. Tap a point on the chart to see which day it is." },
-  "Maqsad matningiz, natija halqasi va yillik maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, 6 oy va yil bo'yicha.": { en: "Your goal text, the result ring and your yearly goals. Tap any goal to see its progress — by week, month, 6 months and year." },
-  "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": { en: "Settings → Data. When you download the PDF, all your data is stored in that file. On a new phone you restore it with «Install from PDF»." },
 
   // --- Yangiliklar oynasi (v10) ---
 
@@ -720,7 +703,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ha, ko'rsating": { en: "Yes, show me" },
   "O'tkazib yuborish": { en: "Skip" },
   "Keyingisi": { en: "Next" },
-  "Ilova bo'ylab qadam-baqadam yuriladi": { en: "A step-by-step walk through the app" },
 
   // --- Qadam sarlavhalari ---
   "Maqsad bo'limi": { en: "The Goal section" },
@@ -759,7 +741,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- v12: dumaloq tugmalar ---
   "Kun iqtiboslari": { en: "Quotes of the day" },
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
-  "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": { en: "The four round buttons below are tappable — worship, countable tasks, work beyond the plan and the quotes of the day open from here." },
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
   "Nimadan boshlaymiz?": { en: "Where shall we begin?" },
@@ -776,6 +757,38 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
 
   // --- v12: namoz ixcham qatori ---
   "masjidda o'qildi": { en: "prayed in the mosque" },
+
+  // --- v12: ma'lumotnoma qayta yozildi ---
+  "Xatm rejasini tahrirlash": { en: "Edit khatm plan" },
+  "Har bo'lim nima qiladi?": { en: "What does each section do?" },
+  "Bo'limlar va tugmalar batafsil izohlangan — o'qib chiqiladi": { en: "Sections and buttons explained in detail — for reading" },
+  "Ilova bo'ylab qadam-baqadam yuriladi — ko'rsatib boriladi": { en: "A step-by-step walk through the app, each place shown to you" },
+  "Oy": { en: "Month" },
+  "6 oy": { en: "6 months" },
+  "Vazifani belgilash": { en: "Marking a task" },
+  "Vazifa vaqti va eslatma": { en: "Task time and reminder" },
+  "Papkalar": { en: "Folders" },
+  "Zaxira nusxa": { en: "Backup" },
+  "Kunduzgi va tungi ko'rinish": { en: "Light and dark appearance" },
+  "Kunning yuragi. Eng yuqorida bugungi natija halqasi — nechta vazifa bajarilgani va foizi. Ostida bugun bajariladigan vazifalar. Vaqt belgilangan vazifalar soat tartibida chiqadi.": { en: "The heart of the day. At the very top is today's result ring — how many tasks are done and the percentage. Below it are the tasks due today. Tasks with a set time appear in clock order." },
+  "Vazifa katakchasini bosing — pastdan belgilash oynasi chiqadi. Uch javob bor: «qildim», «sababli qilmadim» (kasallik, safar kabi — bu statistikani pasaytirmaydi) va «qilmadim». Katakchani bir soniya bosib tursangiz tahrirlash va o'chirish tugmalari chiqadi.": { en: "Tap a task cell — the marking sheet slides up from below. There are three answers: «done», «missed with an excuse» (illness, travel and the like — this does not lower your statistics) and «not done». Hold the cell for about a second and Edit and Delete buttons appear." },
+  "Pastdagi katta yashil tugma. Undan uch narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa va yillik raqamli maqsad. Eng pastdagi «Barcha vazifalar» esa qo'shish uchun emas — bor vazifalarni ko'rish va boshqarish uchun.": { en: "The large green button at the bottom. Three things are added from it: a daily task that repeats every day, a great-goal task that leads to your big aim, and a yearly numeric goal. The «All tasks» row at the very bottom is not for adding — it is for viewing and managing what already exists." },
+  "Har vazifaga vaqt oralig'i beriladi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Vazifa haftaning qaysi kunlari bajarilishini ham tanlaysiz.": { en: "Each task can be given a time range — for example 08:00–09:00. When that time comes a reminder arrives on your phone, even if the app is closed. You also choose which days of the week the task runs." },
+  "Vazifalar ko'payib ketganda ularni papkalarga ajratasiz — masalan «Ilm», «Sog'liq», «Ish». Papkalar «Barcha vazifalar» bo'limida yaratiladi va vazifa ro'yxati shunga qarab guruhlanadi.": { en: "When tasks grow numerous you sort them into folders — for example «Knowledge», «Health», «Work». Folders are created in the «All tasks» section and the task list is grouped by them." },
+  "Rejadan ortiq ish qilgan kuningiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "On a day you do more than planned, you record it here. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
+  "Miqdori sanaladigan ishlar uchun: necha bet o'qildi, necha marta zikr aytildi, necha kilometr yurildi. Har kuni raqam kiritasiz, to'plangan miqdor va jarayon alohida ko'rinadi.": { en: "For work measured by amount: how many pages read, how many times a dhikr was said, how many kilometres walked. You enter a number each day, and the accumulated amount and progress are shown separately." },
+  "Alohida bo'lim — kunlik vazifalar foiziga aralashmaydi. Tonggi va kechki zikrlar, besh vaqt namoz (har biri sunnat va farzga ajratilgan), tahajjud va kunduzgi nafllar shu yerda belgilanadi. Erkaklarda har namoz yonida «Masjidda» tugmasi bor — u reytingga bonus qo'shadi.": { en: "A separate section — it does not affect the daily task percentage. Morning and evening dhikr, the five daily prayers (each split into sunnah and fard), tahajjud and daytime nafl are marked here. For men there is an «In the mosque» button beside each prayer — it adds a bonus to the rating." },
+  "Xatmni oldindan rejalashtirasiz: qachondan qachongacha va kuniga necha daqiqa yoki necha pora. Har kuni bajarganingizni belgilab borasiz, necha kun o'tgani yonida ko'rinib turadi. Rejani o'zgartirish uchun qatorni bosib turing.": { en: "You plan the khatm in advance: from when to when, and how many minutes or juz' per day. Each day you mark what you have completed, and the number of days passed is shown beside it. To change the plan, hold the row." },
+  "Sarlavhadagi karavot tugmasi. Necha soat uxlashni yoki aniq vaqt oralig'ini belgilaysiz, so'ng har kuni qancha uxlaganingizni yozib borasiz. Haftalik o'rtacha va rejadan chetlashish ko'rsatiladi.": { en: "The bed button in the header. You set how many hours to sleep or an exact time range, then record how much you slept each day. The weekly average and the deviation from your plan are shown." },
+  "Diqqatni jamlab ishlash taymeri. Ikki rejim bor: «Diqqatni jamlash»da ekran qorayadi va faqat taymer qoladi; «Ochiq rejim»da ilovadan chiqsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": { en: "A timer for focused work. There are two modes: in «Focus» the screen goes dark and only the timer remains; in «Open mode» you may leave the app and the phone still notifies you when the time is up. The minutes you worked are added to the task you choose." },
+  "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi.": { en: "Each day is coloured by that day's result: a fully completed day is green, more than half is yellow, and lower is red. The rest day has no colour — it is not counted. Tap a day to open its full details." },
+  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": { en: "Daily, weekly and monthly views. Beside each number is its difference from the previous period — whether it rose or fell. Tap a point on the chart to see which day it is." },
+  "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz.": { en: "The text of your goal, the overall result ring and your yearly numeric goals. Tap any goal to see its progress — by week, month, six months and year. In a multi-year plan each year is kept separately: when a year ends you add the next year's tasks." },
+  "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi.": { en: "Here you write down words that moved you, and the meanings of verses and hadiths. They open from the round buttons on the Today page." },
+  "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi.": { en: "While setting up your plan you may mark one day of the week as a rest day. On that day no tasks are asked of you and it does not enter the statistics — it will not lower your percentage." },
+  "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": { en: "Settings → Data. Tap «Download PDF» and all your data is saved into a single file. When you move to a new phone you restore everything through «Install PDF». Your data stays only on your phone — it is never sent anywhere." },
+  "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": { en: "There are five languages: Uzbek in Latin and Cyrillic script, English, Arabic and Russian. If Arabic is chosen the whole app turns right-to-left." },
+  "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": { en: "The sun or moon button in the header switches the app's colours. Turn on the dark appearance in the evening so your eyes do not tire." },
 };
 
 // ---------- ARABCHA ----------
@@ -969,7 +982,6 @@ const LUGAT_AR: Record<string, string> = {
   "ma'lumot yo'q": "لا توجد بيانات",
   "Hech narsa topilmadi.": "لم يُعثر على شيء.",
   "Ilova yangiliklari": "جديد التطبيق",
-  "Qanday ishlaydi?": "كيف يعمل؟",
   "PDF yuklab olish": "تنزيل PDF",
   "Zaxira saqlandi": "تم حفظ النسخة الاحتياطية",
   // Arabchada sanoq yuklamasi yo'q — o'zbekcha "ta" kabi
@@ -1127,7 +1139,6 @@ const LUGAT_AR: Record<string, string> = {
 
   // --- Ibodat (davomi) ---
   "Qur'on xatmini rejalash": "التخطيط لختم القرآن",
-  "xatm rejasini tahrirlash": "تعديل خطة الختمة",
   "Bismillah — boshlaymiz!": "بسم الله — لنبدأ!",
 
   // --- Xulosa, iqtibos, eslatma ---
@@ -1256,7 +1267,6 @@ const LUGAT_AR: Record<string, string> = {
   "Taxminan necha kunda tugataman?": "في كم يوم تقريبًا سأنهيه؟",
   "Sanaladigan vazifada muddat majburiy — qachongacha yetkazasiz?": "الموعد النهائي إلزامي في المهمة القابلة للعد — إلى متى ستنجزها؟",
   "Vazifaning kunlik vaqti {v} — undan KAM vaqt ajratib bo'lmaydi.": "الوقت اليومي للمهمة {v} — ولا يمكن تخصيص وقت أقل منه.",
-  "Vazifa katakchasini bossangiz — belgilash oynasi ochiladi: qildim, sababli yoki qilmadim.": "اضغط مربّع المهمة فتُفتح نافذة التحديد: فعلتُ، بعذر، أو لم أفعل.",
   "Bu vazifani tugatdingizmi? Tabriklaymiz!": "هل أنهيت هذه المهمة؟ تهانينا!",
   "Vazifani tashlab qo'yasizmi? Bu statistikada salbiy iz qoldiradi.": "هل تترك هذه المهمة؟ سيترك ذلك أثرًا سلبيًا في الإحصائيات.",
   "Bu vazifa hali boshlanmagan. Butunlay o'chirilsinmi?": "لم تبدأ هذه المهمة بعد. هل تُحذف نهائيًا؟",
@@ -1345,9 +1355,7 @@ const LUGAT_AR: Record<string, string> = {
   "Keyinroq sozlashim mumkin.": "يمكنني ضبطه لاحقًا.",
 
   // --- Yordam va kanal ---
-  "Ilovaning har bo'limi haqida qisqa izoh": "شرح موجز لكل قسم من التطبيق",
   "Yangiliklar va yangilanishlar shu yerda": "الأخبار والتحديثات هنا",
-  "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": "بزر + في الأسفل تضيف المهام اليومية ومهام المقصد الأعلى وأهدافك السنوية.",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "لإضافة مهمة يومية أو مهمة للمقصد الأعلى.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "أضِف مهمة وسجّلها بضعة أيام — ستظهر هنا النتائج والرسوم البيانية والتقرير الأسبوعي.",
   "«Oliy maqsad» telegram kanali": "قناة «المقصد الأعلى» على تيليجرام",
@@ -1391,18 +1399,6 @@ const LUGAT_AR: Record<string, string> = {
 
   // --- Yordam bo'limi ---
   "Qo'shish (+)": "الإضافة (+)",
-  "Vazifa vaqti": "وقت المهمة",
-  "Zaxira": "النسخة الاحتياطية",
-  "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim.": "قلب اليوم. في الأعلى نتيجة اليوم، ثم مهامك. اضغط المربّع فتُفتح نافذة التحديد: فعلتُ، لم أفعل بعذر، أو لم أفعل مطلقًا.",
-  "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz.": "الزر الأخضر في الأسفل. منه تضيف مهمة يومية أو مهمة للمقصد الأعلى أو هدفًا سنويًا، وتفتح قائمة كل المهام.",
-  "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin.": "لكل مهمة فترة زمنية — مثلًا ٠٨:٠٠–٠٩:٠٠. وعند حلول ذلك الوقت يصلك تذكير على الهاتف، ولو كان التطبيق مغلقًا. ويمكنك اختيار الأيام أيضًا.",
-  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا ما تعمله زيادة على الخطة. يُضاف إلى المهمة المعنية بوصفه «زيادة» ويرفع النسبة فوق ١٠٠٪ في الإحصائيات.",
-  "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi.": "قسم مستقل لا يؤثر على النسبة اليومية. هنا تُسجَّل الأذكار والصلوات الخمس والنوافل وختم القرآن.",
-  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi.": "فيه وضعان. في وضع التركيز تُعتَّم الشاشة ولا يبقى إلا المؤقّت. وفي الوضع المفتوح يصلك إشعار عند انتهاء الوقت ولو خرجت من التطبيق.",
-  "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi.": "لون كل يوم بحسب نتيجته: اليوم المنجز كاملًا أخضر، وما فوق النصف أصفر، وما دون ذلك أحمر. ويوم الراحة بلا لون — فهو لا يدخل في الحساب.",
-  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "عرض يومي وأسبوعي وشهري. وبجانب كل رقم فرقه عن الفترة السابقة. واضغط نقطة في الرسم البياني ليظهر أي يوم هي.",
-  "Maqsad matningiz, natija halqasi va yillik maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, 6 oy va yil bo'yicha.": "نص هدفك، وحلقة النتيجة، وأهدافك السنوية. واضغط أي هدف لترى تقدّمه — بالأسبوع والشهر وستة أشهر والسنة.",
-  "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": "الإعدادات ← البيانات. وعند تنزيل ملف PDF تُحفظ فيه كل بياناتك. وفي هاتف جديد تستعيدها بـ«التثبيت من PDF».",
 
   // --- Yangiliklar oynasi (v10) ---
 
@@ -1455,7 +1451,6 @@ const LUGAT_AR: Record<string, string> = {
   "Ha, ko'rsating": "نعم، اعرضها",
   "O'tkazib yuborish": "تخطّي",
   "Keyingisi": "التالي",
-  "Ilova bo'ylab qadam-baqadam yuriladi": "جولة خطوة بخطوة في التطبيق",
 
   // --- Qadam sarlavhalari ---
   "Maqsad bo'limi": "قسم الهدف",
@@ -1496,7 +1491,6 @@ const LUGAT_AR: Record<string, string> = {
   // --- v12: dumaloq tugmalar ---
   "Kun iqtiboslari": "اقتباسات اليوم",
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا كل ما تفعله فوق المخطط. يُضاف إلى المهمة المرتبطة كـ«زيادة» ويرفع نسبتك فوق ١٠٠٪ في الإحصائيات.",
-  "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": "الأزرار الدائرية الأربعة أدناه قابلة للضغط — العبادة والمهام القابلة للعد والأعمال خارج الخطة واقتباسات اليوم تُفتح من هنا.",
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
   "Nimadan boshlaymiz?": "من أين نبدأ؟",
@@ -1513,6 +1507,38 @@ const LUGAT_AR: Record<string, string> = {
 
   // --- v12: namoz ixcham qatori ---
   "masjidda o'qildi": "أُدّيت في المسجد",
+
+  // --- v12: ma'lumotnoma qayta yozildi ---
+  "Xatm rejasini tahrirlash": "تعديل خطة الختمة",
+  "Har bo'lim nima qiladi?": "ماذا يفعل كل قسم؟",
+  "Bo'limlar va tugmalar batafsil izohlangan — o'qib chiqiladi": "شرح مفصّل للأقسام والأزرار — للقراءة",
+  "Ilova bo'ylab qadam-baqadam yuriladi — ko'rsatib boriladi": "جولة خطوة بخطوة في التطبيق، يُشار لك إلى كل موضع",
+  "Oy": "شهر",
+  "6 oy": "6 أشهر",
+  "Vazifani belgilash": "تعليم المهمة",
+  "Vazifa vaqti va eslatma": "وقت المهمة والتذكير",
+  "Papkalar": "المجلدات",
+  "Zaxira nusxa": "النسخة الاحتياطية",
+  "Kunduzgi va tungi ko'rinish": "المظهر النهاري والليلي",
+  "Kunning yuragi. Eng yuqorida bugungi natija halqasi — nechta vazifa bajarilgani va foizi. Ostida bugun bajariladigan vazifalar. Vaqt belgilangan vazifalar soat tartibida chiqadi.": "قلب اليوم. في الأعلى حلقة نتيجة اليوم — كم مهمة أُنجزت والنسبة المئوية. وتحتها مهام اليوم. والمهام ذات الوقت المحدد تظهر بترتيب الساعة.",
+  "Vazifa katakchasini bosing — pastdan belgilash oynasi chiqadi. Uch javob bor: «qildim», «sababli qilmadim» (kasallik, safar kabi — bu statistikani pasaytirmaydi) va «qilmadim». Katakchani bir soniya bosib tursangiz tahrirlash va o'chirish tugmalari chiqadi.": "اضغط على خانة المهمة — تظهر نافذة التعليم من الأسفل. وهناك ثلاث إجابات: «أدّيت»، و«تركت بعذر» (كالمرض والسفر — وهذا لا يخفض إحصاءاتك)، و«لم أؤدِّ». واضغط مطولًا على الخانة نحو ثانية فيظهر زرّا التعديل والحذف.",
+  "Pastdagi katta yashil tugma. Undan uch narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa va yillik raqamli maqsad. Eng pastdagi «Barcha vazifalar» esa qo'shish uchun emas — bor vazifalarni ko'rish va boshqarish uchun.": "الزر الأخضر الكبير في الأسفل. تُضاف منه ثلاثة أشياء: مهمة يومية تتكرر كل يوم، ومهمة تقود إلى هدفك الأسمى، وهدف رقمي سنوي. أما «كل المهام» في الأسفل فليست للإضافة — بل لعرض الموجود وإدارته.",
+  "Har vazifaga vaqt oralig'i beriladi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Vazifa haftaning qaysi kunlari bajarilishini ham tanlaysiz.": "يمكن إعطاء كل مهمة نطاقًا زمنيًا — مثلًا 08:00–09:00. وعند حلول ذلك الوقت يصل تذكير إلى هاتفك، حتى لو كان التطبيق مغلقًا. وتختار أيضًا أيام الأسبوع التي تُؤدَّى فيها المهمة.",
+  "Vazifalar ko'payib ketganda ularni papkalarga ajratasiz — masalan «Ilm», «Sog'liq», «Ish». Papkalar «Barcha vazifalar» bo'limida yaratiladi va vazifa ro'yxati shunga qarab guruhlanadi.": "عندما تكثر المهام توزّعها على مجلدات — مثل «العلم» و«الصحة» و«العمل». وتُنشأ المجلدات في قسم «كل المهام»، وتُجمَّع قائمة المهام بحسبها.",
+  "Rejadan ortiq ish qilgan kuningiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "في اليوم الذي تعمل فيه أكثر من المخطط تسجّله هنا. ويُضاف إلى المهمة المرتبطة كـ«زيادة» ويرفع نسبتك فوق 100% في الإحصائيات.",
+  "Miqdori sanaladigan ishlar uchun: necha bet o'qildi, necha marta zikr aytildi, necha kilometr yurildi. Har kuni raqam kiritasiz, to'plangan miqdor va jarayon alohida ko'rinadi.": "للأعمال التي تُقاس بالمقدار: كم صفحة قُرئت، وكم مرة قيل الذكر، وكم كيلومترًا مُشي. تُدخل رقمًا كل يوم، ويُعرض المجموع المتراكم والتقدّم على حدة.",
+  "Alohida bo'lim — kunlik vazifalar foiziga aralashmaydi. Tonggi va kechki zikrlar, besh vaqt namoz (har biri sunnat va farzga ajratilgan), tahajjud va kunduzgi nafllar shu yerda belgilanadi. Erkaklarda har namoz yonida «Masjidda» tugmasi bor — u reytingga bonus qo'shadi.": "قسم مستقل — لا يتداخل مع نسبة المهام اليومية. تُعلَّم هنا أذكار الصباح والمساء، والصلوات الخمس (كل منها مقسّمة إلى سنة وفرض)، والتهجد ونوافل النهار. وللرجال زر «في المسجد» بجانب كل صلاة — يضيف مكافأة إلى التقييم.",
+  "Xatmni oldindan rejalashtirasiz: qachondan qachongacha va kuniga necha daqiqa yoki necha pora. Har kuni bajarganingizni belgilab borasiz, necha kun o'tgani yonida ko'rinib turadi. Rejani o'zgartirish uchun qatorni bosib turing.": "تخطّط للختمة مسبقًا: من متى إلى متى، وكم دقيقة أو كم جزءًا في اليوم. وتعلّم كل يوم ما أنجزته، ويظهر بجانبه عدد الأيام المنقضية. ولتغيير الخطة اضغط مطولًا على السطر.",
+  "Sarlavhadagi karavot tugmasi. Necha soat uxlashni yoki aniq vaqt oralig'ini belgilaysiz, so'ng har kuni qancha uxlaganingizni yozib borasiz. Haftalik o'rtacha va rejadan chetlashish ko'rsatiladi.": "زر السرير في الترويسة. تحدّد كم ساعة تنام أو نطاقًا زمنيًا دقيقًا، ثم تسجّل كل يوم كم نمت. ويُعرض المتوسط الأسبوعي ومقدار الانحراف عن الخطة.",
+  "Diqqatni jamlab ishlash taymeri. Ikki rejim bor: «Diqqatni jamlash»da ekran qorayadi va faqat taymer qoladi; «Ochiq rejim»da ilovadan chiqsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": "مؤقّت للعمل بتركيز. وفيه وضعان: في «التركيز» تُظلم الشاشة ولا يبقى إلا المؤقّت؛ وفي «الوضع المفتوح» يمكنك مغادرة التطبيق ومع ذلك يُنبّهك الهاتف عند انتهاء الوقت. وتُضاف الدقائق التي عملتها إلى المهمة التي تختارها.",
+  "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi.": "يُلوَّن كل يوم بحسب نتيجته: فاليوم المُنجَز كاملًا أخضر، وما زاد على النصف أصفر، والأدنى أحمر. ويوم الراحة بلا لون — فهو لا يُحتسب. واضغط على يوم لفتح تفاصيله كاملة.",
+  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "عرض يومي وأسبوعي وشهري. وبجانب كل رقم فرقه عن الفترة السابقة — أارتفع أم انخفض. واضغط على نقطة في الرسم البياني لترى أيّ يوم هي.",
+  "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz.": "نصّ هدفك، وحلقة النتيجة العامة، وأهدافك الرقمية السنوية. اضغط على أيّ هدف لترى تقدّمه — بالأسبوع والشهر وستة أشهر والسنة. وفي الخطة متعددة السنوات تُدار كل سنة على حدة: فإذا انتهت سنة أضفت مهام السنة التالية.",
+  "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi.": "هنا تكتب الكلمات التي أثّرت فيك ومعاني الآيات والأحاديث. وتُفتح من الأزرار الدائرية في صفحة اليوم.",
+  "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi.": "عند وضع خطتك يمكنك تعيين يوم واحد من الأسبوع يوم راحة. ففي ذلك اليوم لا تُطلب منك المهام ولا يدخل في الإحصاءات — ولن يخفض نسبتك.",
+  "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": "الإعدادات ← البيانات. اضغط «تنزيل PDF» فتُحفظ كل بياناتك في ملف واحد. وإذا انتقلت إلى هاتف جديد استعدت كل شيء عبر «تثبيت PDF». وتبقى بياناتك في هاتفك وحده — ولا تُرسل إلى أي مكان.",
+  "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": "هناك خمس لغات: الأوزبكية بالحرفين اللاتيني والسيريلي، والإنجليزية، والعربية، والروسية. وإذا اخترت العربية انقلب التطبيق كله من اليمين إلى اليسار.",
+  "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": "زر الشمس أو القمر في الترويسة يبدّل ألوان التطبيق. فشغّل المظهر الليلي في المساء كي لا تتعب عيناك.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -1737,7 +1763,6 @@ const LUGAT_RU: Record<string, string> = {
   "ma'lumot yo'q": "нет данных",
   "Hech narsa topilmadi.": "Ничего не найдено.",
   "Ilova yangiliklari": "Новости приложения",
-  "Qanday ishlaydi?": "Как это работает?",
   "PDF yuklab olish": "Скачать PDF",
   "Zaxira saqlandi": "Резервная копия сохранена",
   "Muddat": "Срок",
@@ -1771,7 +1796,6 @@ const LUGAT_RU: Record<string, string> = {
   "Kechki zikrlar": "Вечерние зикры",
   "Uxlashdan oldingi zikrlar": "Зикры перед сном",
   "Qur'on xatmini rejalash": "Запланировать хатм Корана",
-  "xatm rejasini tahrirlash": "изменить план хатма",
   "Bismillah — boshlaymiz!": "Бисмиллях — начнём!",
 
   // --- Vaqt va sana ---
@@ -1950,8 +1974,6 @@ const LUGAT_RU: Record<string, string> = {
 
   // --- Yordam va tur sarlavhalari ---
   "Qo'shish (+)": "Добавление (+)",
-  "Vazifa vaqti": "Время задачи",
-  "Zaxira": "Резервная копия",
   "Maqsad bo'limi": "Раздел цели",
   "Qo'shish tugmasi": "Кнопка добавления",
   "Bugun sahifasi": "Страница «Сегодня»",
@@ -1977,7 +1999,6 @@ const LUGAT_RU: Record<string, string> = {
   "Namoz belgilash to'g'ri sozlanishi uchun jinsingizni tanlang (bir marta so'raladi, saqlanadi):": "Выберите пол, чтобы отметки намаза настроились правильно (спрашивается один раз и сохраняется):",
   "Erkaklarda har namozda «masjidda o'qidim» tugmasi bo'ladi — reytingda balandroq baholanadi.": "У мужчин при каждом намазе есть кнопка «читал в мечети» — она оценивается выше.",
   "Kunlik vazifalar foiziga aralashmaydi — alohida hisoblanadi. Masjid va nafllar bonus beradi.": "Не влияет на процент ежедневных задач — считается отдельно. Мечеть и нафли дают бонус.",
-  "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi.": "Отдельный раздел, не влияет на дневной процент. Здесь отмечаются зикры, пять намазов, нафли и хатм Корана.",
   "Zikr, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi. Alohida hisoblanadi — kundalik foizga aralashmaydi.": "Здесь отмечаются зикр, пять намазов, нафли и хатм Корана. Считается отдельно — не влияет на дневной процент.",
   "Zikrlar, besh vaqt namoz, nafl namozlar va Qur'on xatmi. Bu bo'lim kundalik vazifalar foiziga aralashmaydi, alohida hisoblanadi. Masjidda o'qilgan namoz va nafllar reytingni oshiradi.": "Зикры, пять намазов, нафль-намазы и хатм Корана. Этот раздел не влияет на процент ежедневных задач, считается отдельно. Намаз в мечети и нафли повышают оценку.",
 
@@ -2013,7 +2034,6 @@ const LUGAT_RU: Record<string, string> = {
   "Boshqa ish — vazifalarga yozilmasin": "Другая работа — не записывать ни к одной задаче",
   "Nima ish qilganingizni yozing.": "Напишите, чем вы занимались.",
   "hisoblanadi — qismiy bajarilish beradi, ortiqchasi «qo'shimcha»ga o'tadi.": "засчитывается — даёт частичное выполнение, а излишек переходит в «сверх нормы».",
-  "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi.": "Есть два режима. В фокусе экран затемняется и остаётся только таймер. В открытом режиме уведомление придёт, даже если вы вышли из приложения.",
   "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqib ketsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": "Есть два режима. В фокусе экран затемняется и остаётся только таймер. В открытом режиме телефон уведомит вас по окончании времени, даже если вы вышли из приложения. Отработанные минуты добавляются к выбранной задаче.",
   "Diqqatni bir joyga jamlab ishlash uchun taymer. Ishlagan vaqtingiz tegishli vazifaga o'zi yozib boriladi.": "Таймер для сосредоточенной работы. Отработанное время само записывается к нужной задаче.",
 
@@ -2034,7 +2054,6 @@ const LUGAT_RU: Record<string, string> = {
   "Taxminan necha kunda tugataman?": "Примерно за сколько дней завершу?",
   "Sanaladigan vazifada muddat majburiy — qachongacha yetkazasiz?": "Для подсчитываемой задачи срок обязателен — к какому времени успеете?",
   "Vazifaning kunlik vaqti {v} — undan KAM vaqt ajratib bo'lmaydi.": "Дневное время задачи {v} — выделить МЕНЬШЕ нельзя.",
-  "Vazifa katakchasini bossangiz — belgilash oynasi ochiladi: qildim, sababli yoki qilmadim.": "Нажмите на квадрат задачи — откроется окно отметки: выполнил, по причине или не выполнил.",
   "Bu vazifani tugatdingizmi? Tabriklaymiz!": "Вы завершили эту задачу? Поздравляем!",
   "Vazifani tashlab qo'yasizmi? Bu statistikada salbiy iz qoldiradi.": "Забросить задачу? Это оставит отрицательный след в статистике.",
   "Bu vazifa hali boshlanmagan. Butunlay o'chirilsinmi?": "Эта задача ещё не начата. Удалить полностью?",
@@ -2045,7 +2064,6 @@ const LUGAT_RU: Record<string, string> = {
   "Vaqtlar faqat reja uchun — belgilashni kun davomida istalgan payt qilasiz.": "Время нужно только для плана — отмечать можно в любой момент дня.",
   "Vazifaga tegishli bo'lsa — o'sha vazifaga «qo'shimcha» qo'shiladi va statistikaga kiradi.": "Если относится к задаче — к ней добавится «сверх нормы» и войдёт в статистику.",
   "Rejadan ortiq ish qilsangiz — Bugun bo'limidagi «Rejadan tashqari amallar» bo'limiga yozing. Vijdon — eng adolatli guvoh.": "Если сделали больше плана — запишите в раздел «Дополнительная работа» на странице «Сегодня». Совесть — самый справедливый свидетель.",
-  "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "Сюда записывайте всё, что сделали сверх плана. Это добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
   "Masalan: qo'shimcha kitob o'qidim": "Например: прочитал дополнительную книгу",
   "«{nom}» — {k}-kun (reja: {r} kun). Shoshilmang, lekin rejani ham unutmang.": "«{nom}» — день {k} (план: {r} дней). Не спешите, но и о плане не забывайте.",
   "«{nom}» vazifasini boshlaysiz.": "вы начнёте задачу «{nom}».",
@@ -2057,9 +2075,6 @@ const LUGAT_RU: Record<string, string> = {
   "(shu tur bir papka bo'ladi)": "(этот тип станет отдельной папкой)",
   "(shu vaqtda eslatma keladi)": "(в это время придёт напоминание)",
   "yoki yangi tur yozing...": "или напишите новый тип...",
-  "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin.": "Каждой задаче задаётся промежуток времени — например 08:00–09:00. В это время придёт напоминание, даже если приложение закрыто. Дни тоже можно выбрать.",
-  "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim.": "Сердце дня. Сверху результат за сегодня, затем ваши задачи. Нажмите на квадрат — откроется окно отметки: выполнил, не выполнил по причине или совсем не выполнил.",
-  "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz.": "Зелёная кнопка внизу. Через неё добавляются ежедневная задача, задача высшей цели и годовая цель, а также открывается список всех задач.",
 
   // --- Maqsad ---
   "Oliy maqsadlaringizni belgilang": "Задайте свои высшие цели",
@@ -2086,7 +2101,6 @@ const LUGAT_RU: Record<string, string> = {
   "Shunday davom etsangiz, yil oxirida taxminan": "При таком темпе к концу года будет примерно",
   "{n} yillik maqsadlaringiz uchun rejangizni tuzishga tayyormisiz?": "Готовы составить план для своих целей на {n} лет?",
   "Hozircha faqat birinchi yil vazifalarini belgilaysiz. Yil tugagach keyingi yilnikini qo'shasiz — o'tgan yil ma'lumotlari saqlanib qoladi ({n} yillik reja shunday boriladi).": "Пока вы задаёте задачи только на первый год. По его окончании добавите задачи следующего года — данные прошедшего года сохранятся (так ведётся план на {n} лет).",
-  "Maqsad matningiz, natija halqasi va yillik maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, 6 oy va yil bo'yicha.": "Текст вашей цели, кольцо результата и годовые цели. Нажмите на любую цель, чтобы увидеть прогресс — за неделю, месяц, 6 месяцев и год.",
   "Avval shu yerda oliy maqsadingizni yozasiz — nimaga erishmoqchisiz va necha yilda. Yillik raqamli maqsadlar ham shu yerda turadi.": "Сначала здесь вы пишете свою высшую цель — чего хотите достичь и за сколько лет. Годовые числовые цели тоже здесь.",
   "Oliy maqsadingiz matni, natija halqasi va yillik raqamli maqsadlaringiz shu yerda. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz, eskisi saqlanib qoladi.": "Здесь текст вашей высшей цели, кольцо результата и годовые числовые цели. Нажмите на любую цель, чтобы увидеть её прогресс — за неделю, месяц, полгода и год. В многолетнем плане каждый год ведётся отдельно: по окончании года добавляете задачи следующего, а прежние сохраняются.",
   "Maqsadga eltuvchi vazifalarni shu tugma orqali qo'shasiz. Kundalik vazifa ham, oliy maqsad vazifasi ham shu yerdan.": "Задачи, ведущие к цели, добавляются этой кнопкой — и ежедневные, и задачи высшей цели.",
@@ -2114,8 +2128,6 @@ const LUGAT_RU: Record<string, string> = {
   "Qaysi vaqt oralig'ida qilasiz?": "В какой промежуток времени будете делать?",
   "Keyingi 7 kun davomida qayta o'zgartirib bo'lmaydi.": "В течение следующих 7 дней изменить снова нельзя.",
   "Quyidagilar keyin o'zgartirilmaydi:": "Следующее нельзя изменить позже:",
-  "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi.": "Цвет каждого дня зависит от результата: полностью выполненный день зелёный, больше половины — жёлтый, ниже — красный. День отдыха бесцветный — он не учитывается.",
-  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "Дневной, недельный и месячный вид. Рядом с каждым числом — разница с прошлым периодом. Нажмите на точку графика, чтобы увидеть, какой это день.",
   "Kunning yuragi shu yerda. Har kuni vazifalarni belgilab borasiz — qildim, sababli qilmadim yoki umuman qilmadim.": "Сердце дня здесь. Каждый день вы отмечаете задачи — выполнил, не выполнил по причине или совсем не выполнил.",
   "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Rejadan tashqari amallar» bo'limiga yozasiz — u tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi.": "Каждый день вы начинаете отсюда. При нажатии на квадрат задачи открывается окно отметки. Если сделали больше плана — запишите в «Дополнительную работу», и это добавится к нужной задаче как «сверх нормы».",
 
@@ -2138,15 +2150,11 @@ const LUGAT_RU: Record<string, string> = {
   "Iltimos, ismingizni kiriting.": "Пожалуйста, введите ваше имя.",
   "Keyinroq davom ettiraman.": "Продолжу позже.",
   "Keyinroq sozlashim mumkin.": "Смогу настроить позже.",
-  "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz.": "Настройки → Данные. При скачивании PDF все данные сохраняются в этом файле. На новом телефоне восстановите через «Установить из PDF».",
   "Zaxira, qo'llanma, maqsadni qayta tuzish": "Копия, руководство, перестройка цели",
 
   // --- Yordam, kanal, til ---
-  "Ilovaning har bo'limi haqida qisqa izoh": "Краткое пояснение по каждому разделу",
   "Ilovani ishlatish bo'yicha qo'llanma": "Руководство по использованию",
-  "Ilova bo'ylab qadam-baqadam yuriladi": "Пошаговая экскурсия по приложению",
   "Yangiliklar va yangilanishlar shu yerda": "Новости и обновления здесь",
-  "Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.": "Кнопкой + внизу вы добавляете ежедневные задачи, задачи высшей цели и годовые цели.",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "чтобы добавить ежедневную задачу или задачу высшей цели.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "Добавьте задачу и отмечайте её несколько дней — здесь появятся результаты, графики и недельный отчёт.",
   "«Oliy maqsad» telegram kanali": "Телеграм-канал «Высшая цель»",
@@ -2184,7 +2192,6 @@ const LUGAT_RU: Record<string, string> = {
   // --- v12: dumaloq tugmalar ---
   "Kun iqtiboslari": "Цитаты дня",
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "Сюда записывайте всё, что сделали сверх плана. Это добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
-  "Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.": "Четыре круглые кнопки ниже нажимаются — отсюда открываются поклонение, подсчитываемые задачи, работы сверх плана и цитаты дня.",
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
   "Nimadan boshlaymiz?": "С чего начнём?",
@@ -2201,6 +2208,38 @@ const LUGAT_RU: Record<string, string> = {
 
   // --- v12: namoz ixcham qatori ---
   "masjidda o'qildi": "прочитано в мечети",
+
+  // --- v12: ma'lumotnoma qayta yozildi ---
+  "Xatm rejasini tahrirlash": "Изменить план хатма",
+  "Har bo'lim nima qiladi?": "Что делает каждый раздел?",
+  "Bo'limlar va tugmalar batafsil izohlangan — o'qib chiqiladi": "Разделы и кнопки описаны подробно — для чтения",
+  "Ilova bo'ylab qadam-baqadam yuriladi — ko'rsatib boriladi": "Пошаговая прогулка по приложению — каждое место показывается",
+  "Oy": "Месяц",
+  "6 oy": "6 месяцев",
+  "Vazifani belgilash": "Отметка задачи",
+  "Vazifa vaqti va eslatma": "Время задачи и напоминание",
+  "Papkalar": "Папки",
+  "Zaxira nusxa": "Резервная копия",
+  "Kunduzgi va tungi ko'rinish": "Светлый и тёмный вид",
+  "Kunning yuragi. Eng yuqorida bugungi natija halqasi — nechta vazifa bajarilgani va foizi. Ostida bugun bajariladigan vazifalar. Vaqt belgilangan vazifalar soat tartibida chiqadi.": "Сердце дня. В самом верху — кольцо результата за сегодня: сколько задач выполнено и процент. Ниже — задачи на сегодня. Задачи с заданным временем идут по часам.",
+  "Vazifa katakchasini bosing — pastdan belgilash oynasi chiqadi. Uch javob bor: «qildim», «sababli qilmadim» (kasallik, safar kabi — bu statistikani pasaytirmaydi) va «qilmadim». Katakchani bir soniya bosib tursangiz tahrirlash va o'chirish tugmalari chiqadi.": "Нажмите на ячейку задачи — снизу появится окно отметки. Три ответа: «сделал», «не сделал по уважительной причине» (болезнь, поездка — это не снижает статистику) и «не сделал». Удержите ячейку около секунды — появятся кнопки «Изменить» и «Удалить».",
+  "Pastdagi katta yashil tugma. Undan uch narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa va yillik raqamli maqsad. Eng pastdagi «Barcha vazifalar» esa qo'shish uchun emas — bor vazifalarni ko'rish va boshqarish uchun.": "Большая зелёная кнопка внизу. Из неё добавляются три вещи: ежедневная задача, повторяющаяся каждый день, задача высшей цели и годовая числовая цель. А «Все задачи» в самом низу — не для добавления, а для просмотра и управления тем, что уже есть.",
+  "Har vazifaga vaqt oralig'i beriladi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Vazifa haftaning qaysi kunlari bajarilishini ham tanlaysiz.": "Каждой задаче можно задать промежуток времени — например 08:00–09:00. Когда это время наступит, на телефон придёт напоминание, даже если приложение закрыто. Вы также выбираете, в какие дни недели выполняется задача.",
+  "Vazifalar ko'payib ketganda ularni papkalarga ajratasiz — masalan «Ilm», «Sog'liq», «Ish». Papkalar «Barcha vazifalar» bo'limida yaratiladi va vazifa ro'yxati shunga qarab guruhlanadi.": "Когда задач становится много, вы раскладываете их по папкам — например «Знание», «Здоровье», «Работа». Папки создаются в разделе «Все задачи», и список задач группируется по ним.",
+  "Rejadan ortiq ish qilgan kuningiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "В день, когда сделали больше плана, записываете это сюда. Оно добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
+  "Miqdori sanaladigan ishlar uchun: necha bet o'qildi, necha marta zikr aytildi, necha kilometr yurildi. Har kuni raqam kiritasiz, to'plangan miqdor va jarayon alohida ko'rinadi.": "Для дел, измеряемых количеством: сколько страниц прочитано, сколько раз произнесён зикр, сколько километров пройдено. Каждый день вводите число, а накопленный итог и ход показываются отдельно.",
+  "Alohida bo'lim — kunlik vazifalar foiziga aralashmaydi. Tonggi va kechki zikrlar, besh vaqt namoz (har biri sunnat va farzga ajratilgan), tahajjud va kunduzgi nafllar shu yerda belgilanadi. Erkaklarda har namoz yonida «Masjidda» tugmasi bor — u reytingga bonus qo'shadi.": "Отдельный раздел — он не влияет на процент ежедневных задач. Здесь отмечаются утренние и вечерние зикры, пять намазов (каждый разделён на сунну и фард), тахаджуд и дневные нафли. У мужчин рядом с каждым намазом есть кнопка «В мечети» — она добавляет бонус к рейтингу.",
+  "Xatmni oldindan rejalashtirasiz: qachondan qachongacha va kuniga necha daqiqa yoki necha pora. Har kuni bajarganingizni belgilab borasiz, necha kun o'tgani yonida ko'rinib turadi. Rejani o'zgartirish uchun qatorni bosib turing.": "Хатм планируется заранее: с какого по какое число и сколько минут или джузов в день. Каждый день вы отмечаете выполненное, а рядом видно, сколько дней прошло. Чтобы изменить план, удержите строку.",
+  "Sarlavhadagi karavot tugmasi. Necha soat uxlashni yoki aniq vaqt oralig'ini belgilaysiz, so'ng har kuni qancha uxlaganingizni yozib borasiz. Haftalik o'rtacha va rejadan chetlashish ko'rsatiladi.": "Кнопка с кроватью в шапке. Вы задаёте, сколько часов спать, или точный промежуток времени, а затем каждый день записываете, сколько поспали. Показываются недельное среднее и отклонение от плана.",
+  "Diqqatni jamlab ishlash taymeri. Ikki rejim bor: «Diqqatni jamlash»da ekran qorayadi va faqat taymer qoladi; «Ochiq rejim»da ilovadan chiqsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi.": "Таймер для сосредоточенной работы. Два режима: в «Сосредоточении» экран темнеет и остаётся только таймер; в «Открытом режиме» можно выйти из приложения — телефон всё равно сообщит, когда время выйдет. Отработанные минуты добавляются к выбранной задаче.",
+  "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi.": "Каждый день окрашивается по его результату: полностью выполненный день зелёный, больше половины — жёлтый, ниже — красный. Выходной день без цвета — он не учитывается. Нажмите на день, чтобы открыть его полные подробности.",
+  "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "Дневной, недельный и месячный вид. Рядом с каждым числом — его разница с прошлым периодом: выросло или упало. Нажмите на точку графика, чтобы увидеть, какой это день.",
+  "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz.": "Текст вашей цели, кольцо общего результата и годовые числовые цели. Нажмите на любую цель, чтобы увидеть её ход — за неделю, месяц, полгода и год. В многолетнем плане каждый год ведётся отдельно: когда год закончится, вы добавите задачи следующего.",
+  "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi.": "Сюда вы записываете слова, которые вас тронули, и смыслы аятов и хадисов. Они открываются круглыми кнопками на странице «Сегодня».",
+  "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi.": "При составлении плана можно отметить один день недели как выходной. В этот день задачи не спрашиваются, и он не входит в статистику — ваш процент не снизится.",
+  "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": "Настройки → Данные. Нажмите «Скачать PDF» — и все ваши данные сохранятся в один файл. Перейдя на новый телефон, вы восстановите всё через «Установить PDF». Данные хранятся только на вашем телефоне и никуда не отправляются.",
+  "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": "Пять языков: узбекский латиницей и кириллицей, английский, арабский и русский. При выборе арабского всё приложение разворачивается справа налево.",
+  "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": "Кнопка солнца или луны в шапке переключает цвета приложения. Вечером включайте тёмный вид, чтобы глаза не уставали.",
 };
 
 // Ruschani LUGAT ga qo'shamiz

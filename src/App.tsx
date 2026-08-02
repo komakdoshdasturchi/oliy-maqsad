@@ -478,6 +478,9 @@ const ICONS: Record<string, string> = {
   trash: '<path d="M4 7h16M9.5 7V5.6A1.6 1.6 0 0 1 11.1 4h1.8a1.6 1.6 0 0 1 1.6 1.6V7M6.8 7l.8 12a2 2 0 0 0 2 1.9h4.8a2 2 0 0 0 2-1.9L17.2 7"/>',
   minus: '<path d="M5 12h14"/>',
   moon: '<path d="M20.5 13.6A8.5 8.5 0 1 1 10.4 3.5a6.6 6.6 0 0 0 10.1 10.1Z"/>',
+  // Uyqu uchun. Ilgari `moon` ishlatilardi, ammo mavzu tugmasi ham yarim oy —
+  // ikkalasi sarlavhada yonma-yon turib chalkashtirardi.
+  bed: '<path d="M3 20V7"/><path d="M3 12.6h13.4a4.6 4.6 0 0 1 4.6 4.6V20"/><path d="M3 16.6h18"/><path d="M6.6 12.6v-1.9a1.7 1.7 0 0 1 1.7-1.7h2.4a1.7 1.7 0 0 1 1.7 1.7v1.9"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/>',
   star: '<path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.8 6.6 19.7l1.2-6-4.5-4.2 6.1-.7z" fill="currentColor" stroke="none"/>',
   starLine: '<path d="m12 3.2 2.5 5.4 5.9.7-4.4 4 1.2 5.8L12 16.4 6.8 19.1 8 13.3 3.6 9.3l5.9-.7z"/>',
@@ -860,15 +863,9 @@ function OyatCard() {
   const arab = getCur() === "ar";
   return (
     <Card className="text-center" style={{ borderColor: "var(--line)" }}>
-      {/* Yuqorida — halqa ichida kitob ikonkasi, ostida kichik nuqta */}
-      <div className="flex flex-col items-center">
-        <span className="grid place-items-center rounded-full" style={{ width: 54, height: 54, border: "1px solid var(--green)", color: "var(--green)", opacity: 0.9 }}>
-          <Icon n="bookOpen" size={22} />
-        </span>
-        <span className="mt-1.5 block rounded-full" style={{ width: 4, height: 4, background: "var(--green)", opacity: 0.7 }} />
-      </div>
-
-      <p className="mt-4 text-[11px] leading-relaxed" style={{ color: "var(--muted)" }}>{tr("Alloh taolo Qur'oni Karimda shunday marhamat qiladi:")}</p>
+      {/* Ilgari yuqorida halqa ichida kitob ikonkasi turardi — olib tashlandi:
+          oyatning o'zi yetarli, ikonka bekorga joy egallardi. */}
+      <p className="text-[11px] leading-relaxed" style={{ color: "var(--muted)" }}>{tr("Alloh taolo Qur'oni Karimda shunday marhamat qiladi:")}</p>
 
       {/* Oyatning asli — ikki yonida oltin bezak */}
       <div className="mt-4 flex items-center justify-center gap-3">
@@ -1303,6 +1300,20 @@ function IbadatPage(p: {
     upd(x => ({ ...x, pr: { ...x.pr, [pid]: arr } }));
   };
 
+  // Uzoq bosish = tahrirlash. Bugun bo'limidagi vazifalar bilan bir xil odat,
+  // shu sabab xatm qatorida ham shunday ishlaydi.
+  const bosish = useRef<{ timer: number | null; uzun: boolean }>({ timer: null, uzun: false });
+  const bekor = () => { if (bosish.current.timer) { clearTimeout(bosish.current.timer); bosish.current.timer = null; } };
+  const uzunBosish = (uzoq: () => void, qisqa: () => void) => ({
+    onPointerDown: () => {
+      bosish.current.uzun = false;
+      bosish.current.timer = window.setTimeout(() => { bosish.current.uzun = true; buzz(); uzoq(); }, 480);
+    },
+    onPointerUp: bekor, onPointerLeave: bekor, onPointerCancel: bekor,
+    onClick: () => { if (bosish.current.uzun) { bosish.current.uzun = false; return; } qisqa(); },
+    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+  });
+
   // xatm jarayoni: boshlanishdan bugungacha nechta kun belgilangan
   let kDone = 0, kTotal = 0;
   if (khatm) {
@@ -1432,7 +1443,7 @@ function IbadatPage(p: {
               <button onClick={() => setShowKhatm(true)} className="ms-auto text-xs" style={lblS}>{tr("tahrirlash")}</button>
             </div>
           ) : kActive ? (
-            <button onClick={() => upd(x => ({ ...x, khatm: !x.khatm }))}
+            <button {...uzunBosish(() => setShowKhatm(true), () => upd(x => ({ ...x, khatm: !x.khatm })))}
               className="om-press flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-sm"
               style={d.khatm ? { borderColor: "var(--green)", background: "var(--soft)" } : cardS}>
               <Icon n="bookOpen" size={18} style={{ color: "var(--green)" }} />
@@ -1448,7 +1459,16 @@ function IbadatPage(p: {
               <button onClick={() => setShowKhatm(true)} className="ms-auto text-xs" style={{ color: "var(--green)" }}>{tr("yangi xatm")}</button>
             </div>
           )}
-          {kActive && <button onClick={() => setShowKhatm(true)} className="mt-1.5 text-[11px]" style={lblS}>{tr("xatm rejasini tahrirlash")}</button>}
+          {/* Ilgari bu shunchaki kichik yozuv edi — bosiladigani bilinmasdi.
+              Endi ramkali tugma + qalam ikonkasi. Qatorning o'zini bosib
+              tursa ham shu oyna ochiladi. */}
+          {kActive && (
+            <button onClick={() => setShowKhatm(true)}
+              className="om-press mt-2 flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[11px] font-medium"
+              style={{ ...cardS, color: "var(--muted)" }}>
+              <Icon n="pencil" size={12} /> {tr("Xatm rejasini tahrirlash")}
+            </button>
+          )}
         </div>
       </div>
       {showKhatm && <KhatmModal khatm={khatm} today={today} onSave={k => p.setKhatm(k)} onClose={() => setShowKhatm(false)} />}
@@ -1557,8 +1577,6 @@ function BugunView(p: {
   openVazifalar: () => void;
   openStat: () => void;
   startPomo: () => void;
-  hints: Record<string, boolean>;
-  doneHint: (k: string) => void;
 }) {
   const { today, plan, tasks, logs, settings, ui, setUi } = p;
   const [noteTask, setNoteTask] = useState<Task | null>(null);
@@ -1593,7 +1611,6 @@ function BugunView(p: {
   };
 
   const setMark = (id: string, mark: MarkV5 | null) => {
-    p.doneHint("mark");
     p.setLogs(ls => {
       const day = { ...(ls[today] || {}) };
       if (mark === null) delete day[id]; else day[id] = mark;
@@ -1835,7 +1852,7 @@ function BugunView(p: {
       : slept !== undefined ? `${tr("uxlandi")}: ${raqam(slept)} ${tr("soat")}`
       : tr("Belgilanmagan");
     return (
-      <IxchamKarta icon="moon" tint="var(--blue)" nom={tr("Rejaga ko'ra uyqu")} holat={holat} ochiq={ochiqUyqu} setOchiq={setOchiqUyqu}>
+      <IxchamKarta icon="bed" tint="var(--blue)" nom={tr("Rejaga ko'ra uyqu")} holat={holat} ochiq={ochiqUyqu} setOchiq={setOchiqUyqu}>
         <div className="text-[11px]" style={{ color: "var(--muted)" }}>
           {tr("Reja")}: {p.sleepCfg.kind === "range" ? `${p.sleepCfg.from} — ${p.sleepCfg.to} (~${raqam(planH)} ${tr("soat")})` : `${raqam(planH)} ${tr("soat")}`}
           {slept !== undefined ? ` · ${tr("uxlandi")}: ${raqam(slept)} ${tr("soat")}` : ""}
@@ -2006,7 +2023,7 @@ function BugunView(p: {
       <div className="flex items-start justify-around gap-1 px-1 pt-1">
         {dumaloq.map(b => (
           <button key={b.id} data-tur={b.id === "ibodat" ? "ibodat" : undefined}
-            onClick={() => { p.doneHint("tiles"); buzz(); b.bos(); }}
+            onClick={() => { buzz(); b.bos(); }}
             className="om-press flex w-[4.6rem] flex-none flex-col items-center gap-1.5">
             <span className="grid h-12 w-12 place-items-center rounded-full"
               style={{ background: "var(--card)", border: "1px solid var(--line)", color: b.tint, boxShadow: "var(--shadow)" }}>
@@ -2112,10 +2129,6 @@ function BugunView(p: {
 
       {NextCard}
 
-      <Hint id="tiles" hints={p.hints} done={p.doneHint}
-        text={tr("Pastdagi to'rtta dumaloq tugma bosiladi — ibodat, sanaladigan vazifalar, rejadan tashqari amallar va kun iqtiboslari shu yerdan ochiladi.")} />
-
-
       {backupOld && <Card style={{ borderColor: "var(--gold)" }}><p className="text-sm" style={{ color: "var(--ink)" }}>{tr("Zaxira nusxa olganingizga ancha bo'ldi — Sozlamalardan yuklab oling.")}</p></Card>}
 
       {soon.map(t => (
@@ -2158,11 +2171,6 @@ function BugunView(p: {
             <p className="mx-auto mt-1 max-w-[16rem] text-[11.5px] leading-relaxed" style={lblS}>{tr("Pastdagi")} <b style={{ color: "var(--green)" }}>+</b> {tr("tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.")}</p>
           </div>
         )}
-        {act.length > 0 && !reorder && (
-          <div className="mb-2"><Hint id="mark" hints={p.hints} done={p.doneHint}
-            text={tr("Vazifa katakchasini bossangiz — belgilash oynasi ochiladi: qildim, sababli yoki qilmadim.")} /></div>
-        )}
-
         {reorder ? (
           <div className="space-y-1.5">
             <p className="text-[11px]" style={lblS}>{tr("Tartibni o'zgartiring — birinchi vazifa «Keyingi vazifa» kartasida chiqadi.")}</p>
@@ -2727,7 +2735,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
 
         <Card>
           <div className="mb-2 flex items-center justify-between">
-            <h3 className="flex items-center gap-2 text-[13px] font-bold" style={{ color: "var(--ink)" }}><Icon n="moon" size={15} style={{ color: "var(--blue)" }} /> {tr("Uyqu")}</h3>
+            <h3 className="flex items-center gap-2 text-[13px] font-bold" style={{ color: "var(--ink)" }}><Icon n="bed" size={15} style={{ color: "var(--blue)" }} /> {tr("Uyqu")}</h3>
             <button onClick={() => setSleepList(true)} className="om-press text-[11px] font-semibold" style={{ color: "var(--blue)" }}>{tr("Uyqu")}</button>
           </div>
           {sAvg === null ? <p className="text-[12px]" style={lblS}>{tr("Bu hafta uyqu yozilmagan.")}</p> : (
@@ -2897,7 +2905,7 @@ function StatView(p: { today: string; plan: Plan; tasks: Task[]; logs: Logs; ext
 function UyquKundaligi({ today, plan, sleepLog, sleepCfg, onClose }: { today: string; plan: Plan; sleepLog: Record<string, number>; sleepCfg: SleepCfg | null; onClose: () => void }) {
   const rows = Object.keys(sleepLog).filter(d => d <= today).sort().reverse().slice(0, 40);
   return (
-    <Sheet title={<span className="flex items-center gap-2"><Icon n="moon" size={16} style={{ color: "var(--blue)" }} /> {tr("Uyqu")}</span>} onClose={onClose}>
+    <Sheet title={<span className="flex items-center gap-2"><Icon n="bed" size={16} style={{ color: "var(--blue)" }} /> {tr("Uyqu")}</span>} onClose={onClose}>
       {rows.length === 0 ? <p className="text-[12px]" style={lblS}>{tr("Hali uyqu yozuvi yo'q.")}</p> : (
         <div className="space-y-1.5">
           {sleepCfg && <p className="mb-2 text-[11px]" style={lblS}>{tr("Reja")}: {sleepCfg.hours} {tr("soat. Rejadan kam uxlash yuqori baholanadi.")}</p>}
@@ -3182,7 +3190,11 @@ function MaqsadView(p: {
 }
 
 // davr tanlash — maqsad jarayoni va vazifalar tarixi uchun
-const MPER = [{ k: "hafta", n: tr("Hafta"), d: 7 }, { k: "oy", n: "Oy", d: 30 }, { k: "yarim", n: "6 oy", d: 182 }, { k: "yil", n: tr("Yil"), d: 365 }] as const;
+// DIQQAT: matnlar shu yerda XOM saqlanadi, `tr()` chizishda chaqiriladi.
+// Ilgari `tr("Hafta")` shu qatorning o'zida edi — modul yuklanganda BIR MARTA
+// hisoblanib, til almashtirilsa ham eski tilda qolib ketardi. «Oy» va «6 oy»
+// esa umuman o'ralmagan edi — boshqa tillarda o'zbekcha chiqardi.
+const MPER = [{ k: "hafta", n: "Hafta", d: 7 }, { k: "oy", n: "Oy", d: 30 }, { k: "yarim", n: "6 oy", d: 182 }, { k: "yil", n: "Yil", d: 365 }] as const;
 type MPerK = typeof MPER[number]["k"];
 
 function PerTabs({ per, setPer }: { per: MPerK; setPer: (k: MPerK) => void }) {
@@ -3190,7 +3202,7 @@ function PerTabs({ per, setPer }: { per: MPerK; setPer: (k: MPerK) => void }) {
     <div className="flex gap-1.5">
       {MPER.map(x => (
         <button key={x.k} onClick={() => setPer(x.k)} className="om-press flex-1 rounded-xl border py-2 text-[12px] font-semibold"
-          style={per === x.k ? { background: "var(--gold)", color: "#fff", borderColor: "var(--gold)" } : { ...cardS, color: "var(--ink)" }}>{x.n}</button>
+          style={per === x.k ? { background: "var(--gold)", color: "#fff", borderColor: "var(--gold)" } : { ...cardS, color: "var(--ink)" }}>{tr(x.n)}</button>
       ))}
     </div>
   );
@@ -3429,7 +3441,7 @@ function SleepPlanCard({ sleepCfg, setSleepCfg }: { sleepCfg: SleepCfg | null; s
           {kind === "range" && (
             <>
               <button onClick={() => setShowT(true)} className="om-press flex w-full items-center gap-3 rounded-xl border px-3.5 py-3 text-left" style={cardS}>
-                <Icon n="moon" size={17} style={{ color: "var(--blue)", flex: "none" }} />
+                <Icon n="bed" size={17} style={{ color: "var(--blue)", flex: "none" }} />
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-bold tabular-nums" style={{ color: "var(--ink)" }}>{from} — {to}</span>
                   <span className="block text-[11px]" style={{ color: "var(--blue)" }}>{tf("~{n} soat", { n: rangeHours(from, to) })}</span>
@@ -3469,7 +3481,7 @@ function UyquPage(p: {
   const weekAvg = n > 0 ? Math.round((sum / n) * 10) / 10 : null;
   return (
     <div className="space-y-4">
-      <h2 className="mb-1 flex items-center gap-2.5 text-2xl font-bold" style={{ color: "var(--ink)" }}><span className="grid h-9 w-9 place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--blue)" }}><Icon n="moon" size={20} /></span>{tr("Uyqu rejasi")}</h2>
+      <h2 className="mb-1 flex items-center gap-2.5 text-2xl font-bold" style={{ color: "var(--ink)" }}><span className="grid h-9 w-9 place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--blue)" }}><Icon n="bed" size={20} /></span>{tr("Uyqu rejasi")}</h2>
 
       {p.sleepCfg ? (
         <div className="rounded-2xl p-5" style={{ background: "linear-gradient(135deg,#232B4A 0%,#141A33 100%)", boxShadow: "var(--shadow-lg)" }}>
@@ -3478,7 +3490,7 @@ function UyquPage(p: {
               <div className="text-2xl font-bold text-white">{tf("{n} soat", { n: p.sleepCfg.hours })}</div>
               <div className="mt-1 flex items-center gap-1.5 text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.62)" }}><Icon n="target" size={12} /> {tr("Belgilangan maqsad")}</div>
             </div>
-            <Icon n="moon" size={40} style={{ color: "#D7A94B" }} />
+            <Icon n="bed" size={40} style={{ color: "#D7A94B" }} />
           </div>
           {p.sleepCfg.kind === "range" && (
             <div className="mt-4 grid grid-cols-2 gap-2">
@@ -4468,7 +4480,7 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="sparkles" size={21} /></span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilovani ishlatish bo'yicha qo'llanma")}</span>
-          <span className="block text-[11px]" style={lblS}>{tr("Ilova bo'ylab qadam-baqadam yuriladi")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Ilova bo'ylab qadam-baqadam yuriladi — ko'rsatib boriladi")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
@@ -4476,8 +4488,8 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
       <button onClick={() => setShowHelp(true)} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
         <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--gold)" }}><Icon n="info" size={21} /></span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Qanday ishlaydi?")}</span>
-          <span className="block text-[11px]" style={lblS}>{tr("Ilovaning har bo'limi haqida qisqa izoh")}</span>
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Har bo'lim nima qiladi?")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Bo'limlar va tugmalar batafsil izohlangan — o'qib chiqiladi")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
@@ -4561,23 +4573,34 @@ const TUR_TOLIQ: TurQadam[] = [
   { tur: "nav-bugun", nom: "Bugun sahifasi", matn: "Har kuni shu yerdan boshlaysiz. Vazifa katakchasini bosganingizda belgilash oynasi ochiladi. Rejadan ortiq ish qilsangiz «Rejadan tashqari amallar» bo'limiga yozasiz — u tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi." },
 ];
 
-// tr("Qanday ishlaydi?") — har bo'lim haqida qisqa izoh
+// tr("Har bo'lim nima qiladi?") — ma'lumotnoma. TANISHTIRUV TURIDAN FARQI:
+// tur ilova bo'ylab qadam-baqadam YURADI (atrofni qoraytirib, joyini yoritib),
+// bu esa o'qib chiqiladigan ro'yxat — istalgan bo'limni izlab topish uchun.
 const HELP_ITEMS: { icon: string; t: string; s: string }[] = [
-  { icon: "home", t: "Bugun", s: "Kunning yuragi. Yuqorida bugungi natija, keyin vazifalaringiz. Katakchani bossangiz belgilash oynasi ochiladi: qildim, sababli qilmadim yoki umuman qilmadim." },
-  { icon: "plus", t: "Qo'shish (+)", s: "Pastdagi yashil tugma. Undan kundalik vazifa, oliy maqsad vazifasi, yillik maqsad qo'shasiz va barcha vazifalar ro'yxatini ochasiz." },
-  { icon: "clock", t: "Vazifa vaqti", s: "Har vazifaga vaqt oralig'i belgilanadi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Kunlarni ham tanlashingiz mumkin." },
-  { icon: "sparkles", t: "Rejadan tashqari amallar", s: "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «qo'shimcha» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi." },
-  { icon: "mosque", t: "Ibodatlar", s: "Alohida bo'lim, kunlik foizga aralashmaydi. Zikrlar, besh vaqt namoz, nafllar va Qur'on xatmi shu yerda belgilanadi." },
-  { icon: "timer", t: "Pomodoro", s: "Ikki rejim bor. Fokusda ekran qorayadi va faqat taymer qoladi. Ochiq rejimda ilovadan chiqsangiz ham vaqt tugaganda xabar keladi." },
-  { icon: "calendar", t: "Taqvim", s: "Har kun rangi natijaga qarab: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi." },
-  { icon: "stats", t: "Statistika", s: "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi." },
-  { icon: "target", t: "Oliy maqsad", s: "Maqsad matningiz, natija halqasi va yillik maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, 6 oy va yil bo'yicha." },
-  { icon: "database", t: "Zaxira", s: "Sozlamalar → Ma'lumotlar. PDF yuklab olsangiz hamma ma'lumot shu faylda saqlanadi. Yangi telefonda «PDF o'rnatish» orqali tiklaysiz." },
+  { icon: "home", t: "Bugun", s: "Kunning yuragi. Eng yuqorida bugungi natija halqasi — nechta vazifa bajarilgani va foizi. Ostida bugun bajariladigan vazifalar. Vaqt belgilangan vazifalar soat tartibida chiqadi." },
+  { icon: "check", t: "Vazifani belgilash", s: "Vazifa katakchasini bosing — pastdan belgilash oynasi chiqadi. Uch javob bor: «qildim», «sababli qilmadim» (kasallik, safar kabi — bu statistikani pasaytirmaydi) va «qilmadim». Katakchani bir soniya bosib tursangiz tahrirlash va o'chirish tugmalari chiqadi." },
+  { icon: "plus", t: "Qo'shish (+)", s: "Pastdagi katta yashil tugma. Undan uch narsa qo'shiladi: har kuni takrorlanadigan kundalik vazifa, katta maqsadga eltuvchi oliy vazifa va yillik raqamli maqsad. Eng pastdagi «Barcha vazifalar» esa qo'shish uchun emas — bor vazifalarni ko'rish va boshqarish uchun." },
+  { icon: "clock", t: "Vazifa vaqti va eslatma", s: "Har vazifaga vaqt oralig'i beriladi — masalan 08:00–09:00. O'sha vaqt kelganda telefonga eslatma keladi, ilova yopiq bo'lsa ham. Vazifa haftaning qaysi kunlari bajarilishini ham tanlaysiz." },
+  { icon: "folder", t: "Papkalar", s: "Vazifalar ko'payib ketganda ularni papkalarga ajratasiz — masalan «Ilm», «Sog'liq», «Ish». Papkalar «Barcha vazifalar» bo'limida yaratiladi va vazifa ro'yxati shunga qarab guruhlanadi." },
+  { icon: "sparkles", t: "Rejadan tashqari amallar", s: "Rejadan ortiq ish qilgan kuningiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi." },
+  { icon: "hash", t: "Sanaladigan vazifalar", s: "Miqdori sanaladigan ishlar uchun: necha bet o'qildi, necha marta zikr aytildi, necha kilometr yurildi. Har kuni raqam kiritasiz, to'plangan miqdor va jarayon alohida ko'rinadi." },
+  { icon: "mosque", t: "Ibodatlar", s: "Alohida bo'lim — kunlik vazifalar foiziga aralashmaydi. Tonggi va kechki zikrlar, besh vaqt namoz (har biri sunnat va farzga ajratilgan), tahajjud va kunduzgi nafllar shu yerda belgilanadi. Erkaklarda har namoz yonida «Masjidda» tugmasi bor — u reytingga bonus qo'shadi." },
+  { icon: "bookOpen", t: "Qur'on xatmi", s: "Xatmni oldindan rejalashtirasiz: qachondan qachongacha va kuniga necha daqiqa yoki necha pora. Har kuni bajarganingizni belgilab borasiz, necha kun o'tgani yonida ko'rinib turadi. Rejani o'zgartirish uchun qatorni bosib turing." },
+  { icon: "bed", t: "Uyqu", s: "Sarlavhadagi karavot tugmasi. Necha soat uxlashni yoki aniq vaqt oralig'ini belgilaysiz, so'ng har kuni qancha uxlaganingizni yozib borasiz. Haftalik o'rtacha va rejadan chetlashish ko'rsatiladi." },
+  { icon: "timer", t: "Pomodoro", s: "Diqqatni jamlab ishlash taymeri. Ikki rejim bor: «Diqqatni jamlash»da ekran qorayadi va faqat taymer qoladi; «Ochiq rejim»da ilovadan chiqsangiz ham vaqt tugaganda telefon xabar beradi. Ishlagan daqiqalaringiz tanlagan vazifangizga qo'shiladi." },
+  { icon: "calendar", t: "Taqvim", s: "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi." },
+  { icon: "stats", t: "Statistika", s: "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi." },
+  { icon: "target", t: "Oliy maqsad", s: "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz." },
+  { icon: "quote", t: "Kun iqtiboslari", s: "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi." },
+  { icon: "moon", t: "Dam kuni", s: "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi." },
+  { icon: "database", t: "Zaxira nusxa", s: "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi." },
+  { icon: "globe", t: "Ilova tili", s: "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi." },
+  { icon: "sun", t: "Kunduzgi va tungi ko'rinish", s: "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying." },
 ];
 
 function HelpSheet({ onClose }: { onClose: () => void }) {
   return (
-    <Sheet title={<span className="flex items-center gap-2"><Icon n="info" size={16} style={{ color: "var(--green)" }} /> {tr("Qanday ishlaydi?")}</span>} onClose={onClose}>
+    <Sheet title={<span className="flex items-center gap-2"><Icon n="info" size={16} style={{ color: "var(--green)" }} /> {tr("Har bo'lim nima qiladi?")}</span>} onClose={onClose}>
       <div className="space-y-2.5">
         {HELP_ITEMS.map(x => (
           <div key={x.t} className="flex gap-3">
@@ -4984,7 +5007,7 @@ export default function App() {
             <button onClick={() => togglePage("uyqu")} className="om-press flex flex-none flex-col items-center gap-1">
               <span className="grid h-11 w-11 place-items-center rounded-2xl"
                 style={{ background: page === "uyqu" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "uyqu" ? "var(--green)" : "var(--line)"), color: page === "uyqu" ? "#fff" : "var(--blue)", boxShadow: "var(--shadow)" }}>
-                <Icon n="moon" size={19} />
+                <Icon n="bed" size={19} />
               </span>
               <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Uyqu")}</span>
             </button>
@@ -5037,8 +5060,7 @@ export default function App() {
               openCountForm={() => setCountForm(true)} openIbadat={() => setPage("ibodat")}
               openTaskEdit={t => { setBoshEdit(t); setPage("vazifalar"); }}
               openUyqu={() => setPage("uyqu")} openSozlama={() => setPage("sozlama")}
-              openPomo={() => setPage("pomo")} openVazifalar={() => setPage("vazifalar")} openStat={() => setTab("stat")} startPomo={startPomo}
-              hints={hints} doneHint={doneHint} />}
+              openPomo={() => setPage("pomo")} openVazifalar={() => setPage("vazifalar")} openStat={() => setTab("stat")} startPomo={startPomo} />}
             {tab === "taqvim" && <TaqvimView today={today} plan={plan} tasks={tasks} logs={logs} extras={extras} counts={counts} countLog={countLog} weights={weights} notes={notes} sleepLog={sleepLog} settings={settings} ib={ib} khatm={khatm} />}
             {tab === "stat" && <StatView today={today} plan={plan} tasks={tasks} logs={logs} extras={extras} folders={folders} sleepCfg={sleepCfg} sleepLog={sleepLog} pomoLog={pomoLog} settings={settings} ib={ib} khatm={khatm} countLog={countLog} />}
             {tab === "maqsad" && <MaqsadView today={today} plan={plan} tasks={tasks} logs={logs} extras={extras} counts={counts} countLog={countLog} weights={weights} setPlan={setPlan} />}
@@ -5153,21 +5175,12 @@ export default function App() {
 
       {showMetrics && plan && <MetricsEdit plan={plan} setPlan={setPlan} onClose={() => setShowMetrics(false)} />}
 
-      {page === null && !hints["add"] && plan && (
-        <div className="fixed inset-x-0 z-20 px-4" style={{ bottom: "calc(96px + env(safe-area-inset-bottom))" }}>
-          <div className="mx-auto max-w-2xl">
-            <Hint id="add" hints={hints} done={doneHint}
-              text={tr("Pastdagi + tugmasi orqali kundalik vazifa, oliy maqsad vazifasi va yillik maqsadlaringizni qo'shasiz.")} />
-          </div>
-        </div>
-      )}
-
       {page === null && (
         <nav className="fixed inset-x-0 bottom-0 z-30">
           <div className="mx-auto flex max-w-2xl items-end justify-around px-3 pt-2" style={{ background: "var(--card)", borderTop: "1px solid var(--line)", boxShadow: "0 -8px 28px rgba(0,0,0,0.14)", paddingBottom: "calc(8px + env(safe-area-inset-bottom))" }}>
             <NavBtn k="bugun" icon="home" label={tr("Bugun")} />
             <NavBtn k="taqvim" icon="calendar" label={tr("Taqvim")} />
-            <button data-tur="qoshish" onClick={() => { doneHint("add"); setAddMenu(true); }} className="om-press -mt-8 grid h-16 w-16 flex-none place-items-center rounded-full text-white" style={{ background: "var(--green)", boxShadow: "0 10px 24px rgba(46,125,87,0.5)" }}><Icon n="plus" size={30} /></button>
+            <button data-tur="qoshish" onClick={() => setAddMenu(true)} className="om-press -mt-8 grid h-16 w-16 flex-none place-items-center rounded-full text-white" style={{ background: "var(--green)", boxShadow: "0 10px 24px rgba(46,125,87,0.5)" }}><Icon n="plus" size={30} /></button>
             <NavBtn k="stat" icon="stats" label={tr("Statistika")} />
             <NavBtn k="maqsad" icon="target" label={tr("Maqsad")} />
           </div>
