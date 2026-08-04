@@ -503,7 +503,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- Pomodoro ---
   "Ekran qorayadi, faqat taymer va bugungi hisob ko'rinadi, ekran o'chmaydi. Chuqur diqqat uchun telefonning «Bezovta qilinmasin» rejimini ham yoqib qo'ying.": { en: "The screen dims to show only the timer and today's count, and stays awake. For deep focus, also turn on your phone's «Do not disturb» mode." },
   "Ilovadan bemalol chiqishingiz mumkin — vaqt tugaganda telefon o'zi xabar beradi.": { en: "You can leave the app freely — your phone will notify you when the time is up." },
-  "Fokusdan chiqish (taymer davom etadi)": { en: "Exit focus (the timer keeps running)" },
   "Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)": { en: "Stop the timer? (this pomodoro will not be counted)" },
   "Yangi pomodoroni o'zingiz boshlaysiz.": { en: "You start the next pomodoro yourself." },
   "Ish vaqti tugadi! Bu vaqtda nima qilganingizni belgilang.": { en: "Work time is over! Mark what you did during this time." },
@@ -684,7 +683,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
 
   // --- v11: ixcham yig'iladigan kartalar ---
   "Kun xulosasi": { en: "Day summary" },
-  "Hali yozilmagan": { en: "Not written yet" },
 
   // --- v11: yozilgan narsalarni tahrirlash ---
   "Xulosani tahrirlang...": { en: "Edit the note..." },
@@ -729,7 +727,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": { en: "When the work time ends it asks \"what did you do in this time?\" and logs the minutes to the chosen task." },
 
   // --- v12: dumaloq tugmalar ---
-  "Kun iqtiboslari": { en: "Quotes of the day" },
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
@@ -774,7 +771,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi.": { en: "Each day is coloured by that day's result: a fully completed day is green, more than half is yellow, and lower is red. The rest day has no colour — it is not counted. Tap a day to open its full details." },
   "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": { en: "Daily, weekly and monthly views. Beside each number is its difference from the previous period — whether it rose or fell. Tap a point on the chart to see which day it is." },
   "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz.": { en: "The text of your goal, the overall result ring and your yearly numeric goals. Tap any goal to see its progress — by week, month, six months and year. In a multi-year plan each year is kept separately: when a year ends you add the next year's tasks." },
-  "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi.": { en: "Here you write down words that moved you, and the meanings of verses and hadiths. They open from the round buttons on the Today page." },
   "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi.": { en: "While setting up your plan you may mark one day of the week as a rest day. On that day no tasks are asked of you and it does not enter the statistics — it will not lower your percentage." },
   "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": { en: "Settings → Data. Tap «Download PDF» and all your data is saved into a single file. When you move to a new phone you restore everything through «Install PDF». Your data stays only on your phone — it is never sent anywhere." },
   "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": { en: "There are five languages: Uzbek in Latin and Cyrillic script, English, Arabic and Russian. If Arabic is chosen the whole app turns right-to-left." },
@@ -790,6 +786,10 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": { en: "The old hints that popped up on screen were removed — they repeated what the guided tour already says." },
   "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": { en: "«All tasks» is now set apart in the add menu: it is not for adding, but for managing what exists." },
   "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": { en: "The «Month» and «6 months» buttons in goal progress now display correctly in the other languages too." },
+
+  // --- v12: fokus rejimi va kun xulosasi ---
+  "Chiqish": { en: "Exit" },
+  "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi.": { en: "At the end of the day you write one sentence answering «how did today go?». It opens from the round buttons on the Today page and is kept under that day in the Calendar." },
 };
 
 // ---------- ARABCHA ----------
@@ -1238,7 +1238,6 @@ const LUGAT_AR: Record<string, string> = {
   // --- Pomodoro ---
   "Ekran qorayadi, faqat taymer va bugungi hisob ko'rinadi, ekran o'chmaydi. Chuqur diqqat uchun telefonning «Bezovta qilinmasin» rejimini ham yoqib qo'ying.": "تُعتَّم الشاشة فلا يظهر إلا المؤقّت وعدّاد اليوم، وتبقى مضاءة. وللتركيز العميق فعِّل أيضًا وضع «عدم الإزعاج» في هاتفك.",
   "Ilovadan bemalol chiqishingiz mumkin — vaqt tugaganda telefon o'zi xabar beradi.": "يمكنك الخروج من التطبيق بحرية — سينبّهك هاتفك عند انتهاء الوقت.",
-  "Fokusdan chiqish (taymer davom etadi)": "الخروج من التركيز (المؤقّت يستمر)",
   "Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)": "هل يُوقَف المؤقّت؟ (لن يُحتسب هذا البومودورو)",
   "Yangi pomodoroni o'zingiz boshlaysiz.": "ستبدأ البومودورو التالي بنفسك.",
   "Ish vaqti tugadi! Bu vaqtda nima qilganingizni belgilang.": "انتهى وقت العمل! حدّد ما فعلته في هذا الوقت.",
@@ -1435,7 +1434,6 @@ const LUGAT_AR: Record<string, string> = {
 
   // --- v11: ixcham yig'iladigan kartalar ---
   "Kun xulosasi": "ملخّص اليوم",
-  "Hali yozilmagan": "لم يُكتب بعد",
 
   // --- v11: yozilgan narsalarni tahrirlash ---
   "Xulosani tahrirlang...": "عدّل الملاحظة...",
@@ -1480,7 +1478,6 @@ const LUGAT_AR: Record<string, string> = {
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "عند انتهاء وقت العمل يسأل: «ماذا فعلت في هذا الوقت؟» ويسجّل الدقائق للمهمة المختارة.",
 
   // --- v12: dumaloq tugmalar ---
-  "Kun iqtiboslari": "اقتباسات اليوم",
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا كل ما تفعله فوق المخطط. يُضاف إلى المهمة المرتبطة كـ«زيادة» ويرفع نسبتك فوق ١٠٠٪ في الإحصائيات.",
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
@@ -1525,7 +1522,6 @@ const LUGAT_AR: Record<string, string> = {
   "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi.": "يُلوَّن كل يوم بحسب نتيجته: فاليوم المُنجَز كاملًا أخضر، وما زاد على النصف أصفر، والأدنى أحمر. ويوم الراحة بلا لون — فهو لا يُحتسب. واضغط على يوم لفتح تفاصيله كاملة.",
   "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "عرض يومي وأسبوعي وشهري. وبجانب كل رقم فرقه عن الفترة السابقة — أارتفع أم انخفض. واضغط على نقطة في الرسم البياني لترى أيّ يوم هي.",
   "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz.": "نصّ هدفك، وحلقة النتيجة العامة، وأهدافك الرقمية السنوية. اضغط على أيّ هدف لترى تقدّمه — بالأسبوع والشهر وستة أشهر والسنة. وفي الخطة متعددة السنوات تُدار كل سنة على حدة: فإذا انتهت سنة أضفت مهام السنة التالية.",
-  "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi.": "هنا تكتب الكلمات التي أثّرت فيك ومعاني الآيات والأحاديث. وتُفتح من الأزرار الدائرية في صفحة اليوم.",
   "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi.": "عند وضع خطتك يمكنك تعيين يوم واحد من الأسبوع يوم راحة. ففي ذلك اليوم لا تُطلب منك المهام ولا يدخل في الإحصاءات — ولن يخفض نسبتك.",
   "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": "الإعدادات ← البيانات. اضغط «تنزيل PDF» فتُحفظ كل بياناتك في ملف واحد. وإذا انتقلت إلى هاتف جديد استعدت كل شيء عبر «تثبيت PDF». وتبقى بياناتك في هاتفك وحده — ولا تُرسل إلى أي مكان.",
   "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": "هناك خمس لغات: الأوزبكية بالحرفين اللاتيني والسيريلي، والإنجليزية، والعربية، والروسية. وإذا اخترت العربية انقلب التطبيق كله من اليمين إلى اليسار.",
@@ -1541,6 +1537,10 @@ const LUGAT_AR: Record<string, string> = {
   "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": "أُزيلت التلميحات القديمة التي كانت تظهر على الشاشة — فقد كانت تكرّر ما يقوله دليل التعريف.",
   "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": "فُصل «كل المهام» في قائمة الإضافة: فهو ليس للإضافة بل لإدارة الموجود.",
   "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": "صار زرّا «شهر» و«٦ أشهر» في تقدّم الهدف يظهران بشكل صحيح في اللغات الأخرى أيضًا.",
+
+  // --- v12: fokus rejimi va kun xulosasi ---
+  "Chiqish": "خروج",
+  "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi.": "في نهاية اليوم تكتب جملة واحدة جوابًا عن «كيف مضى يومك؟». يُفتح من الأزرار الدائرية في صفحة اليوم ويُحفظ تحت ذلك اليوم في التقويم.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -1754,7 +1754,6 @@ const LUGAT_RU: Record<string, string> = {
   "Xulosalarim": "Мои заметки",
   "Xulosa qo'shish": "Добавить заметку",
   "Kun xulosasi": "Итог дня",
-  "Hali yozilmagan": "Ещё не записано",
   "Tonggi": "Светлая",
   "Tungi": "Тёмная",
   "(ixtiyoriy)": "(необязательно)",
@@ -2024,7 +2023,6 @@ const LUGAT_RU: Record<string, string> = {
   // --- Pomodoro ---
   "Ekran qorayadi, faqat taymer va bugungi hisob ko'rinadi, ekran o'chmaydi. Chuqur diqqat uchun telefonning «Bezovta qilinmasin» rejimini ham yoqib qo'ying.": "Экран затемняется, остаются только таймер и счёт за сегодня, экран не гаснет. Для глубокого сосредоточения включите также режим «Не беспокоить».",
   "Ilovadan bemalol chiqishingiz mumkin — vaqt tugaganda telefon o'zi xabar beradi.": "Можете спокойно выйти из приложения — телефон сам сообщит, когда время выйдет.",
-  "Fokusdan chiqish (taymer davom etadi)": "Выйти из фокуса (таймер продолжит идти)",
   "Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)": "Остановить таймер? (этот помодоро не засчитается)",
   "Yangi pomodoroni o'zingiz boshlaysiz.": "Следующий помодоро начинаете сами.",
   "Ish vaqti tugadi! Bu vaqtda nima qilganingizni belgilang.": "Рабочее время закончилось! Отметьте, чем вы занимались.",
@@ -2182,7 +2180,6 @@ const LUGAT_RU: Record<string, string> = {
   "Ish vaqti tugagach \"bu vaqtda nima qildingiz?\" deb so'raydi va tanlangan vazifaga daqiqa yozadi.": "По окончании рабочего времени спрашивает «чем вы занимались в это время?» и записывает минуты к выбранной задаче.",
 
   // --- v12: dumaloq tugmalar ---
-  "Kun iqtiboslari": "Цитаты дня",
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "Сюда записывайте всё, что сделали сверх плана. Это добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
@@ -2227,7 +2224,6 @@ const LUGAT_RU: Record<string, string> = {
   "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi.": "Каждый день окрашивается по его результату: полностью выполненный день зелёный, больше половины — жёлтый, ниже — красный. Выходной день без цвета — он не учитывается. Нажмите на день, чтобы открыть его полные подробности.",
   "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi.": "Дневной, недельный и месячный вид. Рядом с каждым числом — его разница с прошлым периодом: выросло или упало. Нажмите на точку графика, чтобы увидеть, какой это день.",
   "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz.": "Текст вашей цели, кольцо общего результата и годовые числовые цели. Нажмите на любую цель, чтобы увидеть её ход — за неделю, месяц, полгода и год. В многолетнем плане каждый год ведётся отдельно: когда год закончится, вы добавите задачи следующего.",
-  "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi.": "Сюда вы записываете слова, которые вас тронули, и смыслы аятов и хадисов. Они открываются круглыми кнопками на странице «Сегодня».",
   "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi.": "При составлении плана можно отметить один день недели как выходной. В этот день задачи не спрашиваются, и он не входит в статистику — ваш процент не снизится.",
   "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi.": "Настройки → Данные. Нажмите «Скачать PDF» — и все ваши данные сохранятся в один файл. Перейдя на новый телефон, вы восстановите всё через «Установить PDF». Данные хранятся только на вашем телефоне и никуда не отправляются.",
   "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi.": "Пять языков: узбекский латиницей и кириллицей, английский, арабский и русский. При выборе арабского всё приложение разворачивается справа налево.",
@@ -2243,6 +2239,10 @@ const LUGAT_RU: Record<string, string> = {
   "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": "Старые подсказки, всплывавшие на экране, убраны — они повторяли то, что уже говорит обучающий тур.",
   "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": "«Все задачи» отделены в меню добавления: это не для добавления, а для управления тем, что есть.",
   "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": "Кнопки «Месяц» и «6 месяцев» в ходе цели теперь правильно отображаются и на других языках.",
+
+  // --- v12: fokus rejimi va kun xulosasi ---
+  "Chiqish": "Выйти",
+  "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi.": "В конце дня вы пишете одно предложение в ответ на вопрос «как прошёл сегодняшний день?». Открывается круглыми кнопками на странице «Сегодня» и сохраняется под этим днём в Календаре.",
 };
 
 // Ruschani LUGAT ga qo'shamiz

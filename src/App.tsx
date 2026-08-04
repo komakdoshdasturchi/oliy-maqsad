@@ -1819,7 +1819,6 @@ function BugunView(p: {
 
   // Uyqu va kun xulosasi ixcham yig'ilgan holda turadi (joy tejash uchun)
   const [ochiqUyqu, setOchiqUyqu] = useState(false);
-  const [ochiqXulosa, setOchiqXulosa] = useState(false);
 
   // Uyqu: teskari reyting — rejadan KAM uxlash yaxshi. Kuniga bir marta belgilanadi,
   // keyin faqat + bilan soat qo'shiladi (qo'shilgach reja oshsa reyting tushadi).
@@ -1884,17 +1883,17 @@ function BugunView(p: {
     );
   })() : null;
 
-  const NoteCard = (
-    <IxchamKarta icon="pencil" tint="var(--gold)" nom={tr("Kun xulosasi")}
-      holat={p.notes[today] ? p.notes[today] : tr("Hali yozilmagan")}
-      ochiq={ochiqXulosa} setOchiq={setOchiqXulosa}>
+  // Kun xulosasi endi sahifada karta bo'lib turmaydi — pastdagi dumaloq
+  // tugmalardan biri bo'lib, oynada ochiladi. Uning o'rnini oyat egalladi.
+  const XulosaBlock = (
+    <>
       <label className={lblC} style={lblS}>{tr("Bugun qanday o'tdi? (bir jumla — Taqvimda saqlanadi)")}</label>
       <div className="mt-1 flex gap-2">
         <input value={dayNote} onChange={e => setDayNote(e.target.value)} placeholder={tr("Masalan: yaxshi, unumli kun bo'ldi...")} className={inpC + " flex-1"} style={inpS} />
         <button onClick={() => p.setNotes(ns => ({ ...ns, [today]: dayNote.trim() }))} className="rounded-lg px-3 py-2 text-sm font-bold text-white" style={{ background: "var(--green)" }}>{tr("OK")}</button>
       </div>
       {p.notes[today] && <p className="mt-1 text-[11px]" style={{ color: "var(--green)" }}>{tr("Saqlandi ✓")}</p>}
-    </IxchamKarta>
+    </>
   );
 
   const Salom = null;
@@ -1942,7 +1941,7 @@ function BugunView(p: {
   // to'rtta mini-katakcha bilan birga olib tashlandi (v12).
 
   // Pastdagi dumaloq tugmalardan qaysi oyna ochilgan (null = yopiq)
-  const [oyna, setOyna] = useState<null | "sanoq" | "tashqari" | "iqtibos">(null);
+  const [oyna, setOyna] = useState<null | "sanoq" | "tashqari" | "xulosa">(null);
 
   // Sanaladigan vazifalar bo'limi. Avval `|| true` turgan edi (sinovdan qolgan)
   // va bitta ham vazifa bo'lmasa ham bo'lim doim ko'rinardi — olib tashlandi.
@@ -2014,7 +2013,7 @@ function BugunView(p: {
     { id: "ibodat", ic: "mosque", nom: tr("Ibodatlar"), tint: "var(--green)", bos: () => p.openIbadat() },
     { id: "sanoq", ic: "hash", nom: tr("Sanaladigan"), tint: "var(--blue)", bos: () => setOyna("sanoq") },
     { id: "tashqari", ic: "plus", nom: tr("Rejadan tashqari amallar"), tint: "var(--gold)", bos: () => setOyna("tashqari") },
-    { id: "iqtibos", ic: "quote", nom: tr("Kun iqtiboslari"), tint: "var(--ink)", bos: () => setOyna("iqtibos") },
+    { id: "xulosa", ic: "pencil", nom: tr("Kun xulosasi"), tint: "var(--ink)", bos: () => setOyna("xulosa") },
   ];
 
   const DumaloqQator = (
@@ -2043,9 +2042,9 @@ function BugunView(p: {
           {ExtraBlock}
         </Sheet>
       )}
-      {oyna === "iqtibos" && (
-        <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="quote" size={15} style={{ color: "var(--gold)" }} /> {tr("Kun iqtiboslari")}</span>}>
-          <OyatCard />
+      {oyna === "xulosa" && (
+        <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="pencil" size={15} style={{ color: "var(--gold)" }} /> {tr("Kun xulosasi")}</span>}>
+          {XulosaBlock}
         </Sheet>
       )}
     </>
@@ -2087,8 +2086,9 @@ function BugunView(p: {
         </button>
         {weightToday && <WeightCard onSave={v => p.setWeights(ws => [...ws, { date: today, kg: v }])} />}
         {SleepCard}
-        {NoteCard}
         {DumaloqQator}
+        {/* Oyat — sahifaning ENG PASTIDA. Pastga tushgan odam ko'radi. */}
+        <OyatCard />
         {AmalSheet}
         {sheetTask && <MarkSheet t={sheetTask} m={lg[sheetTask.id]} slotMin={null} onClose={() => setSheetTask(null)}
           onSave={mk => { setMark(sheetTask.id, mk); setSheetTask(null); }} />}
@@ -2229,8 +2229,9 @@ function BugunView(p: {
 
       {SleepCard}
 
-      {NoteCard}
       {DumaloqQator}
+      {/* Oyat — sahifaning ENG PASTIDA. Pastga tushgan odam ko'radi. */}
+      <OyatCard />
       {AmalSheet}
 
       {showExtra && <ExtraForm tasks={act} onClose={() => setShowExtra(false)} today={today}
@@ -4111,9 +4112,8 @@ function PomoAsk({ min, tasks, logs, today, onPick }: { min: number; tasks: Task
 }
 
 // FOKUS REJIMI — qop-qora ekran, faqat taymer. Ekran o'chmaydi (wake lock).
-function FocusOverlay({ pomo, setPomo, pomoLog, today }: {
+function FocusOverlay({ pomo, setPomo }: {
   pomo: PomoState; setPomo: React.Dispatch<React.SetStateAction<PomoState | null>>;
-  pomoLog: Record<string, { c: number; m: number }>; today: string;
 }) {
   const [, setTick] = useState(0);
   useEffect(() => { const iv = setInterval(() => setTick(t => t + 1), 500); return () => clearInterval(iv); }, []);
@@ -4125,36 +4125,44 @@ function FocusOverlay({ pomo, setPomo, pomoLog, today }: {
     document.addEventListener("visibilitychange", vis);
     return () => { document.removeEventListener("visibilitychange", vis); try { if (wl) wl.release(); } catch { } };
   }, []);
+  // FOKUSDAN CHIQISH FAQAT «TUGATISH» ORQALI. Ilgari pastda «Fokusdan chiqish»
+  // havolasi bor edi va taymer davom etaverardi — diqqatni jamlash rejimining
+  // ma'nosi shunda yo'qolardi. Endi avval Tugatish bosiladi, keyin Chiqish chiqadi.
+  const [tugadi, setTugadi] = useState(false);
   const leftMs = pomo.pausedLeft !== null ? pomo.pausedLeft : Math.max(pomo.endsAt - Date.now(), 0);
   const left = Math.max(Math.ceil(leftMs / 1000), 0);
   const mm = String(Math.floor(left / 60)).padStart(2, "0");
   const ss = String(left % 60).padStart(2, "0");
-  const tLog = pomoLog[today] || { c: 0, m: 0 };
   const paused = pomo.pausedLeft !== null;
   const dimBtn: React.CSSProperties = { border: "1px solid #333", background: "transparent" };
+  // Ekranda faqat vaqt va tugmalar qoladi. Ish/dam farqi RANG orqali bildiriladi:
+  // ish — oq, dam — oltin, to'xtatilgan — o'chgan kulrang.
+  const rang = tugadi || paused ? "#555" : pomo.phase === "work" ? "#F5F5F5" : "#D7A94B";
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center" style={{ background: "#000" }}>
-      <Icon n="timer" size={30} style={{ color: "#59B483" }} />
-      <div className="mt-4 text-[80px] font-bold leading-none tabular-nums" style={{ color: paused ? "#555" : "#F5F5F5" }}>{mm}:{ss}</div>
-      <div className="mt-4 text-sm font-medium" style={{ color: paused ? "#777" : pomo.phase === "work" ? "#59B483" : "#D7A94B" }}>
-        {paused ? tr("To'xtatilgan") : pomo.phase === "work" ? tr("Ish vaqti") : tr("Dam olish")}
-      </div>
-      <div className="mt-2 text-xs" style={{ color: "#666" }}>Bugun: {tLog.c} pomodoro · {fmtMin(tLog.m)} sof ish</div>
+      <div className="text-[80px] font-bold leading-none tabular-nums" style={{ color: rang }}>{mm}:{ss}</div>
       <div className="mt-12 flex items-center gap-3">
-        {pomo.phase === "work" && !paused && (
-          <button onClick={() => setPomo(pp => pp ? { ...pp, pausedLeft: Math.max(pp.endsAt - Date.now(), 0) } : pp)}
-            className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#D7A94B" }}>{tr("To'xtatish")}</button>
-        )}
-        {pomo.phase === "work" && paused && (
-          <button onClick={() => setPomo(pp => pp ? { ...pp, endsAt: Date.now() + (pp.pausedLeft || 0), pausedLeft: null } : pp)}
-            className="om-press rounded-2xl px-7 py-3 text-sm font-bold text-white" style={{ background: "#59B483" }}>{tr("Davom")}</button>
-        )}
-        <button onClick={async () => { if (await omConfirm(tr("Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)"))) setPomo(null); }}
-          className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#E5674F" }}>{tr("Tugatish")}</button>
+        {tugadi ? (
+          <button onClick={() => setPomo(null)}
+            className="om-press rounded-2xl px-8 py-3 text-sm font-bold text-white" style={{ background: "#59B483" }}>{tr("Chiqish")}</button>
+        ) : (<>
+          {pomo.phase === "work" && !paused && (
+            <button onClick={() => setPomo(pp => pp ? { ...pp, pausedLeft: Math.max(pp.endsAt - Date.now(), 0) } : pp)}
+              className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#D7A94B" }}>{tr("To'xtatish")}</button>
+          )}
+          {pomo.phase === "work" && paused && (
+            <button onClick={() => setPomo(pp => pp ? { ...pp, endsAt: Date.now() + (pp.pausedLeft || 0), pausedLeft: null } : pp)}
+              className="om-press rounded-2xl px-7 py-3 text-sm font-bold text-white" style={{ background: "#59B483" }}>{tr("Davom")}</button>
+          )}
+          <button onClick={async () => {
+            if (!(await omConfirm(tr("Taymer to'xtatilsinmi? (bu pomodoro hisobga kirmaydi)")))) return;
+            // Taymer muzlatiladi, ammo oyna yopilmaydi — chiqish alohida bosiladi
+            setPomo(pp => pp ? { ...pp, pausedLeft: Math.max(pp.endsAt - Date.now(), 0) } : pp);
+            setTugadi(true);
+          }}
+            className="om-press rounded-2xl px-6 py-3 text-sm font-bold" style={{ ...dimBtn, color: "#E5674F" }}>{tr("Tugatish")}</button>
+        </>)}
       </div>
-      <button onClick={() => setPomo(pp => pp ? { ...pp, mode: "open" } : pp)} className="mt-8 text-xs" style={{ color: "#666" }}>
-        {tr("Fokusdan chiqish (taymer davom etadi)")}
-      </button>
     </div>
   );
 }
@@ -4590,7 +4598,7 @@ const HELP_ITEMS: { icon: string; t: string; s: string }[] = [
   { icon: "calendar", t: "Taqvim", s: "Har kun o'sha kungi natijaga qarab bo'yaladi: to'liq bajarilgan kun yashil, yarmidan ko'pi sariq, past bo'lsa qizil. Dam kuni rangsiz — u hisobga kirmaydi. Kunni bossangiz o'sha kunning to'liq tafsiloti ochiladi." },
   { icon: "stats", t: "Statistika", s: "Kunlik, haftalik va oylik ko'rinish. Har raqam yonida o'tgan davrga nisbatan farqi turadi — o'sdimi yoki tushdimi. Grafikdagi nuqtaga bossangiz qaysi kun ekani chiqadi." },
   { icon: "target", t: "Oliy maqsad", s: "Maqsad matningiz, umumiy natija halqasi va yillik raqamli maqsadlaringiz. Har maqsadni bosib jarayonini ko'rasiz — hafta, oy, olti oy va yil bo'yicha. Ko'p yillik rejada har yil alohida yuritiladi: yil tugagach keyingi yil vazifalarini qo'shasiz." },
-  { icon: "quote", t: "Kun iqtiboslari", s: "O'zingizga ta'sir qilgan so'zlarni, oyat va hadis ma'nolarini shu yerga yozib qo'yasiz. Ular Bugun sahifasidagi dumaloq tugmalardan ochiladi." },
+  { icon: "pencil", t: "Kun xulosasi", s: "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi." },
   { icon: "moon", t: "Dam kuni", s: "Reja tuzayotganda haftaning bir kunini dam kuni qilib belgilashingiz mumkin. O'sha kuni vazifalar so'ralmaydi va u statistikaga kirmaydi — foizingizni pasaytirmaydi." },
   { icon: "database", t: "Zaxira nusxa", s: "Sozlamalar → Ma'lumotlar. «PDF yuklab olish» bosilsa hamma ma'lumotingiz bitta faylga saqlanadi. Yangi telefonga o'tsangiz «PDF o'rnatish» orqali hammasini tiklaysiz. Ma'lumot faqat telefoningizda turadi — hech qayerga yuborilmaydi." },
   { icon: "globe", t: "Ilova tili", s: "Beshta til bor: o'zbekcha lotin va kirill yozuvda, inglizcha, arabcha va ruscha. Arabcha tanlansa butun ilova o'ngdan chapga o'giriladi." },
@@ -4998,8 +5006,15 @@ export default function App() {
           <div className="min-w-0">
             <Logo size={34} color={logoColor} />
             <div className="mt-1.5 text-[17px] font-bold leading-none tracking-tight" style={{ color: logoColor }}>{tr("Oliy maqsad")}</div>
-            <div className="mt-2 text-[10.5px] font-medium uppercase tracking-wide" style={{ color: "var(--muted)" }}>
-              {raqam(parseISO(today).getDate())}-{tr(OYLAR[parseISO(today).getMonth()])} · {raqam(parseISO(today).getFullYear())} · {hijri(today, settings.hijriOffset)} · {tr(KUNLAR[parseISO(today).getDay()])}
+            {/* UCH QATOR: milodiy · hijriy · hafta kuni. Ilgari hammasi bitta
+                qatorda edi va tor ekranda «22-» bilan «SAFAR» ajralib qolardi. */}
+            <div className="mt-2 text-[10.5px] font-medium uppercase leading-[1.6] tracking-wide" style={{ color: "var(--muted)" }}>
+              <div>{raqam(parseISO(today).getDate())}-{tr(OYLAR[parseISO(today).getMonth()])} · {raqam(parseISO(today).getFullYear())}</div>
+              {(() => {
+                const q = hijriQism(today, settings.hijriOffset);
+                return q ? <div>{raqam(q.kun)}-{tr(HIJRI_OYLAR[q.oy - 1])} · {raqam(q.yil)}</div> : null;
+              })()}
+              <div>{tr(KUNLAR[parseISO(today).getDay()])}</div>
             </div>
           </div>
           <div className="flex flex-none items-start gap-2">
@@ -5090,7 +5105,7 @@ export default function App() {
         </Sheet>
       )}
 
-      {pomo && pomo.mode === "focus" && <FocusOverlay pomo={pomo} setPomo={setPomo} pomoLog={pomoLog} today={today} />}
+      {pomo && pomo.mode === "focus" && <FocusOverlay pomo={pomo} setPomo={setPomo} />}
 
       {/* YANGILANISHDAN KEYIN: mavjud foydalanuvchidan til bir marta so'raladi.
           ✕ bilan tanlamasdan yopib ketish mumkin. Yangiliklar oynasidan OLDIN
