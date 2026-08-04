@@ -503,6 +503,9 @@ const ICONS: Record<string, string> = {
   user: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20.2a7.5 7.5 0 0 1 15 0"/>',
   flag: '<path d="M6 21V4M6 4.5h11l-2.2 4L17 12.5H6"/>',
   send: '<path d="M21 3 3 10.5l6 2.5m12-10-9 18-2.5-7.5m11.5-10.5L9 13"/>',
+  // Telegramning haqiqiy belgisi — to'ldirilgan qog'oz samolyot.
+  // `send` chiziqli va boshqacha shakl edi, Telegram logosiga o'xshamasdi.
+  telegram: '<path d="M23.91 3.79 20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z" fill="currentColor" stroke="none"/>',
   gear: '<path d="M12.3 2.5h-.6a1.9 1.9 0 0 0-1.9 1.9v.2a1.9 1.9 0 0 1-.95 1.64l-.5.29a1.9 1.9 0 0 1-1.9 0l-.17-.1a1.9 1.9 0 0 0-2.6.7l-.3.52a1.9 1.9 0 0 0 .7 2.6l.17.1a1.9 1.9 0 0 1 .95 1.64v.58a1.9 1.9 0 0 1-.95 1.65l-.17.1a1.9 1.9 0 0 0-.7 2.6l.3.51a1.9 1.9 0 0 0 2.6.7l.17-.1a1.9 1.9 0 0 1 1.9 0l.5.3a1.9 1.9 0 0 1 .95 1.63v.2a1.9 1.9 0 0 0 1.9 1.9h.6a1.9 1.9 0 0 0 1.9-1.9v-.2a1.9 1.9 0 0 1 .95-1.64l.5-.29a1.9 1.9 0 0 1 1.9 0l.17.1a1.9 1.9 0 0 0 2.6-.7l.3-.52a1.9 1.9 0 0 0-.7-2.6l-.17-.1a1.9 1.9 0 0 1-.95-1.64v-.57a1.9 1.9 0 0 1 .95-1.65l.17-.1a1.9 1.9 0 0 0 .7-2.6l-.3-.51a1.9 1.9 0 0 0-2.6-.7l-.17.1a1.9 1.9 0 0 1-1.9 0l-.5-.3a1.9 1.9 0 0 1-.95-1.63v-.2a1.9 1.9 0 0 0-1.9-1.9Z"/><circle cx="12" cy="12" r="2.9"/>',
   download: '<path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/>',
   upload: '<path d="M12 21V9m0 0 4.5 4.5M12 9l-4.5 4.5M4 4h16"/>',
@@ -1063,7 +1066,8 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
 
       <div className="flex flex-1 flex-col justify-center">
         <IconCircle n="flag" />
-        <Title>{tr("Nimadan boshlaymiz?")}</Title>
+        <Title>{tr("Boshlaymiz")}</Title>
+        <Sub>{tr("Ilovadan avval foydalanganmisiz?")}</Sub>
 
         <div className="mt-8 space-y-3">
           <button onClick={() => { buzz(); setTanlovOchiq(false); setDir("l"); setStep(2); }}
@@ -1072,12 +1076,12 @@ function Onboarding({ onFinish }: { onFinish: (plan: Plan) => void }) {
           </button>
           <button onClick={() => zaxiraRef.current?.click()}
             className="om-press w-full rounded-2xl border py-4 text-base font-semibold" style={{ ...cardS, borderWidth: 2, color: "var(--ink)" }}>
-            {tr("Zaxiradan tiklayman")}
+            {tr("PDF orqali ko'chiraman")}
           </button>
         </div>
 
         <p className="mx-auto mt-4 max-w-xs text-center text-[12px] leading-relaxed" style={lblS}>
-          {tr("Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.")}
+          {tr("Ilovadan avval foydalangan bo'lsangiz, Sozlamalardan olgan PDF zaxirangiz bor. Shu faylni tanlasangiz — vazifalaringiz, belgilashlaringiz va butun tarixingiz shu ilovaga ko'chib o'tadi.")}
         </p>
       </div>
 
@@ -4380,8 +4384,9 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   // null = asosiy ro'yxat, aks holda ochiq ichki sahifa
   const [sub, setSub] = useState<null | "malumot">(null);
   const openTelegram = async () => {
-    const ok = await omConfirm(tr("«Oliy maqsad» kanaliga o'tasizmi?"), tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
-    if (ok) { try { window.open("https://telegram.me/Oliymaqsad_apk", "_blank"); } catch { location.href = "https://telegram.me/Oliymaqsad_apk"; } }
+    const ok = await omConfirm(tr("Telegram kanalimizga o'tasizmi?"), tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
+    const url = "https://t.me/xodimiy";
+    if (ok) { try { window.open(url, "_blank"); } catch { location.href = url; } }
   };
   const pdfBackup = async () => {
     const data = p.allData() as Record<string, any>;
@@ -4541,10 +4546,10 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
       </button>
 
       <button onClick={openTelegram} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
-        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "#229ED9" }}><Icon n="send" size={22} style={{ color: "#fff" }} /></span>
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "#229ED9" }}><Icon n="telegram" size={21} style={{ color: "#fff" }} /></span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("«Oliy maqsad» telegram kanali")}</span>
-          <span className="block text-[11px]" style={lblS}>{tr("Yangiliklar va yangilanishlar shu yerda")}</span>
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilovalarimiz va bog'lanish")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>

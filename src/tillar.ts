@@ -5,11 +5,13 @@
 
 export type Lang = "uz" | "uzk" | "en" | "ar" | "ru";
 
+// `nom` va `izoh` TARJIMA QILINMAYDI — ular ro'yxatda har doim O'Z TILIDA
+// turishi kerak, aks holda odam o'z tilini tanimay qoladi.
 export const TILLAR: { id: Lang; nom: string; izoh: string; belgi: string; rang: string; grad: string; holat: "tayyor" | "sinov" | "tez" }[] = [
   { id: "uz", nom: "O'zbek tili", izoh: "Lotin", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
   { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
   { id: "en", nom: "English language", izoh: "Latin", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tayyor" },
-  { id: "ar", nom: "اللغة العربية", izoh: "Arab yozuvi", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tayyor" },
+  { id: "ar", nom: "اللغة العربية", izoh: "الحروف العربية", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tayyor" },
   { id: "ru", nom: "Русский язык", izoh: "Кириллица", belgi: "Ру", rang: "#4E7F8E", grad: "linear-gradient(160deg,#5A8F9E,#2F5A66)", holat: "sinov" },
 ];
 
@@ -588,11 +590,8 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ma'lumot hali yetarli emas": { en: "Not enough data yet" },
 
   // --- Yordam, yangiliklar, kanal ---
-  "Yangiliklar va yangilanishlar shu yerda": { en: "News and updates appear here" },
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": { en: "button to add a daily task or an ultimate goal task." },
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": { en: "Add a task and mark it for a few days — results, charts and the weekly report will appear here." },
-  "«Oliy maqsad» telegram kanali": { en: "The «Ultimate goal» Telegram channel" },
-  "«Oliy maqsad» kanaliga o'tasizmi?": { en: "Go to the «Ultimate goal» channel?" },
   "Masalan: yaxshi, unumli kun bo'ldi...": { en: "For example: it was a good, productive day..." },
   "Ilova tilini tanlang. Til istalgan vaqtda o'zgartirilishi mumkin.": { en: "Choose the app language. You can change it at any time." },
 
@@ -730,10 +729,7 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": { en: "Log here anything you do beyond the plan. It is added to the related task as «extra» and pushes your percentage above 100% in the statistics." },
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
-  "Nimadan boshlaymiz?": { en: "Where shall we begin?" },
   "Yangi boshlayman": { en: "I am starting fresh" },
-  "Zaxiradan tiklayman": { en: "I will restore from a backup" },
-  "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": { en: "If you have used the app before and have a PDF backup, all your data will be restored from that file." },
 
   // --- v12: vazifani bosib turib tahrirlash ---
   "Tahrirlash": { en: "Edit" },
@@ -790,6 +786,15 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- v12: fokus rejimi va kun xulosasi ---
   "Chiqish": { en: "Exit" },
   "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi.": { en: "At the end of the day you write one sentence answering «how did today go?». It opens from the round buttons on the Today page and is kept under that day in the Calendar." },
+
+  // --- v12: kirish ekrani va telegram bo'limi ---
+  "Boshlaymiz": { en: "Let us begin" },
+  "Ilovadan avval foydalanganmisiz?": { en: "Have you used the app before?" },
+  "PDF orqali ko'chiraman": { en: "Restore from a PDF" },
+  "Ilovadan avval foydalangan bo'lsangiz, Sozlamalardan olgan PDF zaxirangiz bor. Shu faylni tanlasangiz — vazifalaringiz, belgilashlaringiz va butun tarixingiz shu ilovaga ko'chib o'tadi.": { en: "If you have used the app before, you have a PDF backup taken from Settings. Choose that file and your tasks, your marks and your whole history move across into this app." },
+  "Telegram kanalimizga o'tasizmi?": { en: "Open our Telegram channel?" },
+  "Ilovalarimiz va bog'lanish": { en: "Our apps and contact" },
+  "Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda": { en: "All our apps, updates and how to reach us — in our Telegram channel" },
 };
 
 // ---------- ARABCHA ----------
@@ -1355,11 +1360,8 @@ const LUGAT_AR: Record<string, string> = {
   "Keyinroq sozlashim mumkin.": "يمكنني ضبطه لاحقًا.",
 
   // --- Yordam va kanal ---
-  "Yangiliklar va yangilanishlar shu yerda": "الأخبار والتحديثات هنا",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "لإضافة مهمة يومية أو مهمة للمقصد الأعلى.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "أضِف مهمة وسجّلها بضعة أيام — ستظهر هنا النتائج والرسوم البيانية والتقرير الأسبوعي.",
-  "«Oliy maqsad» telegram kanali": "قناة «المقصد الأعلى» على تيليجرام",
-  "«Oliy maqsad» kanaliga o'tasizmi?": "هل تنتقل إلى قناة «المقصد الأعلى»؟",
   "Telegram ilovasi ochiladi.": "سيُفتح تطبيق تيليجرام.",
   "Masalan: yaxshi, unumli kun bo'ldi...": "مثال: كان يومًا طيبًا منتجًا...",
   "Masalan: Ingliz tili darsi": "مثال: درس اللغة الإنجليزية",
@@ -1481,10 +1483,7 @@ const LUGAT_AR: Record<string, string> = {
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "سجّل هنا كل ما تفعله فوق المخطط. يُضاف إلى المهمة المرتبطة كـ«زيادة» ويرفع نسبتك فوق ١٠٠٪ في الإحصائيات.",
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
-  "Nimadan boshlaymiz?": "من أين نبدأ؟",
   "Yangi boshlayman": "سأبدأ من جديد",
-  "Zaxiradan tiklayman": "سأستعيد من نسخة احتياطية",
-  "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": "إن كنت قد استخدمت التطبيق من قبل ولديك نسخة PDF، فستُستعاد كل بياناتك من ذلك الملف.",
 
   // --- v12: vazifani bosib turib tahrirlash ---
   "Tahrirlash": "تعديل",
@@ -1541,6 +1540,15 @@ const LUGAT_AR: Record<string, string> = {
   // --- v12: fokus rejimi va kun xulosasi ---
   "Chiqish": "خروج",
   "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi.": "في نهاية اليوم تكتب جملة واحدة جوابًا عن «كيف مضى يومك؟». يُفتح من الأزرار الدائرية في صفحة اليوم ويُحفظ تحت ذلك اليوم في التقويم.",
+
+  // --- v12: kirish ekrani va telegram bo'limi ---
+  "Boshlaymiz": "لنبدأ",
+  "Ilovadan avval foydalanganmisiz?": "هل استخدمت التطبيق من قبل؟",
+  "PDF orqali ko'chiraman": "أنقل عبر ملف PDF",
+  "Ilovadan avval foydalangan bo'lsangiz, Sozlamalardan olgan PDF zaxirangiz bor. Shu faylni tanlasangiz — vazifalaringiz, belgilashlaringiz va butun tarixingiz shu ilovaga ko'chib o'tadi.": "إن كنت قد استخدمت التطبيق من قبل فلديك نسخة PDF أخذتها من الإعدادات. اختر ذلك الملف فتنتقل مهامك وعلاماتك وتاريخك كله إلى هذا التطبيق.",
+  "Telegram kanalimizga o'tasizmi?": "هل تفتح قناتنا على تيليجرام؟",
+  "Ilovalarimiz va bog'lanish": "تطبيقاتنا والتواصل",
+  "Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda": "كل تطبيقاتنا وتحديثاتنا وطريقة التواصل معنا — في قناتنا على تيليجرام",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2154,11 +2162,8 @@ const LUGAT_RU: Record<string, string> = {
 
   // --- Yordam, kanal, til ---
   "Ilovani ishlatish bo'yicha qo'llanma": "Руководство по использованию",
-  "Yangiliklar va yangilanishlar shu yerda": "Новости и обновления здесь",
   "tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.": "чтобы добавить ежедневную задачу или задачу высшей цели.",
   "Vazifa qo'shib, bir necha kun belgilab boring — natijalar, grafiklar va haftalik hisobot shu yerda ko'rinadi.": "Добавьте задачу и отмечайте её несколько дней — здесь появятся результаты, графики и недельный отчёт.",
-  "«Oliy maqsad» telegram kanali": "Телеграм-канал «Высшая цель»",
-  "«Oliy maqsad» kanaliga o'tasizmi?": "Перейти в канал «Высшая цель»?",
   "Telegram ilovasi ochiladi.": "Откроется приложение Telegram.",
   "Masalan: yaxshi, unumli kun bo'ldi...": "Например: день был хорошим и продуктивным...",
   "Masalan: Ingliz tili darsi": "Например: Урок английского",
@@ -2183,10 +2188,7 @@ const LUGAT_RU: Record<string, string> = {
   "Rejadan ortiq ish qilsangiz shu yerga yozasiz. U tegishli vazifaga «ziyoda» bo'lib qo'shiladi va statistikada foizni 100% dan yuqoriga chiqaradi.": "Сюда записывайте всё, что сделали сверх плана. Это добавится к нужной задаче как «сверх нормы» и поднимет процент выше 100%.",
 
   // --- v12: kirishdagi yangi/zaxira tanlovi ---
-  "Nimadan boshlaymiz?": "С чего начнём?",
   "Yangi boshlayman": "Начинаю заново",
-  "Zaxiradan tiklayman": "Восстановлю из копии",
-  "Ilgari ishlatgan bo'lsangiz va PDF zaxirangiz bo'lsa — hamma ma'lumotingiz o'sha fayldan tiklanadi.": "Если вы уже пользовались приложением и у вас есть PDF-копия, все ваши данные восстановятся из этого файла.",
 
   // --- v12: vazifani bosib turib tahrirlash ---
   "Tahrirlash": "Изменить",
@@ -2243,6 +2245,15 @@ const LUGAT_RU: Record<string, string> = {
   // --- v12: fokus rejimi va kun xulosasi ---
   "Chiqish": "Выйти",
   "Kun oxirida «bugun qanday o'tdi?» degan savolga bir jumla yozib qo'yasiz. Bugun sahifasidagi dumaloq tugmalardan ochiladi va Taqvimda o'sha kun ostida saqlanadi.": "В конце дня вы пишете одно предложение в ответ на вопрос «как прошёл сегодняшний день?». Открывается круглыми кнопками на странице «Сегодня» и сохраняется под этим днём в Календаре.",
+
+  // --- v12: kirish ekrani va telegram bo'limi ---
+  "Boshlaymiz": "Начнём",
+  "Ilovadan avval foydalanganmisiz?": "Вы уже пользовались приложением?",
+  "PDF orqali ko'chiraman": "Перенесу из PDF",
+  "Ilovadan avval foydalangan bo'lsangiz, Sozlamalardan olgan PDF zaxirangiz bor. Shu faylni tanlasangiz — vazifalaringiz, belgilashlaringiz va butun tarixingiz shu ilovaga ko'chib o'tadi.": "Если вы уже пользовались приложением, у вас есть PDF-копия, сделанная из Настроек. Выберите этот файл — и ваши задачи, отметки и вся история перейдут в это приложение.",
+  "Telegram kanalimizga o'tasizmi?": "Перейти в наш Telegram-канал?",
+  "Ilovalarimiz va bog'lanish": "Наши приложения и связь",
+  "Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda": "Все наши приложения, обновления и связь с нами — в нашем Telegram-канале",
 };
 
 // Ruschani LUGAT ga qo'shamiz
