@@ -66,6 +66,15 @@ const KUN_QISQA = ["Ya","Du","Se","Ch","Pa","Ju","Sh"];
 const KUN_QISQA_DUSH = [1, 2, 3, 4, 5, 6, 0];
 const HIJRI_OYLAR = ["muharram","safar","rabiul-avval","rabiul-oxir","jumadul-avval","jumadul-oxir","rajab","sha'bon","ramazon","shavvol","zulqa'da","zulhijja"];
 
+// Bo'sh Bugun sahifasida taklif qilinadigan tayyor vazifalar.
+// Bir bosishda qo'shiladi — yangi odam ilovani darrov ishlata boshlaydi.
+// `turkum` — vazifa turi. Ataylab `tur` DEYILMADI: tanishtiruv qadamlarida
+// `tur` maydoni bor va ikkalasi aralashib ketardi.
+const NAMUNA: { nom: string; turkum: string; ik: string; daq: number }[] = [
+  { nom: "Sport bilan shug'ullanish", turkum: "Sog'liq", ik: "run", daq: 30 },
+  { nom: "Kitob o'qish", turkum: "Ilm", ik: "bookOpen", daq: 30 },
+];
+
 const ZIKRLAR = ["Tonggi zikrlar", "Kechki zikrlar", "Uxlashdan oldingi zikrlar"];
 const NAMOZLAR: { id: string; n: string; g: string[] }[] = [
   { id: "bomdod", n: "Bomdod", g: ["2 sunnat", "2 farz"] },
@@ -2172,6 +2181,29 @@ function BugunView(p: {
           <div className="py-2 text-center">
             <p className="text-[13px] font-semibold" style={{ color: "var(--ink)" }}>{tr("Bugunga vazifa yo'q")}</p>
             <p className="mx-auto mt-1 max-w-[16rem] text-[11.5px] leading-relaxed" style={lblS}>{tr("Pastdagi")} <b style={{ color: "var(--green)" }}>+</b> {tr("tugmasi orqali kundalik yoki oliy maqsad vazifasini qo'shing.")}</p>
+            {/* NAMUNA VAZIFALAR — bo'sh ekran yangi odamni to'xtatib qo'yadi.
+                Bir bosishda qo'shiladi, keyin odatdagidek tahrirlanadi. */}
+            <p className="mt-4 text-[11px] font-bold uppercase tracking-wider" style={lblS}>{tr("yoki tayyor namunadan boshlang")}</p>
+            <div className="mt-2 flex flex-wrap justify-center gap-2">
+              {NAMUNA.map(n => (
+                <button key={n.nom} onClick={() => {
+                  buzz();
+                  p.setTasks(ts => ts.some(x => x.name === tr(n.nom) && !x.archivedAt) ? ts : [...ts, {
+                    id: uid(), name: tr(n.nom), type: tr(n.turkum), scope: "daily", folderId: null,
+                    minutes: n.daq, startDate: today, endDate: null, days: [],
+                    schedFrom: null, schedTo: null, remTime: null, remText: "",
+                    pauses: [], abandonedAt: null, archivedAt: null, countsHours: true,
+                    plannedDays: null, notes: [], completedAt: null, kind: "time", createdAt: today,
+                  }]);
+                }}
+                  className="om-press flex items-center gap-1.5 rounded-xl border px-3 py-2 text-[12px] font-semibold"
+                  style={{ ...cardS, color: "var(--ink)" }}>
+                  <Icon n={n.ik} size={14} style={{ color: "var(--green)" }} />
+                  {tr(n.nom)}
+                  <span className="text-[10px] font-normal" style={lblS}>{fmtMin(n.daq)}</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
         {reorder ? (
@@ -4600,20 +4632,21 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
 
-      <button onClick={() => setSub("haqida")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
-        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)" }}><Logo size={24} /></span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova haqida")}</span>
-          <span className="block text-[11px]" style={lblS}>{tr("Nega yaratildi va kimga kerak")}</span>
-        </span>
-        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
-      </button>
-
       <button onClick={openTelegram} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
         <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "#229ED9" }}><Icon n="telegram" size={21} style={{ color: "#fff" }} /></span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilovalarimiz va bog'lanish")}</span>
           <span className="block text-[11px]" style={lblS}>{tr("Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda")}</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      {/* «Ilova haqida» — ENG OXIRIDA, kanal havolasi ostida */}
+      <button onClick={() => setSub("haqida")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)" }}><Logo size={24} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova haqida")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Nega yaratildi va kimga kerak")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>

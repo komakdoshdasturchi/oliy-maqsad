@@ -811,6 +811,13 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.": { en: "The app was made for people's benefit. That is why it carries no advertising and no payments whatsoever." },
   "Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.": { en: "A lifetime is the most precious thing given to us, yet we rarely notice it being spent. Writing the day down changes nothing by itself. But it forces a person into one thing — to stop and look at himself." },
   "Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.": { en: "An unwatched day passes unnoticed. A counted day stays." },
+
+  // --- v12: namuna vazifalar ---
+  "yoki tayyor namunadan boshlang": { en: "or start from a ready example" },
+  "Sport bilan shug'ullanish": { en: "Exercise" },
+  "Kitob o'qish": { en: "Reading a book" },
+  "Sog'liq": { en: "Health" },
+  "Ilm": { en: "Knowledge" },
 };
 
 // ---------- ARABCHA ----------
@@ -1581,6 +1588,13 @@ const LUGAT_AR: Record<string, string> = {
   "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.": "صُنع التطبيق لمنفعة الناس. ولذلك ليس فيه إعلانات ولا مدفوعات البتة.",
   "Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.": "العمر أثمن ما أُعطينا، ومع ذلك قلّما نشعر به وهو يُنفَق. وتدوين اليوم بذاته لا يغيّر شيئًا. لكنه يُلزم المرء بأمر واحد — أن يتوقف وينظر إلى نفسه.",
   "Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.": "اليوم الذي لا يُراقَب يمضي دون أن يُشعر به. واليوم الذي يُحسَب يبقى.",
+
+  // --- v12: namuna vazifalar ---
+  "yoki tayyor namunadan boshlang": "أو ابدأ من نموذج جاهز",
+  "Sport bilan shug'ullanish": "ممارسة الرياضة",
+  "Kitob o'qish": "قراءة كتاب",
+  "Sog'liq": "الصحة",
+  "Ilm": "العلم",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2302,6 +2316,13 @@ const LUGAT_RU: Record<string, string> = {
   "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.": "Приложение сделано ради пользы людей. Поэтому в нём нет ни рекламы, ни платежей.",
   "Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.": "Жизнь — самое ценное, что нам дано, но мы редко замечаем, как она расходуется. Запись дня сама по себе ничего не меняет. Но она вынуждает человека к одному — остановиться и взглянуть на себя.",
   "Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.": "День без присмотра проходит незаметно. А сочтённый день остаётся.",
+
+  // --- v12: namuna vazifalar ---
+  "yoki tayyor namunadan boshlang": "или начните с готового примера",
+  "Sport bilan shug'ullanish": "Заниматься спортом",
+  "Kitob o'qish": "Чтение книги",
+  "Sog'liq": "Здоровье",
+  "Ilm": "Знание",
 };
 
 // Ruschani LUGAT ga qo'shamiz
