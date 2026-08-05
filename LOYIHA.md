@@ -316,6 +316,6 @@ buni lug'at tekshiruvi **TOPMAYDI** (kalit bor, tarjima bor — lekin ma'nosi no
   bo'ldi — ataylab, bir xil emas
 
 ## KELAJAK REJALARI
-- **!!! PLAY MARKET BOSQICHIDA BIRINCHI NAVBATDA ESLATISH (foydalanuvchi maxsus so'radi):** tashqi ilova belgisi (launcher ikonka) tanlovi funksiyasini qo'shish — Sozlamalar→Ko'rinishdan oq/yashil/sariq/4-variant logolardan birini tanlash. **Web/Capacitor'da MUMKIN EMAS** (Android activity-alias + native Kotlin/Java kerak). Logolar tayyor: `C:\oliy-maqsad\Logolar\`
+- **LAUNCHER IKONKA TANLOVI — v13 GA QOLDIRILDI (qaror 2026-08-05).** Foydalanuvchiga tushuntirildi va u o'zi «b» variantini (keyinga qoldirish) tanladi: chiqishni kechiktirmaslik uchun. Sozlamalardan oq/yashil/sariq/4-variant logolardan birini tanlash. **Web/Capacitor'da MUMKIN EMAS** — Android `activity-alias` + `PackageManager.setComponentEnabledSetting` uchun native Java kerak, ya'ni kichik plagin yoziladi. Ma'lum xatarlar: almashganda Android ilovani majburan yopadi · MIUI ikonkani keshlaydi · ba'zi launcher'larda bosh ekran yorlig'i yo'qoladi. Logolar tayyor: `C:\oliy-maqsad\Logolar\` (1/2/3-varyant + 4-variant.jpg)
 - Play Market: $25 hisob, Capacitor AAB, ~12 sinovchi 14 kun yopiq test, maxfiylik siyosati sahifasi
 - Firebase profil-sinxronlash — Play bosqichida
