@@ -6,6 +6,16 @@ apply plugin: 'com.android.application'
 def omVersiya = "12"          // "Oliy maqsad v12.apk" va Sozlamalardagi versiya
 def omVersiyaKodi = 12        // Android uchun: har chiqarishda OSHIB borishi shart
 
+// IMZO KALITI. Yo'l va parollar `android/keystore.properties` da turadi —
+// u fayl .gitignore da, GitHub'ga TUSHMAYDI. Kalitning o'zi esa umuman
+// loyihadan tashqarida: C:\Users\Techno House\oliy-maqsad-kalit\
+// Fayl topilmasa (masalan toza klondan qurilsa) release imzosiz chiqadi,
+// ammo qurilish to'xtamaydi.
+def kalitFayl = rootProject.file("keystore.properties")
+def kalit = new Properties()
+if (kalitFayl.exists()) { kalitFayl.withInputStream { kalit.load(it) } }
+def kalitBor = kalit.containsKey("storeFile")
+
 android {
     namespace = "com.oliymaqsad.app"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -22,8 +32,19 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            if (kalitBor) {
+                storeFile file(kalit["storeFile"])
+                storePassword kalit["storePassword"]
+                keyAlias kalit["keyAlias"]
+                keyPassword kalit["keyPassword"]
+            }
+        }
+    }
     buildTypes {
         release {
+            if (kalitBor) { signingConfig signingConfigs.release }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

@@ -10,6 +10,9 @@ coverage/
 !.env.example
 *.keystore
 *.jks
+# Imzo kaliti yo'li va parollari. Kalitning O'ZI git papkasidan TASHQARIDA:
+# C:\Users\Techno House\oliy-maqsad-kalit\  — u yerda .jks va parol.txt turadi
+android/keystore.properties
 
 # === SHAXSIY MA'LUMOT — GitHub'ga hech qachon tushmasin ===
 oliy-maqsad-zaxira-*.pdf
