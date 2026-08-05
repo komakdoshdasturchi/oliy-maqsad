@@ -795,6 +795,22 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Telegram kanalimizga o'tasizmi?": { en: "Open our Telegram channel?" },
   "Ilovalarimiz va bog'lanish": { en: "Our apps and contact" },
   "Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda": { en: "All our apps, updates and how to reach us — in our Telegram channel" },
+
+  // --- v12: «Ilova haqida» bo'limi ---
+  "Ilova haqida": { en: "About the app" },
+  "Nega yaratildi va kimga kerak": { en: "Why it was made and who it is for" },
+  "Yangilanishlar va aloqa uchun": { en: "Updates and contact" },
+  "Assalomu alaykum. Hayotimiz davomida ko'pchiligimiz o'zimiz uchun turli xil katta maqsadlar qo'yamiz — «shu yili buni o'rganaman», «bu yili tashlayman», «u yilda mana buncha narsaga erishaman» va hokazo. Bir hafta o'tadi, ikki hafta o'tadi, ammo maqsadlarimizni bajarish tugul, qanday maqsadlar haqida o'ylaganimizni ham eslay olmaymiz. Maqsad yo'qolmaydi — u shunchaki har kungi kichik ishlarga bo'linmagani uchun qo'ldan chiqib ketadi.": { en: "Peace be upon you. Throughout our lives most of us set ourselves all kinds of large goals — «this year I will learn that», «this year I will give it up», «by that year I will have achieved this much», and so on. A week passes, two weeks pass, and not only have we failed to carry the goals out, we cannot even recall what goals we were thinking about. A goal does not vanish — it simply slips out of our hands because it was never broken down into small daily tasks." },
+  "Aynan mana shu vaziyatda «Oliy maqsad» sizga yordamchi bo'ladi: ilova kattayu kichik maqsadlaringizni har kungi qadamlarga bo'lib beradi va o'sha qadamlarni shaffof holatda hisoblab boradi.": { en: "This is exactly where «Oliy maqsad» helps you: the app breaks your goals, large and small, into daily steps and keeps count of those steps openly." },
+  "Bugun nimani bajardingiz, nimani qoldirdingiz, nimani sababli qoldirdingiz — hammasi yozilib boradi. Bir oydan keyin o'zingizga «harakat qildim shekilli» deb emas, aniq raqam bilan qaray olasiz.": { en: "What you did today, what you left undone, and what you left with a good reason — all of it is recorded. A month later you can look at yourself not with «I think I tried», but with an exact number." },
+  "Bu yerda maqtov ham, tanbeh ham yo'q. Faqat ko'zgu bor.": { en: "There is no praise here and no reproach. There is only a mirror." },
+  "Biz bu ilovani avvalo o'zimiz uchun yasagandik. Yozib boradigan daftarimiz bor edi, lekin daftar hisoblab bermaydi, eslatmaydi va yo'qolib ketish xavfi bor. Tayyor ilovalarni sinab ko'rdik — ko'pi ro'yxat tuzishga yaxshi, ammo uzoq yo'lni ko'rsatmaydi; shaxsiy ma'lumot daxlsizligi ham so'roq ostidagi masala edi.": { en: "We first built this app for ourselves. We kept a notebook, but a notebook does not count for you, does not remind you, and can be lost. We tried the apps that already existed — most are good at making lists but do not show the long road; and the privacy of personal data was a question mark as well." },
+  "Shuning uchun ilovani yasash mobaynida uch tamal qoidani qat'iy belgiladik:": { en: "So while building the app we laid down three firm rules:" },
+  "Ma'lumot faqat telefoningizda turadi. U hech qayerga ketmaydi. Ilovaning hech qanday serveri yo'q — shaxsiy ma'lumotlar telefondan tashqariga chiqmaydi.": { en: "Your data stays only on your phone. It goes nowhere. The app has no server at all — personal data never leaves the device." },
+  "Serverlar bo'lmaganidan keyin ilova 100% internetsiz ishlaydi.": { en: "Since there are no servers, the app works fully without the internet." },
+  "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.": { en: "The app was made for people's benefit. That is why it carries no advertising and no payments whatsoever." },
+  "Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.": { en: "A lifetime is the most precious thing given to us, yet we rarely notice it being spent. Writing the day down changes nothing by itself. But it forces a person into one thing — to stop and look at himself." },
+  "Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.": { en: "An unwatched day passes unnoticed. A counted day stays." },
 };
 
 // ---------- ARABCHA ----------
@@ -1549,6 +1565,22 @@ const LUGAT_AR: Record<string, string> = {
   "Telegram kanalimizga o'tasizmi?": "هل تفتح قناتنا على تيليجرام؟",
   "Ilovalarimiz va bog'lanish": "تطبيقاتنا والتواصل",
   "Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda": "كل تطبيقاتنا وتحديثاتنا وطريقة التواصل معنا — في قناتنا على تيليجرام",
+
+  // --- v12: «Ilova haqida» bo'limi ---
+  "Ilova haqida": "عن التطبيق",
+  "Nega yaratildi va kimga kerak": "لماذا صُنع ولمن هو",
+  "Yangilanishlar va aloqa uchun": "للتحديثات والتواصل",
+  "Assalomu alaykum. Hayotimiz davomida ko'pchiligimiz o'zimiz uchun turli xil katta maqsadlar qo'yamiz — «shu yili buni o'rganaman», «bu yili tashlayman», «u yilda mana buncha narsaga erishaman» va hokazo. Bir hafta o'tadi, ikki hafta o'tadi, ammo maqsadlarimizni bajarish tugul, qanday maqsadlar haqida o'ylaganimizni ham eslay olmaymiz. Maqsad yo'qolmaydi — u shunchaki har kungi kichik ishlarga bo'linmagani uchun qo'ldan chiqib ketadi.": "السلام عليكم. كثير منا يضع لنفسه على مدى حياته أهدافًا كبيرة من كل نوع — «هذه السنة سأتعلم كذا»، «هذه السنة سأترك كذا»، «في تلك السنة سأبلغ هذا القدر» وهكذا. يمر أسبوع، ويمر أسبوعان، فلا نكون قد نفّذنا أهدافنا، بل لا نتذكر أصلًا ما الأهداف التي كنا نفكر فيها. الهدف لا يضيع — بل ينفلت من أيدينا لأنه لم يُقسَّم إلى أعمال يومية صغيرة.",
+  "Aynan mana shu vaziyatda «Oliy maqsad» sizga yordamchi bo'ladi: ilova kattayu kichik maqsadlaringizni har kungi qadamlarga bo'lib beradi va o'sha qadamlarni shaffof holatda hisoblab boradi.": "وهنا بالضبط يعينك «الهدف الأسمى»: يقسّم التطبيق أهدافك الكبيرة والصغيرة إلى خطوات يومية، ويحسب تلك الخطوات بشفافية.",
+  "Bugun nimani bajardingiz, nimani qoldirdingiz, nimani sababli qoldirdingiz — hammasi yozilib boradi. Bir oydan keyin o'zingizga «harakat qildim shekilli» deb emas, aniq raqam bilan qaray olasiz.": "ما أدّيته اليوم، وما تركته، وما تركته بعذر — كل ذلك يُسجَّل. وبعد شهر تستطيع أن تنظر إلى نفسك لا بعبارة «يبدو أني اجتهدت»، بل برقم دقيق.",
+  "Bu yerda maqtov ham, tanbeh ham yo'q. Faqat ko'zgu bor.": "لا مدح هنا ولا لوم. هنا مرآة فحسب.",
+  "Biz bu ilovani avvalo o'zimiz uchun yasagandik. Yozib boradigan daftarimiz bor edi, lekin daftar hisoblab bermaydi, eslatmaydi va yo'qolib ketish xavfi bor. Tayyor ilovalarni sinab ko'rdik — ko'pi ro'yxat tuzishga yaxshi, ammo uzoq yo'lni ko'rsatmaydi; shaxsiy ma'lumot daxlsizligi ham so'roq ostidagi masala edi.": "صنعنا هذا التطبيق أول ما صنعناه لأنفسنا. كان لنا دفتر نكتب فيه، لكن الدفتر لا يحسب عنك، ولا يذكّرك، ومعرّض للضياع. وجرّبنا التطبيقات الجاهزة — أكثرها جيد في إعداد القوائم، لكنه لا يُظهر الطريق الطويل؛ وكانت حرمة البيانات الشخصية أيضًا موضع سؤال.",
+  "Shuning uchun ilovani yasash mobaynida uch tamal qoidani qat'iy belgiladik:": "لذلك وضعنا أثناء بناء التطبيق ثلاث قواعد راسخة:",
+  "Ma'lumot faqat telefoningizda turadi. U hech qayerga ketmaydi. Ilovaning hech qanday serveri yo'q — shaxsiy ma'lumotlar telefondan tashqariga chiqmaydi.": "بياناتك تبقى في هاتفك وحده. لا تذهب إلى أي مكان. وليس للتطبيق أي خادم — فالبيانات الشخصية لا تخرج من الجهاز.",
+  "Serverlar bo'lmaganidan keyin ilova 100% internetsiz ishlaydi.": "وما دام لا خوادم، فالتطبيق يعمل تمامًا بلا إنترنت.",
+  "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.": "صُنع التطبيق لمنفعة الناس. ولذلك ليس فيه إعلانات ولا مدفوعات البتة.",
+  "Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.": "العمر أثمن ما أُعطينا، ومع ذلك قلّما نشعر به وهو يُنفَق. وتدوين اليوم بذاته لا يغيّر شيئًا. لكنه يُلزم المرء بأمر واحد — أن يتوقف وينظر إلى نفسه.",
+  "Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.": "اليوم الذي لا يُراقَب يمضي دون أن يُشعر به. واليوم الذي يُحسَب يبقى.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2254,6 +2286,22 @@ const LUGAT_RU: Record<string, string> = {
   "Telegram kanalimizga o'tasizmi?": "Перейти в наш Telegram-канал?",
   "Ilovalarimiz va bog'lanish": "Наши приложения и связь",
   "Barcha ilovalarimiz, yangilanishlar va biz bilan bog'lanish — Telegram kanalimizda": "Все наши приложения, обновления и связь с нами — в нашем Telegram-канале",
+
+  // --- v12: «Ilova haqida» bo'limi ---
+  "Ilova haqida": "О приложении",
+  "Nega yaratildi va kimga kerak": "Зачем создано и кому нужно",
+  "Yangilanishlar va aloqa uchun": "Обновления и связь",
+  "Assalomu alaykum. Hayotimiz davomida ko'pchiligimiz o'zimiz uchun turli xil katta maqsadlar qo'yamiz — «shu yili buni o'rganaman», «bu yili tashlayman», «u yilda mana buncha narsaga erishaman» va hokazo. Bir hafta o'tadi, ikki hafta o'tadi, ammo maqsadlarimizni bajarish tugul, qanday maqsadlar haqida o'ylaganimizni ham eslay olmaymiz. Maqsad yo'qolmaydi — u shunchaki har kungi kichik ishlarga bo'linmagani uchun qo'ldan chiqib ketadi.": "Ассаламу алайкум. На протяжении жизни многие из нас ставят себе самые разные большие цели — «в этом году научусь тому», «в этом году брошу это», «к тому году достигну вот столького» и так далее. Проходит неделя, проходят две, и мы не только не выполнили свои цели — мы даже не помним, о каких целях думали. Цель не исчезает: она просто ускользает из рук, потому что не была разбита на маленькие ежедневные дела.",
+  "Aynan mana shu vaziyatda «Oliy maqsad» sizga yordamchi bo'ladi: ilova kattayu kichik maqsadlaringizni har kungi qadamlarga bo'lib beradi va o'sha qadamlarni shaffof holatda hisoblab boradi.": "Именно здесь «Oliy maqsad» вам помогает: приложение разбивает ваши цели, большие и малые, на ежедневные шаги и прозрачно ведёт им счёт.",
+  "Bugun nimani bajardingiz, nimani qoldirdingiz, nimani sababli qoldirdingiz — hammasi yozilib boradi. Bir oydan keyin o'zingizga «harakat qildim shekilli» deb emas, aniq raqam bilan qaray olasiz.": "Что вы сделали сегодня, что оставили, а что оставили по уважительной причине — всё это записывается. Через месяц вы посмотрите на себя не словами «вроде бы старался», а точным числом.",
+  "Bu yerda maqtov ham, tanbeh ham yo'q. Faqat ko'zgu bor.": "Здесь нет ни похвалы, ни упрёка. Здесь только зеркало.",
+  "Biz bu ilovani avvalo o'zimiz uchun yasagandik. Yozib boradigan daftarimiz bor edi, lekin daftar hisoblab bermaydi, eslatmaydi va yo'qolib ketish xavfi bor. Tayyor ilovalarni sinab ko'rdik — ko'pi ro'yxat tuzishga yaxshi, ammo uzoq yo'lni ko'rsatmaydi; shaxsiy ma'lumot daxlsizligi ham so'roq ostidagi masala edi.": "Это приложение мы сделали прежде всего для себя. У нас была тетрадь, но тетрадь не считает за вас, не напоминает и может потеряться. Мы пробовали готовые приложения — большинство хороши для составления списков, но не показывают длинный путь; да и неприкосновенность личных данных оставалась под вопросом.",
+  "Shuning uchun ilovani yasash mobaynida uch tamal qoidani qat'iy belgiladik:": "Поэтому при создании приложения мы твёрдо установили три правила:",
+  "Ma'lumot faqat telefoningizda turadi. U hech qayerga ketmaydi. Ilovaning hech qanday serveri yo'q — shaxsiy ma'lumotlar telefondan tashqariga chiqmaydi.": "Данные хранятся только на вашем телефоне. Они никуда не уходят. У приложения вообще нет сервера — личные данные не покидают устройство.",
+  "Serverlar bo'lmaganidan keyin ilova 100% internetsiz ishlaydi.": "Раз серверов нет, приложение полностью работает без интернета.",
+  "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.": "Приложение сделано ради пользы людей. Поэтому в нём нет ни рекламы, ни платежей.",
+  "Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.": "Жизнь — самое ценное, что нам дано, но мы редко замечаем, как она расходуется. Запись дня сама по себе ничего не меняет. Но она вынуждает человека к одному — остановиться и взглянуть на себя.",
+  "Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.": "День без присмотра проходит незаметно. А сочтённый день остаётся.",
 };
 
 // Ruschani LUGAT ga qo'shamiz

@@ -4382,7 +4382,7 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
   const fileRef = useRef<HTMLInputElement>(null);
   const [showHelp, setShowHelp] = useState(false);
   // null = asosiy ro'yxat, aks holda ochiq ichki sahifa
-  const [sub, setSub] = useState<null | "malumot">(null);
+  const [sub, setSub] = useState<null | "malumot" | "haqida">(null);
   const openTelegram = async () => {
     const ok = await omConfirm(tr("Telegram kanalimizga o'tasizmi?"), tr("Telegram ilovasi ochiladi."), { okText: tr("Ha, o'taman") });
     const url = "https://t.me/xodimiy";
@@ -4465,6 +4465,61 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
     <input ref={fileRef} type="file" accept=".pdf,.json" onChange={e => e.target.files && e.target.files[0] && importFile(e.target.files[0])} style={{ display: "none" }} />
   );
 
+  // ---------- ICHKI: ILOVA HAQIDA ----------
+  // Matn muallifniki (XODIMIY). Bandlarga bo'lingan — har band alohida
+  // lug'at kaliti, aks holda uzun matnni tarjima qilib bo'lmaydi.
+  if (sub === "haqida") return (
+    <div className="space-y-3.5">
+      {sarlavha(tr("Ilova haqida"))}
+
+      <Card className="text-center">
+        <Logo size={44} />
+        <div className="mt-2 text-[15px] font-bold" style={{ color: "var(--green)" }}>{tr("Oliy maqsad")}</div>
+      </Card>
+
+      <Card>
+        <div className="space-y-3 text-[13px] leading-relaxed" style={{ color: "var(--ink)" }}>
+          <p>{tr("Assalomu alaykum. Hayotimiz davomida ko'pchiligimiz o'zimiz uchun turli xil katta maqsadlar qo'yamiz — «shu yili buni o'rganaman», «bu yili tashlayman», «u yilda mana buncha narsaga erishaman» va hokazo. Bir hafta o'tadi, ikki hafta o'tadi, ammo maqsadlarimizni bajarish tugul, qanday maqsadlar haqida o'ylaganimizni ham eslay olmaymiz. Maqsad yo'qolmaydi — u shunchaki har kungi kichik ishlarga bo'linmagani uchun qo'ldan chiqib ketadi.")}</p>
+          <p>{tr("Aynan mana shu vaziyatda «Oliy maqsad» sizga yordamchi bo'ladi: ilova kattayu kichik maqsadlaringizni har kungi qadamlarga bo'lib beradi va o'sha qadamlarni shaffof holatda hisoblab boradi.")}</p>
+          <p>{tr("Bugun nimani bajardingiz, nimani qoldirdingiz, nimani sababli qoldirdingiz — hammasi yozilib boradi. Bir oydan keyin o'zingizga «harakat qildim shekilli» deb emas, aniq raqam bilan qaray olasiz.")}</p>
+          <p className="font-semibold" style={{ color: "var(--green)" }}>{tr("Bu yerda maqtov ham, tanbeh ham yo'q. Faqat ko'zgu bor.")}</p>
+          <p>{tr("Biz bu ilovani avvalo o'zimiz uchun yasagandik. Yozib boradigan daftarimiz bor edi, lekin daftar hisoblab bermaydi, eslatmaydi va yo'qolib ketish xavfi bor. Tayyor ilovalarni sinab ko'rdik — ko'pi ro'yxat tuzishga yaxshi, ammo uzoq yo'lni ko'rsatmaydi; shaxsiy ma'lumot daxlsizligi ham so'roq ostidagi masala edi.")}</p>
+          <p>{tr("Shuning uchun ilovani yasash mobaynida uch tamal qoidani qat'iy belgiladik:")}</p>
+        </div>
+      </Card>
+
+      <div className="space-y-2">
+        {[
+          "Ma'lumot faqat telefoningizda turadi. U hech qayerga ketmaydi. Ilovaning hech qanday serveri yo'q — shaxsiy ma'lumotlar telefondan tashqariga chiqmaydi.",
+          "Serverlar bo'lmaganidan keyin ilova 100% internetsiz ishlaydi.",
+          "Ilova insonlar manfaati uchun yasalgan. Shu sabab unda umuman reklama va to'lovlar yo'q.",
+        ].map((s, i) => (
+          <div key={i} className="om-card flex gap-3 p-3.5">
+            <span className="grid h-7 w-7 flex-none place-items-center rounded-full text-[12px] font-bold text-white" style={{ background: "var(--green)" }}>{raqam(i + 1)}</span>
+            <span className="min-w-0 flex-1 text-[12.5px] leading-relaxed" style={{ color: "var(--ink)" }}>{tr(s)}</span>
+          </div>
+        ))}
+      </div>
+
+      <Card style={{ borderColor: "var(--gold)" }}>
+        <p className="mb-2 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--gold)" }}>{tr("Eslatma")}</p>
+        <p className="text-[13px] leading-relaxed" style={{ color: "var(--ink)" }}>{tr("Umr — bizga berilgan eng qimmatli narsa, ammo u sarflanayotganini ko'pincha sezmaymiz. Kunni yozib borishning o'zi hech narsani o'zgartirmaydi. Lekin u odamni bir ishga majbur qiladi — to'xtab, o'ziga qarashga.")}</p>
+        <p className="mt-2 text-[13px] font-semibold leading-relaxed" style={{ color: "var(--green)" }}>{tr("Nazorat qilinmagan kun sezilmay o'tadi. Sanalgan kun esa qoladi.")}</p>
+      </Card>
+
+      <button onClick={openTelegram} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "#229ED9" }}><Icon n="telegram" size={21} style={{ color: "#fff" }} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Yangilanishlar va aloqa uchun")}</span>
+          <span className="block text-[11px]" style={lblS}>t.me/xodimiy</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      <p className="pt-1 text-center text-[12px] font-bold tracking-[0.2em]" style={{ color: "var(--muted)" }}>XODIMIY</p>
+    </div>
+  );
+
   // ---------- ICHKI: MA'LUMOTLAR ----------
   if (sub === "malumot") return (
     <div className="space-y-3.5">
@@ -4541,6 +4596,15 @@ function SozlamaPage(p: { settings: Settings; setSettings: React.Dispatch<React.
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova tili")}</span>
           <span className="block text-[11px]" style={lblS}>{jorTil.nom}</span>
+        </span>
+        <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
+      </button>
+
+      <button onClick={() => setSub("haqida")} className="om-press om-card flex w-full items-center gap-3 p-3.5 text-left">
+        <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)" }}><Logo size={24} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-bold" style={{ color: "var(--ink)" }}>{tr("Ilova haqida")}</span>
+          <span className="block text-[11px]" style={lblS}>{tr("Nega yaratildi va kimga kerak")}</span>
         </span>
         <Icon n="chevronRight" size={16} style={{ color: "var(--muted)" }} />
       </button>
