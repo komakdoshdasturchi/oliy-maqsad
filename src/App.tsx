@@ -4038,7 +4038,7 @@ function VazifalarPage(p: {
   const [showMetrics, setShowMetrics] = useState(false);
   const { today } = p;
 
-  const types = Array.from(new Set([...p.tasks.map(t => t.type), ...p.plan.metrics.map(m => m.typeName || m.name)].filter(Boolean)));
+  const types = Array.from(new Set([...p.tasks.filter(t => t.kind !== "count").map(t => t.type), ...p.plan.metrics.map(m => m.typeName || m.name)].filter(Boolean)));
   const visible = (t: Task) => t.scope === sub && !t.isSleep && (!t.archivedAt || t.completedAt);
   // tur bo'yicha guruhlash (tur = papka)
   const grouped = (() => {
@@ -5206,7 +5206,10 @@ export default function App() {
     setPomoModeAsk(false);
     setPomo({ phase: "work", endsAt: Date.now() + pomoCfg.work * 60000, pausedLeft: null, mode });
   };
-  const types = Array.from(new Set([...tasks.map(t => t.type), ...plan.metrics.map(m => m.typeName || m.name)].filter(Boolean)));
+  // «Turi» maydonining takliflari. SANALADIGAN vazifalar CHIQARILMAYDI:
+  // ularning «turi» — o'z maqsadining nomi (masalan «100 ta dars»), boshqa
+  // vazifaga turkum bo'lib taklif etilishi mantiqsiz.
+  const types = Array.from(new Set([...tasks.filter(t => t.kind !== "count").map(t => t.type), ...plan.metrics.map(m => m.typeName || m.name)].filter(Boolean)));
 
   const HdrBtn = ({ pg, icon, tint }: { pg: "ibodat" | "pomo" | "vazifalar" | "sozlama"; icon: string; tint: string }) => {
     const active = page === pg || (pg === "pomo" && !!pomo);
