@@ -818,6 +818,14 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Kitob o'qish": { en: "Reading a book" },
   "Sog'liq": { en: "Health" },
   "Ilm": { en: "Knowledge" },
+
+  // --- v12: ibodat eslatmasi ---
+  "to'ldirish shart": { en: "to be filled in" },
+  "to'liq": { en: "complete" },
+  "Kechqurungi eslatma": { en: "Evening reminder" },
+  "Har kuni {v} da eslatiladi": { en: "Reminds you every day at {v}" },
+  "O'chirilgan": { en: "Turned off" },
+  "Bugungi ibodatlaringizni belgilab qo'ying.": { en: "Mark today's worship." },
 };
 
 // ---------- ARABCHA ----------
@@ -1595,6 +1603,14 @@ const LUGAT_AR: Record<string, string> = {
   "Kitob o'qish": "قراءة كتاب",
   "Sog'liq": "الصحة",
   "Ilm": "العلم",
+
+  // --- v12: ibodat eslatmasi ---
+  "to'ldirish shart": "يجب إكماله",
+  "to'liq": "مكتمل",
+  "Kechqurungi eslatma": "تذكير المساء",
+  "Har kuni {v} da eslatiladi": "يذكّرك كل يوم في {v}",
+  "O'chirilgan": "مُطفأ",
+  "Bugungi ibodatlaringizni belgilab qo'ying.": "علّم عبادات اليوم.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2323,6 +2339,14 @@ const LUGAT_RU: Record<string, string> = {
   "Kitob o'qish": "Чтение книги",
   "Sog'liq": "Здоровье",
   "Ilm": "Знание",
+
+  // --- v12: ibodat eslatmasi ---
+  "to'ldirish shart": "нужно заполнить",
+  "to'liq": "полностью",
+  "Kechqurungi eslatma": "Вечернее напоминание",
+  "Har kuni {v} da eslatiladi": "Напоминает каждый день в {v}",
+  "O'chirilgan": "Отключено",
+  "Bugungi ibodatlaringizni belgilab qo'ying.": "Отметьте сегодняшнее поклонение.",
 };
 
 // Ruschani LUGAT ga qo'shamiz

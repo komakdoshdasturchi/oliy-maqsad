@@ -32,7 +32,12 @@ interface Plan {
   weightOn: boolean; weightTarget: number; weightDay: number;
   metrics: Metric[];
 }
-interface Settings { hijriOffset: number; remindersOn: boolean; reminderTimes: string[]; dark: boolean; lastBackup: string | null; }
+interface Settings {
+  hijriOffset: number; remindersOn: boolean; reminderTimes: string[]; dark: boolean; lastBackup: string | null;
+  // Ibodat eslatmasi. IXTIYORIY maydonlar — eski saqlangan sozlamalarda yo'q,
+  // shuning uchun tekshiruv `!== false` (ya'ni yozilmagan bo'lsa YOQIQ hisoblanadi).
+  ibEslatma?: boolean; ibVaqt?: string;
+}
 // cycles — ESKI maydon. "Sikl" (kunlik pomodoro maqsadi) 2026-07-29 da olib
 // tashlandi; maydon faqat eski saqlangan sozlama o'qilganda xato bermasligi
 // uchun turibdi, hech qayerda ishlatilmaydi.
@@ -596,18 +601,42 @@ function Sheet({ title, onClose, children }: { title: React.ReactNode; onClose: 
 const DAYS_ORDER = [1, 2, 3, 4, 5, 6, 0]; // Du Se Ch Pa Ju Sh Ya
 
 // aylanadigan ustun (soat/daqiqa)
+// QATOR BALANDLIGI — `h-11` (44px) bilan bir xil bo'lishi SHART, chunki
+// surilgan masofadan qaysi raqam markazda turgani shu son orqali hisoblanadi.
+const WHEEL_H = 44;
+
 function Wheel({ items, value, onPick, pad }: { items: number[]; value: number; onPick: (v: number) => void; pad?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
+  const tmr = useRef<number | null>(null);
   useEffect(() => {
     const el = ref.current; if (!el) return;
     const i = items.indexOf(value);
-    if (i >= 0) el.scrollTop = i * 44;
+    if (i >= 0) el.scrollTop = i * WHEEL_H;
+    return () => { if (tmr.current) clearTimeout(tmr.current); };
   }, []);
+
+  // SURISH BILAN TANLANADI. Ilgari raqamning ustini bosish kerak edi —
+  // ya'ni 21:00 uchun avval «21», keyin «00» bosilardi. Endi kerakli raqamni
+  // yashil chiziqqa surib qo'yish kifoya. Surish to'xtagach tanlanadi.
+  const surildi = () => {
+    const el = ref.current; if (!el) return;
+    if (tmr.current) clearTimeout(tmr.current);
+    tmr.current = window.setTimeout(() => {
+      const i = Math.max(0, Math.min(Math.round(el.scrollTop / WHEEL_H), items.length - 1));
+      const n = items[i];
+      if (n !== undefined && n !== value) { buzz(); onPick(n); }
+    }, 130);
+  };
+
+  // Bosilganda ham ishlaydi: raqam markazga SURILADI, so'ng yuqoridagi
+  // tekshiruv uni tanlaydi. Shunday qilib ikki usul bir xil natija beradi.
+  const markazga = (i: number) => { const el = ref.current; if (el) el.scrollTo({ top: i * WHEEL_H, behavior: "smooth" }); };
+
   return (
-    <div ref={ref} style={{ height: 176, overflowY: "auto", scrollSnapType: "y mandatory", flex: 1 }}>
+    <div ref={ref} onScroll={surildi} style={{ height: 176, overflowY: "auto", scrollSnapType: "y mandatory", flex: 1 }}>
       <div style={{ height: 66 }} />
-      {items.map(n => (
-        <button key={n} onClick={() => { buzz(); onPick(n); }} className="flex h-11 w-full items-center justify-center text-[22px] font-bold tabular-nums"
+      {items.map((n, i) => (
+        <button key={n} onClick={() => markazga(i)} className="flex h-11 w-full items-center justify-center text-[22px] font-bold tabular-nums"
           style={{ scrollSnapAlign: "center", color: n === value ? "var(--green)" : "var(--ink)", opacity: n === value ? 1 : 0.38 }}>
           {pad ? String(n).padStart(2, "0") : n}
         </button>
@@ -646,9 +675,12 @@ function TimeRangeSheet({ from, to, single, title, wrap, onSave, onClose }: { fr
         )}
         <div className="flex items-center rounded-2xl border" style={{ ...cardS, position: "relative" }}>
           <div style={{ position: "absolute", left: 8, right: 8, top: 66, height: 44, borderRadius: 14, background: "var(--soft)", pointerEvents: "none" }} />
-          <Wheel items={Array.from({ length: 24 }, (_, i) => i)} value={ch} onPick={h => setCur(`${String(h).padStart(2, "0")}:${String(cm).padStart(2, "0")}`)} pad />
+          {/* `key` da `edit` bor: «Boshlanish»dan «Tugash»ga o'tilganda g'ildirak
+              qayta yaratiladi va yangi vaqtga suriladi. Ilgari eski joyida
+              qolib ketardi va yashil chiziqdagi raqam tugmadagidan farq qilardi. */}
+          <Wheel key={edit + "-s"} items={Array.from({ length: 24 }, (_, i) => i)} value={ch} onPick={h => setCur(`${String(h).padStart(2, "0")}:${String(cm).padStart(2, "0")}`)} pad />
           <span className="px-1 text-[20px] font-bold" style={{ color: "var(--muted)" }}>:</span>
-          <Wheel items={Array.from({ length: 12 }, (_, i) => i * 5)} value={Math.round(cm / 5) * 5} onPick={m => setCur(`${String(ch).padStart(2, "0")}:${String(m).padStart(2, "0")}`)} pad />
+          <Wheel key={edit + "-d"} items={Array.from({ length: 12 }, (_, i) => i * 5)} value={Math.round(cm / 5) * 5} onPick={m => setCur(`${String(ch).padStart(2, "0")}:${String(m).padStart(2, "0")}`)} pad />
         </div>
         <div className="flex flex-wrap gap-1.5">
           <button onClick={() => { const d = new Date(); setCur(`${String(d.getHours()).padStart(2, "0")}:${String(Math.floor(d.getMinutes() / 5) * 5).padStart(2, "0")}`); }}
@@ -1292,11 +1324,16 @@ function KhatmModal({ khatm, today, onSave, onClose }: { khatm: KhatmCfg | null;
 function IbadatPage(p: {
   today: string; ib: IbadatLog; setIb: React.Dispatch<React.SetStateAction<IbadatLog>>;
   gender: Gender; khatm: KhatmCfg | null; setKhatm: React.Dispatch<React.SetStateAction<KhatmCfg | null>>;
+  settings: Settings; setSettings: React.Dispatch<React.SetStateAction<Settings>>;
 }) {
-  const { today, khatm, gender } = p;
+  const { today, khatm, gender, settings } = p;
   const d = p.ib[today] || emptyIb();
   const [openPr, setOpenPr] = useState<Record<string, boolean>>({});
   const [showKhatm, setShowKhatm] = useState(false);
+  const [showIbVaqt, setShowIbVaqt] = useState(false);
+  // Yozilmagan bo'lsa YOQIQ hisoblanadi — eski sozlamalarda bu maydon yo'q
+  const ibEsl = settings.ibEslatma !== false;
+  const ibVaqt = settings.ibVaqt || "21:00";
   const kActive = khatmActiveOn(khatm, today);
   const sc = ibScore(d, kActive);
 
@@ -1483,7 +1520,26 @@ function IbadatPage(p: {
           )}
         </div>
       </div>
+      {/* KECHQURUNGI ESLATMA. Sozlamalar bo'limiga emas, shu yerga qo'yildi —
+          o'zi tegishli joyda tursa topish oson, Sozlamalar esa uzayib ketmaydi.
+          Dam kunida ham keladi: ibodat to'xtamaydi. */}
+      <button onClick={() => setShowIbVaqt(true)} className="om-press flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left" style={cardS}>
+        <Icon n="bell" size={17} style={{ color: ibEsl ? "var(--gold)" : "var(--muted)", flex: "none" }} />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[13px] font-semibold" style={{ color: "var(--ink)" }}>{tr("Kechqurungi eslatma")}</span>
+          <span className="block text-[11px]" style={lblS}>{ibEsl ? tf("Har kuni {v} da eslatiladi", { v: ibVaqt }) : tr("O'chirilgan")}</span>
+        </span>
+        <span onClick={e => { e.stopPropagation(); buzz(); p.setSettings(s => ({ ...s, ibEslatma: !ibEsl })); }}
+          className="om-press grid h-7 w-12 flex-none cursor-pointer items-center rounded-full px-0.5"
+          style={{ background: ibEsl ? "var(--green)" : "var(--line)", justifyItems: ibEsl ? "end" : "start" }}>
+          <span className="block h-6 w-6 rounded-full" style={{ background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.25)" }} />
+        </span>
+      </button>
+
       {showKhatm && <KhatmModal khatm={khatm} today={today} onSave={k => p.setKhatm(k)} onClose={() => setShowKhatm(false)} />}
+      {showIbVaqt && <TimeRangeSheet single title={tr("Kechqurungi eslatma")} from={ibVaqt}
+        onClose={() => setShowIbVaqt(false)}
+        onSave={f => { p.setSettings(s => ({ ...s, ibVaqt: f, ibEslatma: true })); setShowIbVaqt(false); }} />}
     </div>
   );
 }
@@ -1912,6 +1968,7 @@ function BugunView(p: {
   const Salom = null;
 
   const ibSc = ibScore(p.ib[today], khatmActiveOn(p.khatm, today));
+  const ibToliq = ibSc.done >= ibSc.base;
   const IbadatBlock = (
     <button onClick={p.openIbadat} className="om-press om-card flex w-full items-center gap-3 p-4 text-left">
       <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl" style={{ background: "var(--soft)", color: "var(--green)" }}><Icon n="mosque" size={22} /></span>
@@ -2031,9 +2088,11 @@ function BugunView(p: {
 
   const DumaloqQator = (
     <>
+      {/* Ibodat tugmasida `data-tur` YO'Q: u yuqoridagi ibodat qatoriga
+          ko'chirildi, chunki u sahifada balandroq va ko'zga ko'proq tashlanadi. */}
       <div className="flex items-start justify-around gap-1 px-1 pt-1">
         {dumaloq.map(b => (
-          <button key={b.id} data-tur={b.id === "ibodat" ? "ibodat" : undefined}
+          <button key={b.id}
             onClick={() => { buzz(); b.bos(); }}
             className="om-press flex w-[4.6rem] flex-none flex-col items-center gap-1.5">
             <span className="grid h-12 w-12 place-items-center rounded-full"
@@ -2115,7 +2174,8 @@ function BugunView(p: {
 
   return (
     <div className="space-y-4">
-      <Card className="flex items-center gap-4">
+      <Card>
+      <div className="flex items-center gap-4">
         <Ring done={st.done} total={Math.max(st.counted - st.excused, 0)} pct={st.pct} />
         <div className="min-w-0 flex-1">
           {st.counted === 0 ? (
@@ -2137,6 +2197,24 @@ function BugunView(p: {
             </div>
           )}
         </div>
+      </div>
+
+      {/* IBODAT QATORI. Ataylab alohida karta EMAS — natija kartasining ichida
+          ingichka bir qator. Shu bilan sahifaga atigi bir necha piksel qo'shiladi,
+          ammo ibodat har kuni ochilishi bilan ko'zga tashlanadi.
+          To'lmagan bo'lsa oltin va «to'ldirish shart», to'lganda yashil. */}
+      <button data-tur="ibodat" onClick={p.openIbadat}
+        className="om-press mt-3 flex w-full items-center gap-2 border-t pt-2.5 text-left"
+        style={{ borderColor: "var(--line)" }}>
+        <Icon n="mosque" size={15} style={{ color: ibToliq ? "var(--green)" : "var(--gold)", flex: "none" }} />
+        <span className="min-w-0 flex-1 truncate text-[12px] font-semibold" style={{ color: "var(--ink)" }}>
+          {tr("Ibodatlar")} <span style={{ color: ibToliq ? "var(--green)" : "var(--gold)", fontWeight: 500 }}>· {ibToliq ? tr("to'liq") : tr("to'ldirish shart")}</span>
+        </span>
+        <span className="flex-none text-[12px] font-bold tabular-nums" style={{ color: ibToliq ? "var(--green)" : "var(--gold)" }}>
+          {ibSc.pct}%{ibSc.bonus > 0 ? ` +${ibSc.bonus}` : ""}
+        </span>
+        <Icon n="chevronRight" size={14} style={{ color: "var(--muted)", flex: "none" }} />
+      </button>
       </Card>
 
       {NextCard}
@@ -4914,11 +4992,21 @@ export default function App() {
             if (!isNaN(h)) pushDaily(t.remText || `Vazifa vaqti: ${t.name}`, h, mi || 0, t.days);
           }
         });
+        // IBODAT ESLATMASI — `pushDaily` ishlatilmaydi, chunki u dam kunini
+        // chiqarib tashlaydi. Ibodat esa dam kunida ham qoladi, shu sabab
+        // alohida, har kunga rejalanadi. Id 2900 — vazifa idlaridan ancha uzoq.
+        if (settings.ibEslatma !== false) {
+          const [ih, im] = (settings.ibVaqt || "21:00").split(":").map(Number);
+          if (!isNaN(ih)) list.push({
+            id: 2900, title: tr("Oliy maqsad"), body: tr("Bugungi ibodatlaringizni belgilab qo'ying."),
+            smallIcon: "ic_stat_om", schedule: { on: { hour: ih, minute: im || 0 }, allowWhileIdle: true },
+          });
+        }
         if (list.length) await ln.schedule({ notifications: list });
       } catch { }
     }, 2000);
     return () => clearTimeout(tm);
-  }, [plan === null, plan && plan.restDay, settings.remindersOn, settings.reminderTimes.join(","), tasks.map(t => t.id + "|" + (t.schedFrom || "") + (t.remTime || "") + (t.days || []).join("") + (t.archivedAt || "") + (t.completedAt || "")).join(",")]);
+  }, [plan === null, plan && plan.restDay, settings.remindersOn, settings.reminderTimes.join(","), settings.ibEslatma, settings.ibVaqt, tasks.map(t => t.id + "|" + (t.schedFrom || "") + (t.remTime || "") + (t.days || []).join("") + (t.archivedAt || "") + (t.completedAt || "")).join(",")]);
 
   // eslatmalar
   useEffect(() => {
@@ -4950,9 +5038,22 @@ export default function App() {
           }
         }
       }
+      // Ibodat eslatmasi — ilova OCHIQ turganda telefon bildirishnomasi
+      // kelmasligi mumkin, shuning uchun shu yerda ham tekshiriladi.
+      // To'liq belgilangan bo'lsa bezovta qilinmaydi.
+      if (settings.ibEslatma !== false && hm === (settings.ibVaqt || "21:00")) {
+        const flag = `om3_ntf_ib_${today}`;
+        if (!localStorage.getItem(flag)) {
+          const s = ibScore(ib[today], khatmActiveOn(khatm, today));
+          if (s.done < s.base) {
+            notify(tr("Bugungi ibodatlaringizni belgilab qo'ying."));
+            localStorage.setItem(flag, "1");
+          }
+        }
+      }
     }, 30000);
     return () => clearInterval(iv);
-  }, [plan, settings.remindersOn, settings.reminderTimes, tasks, logs, today]);
+  }, [plan, settings.remindersOn, settings.reminderTimes, settings.ibEslatma, settings.ibVaqt, tasks, logs, today, ib, khatm]);
 
   const allData = () => {
     const out: Record<string, unknown> = {};
@@ -5150,7 +5251,8 @@ export default function App() {
         {page !== null && <BackCloser key={page} onClose={() => setPage(page === "til" ? "sozlama" : null)} />}
 
         {page === "ibodat" ? (
-          <IbadatPage today={today} ib={ib} setIb={setIb} gender={gender || "m"} khatm={khatm} setKhatm={setKhatm} />
+          <IbadatPage today={today} ib={ib} setIb={setIb} gender={gender || "m"} khatm={khatm} setKhatm={setKhatm}
+            settings={settings} setSettings={setSettings} />
         ) : page === "vazifalar" ? (
           <VazifalarPage today={today} plan={plan} folders={folders} tasks={tasks} sleepCfg={sleepCfg} countLog={countLog}
             boshEdit={boshEdit} boshEditTozala={() => setBoshEdit(null)}
