@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ILOVA BELGISINING OLD QISMI — «Oliy maqsad» tog' logosi, QORA.
+
+  Ilgari bu yerda Android andozasidan qolgan robot rasmi turardi va u
+  umuman ishlatilmasdi: adaptiv belgi `@mipmap/ic_launcher_foreground`
+  degan PNG larga qarardi. Endi logoning O'ZI vektor holida shu yerda —
+  har qanday o'lchamda tiniq chiqadi va PNG qayta chizish shart emas.
+
+  Yo'llar `src/App.tsx` dagi `Logo` komponentidan olingan (viewBox 1920).
+  `group` esa uni adaptiv belgining XAVFSIZ MAYDONIGA sig'diradi:
+  108dp lik maydonning markazidagi ~66dp doiradan chiqib ketmasin,
+  aks holda launcher chetlarini kesib tashlaydi.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="1920"
+    android:viewportHeight="1920">
+    <group
+        android:scaleX="0.62"
+        android:scaleY="0.62"
+        android:translateX="361"
+        android:translateY="420">
+        <path
+            android:fillColor="#1E1B16"
+            android:pathData="M358.71,1449.84L647.07,1051.98L932.46,1452.48L859.87,1227.85L921.47,1283L853.82,1132.49L1036.27,874.45L1308.46,1234.58L1196.79,956.49L1548.83,1452.28L1829.93,1452.28L1877.93,1452.48L1174.69,460.95L858.3,908.12L647.05,612.28L53.1,1452.28Z" />
+        <path
+            android:fillColor="#1E1B16"
+            android:pathData="M1165.51,301.87s-1.1,-11.91 9.53,-11.91c0,0 9.53,-0.63 9.53,10.98v174.51h-19.07v-173.57h0Z" />
+        <path
+            android:fillColor="#1E1B16"
+            android:pathData="M1202.71,306.26v87.57s24.26,-13.79 38.04,11.74,58.72,32.17 98.55,-18.13c0,0 -51.83,-3.32 -66.64,-24.77 -16.09,-18.25 -15.74,-56.92 -69.96,-56.43v0.02Z" />
+    </group>
+</vector>

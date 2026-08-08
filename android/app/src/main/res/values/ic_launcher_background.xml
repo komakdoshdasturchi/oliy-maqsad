@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Ilova belgisining foni. Ilgari SHAFFOF (#00000000) edi va shu sabab
+     launcher uni qora bilan to'ldirar, yashil logo qora fonda bo'g'ilib
+     turardi. Endi oq — logo qora bo'lgani uchun aniq va tiniq ko'rinadi. -->
 <resources>
-    <color name="ic_launcher_background">#00000000</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>
