@@ -893,6 +893,33 @@ function DurationField({ value, onChange }: { value: string; onChange: (v: strin
   );
 }
 
+// Kichik foiz halqasi — ibodat qatorining ikonkasi o'rnida turadi.
+// Katta `Ring` 96px, bu esa 34px: bir qatorga sig'adi.
+function MiniRing({ pct }: { pct: number }) {
+  const r = 14, C = 2 * Math.PI * r;
+  const p = Math.max(0, Math.min(pct, 100)) / 100;
+  const rang = p >= 1 ? "var(--green)" : "var(--gold)";
+  return (
+    <span className="relative grid h-9 w-9 flex-none place-items-center">
+      <svg width={36} height={36} viewBox="0 0 36 36" className="-rotate-90">
+        <circle cx="18" cy="18" r={r} fill="none" stroke="var(--line)" strokeWidth="3.5" />
+        <circle cx="18" cy="18" r={r} fill="none" stroke={rang} strokeWidth="3.5" strokeLinecap="round" strokeDasharray={`${C * p} ${C}`} />
+      </svg>
+      <span className="absolute text-[9px] font-bold tabular-nums" style={{ color: rang }}>{raqam(Math.round(pct))}</span>
+    </span>
+  );
+}
+
+// "02.04 – 23.09" ko'rinishidagi ixcham oraliq. Boshlanish va tugash
+// TURLI YILDA bo'lsa yil ham qo'shiladi: "02.04.26 – 23.09.27".
+const oraliqSana = (a: string, b: string) => {
+  const d1 = parseISO(a), d2 = parseISO(b);
+  const p2 = (n: number) => String(n).padStart(2, "0");
+  const farq = d1.getFullYear() !== d2.getFullYear();
+  const bir = (d: Date) => `${p2(d.getDate())}.${p2(d.getMonth() + 1)}${farq ? "." + String(d.getFullYear()).slice(2) : ""}`;
+  return raqam(`${bir(d1)} – ${bir(d2)}`);
+};
+
 // To'rt qirrali oltin bezak — oyat yonida (chap/o'ng)
 function Yulduzcha({ size = 11 }: { size?: number }) {
   return (
@@ -1634,7 +1661,6 @@ function BugunView(p: {
   setSleepLog: React.Dispatch<React.SetStateAction<Record<string, number>>>;
   setDayMode: React.Dispatch<React.SetStateAction<DayMode>>;
   setUi: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
-  openCountForm: () => void;
   openIbadat: () => void;
   // Vazifa ustini bosib turganda «Tahrirlash» bosilsa chaqiriladi:
   // Vazifalar bo'limiga o'tib, o'sha vazifaning tahrir oynasini ochadi
@@ -1856,6 +1882,8 @@ function BugunView(p: {
         <span className="text-[12px] font-semibold leading-tight" style={{ color: "var(--ink)", textDecoration: done ? "line-through" : "none", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as any, overflow: "hidden", minHeight: "2.2em" }}>{t.name}</span>
         <span className="truncate text-[10px]" style={lblS}>{(t.type || "").trim() || tr("Turi yo'q")}</span>
         <span className="text-[10px] font-semibold" style={{ color: acc }}>{t.minutes > 0 ? fmtMin(t.minutes) : "—"}</span>
+        {/* Muddat belgilangan bo'lsa — juda kichik shriftda boshlanish va tugash */}
+        {t.endDate && <span className="truncate text-[9px] tabular-nums" style={lblS}>{oraliqSana(t.startDate, t.endDate)}</span>}
       </button>
     );
   };
@@ -2011,54 +2039,55 @@ function BugunView(p: {
   // to'rtta mini-katakcha bilan birga olib tashlandi (v12).
 
   // Pastdagi dumaloq tugmalardan qaysi oyna ochilgan (null = yopiq)
-  const [oyna, setOyna] = useState<null | "sanoq" | "tashqari" | "xulosa">(null);
+  const [oyna, setOyna] = useState<null | "tashqari" | "xulosa">(null);
 
   // Sanaladigan vazifalar bo'limi. Avval `|| true` turgan edi (sinovdan qolgan)
   // va bitta ham vazifa bo'lmasa ham bo'lim doim ko'rinardi — olib tashlandi.
-  // Sanaladigan vazifalar — endi `Sec` emas, dumaloq tugma bosilganda oynada chiqadi.
-  // Shuning uchun bu yerda faqat ICHKI qismi turadi, sarlavhani `Sheet` beradi.
-  const CountBlock = (
-    <>
-      <button onClick={p.openCountForm} className="om-press mb-3 w-full rounded-xl py-2 text-sm font-bold text-white" style={{ background: "var(--blue)" }}>+ {tr("Qo'shish")}</button>
-      {countTasks.length === 0 && <p className="text-xs" style={lblS}>{tr("Masalan: «100 ta dars» — kunlik normasiz, umumiy son bilan boriladigan ishlar. «+» bilan qo'shing.")}</p>}
-      <div className="space-y-1.5">
-        {countTasks.map(t => {
-          const total = countTotal(t);
-          const tn = (p.countLog[t.id] || {})[today] || 0;
-          const target = t.countTarget || 0;
-          const ended = !!(t.endDate && today > t.endDate);
-          let behind = false;
-          if (t.endDate && target > 0 && !t.completedAt && !ended) {
-            const totalDays = diffDays(t.startDate, t.endDate) + 1;
-            const passed = diffDays(t.startDate, today) + 1;
-            behind = total < Math.floor((target * passed) / totalDays);
-          }
-          return (
-            <div key={t.id} className="rounded-xl border px-3 py-2" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: t.scope === "oliy" ? "var(--gold)" : "var(--blue)", opacity: t.completedAt ? 0.6 : 1 }}>
-              <div className="flex items-center justify-between gap-2">
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium" style={{ color: "var(--ink)" }}>{t.scope === "oliy" ? "⭐ " : ""}{t.completedAt ? "✅ " : ""}{t.name}</div>
-                  <div className="text-[11px]" style={lblS}>
-                    {tr("Jami:")} <b style={{ color: "var(--ink)" }}>{total}/{target}</b>{tn > 0 ? ` · ${tf("bugun: +{n}", { n: tn })}` : ""}{t.endDate ? ` · ${tf("{sana} gacha", { sana: fmtUz(t.endDate) })}` : ""}
-                  </div>
-                </div>
-                {!t.completedAt && !ended && (
-                  <div className="flex flex-none items-center gap-1.5">
-                    {tn > 0 && <button onClick={() => addCount(t, -1)} className="rounded-lg border px-2.5 py-1.5 text-sm" style={{ ...cardS, color: "var(--muted)" }}>−1</button>}
-                    <button onClick={() => addCount(t, 1)} className="rounded-lg px-3 py-1.5 text-sm font-bold text-white" style={{ background: "var(--blue)" }}>+1</button>
-                  </div>
-                )}
-              </div>
-              <div className="mt-1.5 h-1.5 overflow-hidden rounded-full" style={{ background: "var(--line)" }}>
-                <div className="h-full rounded-full" style={{ width: `${target ? Math.min((total / target) * 100, 100) : 0}%`, background: t.scope === "oliy" ? "var(--gold)" : "var(--blue)" }} />
-              </div>
-              {behind && <p className="mt-1 text-[11px]" style={{ color: "var(--gold)" }}>{tr("Rejadan biroz ortdasiz — bugun bir oz ko'proq harakat qiling.")}</p>}
-              {ended && !t.completedAt && <p className="mt-1 text-[11px]" style={{ color: "var(--red)" }}>{tf("Muddat tugadi: {a}/{b}", { a: total, b: target })}</p>}
+  // SANALADIGAN VAZIFALAR — endi alohida oynada emas, «Bugungi vazifalar»
+  // ro'yxatining o'zida, oddiy vazifalardan keyin ixcham qator bo'lib turadi.
+  // Joy tejash uchun har biri IKKI qator: nom+hisob+tugmalar, ostida chiziq.
+  const CountBlock = countTasks.length === 0 ? null : (
+    <div className="mt-2.5 space-y-1.5 border-t pt-2.5" style={{ borderColor: "var(--line)" }}>
+      <p className="text-[10px] font-bold uppercase tracking-wider" style={lblS}>{tr("Sanaladigan")}</p>
+      {countTasks.map(t => {
+        const total = countTotal(t);
+        const tn = (p.countLog[t.id] || {})[today] || 0;
+        const target = t.countTarget || 0;
+        const ended = !!(t.endDate && today > t.endDate);
+        const acc = t.scope === "oliy" ? "var(--gold)" : "var(--blue)";
+        let behind = false;
+        if (t.endDate && target > 0 && !t.completedAt && !ended) {
+          const totalDays = diffDays(t.startDate, t.endDate) + 1;
+          const passed = diffDays(t.startDate, today) + 1;
+          behind = total < Math.floor((target * passed) / totalDays);
+        }
+        return (
+          <div key={t.id} className="rounded-xl border px-3 py-2" style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: acc, opacity: t.completedAt ? 0.6 : 1 }}>
+            <div className="flex items-center gap-2">
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[13px] font-semibold" style={{ color: "var(--ink)" }}>{t.completedAt ? "✅ " : ""}{t.name}</span>
+                <span className="block text-[10px]" style={lblS}>
+                  <b style={{ color: acc }}>{raqam(total)}/{raqam(target)}</b>
+                  {tn > 0 ? ` · +${raqam(tn)}` : ""}
+                  {t.endDate ? ` · ${oraliqSana(t.startDate, t.endDate)}` : ""}
+                </span>
+              </span>
+              {!t.completedAt && !ended && (
+                <span className="flex flex-none items-center gap-1">
+                  {tn > 0 && <button onClick={() => addCount(t, -1)} className="om-press rounded-lg border px-2 py-1 text-[13px]" style={{ ...cardS, color: "var(--muted)" }}>−</button>}
+                  <button onClick={() => addCount(t, 1)} className="om-press rounded-lg px-2.5 py-1 text-[13px] font-bold text-white" style={{ background: acc }}>+1</button>
+                </span>
+              )}
             </div>
-          );
-        })}
-      </div>
-    </>
+            <div className="mt-1.5 h-1 overflow-hidden rounded-full" style={{ background: "var(--line)" }}>
+              <div className="h-full rounded-full" style={{ width: `${target ? Math.min((total / target) * 100, 100) : 0}%`, background: acc }} />
+            </div>
+            {behind && <p className="mt-1 text-[10px]" style={{ color: "var(--gold)" }}>{tr("Rejadan biroz ortdasiz — bugun bir oz ko'proq harakat qiling.")}</p>}
+            {ended && !t.completedAt && <p className="mt-1 text-[10px]" style={{ color: "var(--red)" }}>{tf("Muddat tugadi: {a}/{b}", { a: total, b: target })}</p>}
+          </div>
+        );
+      })}
+    </div>
   );
 
   // Rejadan tashqari amallar — ichki qismi (sarlavhani `Sheet` beradi)
@@ -2081,7 +2110,8 @@ function BugunView(p: {
   // endi tugma bosilganda oyna bo'lib ochiladi.
   const dumaloq = [
     { id: "ibodat", ic: "mosque", nom: tr("Ibodatlar"), tint: "var(--green)", bos: () => p.openIbadat() },
-    { id: "sanoq", ic: "hash", nom: tr("Sanaladigan"), tint: "var(--blue)", bos: () => setOyna("sanoq") },
+    // «Sanaladigan» tugmasi OLIB TASHLANDI — sanaladigan vazifalar endi
+    // «Bugungi vazifalar» ro'yxatining o'zida, oddiy vazifalar qatorida turadi.
     { id: "tashqari", ic: "plus", nom: tr("Rejadan tashqari amallar"), tint: "var(--gold)", bos: () => setOyna("tashqari") },
     { id: "xulosa", ic: "pencil", nom: tr("Kun xulosasi"), tint: "var(--ink)", bos: () => setOyna("xulosa") },
   ];
@@ -2104,11 +2134,6 @@ function BugunView(p: {
         ))}
       </div>
 
-      {oyna === "sanoq" && (
-        <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="hash" size={15} style={{ color: "var(--blue)" }} /> {tr("Sanaladigan vazifalar")}</span>}>
-          {CountBlock}
-        </Sheet>
-      )}
       {oyna === "tashqari" && (
         <Sheet onClose={() => setOyna(null)} title={<span className="flex items-center gap-2"><Icon n="plus" size={15} style={{ color: "var(--gold)" }} /> {tr("Rejadan tashqari amallar")}</span>}>
           {ExtraBlock}
@@ -2199,22 +2224,6 @@ function BugunView(p: {
         </div>
       </div>
 
-      {/* IBODAT QATORI. Ataylab alohida karta EMAS — natija kartasining ichida
-          ingichka bir qator. Shu bilan sahifaga atigi bir necha piksel qo'shiladi,
-          ammo ibodat har kuni ochilishi bilan ko'zga tashlanadi.
-          To'lmagan bo'lsa oltin va «to'ldirish shart», to'lganda yashil. */}
-      <button data-tur="ibodat" onClick={p.openIbadat}
-        className="om-press mt-3 flex w-full items-center gap-2 border-t pt-2.5 text-left"
-        style={{ borderColor: "var(--line)" }}>
-        <Icon n="mosque" size={15} style={{ color: ibToliq ? "var(--green)" : "var(--gold)", flex: "none" }} />
-        <span className="min-w-0 flex-1 truncate text-[12px] font-semibold" style={{ color: "var(--ink)" }}>
-          {tr("Ibodatlar")} <span style={{ color: ibToliq ? "var(--green)" : "var(--gold)", fontWeight: 500 }}>· {ibToliq ? tr("to'liq") : tr("to'ldirish shart")}</span>
-        </span>
-        <span className="flex-none text-[12px] font-bold tabular-nums" style={{ color: ibToliq ? "var(--green)" : "var(--gold)" }}>
-          {ibSc.pct}%{ibSc.bonus > 0 ? ` +${ibSc.bonus}` : ""}
-        </span>
-        <Icon n="chevronRight" size={14} style={{ color: "var(--muted)", flex: "none" }} />
-      </button>
       </Card>
 
       {NextCard}
@@ -2254,6 +2263,23 @@ function BugunView(p: {
             <Icon n="list" size={13} /> {reorder ? tr("Tayyor") : tr("Tartiblash")}
           </button>
         </div>
+
+        {/* IBODATLAR — ro'yxatning ENG BOSHIDA, doim sobit. Tartiblash yoki
+            kun tartibi rejimida ham joyi o'zgarmaydi, chunki u vazifa emas.
+            Ikonkasi o'rnida foiz halqasi turadi; bosilsa Ibodatlar ochiladi. */}
+        <button data-tur="ibodat" onClick={p.openIbadat}
+          className="om-press mb-2 flex w-full items-center gap-2.5 rounded-xl border px-3 py-2 text-left"
+          style={{ ...cardS, borderInlineStartWidth: 3, borderInlineStartColor: ibToliq ? "var(--green)" : "var(--gold)" }}>
+          <MiniRing pct={ibSc.pct} />
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-sm font-semibold" style={{ color: "var(--ink)" }}>{tr("Ibodatlar")}</span>
+            <span className="block text-[10px] font-medium" style={{ color: ibToliq ? "var(--green)" : "var(--gold)" }}>
+              {ibToliq ? tr("bajarildi") : tr("Majburiy")}
+            </span>
+          </span>
+          {ibSc.bonus > 0 && <span className="flex-none text-[11px] font-bold" style={{ color: "var(--green)" }}>+{raqam(ibSc.bonus)}</span>}
+          <Icon n="chevronRight" size={15} style={{ color: "var(--muted)", flex: "none" }} />
+        </button>
 
         {act.length === 0 && (
           <div className="py-2 text-center">
@@ -2322,6 +2348,7 @@ function BugunView(p: {
             <p className="text-[10px]" style={lblS}>{tr("Vaqtlar faqat reja uchun — belgilashni kun davomida istalgan payt qilasiz.")}</p>
           </div>
         )}
+        {!reorder && CountBlock}
       </Sec>
 
       {manualMetrics.map(m => {
@@ -4847,7 +4874,6 @@ export default function App() {
   const lastPomoMode = useRef<"focus" | "open">("open");
   const [tab, setTab] = useState<"bugun" | "taqvim" | "stat" | "maqsad">("bugun");
   const [page, setPage] = useState<null | "ibodat" | "vazifalar" | "sozlama" | "pomo" | "uyqu" | "til">(null);
-  const [countForm, setCountForm] = useState(false);
   const [addMenu, setAddMenu] = useState(false);
   // Bugun sahifasida vazifa ustini bosib turib «Tahrirlash» bosilsa —
   // Vazifalar bo'limi shu vazifaning tahrir oynasi bilan ochiladi
@@ -5275,7 +5301,7 @@ export default function App() {
               setLogs={setLogs} setExtras={setExtras} setTasks={setTasks} setCounts={setCounts} setCountLog={setCountLog}
               setWeights={setWeights} setNotes={setNotes} setSleepLog={setSleepLog}
               setDayMode={setDayMode} setUi={setUi} pomoLog={pomoLog}
-              openCountForm={() => setCountForm(true)} openIbadat={() => setPage("ibodat")}
+              openIbadat={() => setPage("ibodat")}
               openTaskEdit={t => { setBoshEdit(t); setPage("vazifalar"); }}
               openUyqu={() => setPage("uyqu")} openSozlama={() => setPage("sozlama")}
               openPomo={() => setPage("pomo")} openVazifalar={() => setPage("vazifalar")} openStat={() => setTab("stat")} startPomo={startPomo} />}
@@ -5347,8 +5373,6 @@ export default function App() {
 
       <DialogHost />
 
-      {countForm && <TaskForm scope="daily" scopePick initialKind="count" folderId={null} folders={folders} types={types} today={today}
-        onClose={() => setCountForm(false)} onSave={t => { setTasks(ts => [...ts, t]); setCountForm(false); }} />}
 
       {addMenu && (
         <Sheet title={tr("Nima qo'shamiz?")} onClose={() => setAddMenu(false)}>

@@ -290,7 +290,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Vazifalar tarixi": { en: "Task history" },
   "Kundalik reja": { en: "Daily plan" },
   "Kundalik vazifalar": { en: "Daily tasks" },
-  "Sanaladigan vazifalar": { en: "Countable tasks" },
   "Oliy maqsad vazifasi": { en: "Ultimate goal task" },
   "Oliy maqsad vazifalari": { en: "Ultimate goal tasks" },
   "Bu hafta — oliy vazifalar": { en: "This week — ultimate tasks" },
@@ -551,7 +550,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "«{nom}» turidagi oliy vazifa tugatilganda hisob o'zi +1 bo'ladi.": { en: "When an ultimate task of type «{nom}» is completed, the count increases by 1 automatically." },
   "Bu maqsad qo'lda sanaladi — Bugun sahifasidagi «+1» tugmasi bilan.": { en: "This goal is counted manually — with the «+1» button on the Today page." },
   "Bugun bo'limida «+1» tugmasi chiqadi — har safar o'zingiz bosasiz.": { en: "A «+1» button appears in the Today section — you tap it each time." },
-  "Masalan: «100 ta dars» — kunlik normasiz, umumiy son bilan boriladigan ishlar. «+» bilan qo'shing.": { en: "For example: “100 lessons” — work tracked by a total count with no daily quota. Add it with “+”." },
   "Kunlik miqdor qanday o'lchanadi?": { en: "How is the daily amount measured?" },
 
   // --- Kun, hafta, dam ---
@@ -820,12 +818,14 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Ilm": { en: "Knowledge" },
 
   // --- v12: ibodat eslatmasi ---
-  "to'ldirish shart": { en: "to be filled in" },
-  "to'liq": { en: "complete" },
   "Kechqurungi eslatma": { en: "Evening reminder" },
   "Har kuni {v} da eslatiladi": { en: "Reminds you every day at {v}" },
   "O'chirilgan": { en: "Turned off" },
   "Bugungi ibodatlaringizni belgilab qo'ying.": { en: "Mark today's worship." },
+
+  // --- v12: ibodat qatori ---
+  "Majburiy": { en: "Required" },
+  "bajarildi": { en: "completed" },
 };
 
 // ---------- ARABCHA ----------
@@ -1053,7 +1053,6 @@ const LUGAT_AR: Record<string, string> = {
   "O'lchov": "المقياس",
   "Sanaladigan": "قابل للعد",
   "SANALADIGAN": "قابل للعد",
-  "Sanaladigan vazifalar": "المهام القابلة للعد",
   "qo'lda (+1)": "يدويًا (+١)",
   "O'zim sanayman": "أعدّ بنفسي",
   "Masalan: 10": "مثال: ١٠",
@@ -1341,7 +1340,6 @@ const LUGAT_AR: Record<string, string> = {
   "«{nom}» turidagi oliy vazifa tugatilganda hisob o'zi +1 bo'ladi.": "عند إنجاز مهمة عليا من نوع «{nom}» يزيد العدّاد ١ تلقائيًا.",
   "Bu maqsad qo'lda sanaladi — Bugun sahifasidagi «+1» tugmasi bilan.": "يُعدّ هذا الهدف يدويًا — بزر «+١» في صفحة اليوم.",
   "Bugun bo'limida «+1» tugmasi chiqadi — har safar o'zingiz bosasiz.": "يظهر زر «+١» في قسم اليوم — تضغطه بنفسك في كل مرة.",
-  "Masalan: «100 ta dars» — kunlik normasiz, umumiy son bilan boriladigan ishlar. «+» bilan qo'shing.": "مثال: «١٠٠ درس» — أعمال تُتابَع بعدد إجمالي بلا حصة يومية. أضِفها بعلامة «+».",
   "Kunlik miqdor qanday o'lchanadi?": "كيف يُقاس المقدار اليومي؟",
   "Yiliga nechta? (masalan 10)": "كم في السنة؟ (مثلًا ١٠)",
   "Shunday davom etsangiz, yil oxirida taxminan": "بهذه الوتيرة، بنهاية السنة سيكون نحو",
@@ -1605,12 +1603,14 @@ const LUGAT_AR: Record<string, string> = {
   "Ilm": "العلم",
 
   // --- v12: ibodat eslatmasi ---
-  "to'ldirish shart": "يجب إكماله",
-  "to'liq": "مكتمل",
   "Kechqurungi eslatma": "تذكير المساء",
   "Har kuni {v} da eslatiladi": "يذكّرك كل يوم في {v}",
   "O'chirilgan": "مُطفأ",
   "Bugungi ibodatlaringizni belgilab qo'ying.": "علّم عبادات اليوم.",
+
+  // --- v12: ibodat qatori ---
+  "Majburiy": "واجب",
+  "bajarildi": "أُدّي",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -1991,7 +1991,6 @@ const LUGAT_RU: Record<string, string> = {
   "Nima qo'shamiz?": "Что добавим?",
   "Sanaladigan": "Подсчитываемая",
   "SANALADIGAN": "ПОДСЧЁТ",
-  "Sanaladigan vazifalar": "Подсчитываемые задачи",
   "qo'lda (+1)": "вручную (+1)",
   "O'zim sanayman": "Считаю сам",
   "O'lchov": "Мера",
@@ -2164,7 +2163,6 @@ const LUGAT_RU: Record<string, string> = {
   "«{nom}» turidagi oliy vazifa tugatilganda hisob o'zi +1 bo'ladi.": "При завершении высшей задачи типа «{nom}» счётчик сам увеличится на 1.",
   "Bu maqsad qo'lda sanaladi — Bugun sahifasidagi «+1» tugmasi bilan.": "Эта цель считается вручную — кнопкой «+1» на странице «Сегодня».",
   "Bugun bo'limida «+1» tugmasi chiqadi — har safar o'zingiz bosasiz.": "В разделе «Сегодня» появится кнопка «+1» — нажимаете её сами каждый раз.",
-  "Masalan: «100 ta dars» — kunlik normasiz, umumiy son bilan boriladigan ishlar. «+» bilan qo'shing.": "Например: «100 уроков» — работа без дневной нормы, которая ведётся общим числом. Добавьте кнопкой «+».",
   "Kunlik miqdor qanday o'lchanadi?": "Как измеряется дневной объём?",
   "Kunlik miqdorni kiriting!": "Введите дневной объём!",
   "Yiliga nechta? (masalan 10)": "Сколько в год? (например 10)",
@@ -2341,12 +2339,14 @@ const LUGAT_RU: Record<string, string> = {
   "Ilm": "Знание",
 
   // --- v12: ibodat eslatmasi ---
-  "to'ldirish shart": "нужно заполнить",
-  "to'liq": "полностью",
   "Kechqurungi eslatma": "Вечернее напоминание",
   "Har kuni {v} da eslatiladi": "Напоминает каждый день в {v}",
   "O'chirilgan": "Отключено",
   "Bugungi ibodatlaringizni belgilab qo'ying.": "Отметьте сегодняшнее поклонение.",
+
+  // --- v12: ibodat qatori ---
+  "Majburiy": "Обязательно",
+  "bajarildi": "выполнено",
 };
 
 // Ruschani LUGAT ga qo'shamiz
