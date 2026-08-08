@@ -826,6 +826,9 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   // --- v12: ibodat qatori ---
   "Majburiy": { en: "Required" },
   "bajarildi": { en: "completed" },
+
+  // --- v12: uyqu sahifasiga yo'l ---
+  "Uyqu rejasi va kundaligi": { en: "Sleep plan and diary" },
 };
 
 // ---------- ARABCHA ----------
@@ -1611,6 +1614,9 @@ const LUGAT_AR: Record<string, string> = {
   // --- v12: ibodat qatori ---
   "Majburiy": "واجب",
   "bajarildi": "أُدّي",
+
+  // --- v12: uyqu sahifasiga yo'l ---
+  "Uyqu rejasi va kundaligi": "خطة النوم وسجله",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2347,6 +2353,9 @@ const LUGAT_RU: Record<string, string> = {
   // --- v12: ibodat qatori ---
   "Majburiy": "Обязательно",
   "bajarildi": "выполнено",
+
+  // --- v12: uyqu sahifasiga yo'l ---
+  "Uyqu rejasi va kundaligi": "План сна и дневник",
 };
 
 // Ruschani LUGAT ga qo'shamiz

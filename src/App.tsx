@@ -1976,6 +1976,12 @@ function BugunView(p: {
             <button onClick={addSleep} className="rounded-lg px-4 py-1.5 text-sm font-bold text-white" style={{ background: "var(--blue)" }}>+</button>
           </div>
         )}
+        {/* Uyqu sahifasiga YAGONA yo'l. Sarlavhadagi uyqu tugmasi olib
+            tashlangani uchun reja va kundalik shu yerdan ochiladi. */}
+        <button onClick={p.openUyqu} className="om-press mt-2 flex items-center gap-1 text-[11px] font-medium" style={{ color: "var(--blue)" }}>
+          <Icon n="bed" size={13} /> {tr("Uyqu rejasi va kundaligi")}
+          <Icon n="chevronRight" size={12} />
+        </button>
       </IxchamKarta>
     );
   })() : null;
@@ -5249,14 +5255,10 @@ export default function App() {
               <div>{tr(KUNLAR[parseISO(today).getDay()])}</div>
             </div>
           </div>
+          {/* Sarlavhada UCHTA tugma: mavzu, pomodoro, sozlamalar.
+              «Uyqu» olib tashlandi — u bir marta sozlanadi va Bugun
+              sahifasidagi uyqu kartasidan ochiladi, doimiy joy egallashi shart emas. */}
           <div className="flex flex-none items-start gap-2">
-            <button onClick={() => togglePage("uyqu")} className="om-press flex flex-none flex-col items-center gap-1">
-              <span className="grid h-11 w-11 place-items-center rounded-2xl"
-                style={{ background: page === "uyqu" ? "var(--green)" : "var(--card)", border: "1px solid " + (page === "uyqu" ? "var(--green)" : "var(--line)"), color: page === "uyqu" ? "#fff" : "var(--blue)", boxShadow: "var(--shadow)" }}>
-                <Icon n="bed" size={19} />
-              </span>
-              <span className="text-[9px] font-semibold" style={{ color: "var(--muted)" }}>{tr("Uyqu")}</span>
-            </button>
             <MavzuTugma dark={settings.dark} setDark={v => setSettings(s => ({ ...s, dark: v }))} />
             {/* Pomodoro — avval pastdagi to'rtta katakchada edi, sarlavhaga ko'chdi */}
             <button data-tur="pomodoro" onClick={() => togglePage("pomo")} className="om-press flex flex-none flex-col items-center gap-1">
