@@ -766,15 +766,6 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
   "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": { en: "The sun or moon button in the header switches the app's colours. Turn on the dark appearance in the evening so your eyes do not tire." },
 
   // --- v12 yangiliklari ---
-  "12-yangilanish (v12)": { en: "Update 12 (v12)" },
-  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.": { en: "Hold a task on the Today page and «Edit» and «Delete» buttons appear." },
-  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": { en: "The «At the mosque» button now stays in place after a prayer is marked — there is time to tap it." },
-  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.": { en: "Hold the Qur'an khatm row to open the plan editor." },
-  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.": { en: "Sleep now has its own icon. Before, it was the same crescent as the dark-appearance button." },
-  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.": { en: "«How does it work?» in Settings became «What does each section do?» and grew to nineteen entries." },
-  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": { en: "The old hints that popped up on screen were removed — they repeated what the guided tour already says." },
-  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": { en: "«All tasks» is now set apart in the add menu: it is not for adding, but for managing what exists." },
-  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": { en: "The «Month» and «6 months» buttons in goal progress now display correctly in the other languages too." },
 
   // --- v12: fokus rejimi va kun xulosasi ---
   "Chiqish": { en: "Exit" },
@@ -823,6 +814,21 @@ export const LUGAT: Record<string, Partial<Record<Lang, string>>> = {
 
   // --- v12: uyqu sahifasiga yo'l ---
   "Uyqu rejasi va kundaligi": { en: "Sleep plan and diary" },
+
+  // --- v13 yangiliklari ---
+  "Bugungi vazifalar bitta ro'yxatga keltirildi: ibodat, vazifalar va sanaladiganlar endi bir xil katakchalarda turadi.": { en: "Today's tasks are now one list: worship, tasks and countable goals all sit in identical tiles." },
+  "Ibodatlar ro'yxatning eng boshida — ikonka o'rnida foiz halqasi va ostida «Majburiy» yozuvi bilan.": { en: "Worship stands first in the list — a percentage ring in place of the icon and the word «Required» beneath it." },
+  "Vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi. Qur'on xatmi qatorida ham shunday.": { en: "Hold a task and «Edit» and «Delete» buttons appear. The same works on the Qur'an khatm row." },
+  "Ibodat uchun kechqurungi eslatma qo'shildi. Vaqtini Ibodatlar bo'limidan o'zgartirasiz.": { en: "An evening reminder for worship was added. You change its time in the Worship section." },
+  "Vaqt tanlashda raqamni yashil chiziqqa surib qo'yish kifoya — endi har birini alohida bosish shart emas.": { en: "When picking a time, just slide the number onto the green line — you no longer tap each one separately." },
+  "Pomodoro fokus rejimida faqat vaqt va tugmalar qoldi. Chiqish uchun avval «Tugatish» bosiladi.": { en: "In Pomodoro focus mode only the time and the buttons remain. To leave, you press «Finish» first." },
+  "Sozlamalarga «Ilova haqida» bo'limi qo'shildi, «Qanday ishlaydi?» esa «Har bo'lim nima qiladi?» ga aylanib o'n to'qqiz bandgacha kengaydi.": { en: "An «About the app» section was added to Settings, and «How does it work?» became «What does each section do?», growing to nineteen entries." },
+  "Ilova belgisi yangilandi: oq fonda qora logo.": { en: "The app icon was renewed: a black logo on a white background." },
+  "Yangi boshlaganlar uchun tayyor namuna vazifalar va aniqroq kirish ekrani.": { en: "Ready-made example tasks for newcomers, and a clearer opening screen." },
+
+  // --- v13: qo'shimcha ---
+  "13-yangilanish (v13)": { en: "Update 13 (v13)" },
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": { en: "The «At the mosque» button now stays in place after a prayer is marked — there is time to tap it." },
 };
 
 // ---------- ARABCHA ----------
@@ -1548,15 +1554,6 @@ const LUGAT_AR: Record<string, string> = {
   "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": "زر الشمس أو القمر في الترويسة يبدّل ألوان التطبيق. فشغّل المظهر الليلي في المساء كي لا تتعب عيناك.",
 
   // --- v12 yangiliklari ---
-  "12-yangilanish (v12)": "التحديث ١٢ (v12)",
-  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.": "اضغط مطولًا على مهمة في صفحة اليوم فيظهر زرّا «تعديل» و«حذف».",
-  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": "يبقى زر «في المسجد» في مكانه بعد تعليم الصلاة — فصار هناك وقت للضغط عليه.",
-  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.": "اضغط مطولًا على سطر ختمة القرآن ليُفتح تعديل الخطة.",
-  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.": "صار للنوم أيقونة خاصة. وكان قبلُ هلالًا مثل زر المظهر الليلي نفسه.",
-  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.": "صار «كيف يعمل؟» في الإعدادات «ماذا يفعل كل قسم؟» واتّسع إلى تسعة عشر بندًا.",
-  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": "أُزيلت التلميحات القديمة التي كانت تظهر على الشاشة — فقد كانت تكرّر ما يقوله دليل التعريف.",
-  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": "فُصل «كل المهام» في قائمة الإضافة: فهو ليس للإضافة بل لإدارة الموجود.",
-  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": "صار زرّا «شهر» و«٦ أشهر» في تقدّم الهدف يظهران بشكل صحيح في اللغات الأخرى أيضًا.",
 
   // --- v12: fokus rejimi va kun xulosasi ---
   "Chiqish": "خروج",
@@ -1605,6 +1602,21 @@ const LUGAT_AR: Record<string, string> = {
 
   // --- v12: uyqu sahifasiga yo'l ---
   "Uyqu rejasi va kundaligi": "خطة النوم وسجله",
+
+  // --- v13 yangiliklari ---
+  "Bugungi vazifalar bitta ro'yxatga keltirildi: ibodat, vazifalar va sanaladiganlar endi bir xil katakchalarda turadi.": "صارت مهام اليوم قائمة واحدة: العبادة والمهام والأهداف القابلة للعد كلها في بطاقات متماثلة.",
+  "Ibodatlar ro'yxatning eng boshida — ikonka o'rnida foiz halqasi va ostida «Majburiy» yozuvi bilan.": "العبادات في مقدمة القائمة — حلقة نسبة مئوية مكان الأيقونة وتحتها كلمة «واجب».",
+  "Vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi. Qur'on xatmi qatorida ham shunday.": "اضغط مطولًا على مهمة فيظهر زرّا «تعديل» و«حذف». وكذلك في سطر ختمة القرآن.",
+  "Ibodat uchun kechqurungi eslatma qo'shildi. Vaqtini Ibodatlar bo'limidan o'zgartirasiz.": "أُضيف تذكير مسائي للعبادة. وتغيّر وقته من قسم العبادات.",
+  "Vaqt tanlashda raqamni yashil chiziqqa surib qo'yish kifoya — endi har birini alohida bosish shart emas.": "عند اختيار الوقت يكفي أن تُمرّر الرقم إلى الخط الأخضر — لم يعد يلزم الضغط على كل واحد على حدة.",
+  "Pomodoro fokus rejimida faqat vaqt va tugmalar qoldi. Chiqish uchun avval «Tugatish» bosiladi.": "في وضع تركيز بومودورو لم يبقَ إلا الوقت والأزرار. وللخروج تضغط «إنهاء» أولًا.",
+  "Sozlamalarga «Ilova haqida» bo'limi qo'shildi, «Qanday ishlaydi?» esa «Har bo'lim nima qiladi?» ga aylanib o'n to'qqiz bandgacha kengaydi.": "أُضيف قسم «عن التطبيق» إلى الإعدادات، وصار «كيف يعمل؟» «ماذا يفعل كل قسم؟» واتّسع إلى تسعة عشر بندًا.",
+  "Ilova belgisi yangilandi: oq fonda qora logo.": "جُدّدت أيقونة التطبيق: شعار أسود على خلفية بيضاء.",
+  "Yangi boshlaganlar uchun tayyor namuna vazifalar va aniqroq kirish ekrani.": "مهام نموذجية جاهزة للمبتدئين، وشاشة بداية أوضح.",
+
+  // --- v13: qo'shimcha ---
+  "13-yangilanish (v13)": "التحديث ١٣ (v13)",
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": "يبقى زر «في المسجد» في مكانه بعد تعليم الصلاة — فصار هناك وقت للضغط عليه.",
 };
 
 // Arabchani LUGAT ga qo'shamiz (kalitlar bir xil, faqat `ar` maydoni to'ldiriladi)
@@ -2281,15 +2293,6 @@ const LUGAT_RU: Record<string, string> = {
   "Sarlavhadagi quyosh yoki oy tugmasi ilova ranglarini almashtiradi. Kechqurun ko'z charchamasligi uchun tungi ko'rinishni yoqib qo'ying.": "Кнопка солнца или луны в шапке переключает цвета приложения. Вечером включайте тёмный вид, чтобы глаза не уставали.",
 
   // --- v12 yangiliklari ---
-  "12-yangilanish (v12)": "Обновление 12 (v12)",
-  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.": "Удержите задачу на странице «Сегодня» — появятся кнопки «Изменить» и «Удалить».",
-  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": "Кнопка «В мечети» теперь остаётся на месте после отметки намаза — успеваете её нажать.",
-  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.": "Удержите строку хатма Корана — откроется изменение плана.",
-  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.": "У сна теперь своя иконка. Раньше это был тот же полумесяц, что и у кнопки тёмного вида.",
-  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.": "«Как это работает?» в настройках стало «Что делает каждый раздел?» и выросло до девятнадцати пунктов.",
-  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.": "Старые подсказки, всплывавшие на экране, убраны — они повторяли то, что уже говорит обучающий тур.",
-  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.": "«Все задачи» отделены в меню добавления: это не для добавления, а для управления тем, что есть.",
-  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.": "Кнопки «Месяц» и «6 месяцев» в ходе цели теперь правильно отображаются и на других языках.",
 
   // --- v12: fokus rejimi va kun xulosasi ---
   "Chiqish": "Выйти",
@@ -2338,6 +2341,21 @@ const LUGAT_RU: Record<string, string> = {
 
   // --- v12: uyqu sahifasiga yo'l ---
   "Uyqu rejasi va kundaligi": "План сна и дневник",
+
+  // --- v13 yangiliklari ---
+  "Bugungi vazifalar bitta ro'yxatga keltirildi: ibodat, vazifalar va sanaladiganlar endi bir xil katakchalarda turadi.": "Сегодняшние задачи собраны в один список: поклонение, задачи и подсчитываемые цели теперь в одинаковых карточках.",
+  "Ibodatlar ro'yxatning eng boshida — ikonka o'rnida foiz halqasi va ostida «Majburiy» yozuvi bilan.": "Поклонение стоит первым в списке — вместо иконки кольцо процента, а под ним слово «Обязательно».",
+  "Vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi. Qur'on xatmi qatorida ham shunday.": "Удержите задачу — появятся кнопки «Изменить» и «Удалить». То же работает и на строке хатма Корана.",
+  "Ibodat uchun kechqurungi eslatma qo'shildi. Vaqtini Ibodatlar bo'limidan o'zgartirasiz.": "Добавлено вечернее напоминание о поклонении. Время меняется в разделе «Поклонение».",
+  "Vaqt tanlashda raqamni yashil chiziqqa surib qo'yish kifoya — endi har birini alohida bosish shart emas.": "При выборе времени достаточно подвести число к зелёной полосе — нажимать на каждое отдельно больше не нужно.",
+  "Pomodoro fokus rejimida faqat vaqt va tugmalar qoldi. Chiqish uchun avval «Tugatish» bosiladi.": "В режиме сосредоточения помодоро остались только время и кнопки. Чтобы выйти, сначала нажимаете «Завершить».",
+  "Sozlamalarga «Ilova haqida» bo'limi qo'shildi, «Qanday ishlaydi?» esa «Har bo'lim nima qiladi?» ga aylanib o'n to'qqiz bandgacha kengaydi.": "В настройки добавлен раздел «О приложении», а «Как это работает?» стало «Что делает каждый раздел?» и выросло до девятнадцати пунктов.",
+  "Ilova belgisi yangilandi: oq fonda qora logo.": "Обновлён значок приложения: чёрный логотип на белом фоне.",
+  "Yangi boshlaganlar uchun tayyor namuna vazifalar va aniqroq kirish ekrani.": "Готовые примеры задач для новичков и более понятный стартовый экран.",
+
+  // --- v13: qo'shimcha ---
+  "13-yangilanish (v13)": "Обновление 13 (v13)",
+  "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.": "Кнопка «В мечети» теперь остаётся на месте после отметки намаза — успеваете её нажать.",
 };
 
 // Ruschani LUGAT ga qo'shamiz
@@ -2348,10 +2366,10 @@ for (const k in LUGAT_RU) {
 
 // Avtomatik kirill o'girish xato chiqqan matnlar (istisno):  "Ma'no": "Маъно"
 export const KIRIL_ISTISNO: Record<string, string> = {
-  // Versiya belgisi LOTIN qolishi kerak: toKiril() "v12" ni "в12" qilib yuborardi.
+  // Versiya belgisi LOTIN qolishi kerak: toKiril() "v13" ni "в13" qilib yuborardi.
   // (Qisqartma himoyasi faqat BOSH harfli qisqartmalarni saqlaydi, "v" esa kichik.)
   // YANGILANISHDA: bu qatorni ham yangi versiyaga o'zgartirish esdan chiqmasin.
-  "12-yangilanish (v12)": "12-янгиланиш (v12)",
+  "13-yangilanish (v13)": "13-янгиланиш (v13)",
 };
 
 // ---------- LOTIN → KIRILL ----------

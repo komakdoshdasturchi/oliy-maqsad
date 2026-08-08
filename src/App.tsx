@@ -980,18 +980,20 @@ function OyatCard() {
 }
 
 // ================== ILOVA YANGILIKLARI (bir martalik oyna) ==================
-const NEWS_VER = "v12";
-const NEWS_LABEL = "12-yangilanish (v12)";
-const NEWS_DATE = "2026-08-02";
+const NEWS_VER = "v13";
+const NEWS_LABEL = "13-yangilanish (v13)";
+const NEWS_DATE = "2026-08-08";
 const NEWS_ITEMS = [
-  "Bugun sahifasida vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi.",
+  "Bugungi vazifalar bitta ro'yxatga keltirildi: ibodat, vazifalar va sanaladiganlar endi bir xil katakchalarda turadi.",
+  "Ibodatlar ro'yxatning eng boshida — ikonka o'rnida foiz halqasi va ostida «Majburiy» yozuvi bilan.",
+  "Vazifa ustini bosib tursangiz «Tahrirlash» va «O'chirish» tugmalari chiqadi. Qur'on xatmi qatorida ham shunday.",
   "Namoz belgilangandan keyin ham «Masjidda» tugmasi joyida qoladi — endi uni bosishga ulguriladi.",
-  "Qur'on xatmi qatorini bosib tursangiz reja tahriri ochiladi.",
-  "Uyquga alohida ikonka berildi. Ilgari u tungi ko'rinish tugmasi bilan bir xil yarim oy edi.",
-  "Sozlamalardagi «Qanday ishlaydi?» «Har bo'lim nima qiladi?» ga aylandi va o'n to'qqiz bandgacha kengaydi.",
-  "Ekranda paydo bo'lib turadigan eski ishoralar olib tashlandi — ular tanishtiruv qo'llanmasi bilan takrorlanardi.",
-  "«Barcha vazifalar» qo'shish menyusida ajratildi: u qo'shish uchun emas, bor vazifalarni boshqarish uchun.",
-  "Maqsad jarayonidagi «Oy» va «6 oy» tugmalari boshqa tillarda ham to'g'ri chiqadigan bo'ldi.",
+  "Ibodat uchun kechqurungi eslatma qo'shildi. Vaqtini Ibodatlar bo'limidan o'zgartirasiz.",
+  "Vaqt tanlashda raqamni yashil chiziqqa surib qo'yish kifoya — endi har birini alohida bosish shart emas.",
+  "Pomodoro fokus rejimida faqat vaqt va tugmalar qoldi. Chiqish uchun avval «Tugatish» bosiladi.",
+  "Sozlamalarga «Ilova haqida» bo'limi qo'shildi, «Qanday ishlaydi?» esa «Har bo'lim nima qiladi?» ga aylanib o'n to'qqiz bandgacha kengaydi.",
+  "Ilova belgisi yangilandi: oq fonda qora logo.",
+  "Yangi boshlaganlar uchun tayyor namuna vazifalar va aniqroq kirish ekrani.",
 ];
 
 function NewsModal({ hijriOffset, logoColor, onClose }: { hijriOffset: number; logoColor: string; onClose: () => void }) {

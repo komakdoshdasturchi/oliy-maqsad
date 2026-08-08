@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 // ILOVA VERSIYASI — BITTA JOYDA.
 // Bu yerdan uch narsa oladi: Android versionCode, versionName va APK fayl nomi.
 // Yangi yangilanish chiqarganda faqat shu ikki qatorni o'zgartiring.
-def omVersiya = "12"          // "Oliy maqsad v12.apk" va Sozlamalardagi versiya
-def omVersiyaKodi = 12        // Android uchun: har chiqarishda OSHIB borishi shart
+def omVersiya = "13"          // "Oliy maqsad v13.apk" va Sozlamalardagi versiya
+def omVersiyaKodi = 13        // Android uchun: har chiqarishda OSHIB borishi shart
 
 // IMZO KALITI. Yo'l va parollar `android/keystore.properties` da turadi —
 // u fayl .gitignore da, GitHub'ga TUSHMAYDI. Kalitning o'zi esa umuman
