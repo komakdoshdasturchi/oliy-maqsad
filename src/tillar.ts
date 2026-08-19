@@ -7,12 +7,16 @@ export type Lang = "uz" | "uzk" | "en" | "ar" | "ru";
 
 // `nom` va `izoh` TARJIMA QILINMAYDI — ular ro'yxatda har doim O'Z TILIDA
 // turishi kerak, aks holda odam o'z tilini tanimay qoladi.
+// TARTIB: Lotin · Kirill · Arab · English · Rus.
+// Ikki o'zbek yozuvi ilgari ikkalasi ham «O'zbek tili» deb turardi va
+// bir-biridan faqat kichik izoh bilan farq qilardi — endi asosiy yozuvning
+// O'ZI yozuv nomi («Lotin», «Кирилл»), til nomi esa ostida turadi.
 export const TILLAR: { id: Lang; nom: string; izoh: string; belgi: string; rang: string; grad: string; holat: "tayyor" | "sinov" | "tez" }[] = [
-  { id: "uz", nom: "O'zbek tili", izoh: "Lotin", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
-  { id: "uzk", nom: "Ўзбек тили", izoh: "Кирилл", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
-  { id: "en", nom: "English language", izoh: "Latin", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tayyor" },
-  { id: "ar", nom: "اللغة العربية", izoh: "الحروف العربية", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tayyor" },
-  { id: "ru", nom: "Русский язык", izoh: "Кириллица", belgi: "Ру", rang: "#4E7F8E", grad: "linear-gradient(160deg,#5A8F9E,#2F5A66)", holat: "sinov" },
+  { id: "uz", nom: "Lotin", izoh: "O'zbek tili", belgi: "O'", rang: "#3B7BC4", grad: "linear-gradient(160deg,#4A8AD4,#1E4E86)", holat: "tayyor" },
+  { id: "uzk", nom: "Кирилл", izoh: "Ўзбек тили", belgi: "ў", rang: "#C0453C", grad: "linear-gradient(160deg,#CF574C,#8E2C27)", holat: "tayyor" },
+  { id: "ar", nom: "العربية", izoh: "اللغة العربية", belgi: "ض", rang: "#3E9E6E", grad: "linear-gradient(160deg,#46AC79,#26714E)", holat: "tayyor" },
+  { id: "en", nom: "English", izoh: "English language", belgi: "Aa", rang: "#D98A32", grad: "linear-gradient(160deg,#E2A03F,#B4611F)", holat: "tayyor" },
+  { id: "ru", nom: "Русский", izoh: "Русский язык", belgi: "Ру", rang: "#4E7F8E", grad: "linear-gradient(160deg,#5A8F9E,#2F5A66)", holat: "sinov" },
 ];
 
 // ---------- LUG'AT ----------
